@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.env
+.venv/
+venv/
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+
+# Node / React Native
+node_modules/
+.expo/
+dist/
+build/
+*.lock
+.env.local
+.env.*.local
+
+# Data / Models
+data/raw/
+*.faiss
+*.pkl
+*.bin
+*.pt
+*.pth
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
