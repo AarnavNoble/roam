@@ -7,7 +7,7 @@ import numpy as np
 import pickle
 from pathlib import Path
 
-INDEX_DIR = Path(__file__).resolve().parents[4] / "data"
+INDEX_DIR = Path(__file__).resolve().parents[3] / "data"
 INDEX_PATH = INDEX_DIR / "faiss.index"
 METADATA_PATH = INDEX_DIR / "chunks_meta.pkl"
 

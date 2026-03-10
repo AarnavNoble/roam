@@ -13,7 +13,7 @@ from .vector_store import build_index, save_index
 from pathlib import Path
 import numpy as np
 
-RAW_DATA_DIR = Path(__file__).resolve().parents[4] / "data" / "raw"
+RAW_DATA_DIR = Path(__file__).resolve().parents[3] / "data" / "raw"
 
 # Add more destinations here as needed
 DESTINATIONS = [

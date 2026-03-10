@@ -8,7 +8,7 @@ import numpy as np
 import pickle
 from pathlib import Path
 
-MODEL_PATH = Path(__file__).resolve().parents[4] / "data" / "ranker_model.pkl"
+MODEL_PATH = Path(__file__).resolve().parents[3] / "data" / "ranker_model.pkl"
 
 
 class POIRanker:

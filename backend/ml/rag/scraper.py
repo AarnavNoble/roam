@@ -9,8 +9,10 @@ import time
 import httpx
 from pathlib import Path
 
-RAW_DATA_DIR = Path(__file__).resolve().parents[4] / "data" / "raw"
+RAW_DATA_DIR = Path(__file__).resolve().parents[3] / "data" / "raw"
 RAW_DATA_DIR.mkdir(parents=True, exist_ok=True)
+
+HEADERS = {"User-Agent": "roam-travel-app/1.0 (https://github.com/AarnavNoble/roam)"}
 
 
 def fetch_wikivoyage(destination: str) -> str:
@@ -23,7 +25,7 @@ def fetch_wikivoyage(destination: str) -> str:
         "explaintext": True,
         "format": "json",
     }
-    resp = httpx.get(url, params=params, timeout=10)
+    resp = httpx.get(url, params=params, headers=HEADERS, timeout=10)
     resp.raise_for_status()
     pages = resp.json().get("query", {}).get("pages", {})
     for page in pages.values():
