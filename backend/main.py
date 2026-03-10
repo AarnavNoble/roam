@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from backend.api.routes import router
 
 app = FastAPI(title="roam API")
 
@@ -10,6 +11,4 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.get("/health")
-def health():
-    return {"status": "ok"}
+app.include_router(router, prefix="/api")

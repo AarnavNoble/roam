@@ -16,8 +16,11 @@ node_modules/
 dist/
 build/
 *.lock
-.env.local
-.env.*.local
+
+# Env files — never commit secrets
+.env
+.env.*
+!**/.env.example
 
 # Data / Models
 data/raw/
