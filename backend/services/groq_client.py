@@ -6,9 +6,17 @@ Takes structured itinerary data + RAG context and generates natural language out
 import os
 import json
 from groq import Groq
+from dotenv import load_dotenv
 
-client = Groq(api_key=os.environ.get("GROQ_API_KEY"))
+load_dotenv()
 MODEL = "llama-3.3-70b-versatile"
+
+
+def get_client() -> Groq:
+    api_key = os.environ.get("GROQ_API_KEY", "").strip()
+    if not api_key:
+        raise RuntimeError("GROQ_API_KEY not set in environment")
+    return Groq(api_key=api_key)
 
 
 def build_prompt(trip: dict, itinerary: list[dict], rag_context: str) -> str:
@@ -66,7 +74,7 @@ def generate_itinerary(trip: dict, itinerary: list[dict], rag_context: str) -> d
     """
     prompt = build_prompt(trip, itinerary, rag_context)
 
-    response = client.chat.completions.create(
+    response = get_client().chat.completions.create(
         model=MODEL,
         messages=[{"role": "user", "content": prompt}],
         temperature=0.4,
