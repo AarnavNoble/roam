@@ -9,6 +9,26 @@ from dataclasses import dataclass, field
 OVERPASS_URL = "https://overpass-api.de/api/interpreter"
 
 # OSM tags that map to travel interest categories
+# Global chain brands to filter out — we want local places
+CHAIN_BLOCKLIST = {
+    "starbucks", "mcdonald's", "mcdonalds", "burger king", "kfc", "subway",
+    "pizza hut", "domino's", "dominos", "dunkin", "dunkin'", "tim hortons",
+    "costa coffee", "costa", "nero", "caffe nero", "pret", "pret a manger",
+    "seven eleven", "7-eleven", "7eleven", "lawson", "familymart", "family mart",
+    "circle k", "spar", "aldi", "lidl", "walmart", "tesco", "sainsbury's",
+    "wendy's", "wendys", "taco bell", "popeyes", "chick-fil-a", "five guys",
+    "shake shack", "mcdonald", "ikea", "zara", "h&m", "uniqlo",
+}
+
+
+def _is_chain(name: str, tags: dict = None) -> bool:
+    if name.lower().strip() in CHAIN_BLOCKLIST:
+        return True
+    # OSM brand tag always has the English brand name even for non-English locations
+    brand = (tags or {}).get("brand", "").lower().strip()
+    return brand in CHAIN_BLOCKLIST
+
+
 CATEGORY_QUERIES = {
     "food":        ['amenity~"restaurant|cafe|bar|food_court|fast_food"'],
     "nature":      ['leisure~"park|nature_reserve|garden"', 'natural~"beach|waterfall|viewpoint"'],
@@ -57,8 +77,9 @@ def _build_query(lat: float, lon: float, radius_m: int, categories: list[str]) -
     tag_filters = []
     for cat in categories:
         for tag_expr in CATEGORY_QUERIES.get(cat, []):
-            tag_filters.append(f'node[{tag_expr}](around:{radius_m},{lat},{lon});')
-            tag_filters.append(f'way[{tag_expr}](around:{radius_m},{lat},{lon});')
+            # [!"brand"] excludes chain restaurants/shops at the query level
+            tag_filters.append(f'node[{tag_expr}][!"brand"](around:{radius_m},{lat},{lon});')
+            tag_filters.append(f'way[{tag_expr}][!"brand"](around:{radius_m},{lat},{lon});')
 
     union = "\n".join(tag_filters)
     return f"""
@@ -86,6 +107,8 @@ def fetch_pois(lat: float, lon: float, categories: list[str], radius_m: int = 50
         tags = el.get("tags", {})
         name = tags.get("name")
         if not name:
+            continue
+        if _is_chain(name, tags):
             continue
 
         # get coordinates (nodes have lat/lon directly, ways have center)
