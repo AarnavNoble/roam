@@ -2,9 +2,12 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useState } from 'react';
 import {
   View, Text, ScrollView, TouchableOpacity,
-  StyleSheet, SafeAreaView,
+  StyleSheet, SafeAreaView, Dimensions,
 } from 'react-native';
+import Mapbox, { MapView, Camera, ShapeSource, LineLayer, CircleLayer, SymbolLayer } from '@rnmapbox/maps';
 import { Itinerary, Day, Stop } from '../services/api';
+
+Mapbox.setAccessToken(process.env.EXPO_PUBLIC_MAPBOX_TOKEN || '');
 
 const CATEGORY_COLORS: Record<string, string> = {
   food: '#F59E0B',
@@ -16,6 +19,11 @@ const CATEGORY_COLORS: Record<string, string> = {
   adventure: '#EF4444',
   attraction: '#6B7280',
 };
+
+// A distinct color per day index
+const DAY_COLORS = ['#3B82F6', '#10B981', '#F59E0B', '#EC4899', '#8B5CF6', '#EF4444'];
+
+// ── List view components ──────────────────────────────────────────────────────
 
 function StopCard({ stop }: { stop: Stop }) {
   const [expanded, setExpanded] = useState(false);
@@ -60,10 +68,127 @@ function DaySection({ day }: { day: Day }) {
   );
 }
 
+// ── Map view ──────────────────────────────────────────────────────────────────
+
+function MapScreen({ itinerary }: { itinerary: Itinerary }) {
+  const [activeDay, setActiveDay] = useState(0);
+  const day = itinerary.days[activeDay];
+
+  if (!day) return null;
+
+  const stops = day.stops.filter(s => s.lat && s.lon);
+  if (stops.length === 0) return (
+    <View style={styles.noCoords}>
+      <Text style={styles.noCoordsText}>No coordinates available for this day.</Text>
+    </View>
+  );
+
+  const centerLon = stops.reduce((s, p) => s + p.lon, 0) / stops.length;
+  const centerLat = stops.reduce((s, p) => s + p.lat, 0) / stops.length;
+  const dayColor = DAY_COLORS[activeDay % DAY_COLORS.length];
+
+  // Route line GeoJSON
+  const routeLine: GeoJSON.Feature<GeoJSON.LineString> = {
+    type: 'Feature',
+    geometry: {
+      type: 'LineString',
+      coordinates: stops.map(s => [s.lon, s.lat]),
+    },
+    properties: {},
+  };
+
+  // Stop pins GeoJSON
+  const stopPoints: GeoJSON.FeatureCollection<GeoJSON.Point> = {
+    type: 'FeatureCollection',
+    features: stops.map((s, i) => ({
+      type: 'Feature',
+      geometry: { type: 'Point', coordinates: [s.lon, s.lat] },
+      properties: { name: s.name, index: i + 1, color: dayColor },
+    })),
+  };
+
+  return (
+    <View style={styles.mapContainer}>
+      {/* Day selector */}
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        style={styles.dayTabs}
+        contentContainerStyle={styles.dayTabsContent}
+      >
+        {itinerary.days.map((d, i) => (
+          <TouchableOpacity
+            key={i}
+            style={[styles.dayTab, activeDay === i && { backgroundColor: DAY_COLORS[i % DAY_COLORS.length] }]}
+            onPress={() => setActiveDay(i)}
+          >
+            <Text style={[styles.dayTabText, activeDay === i && styles.dayTabTextActive]}>
+              Day {d.day}
+            </Text>
+          </TouchableOpacity>
+        ))}
+      </ScrollView>
+
+      <MapView style={styles.map} styleURL={Mapbox.StyleURL.Dark}>
+        <Camera centerCoordinate={[centerLon, centerLat]} zoomLevel={13} animationDuration={500} />
+
+        {/* Route line */}
+        <ShapeSource id="route" shape={routeLine}>
+          <LineLayer
+            id="routeLine"
+            style={{ lineColor: dayColor, lineWidth: 3, lineOpacity: 0.8, lineDasharray: [2, 1] }}
+          />
+        </ShapeSource>
+
+        {/* Stop pins */}
+        <ShapeSource id="stops" shape={stopPoints}>
+          <CircleLayer
+            id="stopCircles"
+            style={{
+              circleRadius: 14,
+              circleColor: dayColor,
+              circleStrokeWidth: 2,
+              circleStrokeColor: '#0f0f0f',
+            }}
+          />
+          <SymbolLayer
+            id="stopLabels"
+            style={{
+              textField: ['get', 'index'],
+              textSize: 11,
+              textColor: '#fff',
+              textFont: ['DIN Offc Pro Bold', 'Arial Unicode MS Bold'],
+              textAllowOverlap: true,
+            }}
+          />
+        </ShapeSource>
+      </MapView>
+
+      {/* Stop list below map */}
+      <ScrollView style={styles.mapStopList} contentContainerStyle={{ padding: 16 }}>
+        {stops.map((stop, i) => (
+          <View key={i} style={styles.mapStopRow}>
+            <View style={[styles.mapStopNum, { backgroundColor: dayColor }]}>
+              <Text style={styles.mapStopNumText}>{i + 1}</Text>
+            </View>
+            <View style={styles.mapStopInfo}>
+              <Text style={styles.mapStopName}>{stop.name}</Text>
+              <Text style={styles.mapStopTime}>{stop.arrival_time} · {stop.duration_min} min</Text>
+            </View>
+          </View>
+        ))}
+      </ScrollView>
+    </View>
+  );
+}
+
+// ── Main screen ───────────────────────────────────────────────────────────────
+
 export default function ItineraryScreen() {
   const { data } = useLocalSearchParams<{ data: string }>();
   const router = useRouter();
   const itinerary: Itinerary = JSON.parse(data);
+  const [view, setView] = useState<'list' | 'map'>('list');
 
   return (
     <SafeAreaView style={styles.container}>
@@ -72,16 +197,31 @@ export default function ItineraryScreen() {
           <Text style={styles.back}>← Back</Text>
         </TouchableOpacity>
         <Text style={styles.screenTitle}>Your Trip</Text>
-        <View style={{ width: 50 }} />
+        <View style={styles.viewToggle}>
+          <TouchableOpacity onPress={() => setView('list')}>
+            <Text style={[styles.toggleBtn, view === 'list' && styles.toggleBtnActive]}>List</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => setView('map')}>
+            <Text style={[styles.toggleBtn, view === 'map' && styles.toggleBtnActive]}>Map</Text>
+          </TouchableOpacity>
+        </View>
       </View>
 
-      <ScrollView contentContainerStyle={styles.scroll}>
-        <Text style={styles.overview}>{itinerary.overview}</Text>
-        {itinerary.days.map(day => <DaySection key={day.day} day={day} />)}
-      </ScrollView>
+      {view === 'list' ? (
+        <ScrollView contentContainerStyle={styles.scroll}>
+          <Text style={styles.overview}>{itinerary.overview}</Text>
+          {itinerary.days.map(day => <DaySection key={day.day} day={day} />)}
+        </ScrollView>
+      ) : (
+        <MapScreen itinerary={itinerary} />
+      )}
     </SafeAreaView>
   );
 }
+
+// ── Styles ────────────────────────────────────────────────────────────────────
+
+const { height } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#0f0f0f' },
@@ -91,6 +231,11 @@ const styles = StyleSheet.create({
   },
   back: { color: '#888', fontSize: 14 },
   screenTitle: { color: '#fff', fontSize: 16, fontWeight: '600' },
+  viewToggle: { flexDirection: 'row', gap: 12 },
+  toggleBtn: { color: '#555', fontSize: 14, fontWeight: '500' },
+  toggleBtnActive: { color: '#fff', fontWeight: '700' },
+
+  // List view
   scroll: { padding: 20, paddingBottom: 60 },
   overview: { color: '#aaa', fontSize: 15, lineHeight: 22, marginBottom: 32 },
   daySection: { marginBottom: 40 },
@@ -115,4 +260,28 @@ const styles = StyleSheet.create({
   tipLabel: { color: '#555', fontSize: 11, fontWeight: '600', textTransform: 'uppercase', marginBottom: 4 },
   tipText: { color: '#888', fontSize: 13, lineHeight: 18 },
   daySummary: { color: '#444', fontSize: 13, fontStyle: 'italic', marginTop: 8 },
+
+  // Map view
+  mapContainer: { flex: 1 },
+  dayTabs: { maxHeight: 48, borderBottomWidth: 1, borderBottomColor: '#1a1a1a' },
+  dayTabsContent: { paddingHorizontal: 16, gap: 8, alignItems: 'center' },
+  dayTab: {
+    paddingHorizontal: 16, paddingVertical: 8, borderRadius: 20,
+    backgroundColor: '#1a1a1a', borderWidth: 1, borderColor: '#2a2a2a',
+  },
+  dayTabText: { color: '#666', fontSize: 13, fontWeight: '500' },
+  dayTabTextActive: { color: '#fff', fontWeight: '700' },
+  map: { height: height * 0.45 },
+  mapStopList: { flex: 1, backgroundColor: '#0f0f0f' },
+  mapStopRow: { flexDirection: 'row', alignItems: 'center', marginBottom: 14 },
+  mapStopNum: {
+    width: 28, height: 28, borderRadius: 14,
+    alignItems: 'center', justifyContent: 'center', marginRight: 12,
+  },
+  mapStopNumText: { color: '#fff', fontSize: 12, fontWeight: '700' },
+  mapStopInfo: { flex: 1 },
+  mapStopName: { color: '#fff', fontSize: 14, fontWeight: '600' },
+  mapStopTime: { color: '#555', fontSize: 12, marginTop: 2 },
+  noCoords: { flex: 1, alignItems: 'center', justifyContent: 'center' },
+  noCoordsText: { color: '#555', fontSize: 14 },
 });
