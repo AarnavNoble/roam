@@ -4,10 +4,13 @@ import {
   View, Text, ScrollView, TouchableOpacity,
   StyleSheet, SafeAreaView, Dimensions,
 } from 'react-native';
-import Mapbox, { MapView, Camera, ShapeSource, LineLayer, CircleLayer, SymbolLayer } from '@rnmapbox/maps';
+import MapLibreGL from '@maplibre/maplibre-react-native';
 import { Itinerary, Day, Stop } from '../services/api';
 
-Mapbox.setAccessToken(process.env.EXPO_PUBLIC_MAPBOX_TOKEN || '');
+// MapLibre is fully open source — no token needed
+MapLibreGL.setAccessToken(null);
+
+const { MapView, Camera, ShapeSource, LineLayer, CircleLayer, SymbolLayer } = MapLibreGL;
 
 const CATEGORY_COLORS: Record<string, string> = {
   food: '#F59E0B',
@@ -129,7 +132,7 @@ function MapScreen({ itinerary }: { itinerary: Itinerary }) {
         ))}
       </ScrollView>
 
-      <MapView style={styles.map} styleURL={Mapbox.StyleURL.Dark}>
+      <MapView style={styles.map} styleURL="https://demotiles.maplibre.org/style.json">
         <Camera centerCoordinate={[centerLon, centerLat]} zoomLevel={13} animationDuration={500} />
 
         {/* Route line */}

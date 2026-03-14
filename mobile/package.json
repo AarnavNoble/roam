@@ -9,7 +9,7 @@
     "web": "expo start --web"
   },
   "dependencies": {
-    "@rnmapbox/maps": "^10.2.10",
+    "@maplibre/maplibre-react-native": "^10.4.2",
     "axios": "^1.13.6",
     "expo": "~55.0.5",
     "expo-status-bar": "~55.0.4",
