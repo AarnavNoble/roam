@@ -25,6 +25,8 @@ DESTINATIONS = [
     "London",
     "Rome",
     "Sydney",
+    "Toronto",
+    "San Francisco",
 ]
 
 
