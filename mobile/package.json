@@ -9,6 +9,7 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@expo/cli": "^55.0.16",
     "@maplibre/maplibre-react-native": "^10.4.2",
     "axios": "^1.13.6",
     "expo": "~55.0.5",
