@@ -1,0 +1,5 @@
+mobile/
+data/raw/
+.venv/
+__pycache__/
+*.pyc
