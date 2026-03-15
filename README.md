@@ -1,3 +1,11 @@
+---
+title: Roam
+colorFrom: blue
+colorTo: purple
+sdk: docker
+pinned: false
+---
+
 # roam
 
 An AI-powered travel itinerary generator. Give it a destination, trip duration, transport mode, and your interests — it returns a day-by-day itinerary with stops ordered to minimize travel time.
