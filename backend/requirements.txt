@@ -10,3 +10,4 @@ pydantic
 numpy
 scikit-learn
 lightgbm
+pytest
