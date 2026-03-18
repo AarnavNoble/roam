@@ -12,6 +12,7 @@ export interface TripRequest {
 }
 
 export interface Stop {
+  id?: number;
   name: string;
   arrival_time: string;
   duration_min: number;
@@ -39,6 +40,12 @@ export async function generateItinerary(req: TripRequest): Promise<Itinerary> {
   return res.data;
 }
 
-export async function submitFeedback(poi_id: number, relevant: boolean) {
-  await api.post('/feedback', { poi_id, relevant });
+export async function submitFeedback(
+  poi_id: number,
+  relevant: boolean,
+  poi_name: string = '',
+  category: string = '',
+  goals: string[] = [],
+) {
+  await api.post('/feedback', { poi_id, relevant, poi_name, category, goals });
 }

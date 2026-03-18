@@ -35,7 +35,7 @@ export default function HomeScreen() {
         transport,
         goals,
       });
-      router.push({ pathname: '/itinerary', params: { data: JSON.stringify(itinerary) } });
+      router.push({ pathname: '/itinerary', params: { data: JSON.stringify(itinerary), goals: JSON.stringify(goals) } });
     } catch (e: any) {
       Alert.alert('Error', e?.response?.data?.detail || 'Something went wrong');
     } finally {

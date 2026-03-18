@@ -5,7 +5,7 @@ import {
   StyleSheet, SafeAreaView, Dimensions,
 } from 'react-native';
 import MapLibreGL from '@maplibre/maplibre-react-native';
-import { Itinerary, Day, Stop } from '../services/api';
+import { Itinerary, Day, Stop, submitFeedback } from '../services/api';
 
 // MapLibre is fully open source — no token needed
 MapLibreGL.setAccessToken(null);
@@ -28,9 +28,18 @@ const DAY_COLORS = ['#3B82F6', '#10B981', '#F59E0B', '#EC4899', '#8B5CF6', '#EF4
 
 // ── List view components ──────────────────────────────────────────────────────
 
-function StopCard({ stop }: { stop: Stop }) {
+function StopCard({ stop, goals }: { stop: Stop; goals: string[] }) {
   const [expanded, setExpanded] = useState(false);
+  const [feedback, setFeedback] = useState<'up' | 'down' | null>(null);
   const color = CATEGORY_COLORS[stop.category] || '#6B7280';
+
+  const handleFeedback = async (relevant: boolean) => {
+    const signal = relevant ? 'up' : 'down';
+    setFeedback(signal);
+    try {
+      await submitFeedback(stop.id || 0, relevant, stop.name, stop.category, goals);
+    } catch {}
+  };
 
   return (
     <TouchableOpacity style={styles.stopCard} onPress={() => setExpanded(e => !e)} activeOpacity={0.8}>
@@ -39,6 +48,14 @@ function StopCard({ stop }: { stop: Stop }) {
         <View style={styles.stopMeta}>
           <Text style={styles.stopTime}>{stop.arrival_time}</Text>
           <Text style={styles.stopDuration}>{stop.duration_min} min</Text>
+        </View>
+        <View style={styles.feedbackRow}>
+          <TouchableOpacity onPress={() => handleFeedback(true)} hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}>
+            <Text style={[styles.feedbackBtn, feedback === 'up' && styles.feedbackActive]}>+</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => handleFeedback(false)} hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}>
+            <Text style={[styles.feedbackBtn, feedback === 'down' && styles.feedbackActive]}>−</Text>
+          </TouchableOpacity>
         </View>
       </View>
       <Text style={styles.stopName}>{stop.name}</Text>
@@ -58,14 +75,14 @@ function StopCard({ stop }: { stop: Stop }) {
   );
 }
 
-function DaySection({ day }: { day: Day }) {
+function DaySection({ day, goals }: { day: Day; goals: string[] }) {
   return (
     <View style={styles.daySection}>
       <View style={styles.dayHeader}>
         <Text style={styles.dayNumber}>Day {day.day}</Text>
         <Text style={styles.dayTheme}>{day.theme}</Text>
       </View>
-      {day.stops.map((stop, i) => <StopCard key={i} stop={stop} />)}
+      {day.stops.map((stop, i) => <StopCard key={i} stop={stop} goals={goals} />)}
       <Text style={styles.daySummary}>{day.summary}</Text>
     </View>
   );
@@ -188,9 +205,10 @@ function MapScreen({ itinerary }: { itinerary: Itinerary }) {
 // ── Main screen ───────────────────────────────────────────────────────────────
 
 export default function ItineraryScreen() {
-  const { data } = useLocalSearchParams<{ data: string }>();
+  const { data, goals: goalsParam } = useLocalSearchParams<{ data: string; goals: string }>();
   const router = useRouter();
   const itinerary: Itinerary = JSON.parse(data);
+  const goals: string[] = goalsParam ? JSON.parse(goalsParam) : [];
   const [view, setView] = useState<'list' | 'map'>('list');
 
   return (
@@ -213,7 +231,7 @@ export default function ItineraryScreen() {
       {view === 'list' ? (
         <ScrollView contentContainerStyle={styles.scroll}>
           <Text style={styles.overview}>{itinerary.overview}</Text>
-          {itinerary.days.map(day => <DaySection key={day.day} day={day} />)}
+          {itinerary.days.map(day => <DaySection key={day.day} day={day} goals={goals} />)}
         </ScrollView>
       ) : (
         <MapScreen itinerary={itinerary} />

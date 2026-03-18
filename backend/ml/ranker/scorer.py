@@ -32,11 +32,13 @@ def rank_pois(user_goals: list[str], pois: list[dict], top_k: int = 20) -> list[
     return ranked[:top_k]
 
 
-def apply_feedback(poi_id: int, relevant: bool) -> None:
+def apply_feedback(poi_id: int, relevant: bool, poi_name: str = "", category: str = "", goals: list[str] = None) -> None:
     """
-    Placeholder for online learning feedback loop.
-    Logs positive/negative signals to retrain the ranker incrementally.
+    Log feedback signal and trigger retraining if threshold is reached.
     """
-    # TODO: log feedback to DB and periodically retrain
-    signal = "positive" if relevant else "negative"
-    print(f"Feedback received: POI {poi_id} → {signal}")
+    from .feedback_store import log_feedback
+    from .retrain import retrain_if_needed
+
+    log_feedback(poi_id=poi_id, relevant=relevant, poi_name=poi_name, category=category, goals=goals)
+    print(f"Feedback logged: POI {poi_id} ({poi_name}) → {'relevant' if relevant else 'not relevant'}")
+    retrain_if_needed()

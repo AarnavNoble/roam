@@ -25,6 +25,9 @@ class TripRequest(BaseModel):
 class FeedbackRequest(BaseModel):
     poi_id: int
     relevant: bool
+    poi_name: str = ""
+    category: str = ""
+    goals: list[str] = []
 
 
 @router.post("/itinerary")
@@ -80,10 +83,24 @@ async def create_itinerary(req: TripRequest):
 
 @router.post("/feedback")
 async def submit_feedback(req: FeedbackRequest):
-    """Receive thumbs up/down on a POI to improve future rankings."""
+    """Receive thumbs up/down on a POI. Logs signal and triggers retraining at threshold."""
     from backend.ml.ranker.scorer import apply_feedback
-    apply_feedback(req.poi_id, req.relevant)
-    return {"status": "ok"}
+    from backend.ml.ranker.feedback_store import get_feedback_count
+    apply_feedback(req.poi_id, req.relevant, req.poi_name, req.category, req.goals)
+    return {"status": "ok", "total_feedback": get_feedback_count()}
+
+
+@router.get("/feedback/stats")
+async def feedback_stats():
+    """Return feedback collection stats."""
+    from backend.ml.ranker.feedback_store import get_feedback_count, get_feedback_as_training_data
+    from backend.ml.ranker.retrain import RETRAIN_THRESHOLD
+    count = get_feedback_count()
+    return {
+        "total_signals": count,
+        "retrain_threshold": RETRAIN_THRESHOLD,
+        "signals_until_retrain": max(0, RETRAIN_THRESHOLD - (count % RETRAIN_THRESHOLD)),
+    }
 
 
 @router.get("/health")
