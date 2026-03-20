@@ -2,15 +2,16 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useState } from 'react';
 import {
   View, Text, ScrollView, TouchableOpacity,
-  StyleSheet, SafeAreaView, Dimensions,
+  StyleSheet, SafeAreaView, Dimensions, Platform,
 } from 'react-native';
-import MapLibreGL from '@maplibre/maplibre-react-native';
 import { Itinerary, Day, Stop, submitFeedback } from '../services/api';
 
-// MapLibre is fully open source — no token needed
-MapLibreGL.setAccessToken(null);
-
-const { MapView, Camera, ShapeSource, LineLayer, CircleLayer, SymbolLayer } = MapLibreGL;
+// MapLibre is native-only — conditionally import to avoid web crashes
+let MapLibreGL: any = null;
+if (Platform.OS !== 'web') {
+  MapLibreGL = require('@maplibre/maplibre-react-native').default;
+  MapLibreGL.setAccessToken(null);
+}
 
 const CATEGORY_COLORS: Record<string, string> = {
   food: '#F59E0B',
@@ -94,6 +95,14 @@ function MapScreen({ itinerary }: { itinerary: Itinerary }) {
   const [activeDay, setActiveDay] = useState(0);
   const day = itinerary.days[activeDay];
 
+  if (Platform.OS === 'web') {
+    return (
+      <View style={styles.noCoords}>
+        <Text style={styles.noCoordsText}>Map view is available in the mobile app.</Text>
+      </View>
+    );
+  }
+
   if (!day) return null;
 
   const stops = day.stops.filter(s => s.lat && s.lon);
@@ -107,17 +116,14 @@ function MapScreen({ itinerary }: { itinerary: Itinerary }) {
   const centerLat = stops.reduce((s, p) => s + p.lat, 0) / stops.length;
   const dayColor = DAY_COLORS[activeDay % DAY_COLORS.length];
 
-  // Route line GeoJSON
+  const { MapView, Camera, ShapeSource, LineLayer, CircleLayer, SymbolLayer } = MapLibreGL;
+
   const routeLine: GeoJSON.Feature<GeoJSON.LineString> = {
     type: 'Feature',
-    geometry: {
-      type: 'LineString',
-      coordinates: stops.map(s => [s.lon, s.lat]),
-    },
+    geometry: { type: 'LineString', coordinates: stops.map(s => [s.lon, s.lat]) },
     properties: {},
   };
 
-  // Stop pins GeoJSON
   const stopPoints: GeoJSON.FeatureCollection<GeoJSON.Point> = {
     type: 'FeatureCollection',
     features: stops.map((s, i) => ({
@@ -129,7 +135,6 @@ function MapScreen({ itinerary }: { itinerary: Itinerary }) {
 
   return (
     <View style={styles.mapContainer}>
-      {/* Day selector */}
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
@@ -151,16 +156,12 @@ function MapScreen({ itinerary }: { itinerary: Itinerary }) {
 
       <MapView style={styles.map} styleURL="https://demotiles.maplibre.org/style.json">
         <Camera centerCoordinate={[centerLon, centerLat]} zoomLevel={13} animationDuration={500} />
-
-        {/* Route line */}
         <ShapeSource id="route" shape={routeLine}>
           <LineLayer
             id="routeLine"
             style={{ lineColor: dayColor, lineWidth: 3, lineOpacity: 0.8, lineDasharray: [2, 1] }}
           />
         </ShapeSource>
-
-        {/* Stop pins */}
         <ShapeSource id="stops" shape={stopPoints}>
           <CircleLayer
             id="stopCircles"
@@ -184,7 +185,6 @@ function MapScreen({ itinerary }: { itinerary: Itinerary }) {
         </ShapeSource>
       </MapView>
 
-      {/* Stop list below map */}
       <ScrollView style={styles.mapStopList} contentContainerStyle={{ padding: 16 }}>
         {stops.map((stop, i) => (
           <View key={i} style={styles.mapStopRow}>
