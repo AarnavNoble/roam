@@ -30,13 +30,13 @@ def _is_chain(name: str, tags: dict = None) -> bool:
 
 
 CATEGORY_QUERIES = {
-    "food":        ['amenity~"restaurant|cafe|bar|food_court|fast_food"'],
-    "nature":      ['leisure~"park|nature_reserve|garden"', 'natural~"beach|waterfall|viewpoint"'],
-    "history":     ['historic~"monument|castle|ruins|memorial|archaeological_site"'],
-    "culture":     ['tourism~"museum|gallery|artwork"', 'amenity~"theatre|cinema"'],
-    "nightlife":   ['amenity~"bar|nightclub|pub"'],
-    "shopping":    ['shop~"mall|market|department_store|boutique"'],
-    "adventure":   ['leisure~"climbing|sports_centre"', 'sport~"hiking|cycling"'],
+    "food":        ['amenity~"restaurant|cafe|bar|food_court|fast_food"', 'shop~"bakery|deli|confectionery"'],
+    "nature":      ['leisure~"park|nature_reserve|garden"', 'natural~"beach|waterfall|viewpoint|peak"', 'tourism~"viewpoint"'],
+    "history":     ['historic~"monument|castle|ruins|memorial|archaeological_site|fort|city_gate"', 'tourism~"attraction"["historic"]'],
+    "culture":     ['tourism~"museum|gallery|artwork"', 'amenity~"theatre|cinema|arts_centre|community_centre"'],
+    "nightlife":   ['amenity~"bar|nightclub|pub|biergarten"'],
+    "shopping":    ['shop~"mall|market|department_store|boutique|gift|clothes"', 'amenity~"marketplace"'],
+    "adventure":   ['leisure~"water_park|escape_game|climbing_adventure|miniature_golf|amusement_arcade|horse_riding"', 'tourism~"attraction|theme_park|zoo|aquarium"', 'sport~"surfing|kayak|diving|sailing|paragliding"', 'amenity~"boat_rental"'],
     "hidden_gems": ['tourism~"attraction|viewpoint"', 'historic'],
 }
 

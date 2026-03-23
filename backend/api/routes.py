@@ -20,6 +20,10 @@ class TripRequest(BaseModel):
     days: int
     transport: str          # driving | walking | cycling | transit
     goals: list[str]        # e.g. ["food", "history", "hidden gems"]
+    pace: str = "moderate"  # relaxed | moderate | packed
+    budget: str = "mid"     # free | budget | mid | splurge
+    style: str = "solo"     # solo | couple | family | group
+    notes: str = ""         # free-text preferences
 
 
 class FeedbackRequest(BaseModel):
@@ -75,6 +79,10 @@ async def create_itinerary(req: TripRequest):
         "days": req.days,
         "transport": req.transport,
         "goals": req.goals,
+        "pace": req.pace,
+        "budget": req.budget,
+        "style": req.style,
+        "notes": req.notes,
     }
     result = generate_itinerary(trip=trip, itinerary=itinerary, rag_context=rag_context)
 

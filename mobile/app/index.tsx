@@ -8,6 +8,9 @@ import { generateItinerary, TripRequest } from '../services/api';
 
 const TRANSPORT_OPTIONS = ['driving', 'walking', 'cycling', 'transit'] as const;
 const GOAL_OPTIONS = ['food', 'nature', 'history', 'culture', 'nightlife', 'shopping', 'adventure'];
+const PACE_OPTIONS = ['relaxed', 'moderate', 'packed'] as const;
+const BUDGET_OPTIONS = ['free', 'budget', 'mid', 'splurge'] as const;
+const STYLE_OPTIONS = ['solo', 'couple', 'family', 'group'] as const;
 
 export default function HomeScreen() {
   const router = useRouter();
@@ -15,6 +18,10 @@ export default function HomeScreen() {
   const [days, setDays] = useState('3');
   const [transport, setTransport] = useState<TripRequest['transport']>('walking');
   const [goals, setGoals] = useState<string[]>([]);
+  const [pace, setPace] = useState<TripRequest['pace']>('moderate');
+  const [budget, setBudget] = useState<TripRequest['budget']>('mid');
+  const [style, setStyle] = useState<TripRequest['style']>('solo');
+  const [notes, setNotes] = useState('');
   const [loading, setLoading] = useState(false);
 
   const toggleGoal = (goal: string) => {
@@ -34,6 +41,10 @@ export default function HomeScreen() {
         days: parseInt(days),
         transport,
         goals,
+        pace,
+        budget,
+        style,
+        notes: notes.trim(),
       });
       router.push({ pathname: '/itinerary', params: { data: JSON.stringify(itinerary), goals: JSON.stringify(goals) } });
     } catch (e: any) {
@@ -94,6 +105,54 @@ export default function HomeScreen() {
           </TouchableOpacity>
         ))}
       </View>
+
+      <Text style={styles.label}>Pace</Text>
+      <View style={styles.row}>
+        {PACE_OPTIONS.map(p => (
+          <TouchableOpacity
+            key={p}
+            style={[styles.chip, pace === p && styles.chipSelected]}
+            onPress={() => setPace(p)}
+          >
+            <Text style={[styles.chipText, pace === p && styles.chipTextSelected]}>{p}</Text>
+          </TouchableOpacity>
+        ))}
+      </View>
+
+      <Text style={styles.label}>Budget</Text>
+      <View style={styles.row}>
+        {BUDGET_OPTIONS.map(b => (
+          <TouchableOpacity
+            key={b}
+            style={[styles.chip, budget === b && styles.chipSelected]}
+            onPress={() => setBudget(b)}
+          >
+            <Text style={[styles.chipText, budget === b && styles.chipTextSelected]}>{b}</Text>
+          </TouchableOpacity>
+        ))}
+      </View>
+
+      <Text style={styles.label}>Traveling as</Text>
+      <View style={styles.row}>
+        {STYLE_OPTIONS.map(s => (
+          <TouchableOpacity
+            key={s}
+            style={[styles.chip, style === s && styles.chipSelected]}
+            onPress={() => setStyle(s)}
+          >
+            <Text style={[styles.chipText, style === s && styles.chipTextSelected]}>{s}</Text>
+          </TouchableOpacity>
+        ))}
+      </View>
+
+      <Text style={styles.label}>Anything else?</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="I love street food, hate museums..."
+        placeholderTextColor="#666"
+        value={notes}
+        onChangeText={setNotes}
+      />
 
       <TouchableOpacity
         style={[styles.button, loading && styles.buttonDisabled]}

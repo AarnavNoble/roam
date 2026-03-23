@@ -20,6 +20,15 @@ def get_client() -> Groq:
 
 
 def build_prompt(trip: dict, itinerary: list[dict], rag_context: str) -> str:
+    pace_desc = {"relaxed": "fewer stops, more downtime", "moderate": "balanced pace", "packed": "maximize stops, tight schedule"}
+    budget_desc = {"free": "only free activities", "budget": "cheap eats and free attractions", "mid": "mix of free and paid", "splurge": "premium experiences welcome"}
+    style_desc = {"solo": "solo traveler", "couple": "traveling as a couple", "family": "family with kids", "group": "group of friends"}
+
+    pace = pace_desc.get(trip.get("pace", "moderate"), "balanced pace")
+    budget = budget_desc.get(trip.get("budget", "mid"), "mix of free and paid")
+    style = style_desc.get(trip.get("style", "solo"), "solo traveler")
+    notes = trip.get("notes", "")
+
     return f"""You are a knowledgeable travel guide. Generate a detailed, natural day-by-day itinerary.
 
 TRIP DETAILS:
@@ -27,6 +36,10 @@ TRIP DETAILS:
 - Duration: {trip['days']} days
 - Transport: {trip['transport']}
 - Goals: {', '.join(trip['goals'])}
+- Pace: {pace}
+- Budget: {budget}
+- Traveler: {style}
+{f'- Special requests: {notes}' if notes else ''}
 
 RELEVANT LOCAL KNOWLEDGE:
 {rag_context}

@@ -2,13 +2,17 @@ import axios from 'axios';
 
 const BASE_URL = process.env.EXPO_PUBLIC_API_URL || 'http://localhost:8000/api';
 
-const api = axios.create({ baseURL: BASE_URL, timeout: 30000 });
+const api = axios.create({ baseURL: BASE_URL, timeout: 120000 });
 
 export interface TripRequest {
   destination: string;
   days: number;
   transport: 'driving' | 'walking' | 'cycling' | 'transit';
   goals: string[];
+  pace: 'relaxed' | 'moderate' | 'packed';
+  budget: 'free' | 'budget' | 'mid' | 'splurge';
+  style: 'solo' | 'couple' | 'family' | 'group';
+  notes: string;
 }
 
 export interface Stop {
