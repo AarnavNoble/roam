@@ -4,13 +4,22 @@ import {
   ScrollView, StyleSheet, ActivityIndicator, Alert,
 } from 'react-native';
 import { useRouter } from 'expo-router';
-import { generateItinerary, TripRequest } from '../services/api';
+import { generateItineraryStreaming, TripRequest, PipelineProgress } from '../services/api';
 
 const TRANSPORT_OPTIONS = ['driving', 'walking', 'cycling', 'transit'] as const;
 const GOAL_OPTIONS = ['food', 'nature', 'history', 'culture', 'nightlife', 'shopping', 'adventure'];
 const PACE_OPTIONS = ['relaxed', 'moderate', 'packed'] as const;
 const BUDGET_OPTIONS = ['free', 'budget', 'mid', 'splurge'] as const;
 const STYLE_OPTIONS = ['solo', 'couple', 'family', 'group'] as const;
+
+const PIPELINE_STEPS = [
+  { key: 'geocoding', label: 'Geocoding' },
+  { key: 'fetching_pois', label: 'Fetching POIs' },
+  { key: 'ranking', label: 'ML Ranking' },
+  { key: 'optimizing', label: 'Route Optimization' },
+  { key: 'retrieving', label: 'RAG Retrieval' },
+  { key: 'generating', label: 'LLM Synthesis' },
+];
 
 export default function HomeScreen() {
   const router = useRouter();
@@ -23,6 +32,8 @@ export default function HomeScreen() {
   const [style, setStyle] = useState<TripRequest['style']>('solo');
   const [notes, setNotes] = useState('');
   const [loading, setLoading] = useState(false);
+  const [currentStep, setCurrentStep] = useState<string | null>(null);
+  const [completedSteps, setCompletedSteps] = useState<string[]>([]);
 
   const toggleGoal = (goal: string) => {
     setGoals(prev =>
@@ -35,22 +46,44 @@ export default function HomeScreen() {
     if (goals.length === 0) return Alert.alert('Select at least one interest');
 
     setLoading(true);
+    setCurrentStep(null);
+    setCompletedSteps([]);
+
     try {
-      const itinerary = await generateItinerary({
-        destination: destination.trim(),
-        days: parseInt(days),
-        transport,
-        goals,
-        pace,
-        budget,
-        style,
-        notes: notes.trim(),
-      });
+      const itinerary = await generateItineraryStreaming(
+        {
+          destination: destination.trim(),
+          days: parseInt(days),
+          transport,
+          goals,
+          pace,
+          budget,
+          style,
+          notes: notes.trim(),
+        },
+        (progress: PipelineProgress) => {
+          setCompletedSteps(prev => {
+            const newCompleted = [...prev];
+            if (currentStep && !newCompleted.includes(currentStep)) {
+              // Mark previous step as complete when new one starts
+            }
+            return newCompleted;
+          });
+          setCurrentStep(prev => {
+            if (prev && !completedSteps.includes(prev)) {
+              setCompletedSteps(c => [...c, prev]);
+            }
+            return progress.step;
+          });
+        },
+      );
       router.push({ pathname: '/itinerary', params: { data: JSON.stringify(itinerary), goals: JSON.stringify(goals) } });
     } catch (e: any) {
-      Alert.alert('Error', e?.response?.data?.detail || 'Something went wrong');
+      Alert.alert('Error', e?.message || 'Something went wrong');
     } finally {
       setLoading(false);
+      setCurrentStep(null);
+      setCompletedSteps([]);
     }
   };
 
@@ -160,7 +193,28 @@ export default function HomeScreen() {
         disabled={loading}
       >
         {loading
-          ? <ActivityIndicator color="#fff" />
+          ? <View style={styles.progressContainer}>
+              {PIPELINE_STEPS.map(step => {
+                const isCompleted = completedSteps.includes(step.key);
+                const isCurrent = currentStep === step.key;
+                return (
+                  <View key={step.key} style={styles.progressStep}>
+                    <View style={[
+                      styles.progressDot,
+                      isCompleted && styles.progressDotDone,
+                      isCurrent && styles.progressDotCurrent,
+                    ]}>
+                      {isCurrent && <ActivityIndicator size="small" color="#000" />}
+                      {isCompleted && <Text style={styles.checkmark}>✓</Text>}
+                    </View>
+                    <Text style={[
+                      styles.progressLabel,
+                      (isCompleted || isCurrent) && styles.progressLabelActive,
+                    ]}>{step.label}</Text>
+                  </View>
+                );
+              })}
+            </View>
           : <Text style={styles.buttonText}>Generate Itinerary</Text>
         }
       </TouchableOpacity>
@@ -188,8 +242,19 @@ const styles = StyleSheet.create({
   chipTextSelected: { color: '#000', fontWeight: '600' },
   button: {
     backgroundColor: '#fff', borderRadius: 14, padding: 18,
-    alignItems: 'center', marginTop: 40,
+    alignItems: 'center', marginTop: 40, marginBottom: 40,
   },
-  buttonDisabled: { opacity: 0.5 },
+  buttonDisabled: { opacity: 0.9, paddingVertical: 20 },
   buttonText: { color: '#000', fontSize: 16, fontWeight: '700' },
+  progressContainer: { width: '100%', gap: 8 },
+  progressStep: { flexDirection: 'row', alignItems: 'center', gap: 10 },
+  progressDot: {
+    width: 24, height: 24, borderRadius: 12,
+    backgroundColor: '#e0e0e0', alignItems: 'center', justifyContent: 'center',
+  },
+  progressDotDone: { backgroundColor: '#10B981' },
+  progressDotCurrent: { backgroundColor: '#3B82F6' },
+  progressLabel: { color: '#999', fontSize: 13 },
+  progressLabelActive: { color: '#000', fontWeight: '600' },
+  checkmark: { color: '#fff', fontSize: 12, fontWeight: '700' },
 });

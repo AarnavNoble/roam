@@ -4,7 +4,7 @@ import {
   View, Text, ScrollView, TouchableOpacity,
   StyleSheet, SafeAreaView, Dimensions, Platform,
 } from 'react-native';
-import { Itinerary, Day, Stop, submitFeedback } from '../services/api';
+import { Itinerary, Day, Stop, FeatureExplanation, submitFeedback } from '../services/api';
 
 // MapLibre is native-only — conditionally import to avoid web crashes
 let MapLibreGL: any = null;
@@ -29,7 +29,24 @@ const DAY_COLORS = ['#3B82F6', '#10B981', '#F59E0B', '#EC4899', '#8B5CF6', '#EF4
 
 // ── List view components ──────────────────────────────────────────────────────
 
-function StopCard({ stop, goals }: { stop: Stop; goals: string[] }) {
+function ContributionBar({ name, value, max }: { name: string; value: number; max: number }) {
+  const width = max > 0 ? Math.abs(value) / max * 100 : 0;
+  const positive = value >= 0;
+  return (
+    <View style={styles.contribRow}>
+      <Text style={styles.contribName}>{name.replace('_', ' ')}</Text>
+      <View style={styles.contribBarBg}>
+        <View style={[
+          styles.contribBar,
+          { width: `${Math.min(width, 100)}%`, backgroundColor: positive ? '#10B981' : '#EF4444' },
+        ]} />
+      </View>
+      <Text style={styles.contribValue}>{value > 0 ? '+' : ''}{value.toFixed(2)}</Text>
+    </View>
+  );
+}
+
+function StopCard({ stop, goals, explanation }: { stop: Stop; goals: string[]; explanation?: FeatureExplanation }) {
   const [expanded, setExpanded] = useState(false);
   const [feedback, setFeedback] = useState<'up' | 'down' | null>(null);
   const color = CATEGORY_COLORS[stop.category] || '#6B7280';
@@ -70,20 +87,38 @@ function StopCard({ stop, goals }: { stop: Stop; goals: string[] }) {
             <Text style={styles.tipLabel}>Tip</Text>
             <Text style={styles.tipText}>{stop.tip}</Text>
           </View>
+          {explanation && (
+            <View style={styles.explainBox}>
+              <Text style={styles.explainTitle}>Why this place?</Text>
+              {(() => {
+                const contribs = explanation.contributions;
+                const maxVal = Math.max(...Object.values(contribs).map(Math.abs), 0.01);
+                return Object.entries(contribs)
+                  .filter(([k]) => k !== 'bias')
+                  .sort((a, b) => Math.abs(b[1]) - Math.abs(a[1]))
+                  .slice(0, 4)
+                  .map(([name, value]) => (
+                    <ContributionBar key={name} name={name} value={value} max={maxVal} />
+                  ));
+              })()}
+            </View>
+          )}
         </View>
       )}
     </TouchableOpacity>
   );
 }
 
-function DaySection({ day, goals }: { day: Day; goals: string[] }) {
+function DaySection({ day, goals, explanations }: { day: Day; goals: string[]; explanations?: Record<string, FeatureExplanation> }) {
   return (
     <View style={styles.daySection}>
       <View style={styles.dayHeader}>
         <Text style={styles.dayNumber}>Day {day.day}</Text>
         <Text style={styles.dayTheme}>{day.theme}</Text>
       </View>
-      {day.stops.map((stop, i) => <StopCard key={i} stop={stop} goals={goals} />)}
+      {day.stops.map((stop, i) => (
+        <StopCard key={i} stop={stop} goals={goals} explanation={explanations?.[stop.name]} />
+      ))}
       <Text style={styles.daySummary}>{day.summary}</Text>
     </View>
   );
@@ -231,7 +266,7 @@ export default function ItineraryScreen() {
       {view === 'list' ? (
         <ScrollView contentContainerStyle={styles.scroll}>
           <Text style={styles.overview}>{itinerary.overview}</Text>
-          {itinerary.days.map(day => <DaySection key={day.day} day={day} goals={goals} />)}
+          {itinerary.days.map(day => <DaySection key={day.day} day={day} goals={goals} explanations={itinerary.ranking_explanations} />)}
         </ScrollView>
       ) : (
         <MapScreen itinerary={itinerary} />
@@ -305,4 +340,18 @@ const styles = StyleSheet.create({
   mapStopTime: { color: '#555', fontSize: 12, marginTop: 2 },
   noCoords: { flex: 1, alignItems: 'center', justifyContent: 'center' },
   noCoordsText: { color: '#555', fontSize: 14 },
+
+  // Feedback
+  feedbackRow: { flexDirection: 'row', gap: 8, marginLeft: 'auto' },
+  feedbackBtn: { color: '#555', fontSize: 18, fontWeight: '700', paddingHorizontal: 6 },
+  feedbackActive: { color: '#fff' },
+
+  // Explainability
+  explainBox: { marginTop: 12, backgroundColor: '#111', borderRadius: 10, padding: 12 },
+  explainTitle: { color: '#888', fontSize: 11, fontWeight: '600', textTransform: 'uppercase', marginBottom: 8, letterSpacing: 0.5 },
+  contribRow: { flexDirection: 'row', alignItems: 'center', marginBottom: 6 },
+  contribName: { color: '#888', fontSize: 11, width: 90 },
+  contribBarBg: { flex: 1, height: 6, backgroundColor: '#222', borderRadius: 3, marginHorizontal: 8 },
+  contribBar: { height: 6, borderRadius: 3 },
+  contribValue: { color: '#666', fontSize: 10, width: 42, textAlign: 'right' },
 });
