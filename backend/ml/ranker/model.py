@@ -56,6 +56,23 @@ class POIRanker:
             result.append(poi)
         return result
 
+    def explain(self, X: np.ndarray) -> list[dict]:
+        """Per-sample feature contributions using LightGBM's built-in SHAP values."""
+        from .features import FEATURE_NAMES
+        contribs = self.model.predict(X, pred_contrib=True)
+        results = []
+        for i in range(len(X)):
+            row = {name: float(contribs[i][j]) for j, name in enumerate(FEATURE_NAMES)}
+            row["bias"] = float(contribs[i][-1])
+            results.append(row)
+        return results
+
+    def feature_importance(self) -> dict[str, float]:
+        """Global feature importance from the trained model."""
+        from .features import FEATURE_NAMES
+        importances = self.model.feature_importances_
+        return dict(zip(FEATURE_NAMES, [float(v) for v in importances]))
+
     def save(self) -> None:
         with open(MODEL_PATH, "wb") as f:
             pickle.dump(self, f)

@@ -8,6 +8,12 @@ from sklearn.preprocessing import LabelEncoder
 from backend.ml.rag.embedder import embed_texts, embed_query
 
 CATEGORIES = ["food", "nature", "history", "culture", "nightlife", "shopping", "adventure", "attraction"]
+
+FEATURE_NAMES = [
+    "semantic_score", "category_match", "name_length_norm",
+    "has_description", "cuisine_match", "nature_match",
+    "history_match", "nightlife_match",
+]
 _label_enc = LabelEncoder().fit(CATEGORIES)
 
 
@@ -63,3 +69,12 @@ def extract_features(user_goals: list[str], pois: list[dict]) -> np.ndarray:
         ])
 
     return np.array(features, dtype=np.float32)
+
+
+def extract_features_explained(user_goals: list[str], pois: list[dict]) -> tuple[np.ndarray, list[dict]]:
+    """Extract features and return named feature dicts alongside the matrix."""
+    matrix = extract_features(user_goals, pois)
+    explanations = []
+    for row in matrix:
+        explanations.append(dict(zip(FEATURE_NAMES, row.tolist())))
+    return matrix, explanations

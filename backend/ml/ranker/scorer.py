@@ -17,17 +17,30 @@ def get_ranker() -> POIRanker:
     return _ranker
 
 
-def rank_pois(user_goals: list[str], pois: list[dict], top_k: int = 20) -> list[dict]:
+def rank_pois(user_goals: list[str], pois: list[dict], top_k: int = 20, explain: bool = False) -> list[dict]:
     """
     Score and rank a list of POIs against user goals.
     Returns top_k POIs sorted by relevance score.
+    If explain=True, attaches per-POI feature values and SHAP contributions.
     """
     if not pois:
         return []
 
     ranker = get_ranker()
-    features = extract_features(user_goals, pois)
-    scores = ranker.score(features)
+
+    if explain:
+        from .features import extract_features_explained
+        features, feature_dicts = extract_features_explained(user_goals, pois)
+        scores = ranker.score(features)
+        contributions = ranker.explain(features)
+
+        # Attach explanation to each POI before sorting
+        for poi, feat_dict, contrib in zip(pois, feature_dicts, contributions):
+            poi["explanation"] = {"features": feat_dict, "contributions": contrib}
+    else:
+        features = extract_features(user_goals, pois)
+        scores = ranker.score(features)
+
     ranked = ranker.rank_pois(pois, scores)
     return ranked[:top_k]
 

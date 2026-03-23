@@ -81,13 +81,28 @@ def retrain_if_needed() -> bool:
     else:
         X, y, groups = X_base, y_base, groups_base
 
+    # Evaluate BEFORE retraining
+    from .metrics import evaluate_ranker, log_metrics
+    from . import scorer as scorer_mod
+    try:
+        old_ranker = scorer_mod.get_ranker()
+        pre_metrics = evaluate_ranker(old_ranker, X, y, groups)
+        log_metrics(pre_metrics, phase="pre_retrain")
+        print(f"Pre-retrain metrics: {pre_metrics}")
+    except Exception:
+        pass  # first train, no old model
+
     ranker = POIRanker()
     ranker.train(X, y, groups)
     ranker.save()
 
+    # Evaluate AFTER retraining
+    post_metrics = evaluate_ranker(ranker, X, y, groups)
+    log_metrics(post_metrics, phase="post_retrain")
+    print(f"Post-retrain metrics: {post_metrics}")
+
     # Reload the global ranker instance
-    from . import scorer
-    scorer._ranker = ranker
+    scorer_mod._ranker = ranker
 
     _feedback_count_at_last_train = current_count
     print(f"Retraining complete. Model updated.")
