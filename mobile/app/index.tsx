@@ -79,7 +79,12 @@ export default function HomeScreen() {
       );
       router.push({ pathname: '/itinerary', params: { data: JSON.stringify(itinerary), goals: JSON.stringify(goals) } });
     } catch (e: any) {
-      Alert.alert('Error', e?.message || 'Something went wrong');
+      const msg = e?.message || 'Something went wrong';
+      const clean = msg.includes('504') || msg.includes('Gateway')
+        ? 'Location service timed out. Try a smaller city or fewer interests.'
+        : msg.includes('No POIs') ? 'No places found for that destination and interests.'
+        : 'Something went wrong. Please try again.';
+      Alert.alert('Error', clean);
     } finally {
       setLoading(false);
       setCurrentStep(null);

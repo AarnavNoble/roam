@@ -83,21 +83,21 @@ def _build_query(lat: float, lon: float, radius_m: int, categories: list[str]) -
 
     union = "\n".join(tag_filters)
     return f"""
-[out:json][timeout:25];
+[out:json][timeout:60];
 (
 {union}
 );
-out center 100;
+out center 60;
 """
 
 
-def fetch_pois(lat: float, lon: float, categories: list[str], radius_m: int = 5000) -> list[POI]:
+def fetch_pois(lat: float, lon: float, categories: list[str], radius_m: int = 3000) -> list[POI]:
     """
     Fetch POIs from Overpass API around a coordinate.
-    Returns up to 100 POIs across the requested categories.
+    Returns up to 60 POIs across the requested categories.
     """
     query = _build_query(lat, lon, radius_m, categories)
-    resp = httpx.post(OVERPASS_URL, data={"data": query}, timeout=30)
+    resp = httpx.post(OVERPASS_URL, data={"data": query}, timeout=90)
     resp.raise_for_status()
 
     elements = resp.json().get("elements", [])
