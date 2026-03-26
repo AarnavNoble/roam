@@ -195,8 +195,8 @@ export default function HomeScreen() {
 
       <TouchableOpacity
         style={[styles.button, loading && styles.buttonDisabled]}
-        onPress={handleGenerate}
-        disabled={loading}
+        onPress={loading ? undefined : handleGenerate}
+        activeOpacity={loading ? 1 : 0.8}
       >
         {loading
           ? <View style={styles.progressContainer}>

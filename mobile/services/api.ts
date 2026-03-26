@@ -105,8 +105,7 @@ export async function generateItineraryStreaming(
             onProgress(parsed as PipelineProgress);
           } else if (parsed.days) {
             result = parsed as Itinerary;
-            reader.cancel(); // close connection immediately — don't wait for SSE to end
-            return result;
+            return result; // got what we need — exit immediately
           } else if (parsed.message) {
             throw new Error(parsed.message);
           }
