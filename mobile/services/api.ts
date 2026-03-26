@@ -63,15 +63,20 @@ export async function generateItineraryStreaming(
 ): Promise<Itinerary> {
   const response = await fetch(`${BASE_URL}/itinerary/stream`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json', 'Accept': 'text/event-stream' },
     body: JSON.stringify(req),
   });
 
   if (!response.ok) {
     throw new Error(`HTTP ${response.status}`);
   }
+  if (!response.body) {
+    // Fallback: streaming not supported, use regular endpoint
+    const res = await api.post<Itinerary>('/itinerary', req);
+    return res.data;
+  }
 
-  const reader = response.body!.getReader();
+  const reader = response.body.getReader();
   const decoder = new TextDecoder();
   let result: Itinerary | null = null;
   let buffer = '';
@@ -85,10 +90,13 @@ export async function generateItineraryStreaming(
     buffer = lines.pop() || '';
 
     for (const line of lines) {
-      if (line.startsWith('data: ')) {
+      const trimmed = line.trim(); // strip \r and whitespace
+      if (trimmed.startsWith('data: ')) {
+        const raw = trimmed.slice(6).trim();
+        if (!raw) continue;
         try {
-          const parsed = JSON.parse(line.slice(6));
-          if (parsed.step) {
+          const parsed = JSON.parse(raw);
+          if (parsed.step !== undefined) {
             onProgress(parsed as PipelineProgress);
           } else if (parsed.days) {
             result = parsed as Itinerary;
@@ -96,7 +104,8 @@ export async function generateItineraryStreaming(
             throw new Error(parsed.message);
           }
         } catch (e: any) {
-          if (e.message && !e.message.includes('JSON')) throw e;
+          if (e instanceof SyntaxError) continue; // skip malformed SSE lines
+          throw e;
         }
       }
     }
