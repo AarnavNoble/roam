@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import {
   View, Text, TextInput, TouchableOpacity,
-  ScrollView, StyleSheet, ActivityIndicator, Alert,
+  ScrollView, StyleSheet, ActivityIndicator,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { generateItineraryStreaming, storeItinerary, TripRequest, PipelineProgress } from '../services/api';
@@ -34,6 +34,7 @@ export default function HomeScreen() {
   const [loading, setLoading] = useState(false);
   const [currentStep, setCurrentStep] = useState<string | null>(null);
   const [completedSteps, setCompletedSteps] = useState<string[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
   const toggleGoal = (goal: string) => {
     setGoals(prev =>
@@ -48,6 +49,7 @@ export default function HomeScreen() {
     setLoading(true);
     setCurrentStep(null);
     setCompletedSteps([]);
+    setError(null);
 
     try {
       const itinerary = await generateItineraryStreaming(
@@ -80,12 +82,13 @@ export default function HomeScreen() {
       storeItinerary(itinerary);
       router.push({ pathname: '/itinerary', params: { goals: JSON.stringify(goals) } });
     } catch (e: any) {
-      const msg = e?.message || 'Something went wrong';
-      const clean = msg.includes('504') || msg.includes('Gateway')
-        ? 'Location service timed out. Try a smaller city or fewer interests.'
-        : msg.includes('No POIs') ? 'No places found for that destination and interests.'
+      const msg = e?.message || '';
+      const clean = msg.includes('504') || msg.includes('Gateway') || msg.includes('mirrors failed')
+        ? 'Location service timed out. Try a different city or fewer interests.'
+        : msg.includes('No POIs')
+        ? 'No places found for that destination and interests.'
         : 'Something went wrong. Please try again.';
-      Alert.alert('Error', clean);
+      setError(clean);
     } finally {
       setLoading(false);
       setCurrentStep(null);
@@ -193,6 +196,8 @@ export default function HomeScreen() {
         onChangeText={setNotes}
       />
 
+      {error && <Text style={styles.errorText}>{error}</Text>}
+
       <TouchableOpacity
         style={[styles.button, loading && styles.buttonDisabled]}
         onPress={loading ? undefined : handleGenerate}
@@ -252,6 +257,7 @@ const styles = StyleSheet.create({
   },
   buttonDisabled: { opacity: 0.9, paddingVertical: 20 },
   buttonText: { color: '#000', fontSize: 16, fontWeight: '700' },
+  errorText: { color: '#EF4444', fontSize: 13, textAlign: 'center', marginTop: 16, marginBottom: 4 },
   progressContainer: { width: '100%', gap: 8 },
   progressStep: { flexDirection: 'row', alignItems: 'center', gap: 10 },
   progressDot: {

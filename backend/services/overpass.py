@@ -6,7 +6,11 @@ Completely free, no API key needed.
 import httpx
 from dataclasses import dataclass, field
 
-OVERPASS_URL = "https://overpass-api.de/api/interpreter"
+OVERPASS_MIRRORS = [
+    "https://overpass-api.de/api/interpreter",
+    "https://overpass.kumi.systems/api/interpreter",
+    "https://maps.mail.ru/osm/tools/overpass/api/interpreter",
+]
 
 # OSM tags that map to travel interest categories
 # Global chain brands to filter out — we want local places
@@ -97,8 +101,17 @@ def fetch_pois(lat: float, lon: float, categories: list[str], radius_m: int = 30
     Returns up to 60 POIs across the requested categories.
     """
     query = _build_query(lat, lon, radius_m, categories)
-    resp = httpx.post(OVERPASS_URL, data={"data": query}, timeout=90)
-    resp.raise_for_status()
+    last_error = None
+    for mirror in OVERPASS_MIRRORS:
+        try:
+            resp = httpx.post(mirror, data={"data": query}, timeout=60)
+            resp.raise_for_status()
+            break
+        except Exception as e:
+            last_error = e
+            continue
+    else:
+        raise RuntimeError(f"All Overpass mirrors failed: {last_error}")
 
     elements = resp.json().get("elements", [])
     pois = []
