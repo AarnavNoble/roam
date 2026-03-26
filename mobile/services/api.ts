@@ -52,6 +52,11 @@ export interface PipelineProgress {
   progress: number;
 }
 
+// Module-level cache to avoid URL param size limits
+let _lastItinerary: Itinerary | null = null;
+export function storeItinerary(it: Itinerary) { _lastItinerary = it; }
+export function getStoredItinerary(): Itinerary | null { return _lastItinerary; }
+
 export async function generateItinerary(req: TripRequest): Promise<Itinerary> {
   const res = await api.post<Itinerary>('/itinerary', req);
   return res.data;

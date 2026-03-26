@@ -4,7 +4,7 @@ import {
   View, Text, ScrollView, TouchableOpacity,
   StyleSheet, SafeAreaView, Dimensions, Platform,
 } from 'react-native';
-import { Itinerary, Day, Stop, FeatureExplanation, submitFeedback } from '../services/api';
+import { Itinerary, Day, Stop, FeatureExplanation, submitFeedback, getStoredItinerary } from '../services/api';
 
 // MapLibre is native-only — conditionally import to avoid web crashes
 let MapLibreGL: any = null;
@@ -240,9 +240,9 @@ function MapScreen({ itinerary }: { itinerary: Itinerary }) {
 // ── Main screen ───────────────────────────────────────────────────────────────
 
 export default function ItineraryScreen() {
-  const { data, goals: goalsParam } = useLocalSearchParams<{ data: string; goals: string }>();
+  const { goals: goalsParam } = useLocalSearchParams<{ goals: string }>();
   const router = useRouter();
-  const itinerary: Itinerary = JSON.parse(data);
+  const itinerary = getStoredItinerary()!;
   const goals: string[] = goalsParam ? JSON.parse(goalsParam) : [];
   const [view, setView] = useState<'list' | 'map'>('list');
 

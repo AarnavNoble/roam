@@ -4,7 +4,7 @@ import {
   ScrollView, StyleSheet, ActivityIndicator, Alert,
 } from 'react-native';
 import { useRouter } from 'expo-router';
-import { generateItineraryStreaming, TripRequest, PipelineProgress } from '../services/api';
+import { generateItineraryStreaming, storeItinerary, TripRequest, PipelineProgress } from '../services/api';
 
 const TRANSPORT_OPTIONS = ['driving', 'walking', 'cycling', 'transit'] as const;
 const GOAL_OPTIONS = ['food', 'nature', 'history', 'culture', 'nightlife', 'shopping', 'adventure'];
@@ -77,7 +77,8 @@ export default function HomeScreen() {
           });
         },
       );
-      router.push({ pathname: '/itinerary', params: { data: JSON.stringify(itinerary), goals: JSON.stringify(goals) } });
+      storeItinerary(itinerary);
+      router.push({ pathname: '/itinerary', params: { goals: JSON.stringify(goals) } });
     } catch (e: any) {
       const msg = e?.message || 'Something went wrong';
       const clean = msg.includes('504') || msg.includes('Gateway')
