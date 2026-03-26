@@ -85,38 +85,46 @@ export async function generateItineraryStreaming(
   const decoder = new TextDecoder();
   let result: Itinerary | null = null;
   let buffer = '';
+  let chunkCount = 0;
 
   while (true) {
     const { done, value } = await reader.read();
+    console.log('[SSE] read()', { done, bytes: value?.length });
     if (done) break;
+    chunkCount++;
     buffer += decoder.decode(value, { stream: true });
 
     const lines = buffer.split('\n');
     buffer = lines.pop() || '';
 
     for (const line of lines) {
-      const trimmed = line.trim(); // strip \r and whitespace
+      const trimmed = line.trim();
       if (trimmed.startsWith('data: ')) {
         const raw = trimmed.slice(6).trim();
         if (!raw) continue;
         try {
           const parsed = JSON.parse(raw);
+          console.log('[SSE] parsed event keys:', Object.keys(parsed));
           if (parsed.step !== undefined) {
             onProgress(parsed as PipelineProgress);
           } else if (parsed.days) {
-            result = parsed as Itinerary;
-            return result; // got what we need — exit immediately
+            console.log('[SSE] got result, navigating...');
+            return parsed as Itinerary;
           } else if (parsed.message) {
             throw new Error(parsed.message);
           }
         } catch (e: any) {
-          if (e instanceof SyntaxError) continue; // skip malformed SSE lines
+          if (e instanceof SyntaxError) {
+            console.log('[SSE] partial JSON, buffering...');
+            continue;
+          }
           throw e;
         }
       }
     }
   }
 
+  console.log('[SSE] stream ended, result:', !!result, 'chunks:', chunkCount);
   if (!result) throw new Error('No result received from pipeline');
   return result;
 }
