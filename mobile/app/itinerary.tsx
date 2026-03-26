@@ -91,11 +91,11 @@ function StopCard({ stop, goals, explanation }: { stop: Stop; goals: string[]; e
             <View style={styles.explainBox}>
               <Text style={styles.explainTitle}>Why this place?</Text>
               {(() => {
-                const contribs = explanation.contributions;
-                const maxVal = Math.max(...Object.values(contribs).map(Math.abs), 0.01);
-                return Object.entries(contribs)
-                  .filter(([k]) => k !== 'bias')
-                  .sort((a, b) => Math.abs(b[1]) - Math.abs(a[1]))
+                const features = explanation.features;
+                const maxVal = Math.max(...Object.values(features), 0.01);
+                return Object.entries(features)
+                  .filter(([, v]) => v > 0)
+                  .sort((a, b) => b[1] - a[1])
                   .slice(0, 4)
                   .map(([name, value]) => (
                     <ContributionBar key={name} name={name} value={value} max={maxVal} />
