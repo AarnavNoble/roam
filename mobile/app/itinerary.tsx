@@ -29,12 +29,23 @@ const DAY_COLORS = ['#3B82F6', '#10B981', '#F59E0B', '#EC4899', '#8B5CF6', '#EF4
 
 // ── List view components ──────────────────────────────────────────────────────
 
+const FEATURE_LABELS: Record<string, string> = {
+  semantic_score: 'Relevance',
+  category_match: 'Goal match',
+  name_length_norm: 'Specificity',
+  has_description: 'Well known',
+  cuisine_match: 'Food match',
+  nature_match: 'Nature match',
+  history_match: 'Culture match',
+  nightlife_match: 'Nightlife match',
+};
+
 function ContributionBar({ name, value, max }: { name: string; value: number; max: number }) {
   const width = max > 0 ? Math.abs(value) / max * 100 : 0;
   const positive = value >= 0;
   return (
     <View style={styles.contribRow}>
-      <Text style={styles.contribName}>{name.replace('_', ' ')}</Text>
+      <Text style={styles.contribName}>{FEATURE_LABELS[name] ?? name}</Text>
       <View style={styles.contribBarBg}>
         <View style={[
           styles.contribBar,
@@ -242,8 +253,21 @@ function MapScreen({ itinerary }: { itinerary: Itinerary }) {
 export default function ItineraryScreen() {
   const { goals: goalsParam } = useLocalSearchParams<{ goals: string }>();
   const router = useRouter();
-  const itinerary = getStoredItinerary()!;
+  const itinerary = getStoredItinerary();
   const goals: string[] = goalsParam ? JSON.parse(goalsParam) : [];
+
+  if (!itinerary) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <View style={styles.noCoords}>
+          <Text style={styles.noCoordsText}>No itinerary loaded. Go back and generate one.</Text>
+          <TouchableOpacity onPress={() => router.replace('/')} style={{ marginTop: 16 }}>
+            <Text style={{ color: '#3B82F6', fontSize: 14 }}>← Go home</Text>
+          </TouchableOpacity>
+        </View>
+      </SafeAreaView>
+    );
+  }
   const [view, setView] = useState<'list' | 'map'>('list');
 
   return (

@@ -64,17 +64,8 @@ export default function HomeScreen() {
           notes: notes.trim(),
         },
         (progress: PipelineProgress) => {
-          setCompletedSteps(prev => {
-            const newCompleted = [...prev];
-            if (currentStep && !newCompleted.includes(currentStep)) {
-              // Mark previous step as complete when new one starts
-            }
-            return newCompleted;
-          });
           setCurrentStep(prev => {
-            if (prev && !completedSteps.includes(prev)) {
-              setCompletedSteps(c => [...c, prev]);
-            }
+            if (prev) setCompletedSteps(c => c.includes(prev) ? c : [...c, prev]);
             return progress.step;
           });
         },
