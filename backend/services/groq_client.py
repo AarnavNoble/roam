@@ -29,6 +29,17 @@ def build_prompt(trip: dict, itinerary: list[dict], rag_context: str) -> str:
     style = style_desc.get(trip.get("style", "solo"), "solo traveler")
     notes = trip.get("notes", "")
 
+    notes_instruction = ""
+    if notes:
+        notes_instruction = f"""
+TRAVELER'S SPECIAL REQUESTS (enforce strictly):
+"{notes}"
+- Read these carefully before writing anything.
+- If a request EXCLUDES a type of place (e.g. "I hate museums", "no bars", "avoid tourist traps"), OMIT those stops entirely — do not describe them, do not mention them.
+- If a request INCLUDES a preference (e.g. "I love street food", "want hidden gems"), emphasize matching stops and briefly explain why they fit.
+- Adjust each day's theme and summary to reflect what was kept, not what was removed.
+"""
+
     return f"""You are a knowledgeable travel guide. Generate a detailed, natural day-by-day itinerary.
 
 TRIP DETAILS:
@@ -39,21 +50,21 @@ TRIP DETAILS:
 - Pace: {pace}
 - Budget: {budget}
 - Traveler: {style}
-{f'- Special requests: {notes}' if notes else ''}
-
+{notes_instruction}
 RELEVANT LOCAL KNOWLEDGE:
 {rag_context}
 
-OPTIMIZED ROUTE (already ordered to minimize travel time):
+OPTIMIZED ROUTE (filter and use what fits, in the order shown):
 {json.dumps(itinerary, indent=2)}
 
 INSTRUCTIONS:
-- Write a natural, engaging itinerary following the exact order of stops provided
+- Apply the traveler's special requests first — drop any stops that conflict before writing
+- Write a natural, engaging itinerary for the stops that remain
 - For each stop include: what to do there, why it matches the traveler's goals, and a practical tip
 - Include the estimated arrival time provided for each stop
 - Mention travel time between stops where provided
-- Keep each day focused and realistic
-- Do not add stops not in the list
+- Keep each day focused and realistic given the pace setting
+- Do not invent stops not in the list
 - Output as structured JSON matching this format exactly:
 
 {{
