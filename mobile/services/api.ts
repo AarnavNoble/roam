@@ -5,13 +5,18 @@ const BASE_URL = process.env.EXPO_PUBLIC_API_URL || 'http://localhost:8000/api';
 const api = axios.create({ baseURL: BASE_URL, timeout: 120000 });
 
 export interface TripRequest {
-  destination: string;
-  days: number;
-  transport: 'driving' | 'walking' | 'cycling' | 'transit';
+  city: string;
+  start_location: string;
+  duration_hours: number;
   goals: string[];
+  transport: 'walking' | 'transit';
   pace: 'relaxed' | 'moderate' | 'packed';
   budget: 'free' | 'budget' | 'mid' | 'splurge';
   style: 'solo' | 'couple' | 'family' | 'group';
+  dietary: 'none' | 'vegetarian' | 'vegan' | 'halal' | 'kosher';
+  mobility: 'easy' | 'moderate' | 'active';
+  familiarity: 'first_time' | 'returning';
+  start_time: 'morning' | 'afternoon' | 'evening';
   notes: string;
 }
 

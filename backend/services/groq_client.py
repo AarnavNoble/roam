@@ -20,50 +20,57 @@ def get_client() -> Groq:
 
 
 def build_prompt(trip: dict, itinerary: list[dict], rag_context: str) -> str:
-    pace_desc = {"relaxed": "fewer stops, more downtime", "moderate": "balanced pace", "packed": "maximize stops, tight schedule"}
+    pace_desc = {"relaxed": "fewer stops, more time to linger", "moderate": "balanced pace", "packed": "maximize stops, tight schedule"}
     budget_desc = {"free": "only free activities", "budget": "cheap eats and free attractions", "mid": "mix of free and paid", "splurge": "premium experiences welcome"}
     style_desc = {"solo": "solo traveler", "couple": "traveling as a couple", "family": "family with kids", "group": "group of friends"}
+    dietary_desc = {"vegetarian": "vegetarian", "vegan": "vegan", "halal": "halal", "kosher": "kosher"}
+    familiarity_desc = {"first_time": "first time visitor", "returning": "returning visitor who wants to go beyond the obvious"}
 
     pace = pace_desc.get(trip.get("pace", "moderate"), "balanced pace")
     budget = budget_desc.get(trip.get("budget", "mid"), "mix of free and paid")
     style = style_desc.get(trip.get("style", "solo"), "solo traveler")
+    dietary = dietary_desc.get(trip.get("dietary", "none"), "")
+    familiarity = familiarity_desc.get(trip.get("familiarity", "first_time"), "first time visitor")
     notes = trip.get("notes", "")
+    start_location = trip.get("start_location", "")
+    city = trip.get("city", "")
+    duration_hours = trip.get("duration_hours", 6)
 
     notes_instruction = ""
     if notes:
         notes_instruction = f"""
 TRAVELER'S SPECIAL REQUESTS (enforce strictly):
 "{notes}"
-- Read these carefully before writing anything.
-- If a request EXCLUDES a type of place (e.g. "I hate museums", "no bars", "avoid tourist traps"), OMIT those stops entirely — do not describe them, do not mention them.
-- If a request INCLUDES a preference (e.g. "I love street food", "want hidden gems"), emphasize matching stops and briefly explain why they fit.
-- Adjust each day's theme and summary to reflect what was kept, not what was removed.
+- If a request EXCLUDES a type of place (e.g. "I hate museums", "no bars"), OMIT those stops entirely.
+- If a request INCLUDES a preference (e.g. "I love street food"), emphasize matching stops and explain why they fit.
+- Adjust each day's theme and summary to reflect what was kept.
 """
 
-    return f"""You are a knowledgeable travel guide. Generate a detailed, natural day-by-day itinerary.
+    return f"""You are a local expert crafting a personalized journey for someone in {city}.
 
-TRIP DETAILS:
-- Destination: {trip['destination']}
-- Duration: {trip['days']} days
-- Transport: {trip['transport']}
-- Goals: {', '.join(trip['goals'])}
+TRAVELER PROFILE:
+- Starting from: {start_location}, {city}
+- Time available: {duration_hours} hours
+- Getting around: {trip.get("transport", "walking")} and public transport
+- Interests: {', '.join(trip.get("goals", []))}
 - Pace: {pace}
 - Budget: {budget}
-- Traveler: {style}
+- Traveling as: {style}
+- Visitor type: {familiarity}
+{f"- Dietary: {dietary}" if dietary else ""}
 {notes_instruction}
-RELEVANT LOCAL KNOWLEDGE:
+LOCAL KNOWLEDGE:
 {rag_context}
 
-OPTIMIZED ROUTE (filter and use what fits, in the order shown):
+OPTIMIZED ROUTE (stops already ordered to minimize travel — follow this order):
 {json.dumps(itinerary, indent=2)}
 
 INSTRUCTIONS:
-- Apply the traveler's special requests first — drop any stops that conflict before writing
-- Write a natural, engaging itinerary for the stops that remain
-- For each stop include: what to do there, why it matches the traveler's goals, and a practical tip
-- Include the estimated arrival time provided for each stop
-- Mention travel time between stops where provided
-- Keep each day focused and realistic given the pace setting
+- Apply special requests first — drop conflicting stops before writing anything
+- Write this as a flowing journey. The traveler is moving through {city} starting from {start_location}.
+- For each stop: what to do there, why it fits this specific traveler, one practical tip
+- Include arrival times and walking/transit time between stops
+- The overview should feel like a knowledgeable friend recommending their day, not a brochure
 - Do not invent stops not in the list
 - Output as structured JSON matching this format exactly:
 
@@ -71,23 +78,23 @@ INSTRUCTIONS:
   "days": [
     {{
       "day": 1,
-      "theme": "short theme for the day",
+      "theme": "short evocative theme for the day",
       "stops": [
         {{
           "name": "place name",
           "arrival_time": "HH:MM",
           "duration_min": 60,
-          "description": "what to do and why",
+          "description": "what to do and why it fits this traveler",
           "tip": "practical tip",
           "lat": 0.0,
           "lon": 0.0,
           "category": "food"
         }}
       ],
-      "summary": "one sentence day summary"
+      "summary": "one sentence capturing the feel of the day"
     }}
   ],
-  "overview": "2-3 sentence trip overview"
+  "overview": "2-3 sentences written like a friend describing a great day out"
 }}"""
 
 

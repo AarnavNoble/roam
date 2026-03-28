@@ -39,9 +39,10 @@ def _build_time_windows(pois: list[dict]) -> list[tuple[int, int]]:
     return windows
 
 
-def solve_tsp(pois: list[dict], time_matrix: np.ndarray) -> list[int]:
+def solve_tsp(pois: list[dict], time_matrix: np.ndarray, start_node: int = 0) -> list[int]:
     """
     Solve TSP for a single day's POIs using OR-Tools.
+    start_node: index of the POI closest to the user's start location (depot).
     Returns ordered list of indices into pois.
     """
     n = len(pois)
@@ -51,8 +52,8 @@ def solve_tsp(pois: list[dict], time_matrix: np.ndarray) -> list[int]:
     time_windows = _build_time_windows(pois)
     visit_durations = [VISIT_DURATION.get(p.get("category", "attraction"), 45 * 60) for p in pois]
 
-    # OR-Tools routing setup
-    manager = pywrapcp.RoutingIndexManager(n, 1, 0)
+    # OR-Tools routing setup — depot set to the closest POI to start location
+    manager = pywrapcp.RoutingIndexManager(n, 1, start_node)
     routing = pywrapcp.RoutingModel(manager)
 
     def time_callback(from_idx, to_idx):

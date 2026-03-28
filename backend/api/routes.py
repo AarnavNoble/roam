@@ -3,6 +3,7 @@ FastAPI route handlers. Wires the full ML pipeline together.
 """
 
 import json
+import math
 import asyncio
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
@@ -17,16 +18,38 @@ from backend.ml.optimizer.scheduler import build_itinerary
 
 router = APIRouter()
 
+MOBILITY_RADIUS = {"easy": 1500, "moderate": 2500, "active": 4000}
+
+
+def _n_days(duration_hours: int) -> int:
+    return max(1, math.ceil(duration_hours / 10))
+
+
+def _start_hour(start_time: str) -> int:
+    return {"morning": 9, "afternoon": 13, "evening": 17}.get(start_time, 9)
+
+
+def _effective_goals(goals: list[str], familiarity: str) -> list[str]:
+    """Returning visitors get hidden_gems appended to surface lesser-known spots."""
+    if familiarity == "returning" and "hidden_gems" not in goals:
+        return goals + ["hidden_gems"]
+    return goals
+
 
 class TripRequest(BaseModel):
-    destination: str
-    days: int
-    transport: str          # driving | walking | cycling | transit
-    goals: list[str]        # e.g. ["food", "history", "hidden gems"]
-    pace: str = "moderate"  # relaxed | moderate | packed
-    budget: str = "mid"     # free | budget | mid | splurge
-    style: str = "solo"     # solo | couple | family | group
-    notes: str = ""         # free-text preferences
+    city: str                              # area for context (e.g. "Paris")
+    start_location: str                    # where you are now (e.g. "Montmartre")
+    duration_hours: int = 6               # how many hours you have
+    goals: list[str]                       # ["food", "nature", ...]
+    transport: str = "walking"             # walking | transit
+    pace: str = "moderate"                 # relaxed | moderate | packed
+    budget: str = "mid"                    # free | budget | mid | splurge
+    style: str = "solo"                    # solo | couple | family | group
+    dietary: str = "none"                  # none | vegetarian | vegan | halal | kosher
+    mobility: str = "moderate"             # easy | moderate | active
+    familiarity: str = "first_time"        # first_time | returning
+    start_time: str = "morning"            # morning | afternoon | evening
+    notes: str = ""
 
 
 class FeedbackRequest(BaseModel):
@@ -37,50 +60,64 @@ class FeedbackRequest(BaseModel):
     goals: list[str] = []
 
 
-def _build_trip_dict(req: TripRequest) -> dict:
+def _build_trip_dict(req: TripRequest, start_lat: float, start_lon: float) -> dict:
     return {
-        "destination": req.destination,
-        "days": req.days,
+        "city": req.city,
+        "start_location": req.start_location,
+        "duration_hours": req.duration_hours,
         "transport": req.transport,
         "goals": req.goals,
         "pace": req.pace,
         "budget": req.budget,
         "style": req.style,
+        "dietary": req.dietary,
+        "mobility": req.mobility,
+        "familiarity": req.familiarity,
+        "start_time": req.start_time,
         "notes": req.notes,
+        "start_lat": start_lat,
+        "start_lon": start_lon,
     }
 
 
 def _run_pipeline(req: TripRequest, explain: bool = False) -> dict:
     """Run the full itinerary pipeline synchronously. Returns result dict."""
-    # 1. Geocode
-    lat, lon = geocode(req.destination)
+    # 1. Geocode start location within city context
+    start_lat, start_lon = geocode(f"{req.start_location}, {req.city}")
 
-    # 2. Fetch POIs
-    pois = fetch_pois(lat, lon, categories=req.goals)
+    # 2. Fetch POIs around where the user actually is
+    effective_goals = _effective_goals(req.goals, req.familiarity)
+    radius_m = MOBILITY_RADIUS.get(req.mobility, 2500)
+    pois = fetch_pois(start_lat, start_lon, categories=effective_goals,
+                      radius_m=radius_m, dietary=req.dietary)
     if not pois:
-        raise HTTPException(status_code=404, detail=f"No POIs found near {req.destination}")
+        raise HTTPException(status_code=404, detail=f"No POIs found near {req.start_location}")
 
     poi_dicts = [p.to_dict() for p in pois]
 
-    # 3. Rank POIs (with optional SHAP explanations)
+    # 3. Rank POIs
+    n_days = _n_days(req.duration_hours)
     ranked_pois = rank_pois(
         user_goals=req.goals, pois=poi_dicts,
-        top_k=req.days * 6, explain=explain,
+        top_k=n_days * 6, explain=explain,
     )
 
-    # 4. Optimize route
-    itinerary = build_itinerary(pois=ranked_pois, n_days=req.days, transport=req.transport)
+    # 4. Optimize route starting from user's location
+    itinerary = build_itinerary(
+        pois=ranked_pois, n_days=n_days, transport=req.transport,
+        start_lat=start_lat, start_lon=start_lon,
+        start_hour=_start_hour(req.start_time),
+    )
 
     # 5. RAG retrieval
-    query = f"{req.destination} {' '.join(req.goals)}"
-    chunks = retrieve(query=query, destination=req.destination, top_k=5)
+    query = f"{req.city} {' '.join(req.goals)}"
+    chunks = retrieve(query=query, destination=req.city, top_k=5)
     rag_context = format_context(chunks)
 
     # 6. Groq synthesis
-    trip = _build_trip_dict(req)
+    trip = _build_trip_dict(req, start_lat, start_lon)
     result = generate_itinerary(trip=trip, itinerary=itinerary, rag_context=rag_context)
 
-    # Attach ML metadata
     if explain:
         result["ranking_explanations"] = {
             poi["name"]: poi["explanation"]
@@ -98,7 +135,7 @@ def _run_pipeline(req: TripRequest, explain: bool = False) -> dict:
 async def create_itinerary(req: TripRequest):
     """Full pipeline — returns complete result with ML explanations."""
     try:
-        lat, lon = geocode(req.destination)
+        geocode(f"{req.start_location}, {req.city}")
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
 
@@ -111,35 +148,41 @@ async def create_itinerary_stream(req: TripRequest):
     """SSE streaming endpoint — sends pipeline progress events then the final result."""
     async def event_generator():
         try:
-            # Step 1: Geocode
-            yield {"event": "progress", "data": json.dumps({"step": "geocoding", "message": "Geocoding destination...", "progress": 10})}
-            lat, lon = await asyncio.to_thread(geocode, req.destination)
+            # Step 1: Geocode start location
+            yield {"event": "progress", "data": json.dumps({"step": "geocoding", "message": f"Locating {req.start_location}...", "progress": 10})}
+            start_lat, start_lon = await asyncio.to_thread(geocode, f"{req.start_location}, {req.city}")
 
-            # Step 2: Fetch POIs
-            yield {"event": "progress", "data": json.dumps({"step": "fetching_pois", "message": "Fetching points of interest...", "progress": 25})}
-            pois = await asyncio.to_thread(fetch_pois, lat, lon, req.goals)
+            # Step 2: Fetch POIs around where the user is
+            yield {"event": "progress", "data": json.dumps({"step": "fetching_pois", "message": "Discovering places near you...", "progress": 25})}
+            effective_goals = _effective_goals(req.goals, req.familiarity)
+            radius_m = MOBILITY_RADIUS.get(req.mobility, 2500)
+            pois = await asyncio.to_thread(fetch_pois, start_lat, start_lon, effective_goals, radius_m, req.dietary)
             if not pois:
-                yield {"event": "error", "data": json.dumps({"message": f"No POIs found near {req.destination}"})}
+                yield {"event": "error", "data": json.dumps({"message": f"No places found near {req.start_location}"})}
                 return
             poi_dicts = [p.to_dict() for p in pois]
 
             # Step 3: Rank
             yield {"event": "progress", "data": json.dumps({"step": "ranking", "message": "Ranking with ML model...", "progress": 45})}
-            ranked_pois = await asyncio.to_thread(rank_pois, req.goals, poi_dicts, req.days * 6, True)
+            n_days = _n_days(req.duration_hours)
+            ranked_pois = await asyncio.to_thread(rank_pois, req.goals, poi_dicts, n_days * 6, True)
 
-            # Step 4: Optimize route
-            yield {"event": "progress", "data": json.dumps({"step": "optimizing", "message": "Optimizing route...", "progress": 60})}
-            itinerary = await asyncio.to_thread(build_itinerary, ranked_pois, req.days, req.transport)
+            # Step 4: Optimize route from start location
+            yield {"event": "progress", "data": json.dumps({"step": "optimizing", "message": "Building your route...", "progress": 60})}
+            itinerary = await asyncio.to_thread(
+                build_itinerary, ranked_pois, n_days, req.transport,
+                start_lat, start_lon, _start_hour(req.start_time),
+            )
 
             # Step 5: RAG
-            yield {"event": "progress", "data": json.dumps({"step": "retrieving", "message": "Retrieving local knowledge...", "progress": 75})}
-            query = f"{req.destination} {' '.join(req.goals)}"
-            chunks = await asyncio.to_thread(retrieve, query=query, destination=req.destination, top_k=5)
+            yield {"event": "progress", "data": json.dumps({"step": "retrieving", "message": "Gathering local knowledge...", "progress": 75})}
+            query = f"{req.city} {' '.join(req.goals)}"
+            chunks = await asyncio.to_thread(retrieve, query=query, destination=req.city, top_k=5)
             rag_context = format_context(chunks)
 
             # Step 6: LLM synthesis
-            yield {"event": "progress", "data": json.dumps({"step": "generating", "message": "Generating descriptions...", "progress": 90})}
-            trip = _build_trip_dict(req)
+            yield {"event": "progress", "data": json.dumps({"step": "generating", "message": "Writing your journey...", "progress": 90})}
+            trip = _build_trip_dict(req, start_lat, start_lon)
             result = await asyncio.to_thread(generate_itinerary, trip, itinerary, rag_context)
 
             # Attach ML metadata

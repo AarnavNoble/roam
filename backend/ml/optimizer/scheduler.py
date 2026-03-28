@@ -54,21 +54,40 @@ def assign_days(pois: list[dict], n_days: int, time_matrix: np.ndarray) -> list[
     return days
 
 
-def build_itinerary(pois: list[dict], n_days: int, transport: str) -> list[dict]:
+def build_itinerary(
+    pois: list[dict],
+    n_days: int,
+    transport: str,
+    start_lat: float = None,
+    start_lon: float = None,
+    start_hour: int = 9,
+) -> list[dict]:
     """
     Full scheduling pipeline:
-    1. Build travel time matrix
+    1. Build travel time matrix (optionally anchored to start location)
     2. Assign POIs to days
-    3. Optimize each day's route with TSP
+    3. Optimize each day's route with TSP from start location
     4. Return structured itinerary
-
-    Returns: list of day dicts, each with ordered list of POIs + travel times
     """
     if not pois:
         return []
 
-    time_matrix = build_time_matrix(pois, transport)
+    # Prepend start location as a virtual depot node (index 0)
+    if start_lat is not None and start_lon is not None:
+        depot = {"lat": start_lat, "lon": start_lon, "category": "_depot", "name": "_start"}
+        all_nodes = [depot] + pois
+        full_matrix = build_time_matrix(all_nodes, transport)
+        # Time matrix for just the real POIs
+        time_matrix = full_matrix[1:, 1:]
+        # Travel time from depot to each POI (used to anchor day 1)
+        depot_to_poi = full_matrix[0, 1:]
+    else:
+        time_matrix = build_time_matrix(pois, transport)
+        depot_to_poi = None
+
     day_assignments = assign_days(pois, n_days, time_matrix)
+
+    day_start_sec = start_hour * 3600
 
     itinerary = []
     for day_num, poi_indices in enumerate(day_assignments):
@@ -78,7 +97,14 @@ def build_itinerary(pois: list[dict], n_days: int, transport: str) -> list[dict]
         day_pois = [pois[i] for i in poi_indices]
         day_matrix = time_matrix[np.ix_(poi_indices, poi_indices)]
 
-        optimized_order = solve_tsp(day_pois, day_matrix)
+        # For day 1, seed the TSP so the closest POI to the start location goes first
+        if day_num == 0 and depot_to_poi is not None:
+            depot_times = depot_to_poi[poi_indices]
+            closest = int(np.argmin(depot_times))
+        else:
+            closest = 0
+
+        optimized_order = solve_tsp(day_pois, day_matrix, start_node=closest)
         ordered_pois = [day_pois[i] for i in optimized_order]
 
         # compute travel times between consecutive stops
@@ -86,8 +112,8 @@ def build_itinerary(pois: list[dict], n_days: int, transport: str) -> list[dict]
         for a, b in zip(optimized_order, optimized_order[1:]):
             travel_times.append(int(day_matrix[a][b]))
 
-        # estimate arrival times
-        current_time = DAY_START_SEC
+        # estimate arrival times from start_hour on day 1, 9am on subsequent days
+        current_time = day_start_sec if day_num == 0 else DAY_START_SEC
         for i, poi in enumerate(ordered_pois):
             poi = poi.copy()
             poi["arrival_time"] = _seconds_to_time(current_time)

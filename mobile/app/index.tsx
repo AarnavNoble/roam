@@ -1,50 +1,67 @@
 import { useState } from 'react';
 import {
   View, Text, TextInput, TouchableOpacity,
-  ScrollView, StyleSheet, ActivityIndicator,
+  ScrollView, StyleSheet, ActivityIndicator, Alert,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { generateItineraryStreaming, storeItinerary, TripRequest, PipelineProgress } from '../services/api';
 
-const TRANSPORT_OPTIONS = ['driving', 'walking', 'cycling', 'transit'] as const;
 const GOAL_OPTIONS = ['food', 'nature', 'history', 'culture', 'nightlife', 'shopping', 'adventure'];
 const PACE_OPTIONS = ['relaxed', 'moderate', 'packed'] as const;
 const BUDGET_OPTIONS = ['free', 'budget', 'mid', 'splurge'] as const;
 const STYLE_OPTIONS = ['solo', 'couple', 'family', 'group'] as const;
+const DIETARY_OPTIONS = ['none', 'vegetarian', 'vegan', 'halal', 'kosher'] as const;
+const MOBILITY_OPTIONS = ['easy', 'moderate', 'active'] as const;
+const FAMILIARITY_OPTIONS = ['first_time', 'returning'] as const;
+const START_TIME_OPTIONS = ['morning', 'afternoon', 'evening'] as const;
+const DURATION_OPTIONS = [2, 3, 4, 6, 8, 10] as const;
+
+const MOBILITY_LABELS = { easy: 'Easy (short walks)', moderate: 'Moderate', active: 'Active (lots of walking)' };
+const FAMILIARITY_LABELS = { first_time: 'First time here', returning: 'I\'ve been before' };
+const DURATION_LABELS: Record<number, string> = { 2: '2h', 3: '3h', 4: '4h', 6: '6h', 8: '8h', 10: 'Full day' };
 
 const PIPELINE_STEPS = [
-  { key: 'geocoding', label: 'Geocoding' },
-  { key: 'fetching_pois', label: 'Fetching POIs' },
-  { key: 'ranking', label: 'ML Ranking' },
-  { key: 'optimizing', label: 'Route Optimization' },
-  { key: 'retrieving', label: 'RAG Retrieval' },
-  { key: 'generating', label: 'LLM Synthesis' },
+  { key: 'geocoding',    label: 'Locating you' },
+  { key: 'fetching_pois', label: 'Finding places' },
+  { key: 'ranking',     label: 'ML Ranking' },
+  { key: 'optimizing',  label: 'Building route' },
+  { key: 'retrieving',  label: 'Local knowledge' },
+  { key: 'generating',  label: 'Writing journey' },
 ];
 
 export default function HomeScreen() {
   const router = useRouter();
-  const [destination, setDestination] = useState('');
-  const [days, setDays] = useState('3');
-  const [transport, setTransport] = useState<TripRequest['transport']>('walking');
+
+  // Core
+  const [city, setCity] = useState('');
+  const [startLocation, setStartLocation] = useState('');
   const [goals, setGoals] = useState<string[]>([]);
+  const [durationHours, setDurationHours] = useState<number>(6);
+
+  // Preferences
   const [pace, setPace] = useState<TripRequest['pace']>('moderate');
   const [budget, setBudget] = useState<TripRequest['budget']>('mid');
   const [style, setStyle] = useState<TripRequest['style']>('solo');
+  const [dietary, setDietary] = useState<TripRequest['dietary']>('none');
+  const [mobility, setMobility] = useState<TripRequest['mobility']>('moderate');
+  const [familiarity, setFamiliarity] = useState<TripRequest['familiarity']>('first_time');
+  const [startTime, setStartTime] = useState<TripRequest['start_time']>('morning');
   const [notes, setNotes] = useState('');
+
+  // UI state
   const [loading, setLoading] = useState(false);
   const [currentStep, setCurrentStep] = useState<string | null>(null);
   const [completedSteps, setCompletedSteps] = useState<string[]>([]);
   const [error, setError] = useState<string | null>(null);
 
   const toggleGoal = (goal: string) => {
-    setGoals(prev =>
-      prev.includes(goal) ? prev.filter(g => g !== goal) : [...prev, goal]
-    );
+    setGoals(prev => prev.includes(goal) ? prev.filter(g => g !== goal) : [...prev, goal]);
   };
 
   const handleGenerate = async () => {
-    if (!destination.trim()) return Alert.alert('Enter a destination');
-    if (goals.length === 0) return Alert.alert('Select at least one interest');
+    if (!city.trim()) { setError('Enter a city or area'); return; }
+    if (!startLocation.trim()) { setError('Enter where you\'re starting from'); return; }
+    if (goals.length === 0) { setError('Pick at least one interest'); return; }
 
     setLoading(true);
     setCurrentStep(null);
@@ -54,13 +71,18 @@ export default function HomeScreen() {
     try {
       const itinerary = await generateItineraryStreaming(
         {
-          destination: destination.trim(),
-          days: parseInt(days),
-          transport,
+          city: city.trim(),
+          start_location: startLocation.trim(),
+          duration_hours: durationHours,
           goals,
+          transport: 'walking',
           pace,
           budget,
           style,
+          dietary,
+          mobility,
+          familiarity,
+          start_time: startTime,
           notes: notes.trim(),
         },
         (progress: PipelineProgress) => {
@@ -75,9 +97,9 @@ export default function HomeScreen() {
     } catch (e: any) {
       const msg = e?.message || '';
       const clean = msg.includes('504') || msg.includes('Gateway') || msg.includes('mirrors failed')
-        ? 'Location service timed out. Try a different city or fewer interests.'
-        : msg.includes('No POIs')
-        ? 'No places found for that destination and interests.'
+        ? 'Location service timed out. Try a different area or fewer interests.'
+        : msg.includes('No POIs') || msg.includes('No places')
+        ? 'No places found there. Try a different starting point or broader interests.'
         : 'Something went wrong. Please try again.';
       setError(clean);
     } finally {
@@ -90,39 +112,26 @@ export default function HomeScreen() {
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
       <Text style={styles.title}>roam</Text>
-      <Text style={styles.subtitle}>AI-optimized travel itineraries</Text>
+      <Text style={styles.subtitle}>Your journey, crafted for you</Text>
 
-      <Text style={styles.label}>Where to?</Text>
+      {/* ── Core inputs ── */}
+      <Text style={styles.label}>What city or area?</Text>
       <TextInput
         style={styles.input}
-        placeholder="Tokyo, Paris, New York..."
-        placeholderTextColor="#666"
-        value={destination}
-        onChangeText={setDestination}
+        placeholder="Paris, Tokyo, New York..."
+        placeholderTextColor="#555"
+        value={city}
+        onChangeText={setCity}
       />
 
-      <Text style={styles.label}>How many days?</Text>
+      <Text style={styles.label}>Where are you starting from?</Text>
       <TextInput
         style={styles.input}
-        keyboardType="number-pad"
-        value={days}
-        onChangeText={setDays}
+        placeholder="Montmartre, Shibuya station, Times Square..."
+        placeholderTextColor="#555"
+        value={startLocation}
+        onChangeText={setStartLocation}
       />
-
-      <Text style={styles.label}>Getting around</Text>
-      <View style={styles.row}>
-        {TRANSPORT_OPTIONS.map(t => (
-          <TouchableOpacity
-            key={t}
-            style={[styles.chip, transport === t && styles.chipSelected]}
-            onPress={() => setTransport(t)}
-          >
-            <Text style={[styles.chipText, transport === t && styles.chipTextSelected]}>
-              {t}
-            </Text>
-          </TouchableOpacity>
-        ))}
-      </View>
 
       <Text style={styles.label}>What are you into?</Text>
       <View style={styles.row}>
@@ -132,12 +141,41 @@ export default function HomeScreen() {
             style={[styles.chip, goals.includes(g) && styles.chipSelected]}
             onPress={() => toggleGoal(g)}
           >
-            <Text style={[styles.chipText, goals.includes(g) && styles.chipTextSelected]}>
-              {g}
+            <Text style={[styles.chipText, goals.includes(g) && styles.chipTextSelected]}>{g}</Text>
+          </TouchableOpacity>
+        ))}
+      </View>
+
+      <Text style={styles.label}>How much time do you have?</Text>
+      <View style={styles.row}>
+        {DURATION_OPTIONS.map(d => (
+          <TouchableOpacity
+            key={d}
+            style={[styles.chip, durationHours === d && styles.chipSelected]}
+            onPress={() => setDurationHours(d)}
+          >
+            <Text style={[styles.chipText, durationHours === d && styles.chipTextSelected]}>
+              {DURATION_LABELS[d]}
             </Text>
           </TouchableOpacity>
         ))}
       </View>
+
+      <Text style={styles.label}>When are you starting?</Text>
+      <View style={styles.row}>
+        {START_TIME_OPTIONS.map(t => (
+          <TouchableOpacity
+            key={t}
+            style={[styles.chip, startTime === t && styles.chipSelected]}
+            onPress={() => setStartTime(t)}
+          >
+            <Text style={[styles.chipText, startTime === t && styles.chipTextSelected]}>{t}</Text>
+          </TouchableOpacity>
+        ))}
+      </View>
+
+      {/* ── Preferences ── */}
+      <Text style={styles.sectionHeader}>Your preferences</Text>
 
       <Text style={styles.label}>Pace</Text>
       <View style={styles.row}>
@@ -178,13 +216,58 @@ export default function HomeScreen() {
         ))}
       </View>
 
+      <Text style={styles.label}>Walking comfort</Text>
+      <View style={styles.column}>
+        {MOBILITY_OPTIONS.map(m => (
+          <TouchableOpacity
+            key={m}
+            style={[styles.optionRow, mobility === m && styles.optionRowSelected]}
+            onPress={() => setMobility(m)}
+          >
+            <Text style={[styles.chipText, mobility === m && styles.chipTextSelected]}>
+              {MOBILITY_LABELS[m]}
+            </Text>
+          </TouchableOpacity>
+        ))}
+      </View>
+
+      <Text style={styles.label}>Have you been here before?</Text>
+      <View style={styles.row}>
+        {FAMILIARITY_OPTIONS.map(f => (
+          <TouchableOpacity
+            key={f}
+            style={[styles.chip, familiarity === f && styles.chipSelected]}
+            onPress={() => setFamiliarity(f)}
+          >
+            <Text style={[styles.chipText, familiarity === f && styles.chipTextSelected]}>
+              {FAMILIARITY_LABELS[f]}
+            </Text>
+          </TouchableOpacity>
+        ))}
+      </View>
+
+      <Text style={styles.label}>Dietary preference</Text>
+      <View style={styles.row}>
+        {DIETARY_OPTIONS.map(d => (
+          <TouchableOpacity
+            key={d}
+            style={[styles.chip, dietary === d && styles.chipSelected]}
+            onPress={() => setDietary(d)}
+          >
+            <Text style={[styles.chipText, dietary === d && styles.chipTextSelected]}>{d}</Text>
+          </TouchableOpacity>
+        ))}
+      </View>
+
       <Text style={styles.label}>Anything else?</Text>
       <TextInput
-        style={styles.input}
-        placeholder="I love street food, hate museums..."
-        placeholderTextColor="#666"
+        style={[styles.input, styles.inputMultiline]}
+        placeholder="I love street food, hate tourist traps, want hidden gems..."
+        placeholderTextColor="#555"
         value={notes}
         onChangeText={setNotes}
+        multiline
+        numberOfLines={3}
       />
 
       {error && <Text style={styles.errorText}>{error}</Text>}
@@ -217,7 +300,7 @@ export default function HomeScreen() {
                 );
               })}
             </View>
-          : <Text style={styles.buttonText}>Generate Itinerary</Text>
+          : <Text style={styles.buttonText}>Build My Journey</Text>
         }
       </TouchableOpacity>
     </ScrollView>
@@ -226,15 +309,21 @@ export default function HomeScreen() {
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#0f0f0f' },
-  content: { padding: 24, paddingTop: 72 },
+  content: { padding: 24, paddingTop: 72, paddingBottom: 60 },
   title: { fontSize: 36, fontWeight: '700', color: '#fff', letterSpacing: -1 },
-  subtitle: { fontSize: 14, color: '#666', marginTop: 4, marginBottom: 40 },
+  subtitle: { fontSize: 14, color: '#555', marginTop: 4, marginBottom: 40 },
+  sectionHeader: {
+    fontSize: 11, color: '#444', marginTop: 36, marginBottom: 4,
+    textTransform: 'uppercase', letterSpacing: 1.5,
+  },
   label: { fontSize: 13, color: '#888', marginBottom: 10, marginTop: 24, textTransform: 'uppercase', letterSpacing: 0.5 },
   input: {
     backgroundColor: '#1a1a1a', color: '#fff', borderRadius: 12,
     padding: 16, fontSize: 16, borderWidth: 1, borderColor: '#2a2a2a',
   },
+  inputMultiline: { minHeight: 80, textAlignVertical: 'top' },
   row: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
+  column: { gap: 8 },
   chip: {
     paddingHorizontal: 14, paddingVertical: 8, borderRadius: 20,
     backgroundColor: '#1a1a1a', borderWidth: 1, borderColor: '#2a2a2a',
@@ -242,6 +331,11 @@ const styles = StyleSheet.create({
   chipSelected: { backgroundColor: '#fff', borderColor: '#fff' },
   chipText: { color: '#888', fontSize: 13 },
   chipTextSelected: { color: '#000', fontWeight: '600' },
+  optionRow: {
+    paddingHorizontal: 16, paddingVertical: 12, borderRadius: 12,
+    backgroundColor: '#1a1a1a', borderWidth: 1, borderColor: '#2a2a2a',
+  },
+  optionRowSelected: { backgroundColor: '#fff', borderColor: '#fff' },
   button: {
     backgroundColor: '#fff', borderRadius: 14, padding: 18,
     alignItems: 'center', marginTop: 40, marginBottom: 40,

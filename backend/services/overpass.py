@@ -95,10 +95,11 @@ out center 60;
 """
 
 
-def fetch_pois(lat: float, lon: float, categories: list[str], radius_m: int = 3000) -> list[POI]:
+def fetch_pois(lat: float, lon: float, categories: list[str], radius_m: int = 2500, dietary: str = "none") -> list[POI]:
     """
     Fetch POIs from Overpass API around a coordinate.
     Returns up to 60 POIs across the requested categories.
+    dietary: filter food POIs by diet tag (none | vegetarian | vegan | halal | kosher)
     """
     query = _build_query(lat, lon, radius_m, categories)
     last_error = None
@@ -134,8 +135,12 @@ def fetch_pois(lat: float, lon: float, categories: list[str], radius_m: int = 30
         if lat_el is None or lon_el is None:
             continue
 
-        # infer category from tags
+        # dietary filter — only applies to food POIs
         category = _infer_category(tags)
+        if dietary != "none" and category == "food":
+            diet_tag = tags.get(f"diet:{dietary}", "")
+            if diet_tag not in ("yes", "only"):
+                continue
 
         pois.append(POI(
             id=el["id"],
