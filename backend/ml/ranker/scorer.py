@@ -51,32 +51,54 @@ def rank_pois(user_goals: list[str], pois: list[dict], top_k: int = 20, explain:
 
 def _diversify(ranked: list[dict], top_k: int, user_goals: list[str]) -> list[dict]:
     """
-    Pick top_k POIs while ensuring each goal category gets fair representation.
-    Cap per-category at ceil(top_k * 0.4), filling remaining slots with next-best.
+    Pick top_k POIs guaranteeing at least 1 stop per user goal, then fill
+    remaining slots by score with a per-category cap.
+
+    adventure/hidden_gems POIs are classified as 'attraction' by OSM inference,
+    so we map those goals to the right bucket.
     """
-    max_per_category = max(1, round(top_k * 0.4))
-    counts: dict[str, int] = {}
-    selected = []
-    overflow = []
+    GOAL_TO_CAT = {
+        "food": "food", "nature": "nature", "history": "history",
+        "culture": "culture", "nightlife": "nightlife", "shopping": "shopping",
+        "adventure": "attraction", "hidden_gems": "attraction",
+    }
+
+    # Group ranked POIs by inferred category (preserves score order within each group)
+    by_cat: dict[str, list] = {}
+    for poi in ranked:
+        by_cat.setdefault(poi.get("category", "attraction"), []).append(poi)
+
+    selected: list[dict] = []
+    used_ids: set = set()
+
+    # Phase 1: guarantee 1 best-ranked POI per user goal
+    for goal in user_goals:
+        cat = GOAL_TO_CAT.get(goal, goal)
+        for poi in by_cat.get(cat, []):
+            if poi.get("id") not in used_ids:
+                selected.append(poi)
+                used_ids.add(poi.get("id"))
+                break  # only take the top-ranked one per goal
+
+    # Phase 2: fill remaining slots by score, max 2 per category
+    max_per_cat = max(2, top_k // max(len(user_goals), 1))
+    cat_counts: dict[str, int] = {}
+    for poi in selected:
+        cat_counts[poi.get("category", "attraction")] = cat_counts.get(poi.get("category", "attraction"), 0) + 1
 
     for poi in ranked:
-        cat = poi.get("category", "attraction")
-        c = counts.get(cat, 0)
-        if c < max_per_category:
-            selected.append(poi)
-            counts[cat] = c + 1
-            if len(selected) == top_k:
-                break
-        else:
-            overflow.append(poi)
-
-    # Fill remaining slots if diversity cap left gaps
-    for poi in overflow:
         if len(selected) >= top_k:
             break
-        selected.append(poi)
+        pid = poi.get("id")
+        if pid in used_ids:
+            continue
+        cat = poi.get("category", "attraction")
+        if cat_counts.get(cat, 0) < max_per_cat:
+            selected.append(poi)
+            used_ids.add(pid)
+            cat_counts[cat] = cat_counts.get(cat, 0) + 1
 
-    return selected
+    return selected[:top_k]
 
 
 def apply_feedback(poi_id: int, relevant: bool, poi_name: str = "", category: str = "", goals: list[str] = None) -> None:
