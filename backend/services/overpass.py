@@ -34,14 +34,14 @@ def _is_chain(name: str, tags: dict = None) -> bool:
 
 
 CATEGORY_QUERIES = {
-    "food":        ['amenity~"restaurant|cafe|bar|food_court|fast_food"', 'shop~"bakery|deli|confectionery"'],
-    "nature":      ['leisure~"park|nature_reserve|garden"', 'natural~"beach|waterfall|viewpoint|peak"', 'tourism~"viewpoint"'],
-    "history":     ['historic~"monument|castle|ruins|memorial|archaeological_site|fort|city_gate"', 'tourism~"attraction"["historic"]'],
-    "culture":     ['tourism~"museum|gallery|artwork"', 'amenity~"theatre|cinema|arts_centre|community_centre"'],
+    "food":        ['amenity~"restaurant|cafe|bar|fast_food|food_court"'],
+    "nature":      ['leisure~"park|nature_reserve|garden"', 'natural~"beach|waterfall|peak"'],
+    "history":     ['historic~"monument|castle|ruins|memorial|archaeological_site|fort"'],
+    "culture":     ['tourism~"museum|gallery"', 'amenity~"theatre|arts_centre"'],
     "nightlife":   ['amenity~"bar|nightclub|pub|biergarten"'],
-    "shopping":    ['shop~"mall|market|department_store|boutique|gift|clothes"', 'amenity~"marketplace"'],
-    "adventure":   ['leisure~"water_park|escape_game|climbing_adventure|miniature_golf|amusement_arcade|horse_riding"', 'tourism~"attraction|theme_park|zoo|aquarium"', 'sport~"surfing|kayak|diving|sailing|paragliding"', 'amenity~"boat_rental"'],
-    "hidden_gems": ['tourism~"attraction|viewpoint"', 'historic'],
+    "shopping":    ['shop~"mall|market|department_store|clothes|gift"'],
+    "adventure":   ['tourism~"attraction|theme_park|zoo|aquarium"', 'leisure~"escape_game|miniature_golf|amusement_arcade"'],
+    "hidden_gems": ['tourism~"attraction|viewpoint"'],
 }
 
 
@@ -87,11 +87,11 @@ def _build_query(lat: float, lon: float, radius_m: int, categories: list[str]) -
 
     union = "\n".join(tag_filters)
     return f"""
-[out:json][timeout:60];
+[out:json][timeout:30];
 (
 {union}
 );
-out center 60;
+out center 50;
 """
 
 

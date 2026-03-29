@@ -18,7 +18,7 @@ from backend.ml.optimizer.scheduler import build_itinerary
 
 router = APIRouter()
 
-MOBILITY_RADIUS = {"easy": 1500, "moderate": 2500, "active": 4000}
+MOBILITY_RADIUS = {"easy": 1500, "moderate": 2000, "active": 3000}
 
 
 def _n_days(duration_hours: int) -> int:
