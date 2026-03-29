@@ -39,11 +39,12 @@ def build_prompt(trip: dict, itinerary: list[dict], rag_context: str) -> str:
     notes_instruction = ""
     if notes:
         notes_instruction = f"""
-TRAVELER'S SPECIAL REQUESTS (enforce strictly):
+TRAVELER'S NOTES:
 "{notes}"
-- If a request EXCLUDES a type of place (e.g. "I hate museums", "no bars"), OMIT those stops entirely.
-- If a request INCLUDES a preference (e.g. "I love street food"), emphasize matching stops and explain why they fit.
-- Adjust each day's theme and summary to reflect what was kept.
+- ONLY remove a stop if the notes contain an EXPLICIT exclusion like "I hate museums", "no bars", "avoid tourist traps".
+- Positive preferences ("I want to hike", "love street food", "great photos") mean you should KEEP matching stops and describe why they fit — do NOT remove stops because you think they don't perfectly match.
+- Mention places the traveler has already visited (like Big Ben, London Eye) so they know to move on quickly.
+- Do NOT drop a stop just because it wasn't explicitly requested — the ML pipeline already selected the best matches.
 """
 
     return f"""You are a local expert crafting a personalized journey for someone in {city}.
@@ -66,9 +67,10 @@ OPTIMIZED ROUTE (stops already ordered to minimize travel — follow this order)
 {json.dumps(itinerary, indent=2)}
 
 INSTRUCTIONS:
-- Apply special requests first — drop conflicting stops before writing anything
+- Include ALL stops in the route — only omit a stop if it directly conflicts with an explicit exclusion in the notes
 - Write this as a flowing journey. The traveler is moving through {city} starting from {start_location}.
 - For each stop: what to do there, why it fits this specific traveler, one practical tip
+- For outdoor/nature stops, describe them in terms of the experience (views, fresh air, walking routes) not just "it's a park"
 - Include arrival times and walking/transit time between stops
 - The overview should feel like a knowledgeable friend recommending their day, not a brochure
 - Do not invent stops not in the list
