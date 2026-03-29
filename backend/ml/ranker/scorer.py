@@ -42,7 +42,41 @@ def rank_pois(user_goals: list[str], pois: list[dict], top_k: int = 20, explain:
         scores = ranker.score(features)
 
     ranked = ranker.rank_pois(pois, scores)
-    return ranked[:top_k]
+
+    # Enforce category diversity: no single category can exceed 40% of top_k slots
+    # This prevents e.g. 6 food places crowding out nature/culture/history
+    diverse = _diversify(ranked, top_k, user_goals)
+    return diverse
+
+
+def _diversify(ranked: list[dict], top_k: int, user_goals: list[str]) -> list[dict]:
+    """
+    Pick top_k POIs while ensuring each goal category gets fair representation.
+    Cap per-category at ceil(top_k * 0.4), filling remaining slots with next-best.
+    """
+    max_per_category = max(1, round(top_k * 0.4))
+    counts: dict[str, int] = {}
+    selected = []
+    overflow = []
+
+    for poi in ranked:
+        cat = poi.get("category", "attraction")
+        c = counts.get(cat, 0)
+        if c < max_per_category:
+            selected.append(poi)
+            counts[cat] = c + 1
+            if len(selected) == top_k:
+                break
+        else:
+            overflow.append(poi)
+
+    # Fill remaining slots if diversity cap left gaps
+    for poi in overflow:
+        if len(selected) >= top_k:
+            break
+        selected.append(poi)
+
+    return selected
 
 
 def apply_feedback(poi_id: int, relevant: bool, poi_name: str = "", category: str = "", goals: list[str] = None) -> None:

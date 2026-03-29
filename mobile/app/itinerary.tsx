@@ -88,8 +88,15 @@ function StopCard({ stop, goals, explanation }: { stop: Stop; goals: string[]; e
         </View>
       </View>
       <Text style={styles.stopName}>{stop.name}</Text>
-      <View style={[styles.categoryBadge, { backgroundColor: color + '20' }]}>
-        <Text style={[styles.categoryText, { color }]}>{stop.category}</Text>
+      <View style={styles.stopSubRow}>
+        <View style={[styles.categoryBadge, { backgroundColor: color + '20' }]}>
+          <Text style={[styles.categoryText, { color }]}>{stop.category.toUpperCase()}</Text>
+        </View>
+        {stop.description ? (
+          <Text style={styles.stopDescPreview} numberOfLines={1}>
+            {stop.description}
+          </Text>
+        ) : null}
       </View>
       {expanded && (
         <View style={styles.stopDetails}>
@@ -334,6 +341,8 @@ const styles = StyleSheet.create({
   stopName: { color: '#fff', fontSize: 16, fontWeight: '600', marginBottom: 8 },
   categoryBadge: { alignSelf: 'flex-start', paddingHorizontal: 10, paddingVertical: 4, borderRadius: 8 },
   categoryText: { fontSize: 11, fontWeight: '600', textTransform: 'uppercase', letterSpacing: 0.5 },
+  stopSubRow: { flexDirection: 'row', alignItems: 'center', gap: 8, marginTop: 6, flexWrap: 'nowrap' },
+  stopDescPreview: { fontSize: 12, color: '#555', flex: 1 },
   stopDetails: { marginTop: 12 },
   stopDescription: { color: '#aaa', fontSize: 14, lineHeight: 20, marginBottom: 12 },
   tipBox: { backgroundColor: '#111', borderRadius: 10, padding: 12 },
