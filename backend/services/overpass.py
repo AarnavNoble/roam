@@ -76,82 +76,88 @@ class POI:
         }
 
 
-def _build_query(lat: float, lon: float, radius_m: int, categories: list[str]) -> str:
-    """Build Overpass QL query for given categories around a point."""
+def _build_category_query(lat: float, lon: float, radius_m: int, category: str) -> str:
+    """Build a query for a single category, capped at 15 results."""
     tag_filters = []
-    for cat in categories:
-        for tag_expr in CATEGORY_QUERIES.get(cat, []):
-            # [!"brand"] excludes chain restaurants/shops at the query level
-            tag_filters.append(f'node[{tag_expr}][!"brand"](around:{radius_m},{lat},{lon});')
-            tag_filters.append(f'way[{tag_expr}][!"brand"](around:{radius_m},{lat},{lon});')
-
+    for tag_expr in CATEGORY_QUERIES.get(category, []):
+        tag_filters.append(f'node[{tag_expr}][!"brand"](around:{radius_m},{lat},{lon});')
+        tag_filters.append(f'way[{tag_expr}][!"brand"](around:{radius_m},{lat},{lon});')
     union = "\n".join(tag_filters)
     return f"""
-[out:json][timeout:30];
+[out:json][timeout:25];
 (
 {union}
 );
-out center 50;
+out center 15;
 """
+
+
+def _query_overpass(query: str) -> list:
+    """Execute a query against Overpass mirrors, return elements list."""
+    last_error = None
+    for mirror in OVERPASS_MIRRORS:
+        try:
+            resp = httpx.post(mirror, data={"data": query}, timeout=30)
+            resp.raise_for_status()
+            return resp.json().get("elements", [])
+        except Exception as e:
+            last_error = e
+            continue
+    raise RuntimeError(f"All Overpass mirrors failed: {last_error}")
 
 
 def fetch_pois(lat: float, lon: float, categories: list[str], radius_m: int = 2500, dietary: str = "none") -> list[POI]:
     """
     Fetch POIs from Overpass API around a coordinate.
-    Returns up to 60 POIs across the requested categories.
+    Queries each category separately (15 results each) so every category
+    gets fair representation regardless of OSM node density.
     dietary: filter food POIs by diet tag (none | vegetarian | vegan | halal | kosher)
     """
-    query = _build_query(lat, lon, radius_m, categories)
-    last_error = None
-    for mirror in OVERPASS_MIRRORS:
+    seen_ids: set[int] = set()
+    all_pois: list[POI] = []
+
+    for category in categories:
+        query = _build_category_query(lat, lon, radius_m, category)
         try:
-            resp = httpx.post(mirror, data={"data": query}, timeout=60)
-            resp.raise_for_status()
-            break
-        except Exception as e:
-            last_error = e
-            continue
-    else:
-        raise RuntimeError(f"All Overpass mirrors failed: {last_error}")
+            elements = _query_overpass(query)
+        except RuntimeError:
+            continue  # skip category if mirrors fail, don't abort entire request
 
-    elements = resp.json().get("elements", [])
-    pois = []
-
-    for el in elements:
-        tags = el.get("tags", {})
-        name = tags.get("name")
-        if not name:
-            continue
-        if _is_chain(name, tags):
-            continue
-
-        # get coordinates (nodes have lat/lon directly, ways have center)
-        if el["type"] == "node":
-            lat_el, lon_el = el.get("lat"), el.get("lon")
-        else:
-            center = el.get("center", {})
-            lat_el, lon_el = center.get("lat"), center.get("lon")
-
-        if lat_el is None or lon_el is None:
-            continue
-
-        # dietary filter — only applies to food POIs
-        category = _infer_category(tags)
-        if dietary != "none" and category == "food":
-            diet_tag = tags.get(f"diet:{dietary}", "")
-            if diet_tag not in ("yes", "only"):
+        for el in elements:
+            if el["id"] in seen_ids:
                 continue
 
-        pois.append(POI(
-            id=el["id"],
-            name=name,
-            lat=lat_el,
-            lon=lon_el,
-            category=category,
-            tags=tags,
-        ))
+            tags = el.get("tags", {})
+            name = tags.get("name")
+            if not name or _is_chain(name, tags):
+                continue
 
-    return pois
+            if el["type"] == "node":
+                lat_el, lon_el = el.get("lat"), el.get("lon")
+            else:
+                center = el.get("center", {})
+                lat_el, lon_el = center.get("lat"), center.get("lon")
+
+            if lat_el is None or lon_el is None:
+                continue
+
+            inferred = _infer_category(tags)
+
+            if dietary != "none" and inferred == "food":
+                diet_tag = tags.get(f"diet:{dietary}", "")
+                if diet_tag not in ("yes", "only"):
+                    continue
+
+            seen_ids.add(el["id"])
+            all_pois.append(POI(
+                id=el["id"], name=name,
+                lat=lat_el, lon=lon_el,
+                category=inferred, tags=tags,
+            ))
+
+    return all_pois
+
+
 
 
 def _infer_category(tags: dict) -> str:
