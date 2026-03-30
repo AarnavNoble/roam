@@ -9,7 +9,6 @@ from dataclasses import dataclass, field
 OVERPASS_MIRRORS = [
     "https://overpass-api.de/api/interpreter",
     "https://overpass.kumi.systems/api/interpreter",
-    "https://maps.mail.ru/osm/tools/overpass/api/interpreter",
 ]
 
 # OSM tags that map to travel interest categories
