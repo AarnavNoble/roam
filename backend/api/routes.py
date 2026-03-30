@@ -21,8 +21,18 @@ router = APIRouter()
 MOBILITY_RADIUS = {"easy": 1500, "moderate": 2000, "active": 3000}
 
 
+PACE_STOPS_PER_DAY = {"relaxed": 4, "moderate": 6, "packed": 9}
+
+
 def _n_days(duration_hours: int) -> int:
     return max(1, math.ceil(duration_hours / 10))
+
+
+def _top_k(duration_hours: int, pace: str, n_goals: int) -> int:
+    """Stops to select: scales with pace, always enough for each goal to appear."""
+    base = PACE_STOPS_PER_DAY.get(pace, 6)
+    n_days = _n_days(duration_hours)
+    return max(n_days * base, n_goals * 2)
 
 
 def _start_hour(start_time: str) -> int:
@@ -99,7 +109,7 @@ def _run_pipeline(req: TripRequest, explain: bool = False) -> dict:
     n_days = _n_days(req.duration_hours)
     ranked_pois = rank_pois(
         user_goals=req.goals, pois=poi_dicts,
-        top_k=n_days * 6, explain=explain,
+        top_k=_top_k(req.duration_hours, req.pace, len(req.goals)), explain=explain,
     )
 
     # 4. Optimize route starting from user's location
@@ -165,7 +175,7 @@ async def create_itinerary_stream(req: TripRequest):
             # Step 3: Rank
             yield {"event": "progress", "data": json.dumps({"step": "ranking", "message": "Ranking with ML model...", "progress": 45})}
             n_days = _n_days(req.duration_hours)
-            ranked_pois = await asyncio.to_thread(rank_pois, req.goals, poi_dicts, n_days * 6, True)
+            ranked_pois = await asyncio.to_thread(rank_pois, req.goals, poi_dicts, _top_k(req.duration_hours, req.pace, len(req.goals)), True)
 
             # Step 4: Optimize route from start location
             yield {"event": "progress", "data": json.dumps({"step": "optimizing", "message": "Building your route...", "progress": 60})}
