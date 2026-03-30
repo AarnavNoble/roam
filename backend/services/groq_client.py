@@ -67,13 +67,16 @@ OPTIMIZED ROUTE (stops already ordered to minimize travel — follow this order)
 {json.dumps(itinerary, indent=2)}
 
 INSTRUCTIONS:
-- Include ALL stops in the route — only omit a stop if it directly conflicts with an explicit exclusion in the notes
-- Write this as a flowing journey. The traveler is moving through {city} starting from {start_location}.
+- OUTPUT EVERY STOP in the route list above — do not remove, skip, or merge any stops under any circumstances
+- The only exception: if notes contain an EXPLICIT exclusion like "no museums" or "hate bars", remove only those stops
+- Positive preferences in notes ("want to hike", "love food") mean describe the matching stops enthusiastically — not a reason to drop other stops
+- Write this as a flowing journey from {start_location} through {city}
 - For each stop: what to do there, why it fits this specific traveler, one practical tip
-- For outdoor/nature stops, describe them in terms of the experience (views, fresh air, walking routes) not just "it's a park"
+- For outdoor/nature stops, describe the experience (views, the walk, fresh air) not just "it's a park"
 - Include arrival times and walking/transit time between stops
 - The overview should feel like a knowledgeable friend recommending their day, not a brochure
 - Do not invent stops not in the list
+- The JSON output must contain exactly the same number of stops as the route list above
 - Output as structured JSON matching this format exactly:
 
 {{

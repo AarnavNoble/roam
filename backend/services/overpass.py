@@ -131,6 +131,9 @@ def fetch_pois(lat: float, lon: float, categories: list[str], radius_m: int = 25
             name = tags.get("name")
             if not name or _is_chain(name, tags):
                 continue
+            # Skip OSM nodes that are clearly sub-elements (zoo animals, benches, etc.)
+            if tags.get("species") or tags.get("animal") or tags.get("genus"):
+                continue
 
             if el["type"] == "node":
                 lat_el, lon_el = el.get("lat"), el.get("lon")
