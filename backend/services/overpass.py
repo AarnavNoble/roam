@@ -3,8 +3,92 @@ Overpass API client for fetching POIs from OpenStreetMap.
 Completely free, no API key needed.
 """
 
+import re
 import httpx
 from dataclasses import dataclass, field
+from datetime import datetime
+
+# ── Opening-hours parser (OSM subset) ────────────────────────────────────────
+# Handles the formats that cover >90% of OSM tags:
+#   24/7 · Mo-Fr 09:00-18:00 · Sa,Su 10:00-16:00 · Tu off · semicolon rules
+
+_DAY_MAP = {"mo": 0, "tu": 1, "we": 2, "th": 3, "fr": 4, "sa": 5, "su": 6}
+
+
+def _parse_oh_days(expr: str) -> set[int]:
+    """'Mo-Fr' → {0..4}; 'Sa,Su' → {5,6}; 'Mo' → {0}"""
+    days: set[int] = set()
+    for part in re.split(r",\s*", expr.strip().lower()):
+        m = re.match(r"^([a-z]{2})-([a-z]{2})$", part)
+        if m:
+            s, e = _DAY_MAP.get(m.group(1)), _DAY_MAP.get(m.group(2))
+            if s is not None and e is not None:
+                if s <= e:
+                    days.update(range(s, e + 1))
+                else:                        # wrap-around e.g. Sa-Mo
+                    days.update(range(s, 7))
+                    days.update(range(0, e + 1))
+        else:
+            d = _DAY_MAP.get(part.strip())
+            if d is not None:
+                days.add(d)
+    return days
+
+
+def _parse_oh_time(expr: str) -> tuple[float, float] | None:
+    """'09:00-18:00' → (9.0, 18.0); returns None if unparseable."""
+    m = re.match(r"(\d{1,2}):(\d{2})-(\d{1,2}):(\d{2})", expr.strip())
+    if not m:
+        return None
+    sh, sm, eh, em = int(m.group(1)), int(m.group(2)), int(m.group(3)), int(m.group(4))
+    end = eh + em / 60 or 24.0   # 00:00 closing = midnight
+    return sh + sm / 60, end
+
+
+def _is_open_during(oh_str: str, weekday: int, trip_start: float, trip_end: float) -> bool:
+    """
+    Returns True if a place is open at any point in [trip_start, trip_end].
+    weekday: 0=Mon … 6=Sun.
+    Defaults to True when the tag is absent or unparseable (never over-filter).
+    """
+    if not oh_str:
+        return True
+    if oh_str.strip().lower() == "24/7":
+        return True
+
+    found_parseable = False
+
+    for rule in oh_str.split(";"):
+        rule = rule.strip()
+        if not rule:
+            continue
+
+        # Split optional day prefix from time expression
+        m = re.match(r"^([A-Za-z]{2}(?:[-,][A-Za-z]{2})*)\s+(.*)", rule)
+        if m:
+            day_expr, time_expr = m.group(1), m.group(2).strip()
+            days = _parse_oh_days(day_expr)
+            if not days or weekday not in days:
+                continue
+        else:
+            time_expr = rule
+
+        if time_expr.lower() == "off":
+            found_parseable = True
+            continue                         # explicitly closed — try next rule
+
+        parsed = _parse_oh_time(time_expr)
+        if parsed is None:
+            continue                         # unrecognized format — skip rule
+
+        found_parseable = True
+        open_h, close_h = parsed
+        if trip_start < close_h and trip_end > open_h:
+            return True                      # trip window overlaps opening hours
+
+    # If we found parseable rules but none matched → closed today
+    # If we found no parseable rules → can't tell, assume open
+    return not found_parseable
 
 OVERPASS_MIRRORS = [
     "https://overpass-api.de/api/interpreter",
@@ -105,13 +189,24 @@ def _query_overpass(query: str) -> list:
     raise RuntimeError(f"All Overpass mirrors failed: {last_error}")
 
 
-def fetch_pois(lat: float, lon: float, categories: list[str], radius_m: int = 2500, dietary: str = "none") -> list[POI]:
+def fetch_pois(
+    lat: float,
+    lon: float,
+    categories: list[str],
+    radius_m: int = 2500,
+    dietary: str = "none",
+    visit_start_h: int = 9,
+    visit_end_h: int = 23,
+) -> list[POI]:
     """
     Fetch POIs from Overpass API around a coordinate.
     Queries each category separately (15 results each) so every category
     gets fair representation regardless of OSM node density.
     dietary: filter food POIs by diet tag (none | vegetarian | vegan | halal | kosher)
+    visit_start_h / visit_end_h: trip window in hours (0-24) used to filter
+      places that are closed for the entire visit — today's weekday is assumed.
     """
+    weekday = datetime.now().weekday()   # 0=Mon … 6=Sun
     seen_ids: set[int] = set()
     all_pois: list[POI] = []
 
@@ -149,6 +244,10 @@ def fetch_pois(lat: float, lon: float, categories: list[str], radius_m: int = 25
                 diet_tag = tags.get(f"diet:{dietary}", "")
                 if diet_tag not in ("yes", "only"):
                     continue
+
+            oh = tags.get("opening_hours", "")
+            if not _is_open_during(oh, weekday, visit_start_h, visit_end_h):
+                continue
 
             seen_ids.add(el["id"])
             all_pois.append(POI(

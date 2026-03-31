@@ -98,8 +98,11 @@ def _run_pipeline(req: TripRequest, explain: bool = False) -> dict:
     # 2. Fetch POIs around where the user actually is
     effective_goals = _effective_goals(req.goals, req.familiarity)
     radius_m = MOBILITY_RADIUS.get(req.mobility, 2500)
-    pois = fetch_pois(start_lat, start_lon, categories=effective_goals,
-                      radius_m=radius_m, dietary=req.dietary)
+    start_h = _start_hour(req.start_time)
+    pois = fetch_pois(
+        start_lat, start_lon, categories=effective_goals, radius_m=radius_m,
+        dietary=req.dietary, visit_start_h=start_h, visit_end_h=min(start_h + req.duration_hours, 23),
+    )
     if not pois:
         raise HTTPException(status_code=404, detail=f"No POIs found near {req.start_location}")
 
@@ -166,7 +169,11 @@ async def create_itinerary_stream(req: TripRequest):
             yield {"event": "progress", "data": json.dumps({"step": "fetching_pois", "message": "Discovering places near you...", "progress": 25})}
             effective_goals = _effective_goals(req.goals, req.familiarity)
             radius_m = MOBILITY_RADIUS.get(req.mobility, 2500)
-            pois = await asyncio.to_thread(fetch_pois, start_lat, start_lon, effective_goals, radius_m, req.dietary)
+            start_h = _start_hour(req.start_time)
+            pois = await asyncio.to_thread(
+                fetch_pois, start_lat, start_lon, effective_goals, radius_m,
+                req.dietary, start_h, min(start_h + req.duration_hours, 23),
+            )
             if not pois:
                 yield {"event": "error", "data": json.dumps({"message": f"No places found near {req.start_location}"})}
                 return
