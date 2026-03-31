@@ -239,8 +239,8 @@ async def submit_feedback(req: FeedbackRequest):
     """Receive thumbs up/down on a POI. Logs signal and triggers retraining at threshold."""
     from backend.ml.ranker.scorer import apply_feedback
     from backend.ml.ranker.feedback_store import get_feedback_count
-    apply_feedback(req.poi_id, req.relevant, req.poi_name, req.category, req.goals)
-    return {"status": "ok", "total_feedback": get_feedback_count()}
+    retrained = apply_feedback(req.poi_id, req.relevant, req.poi_name, req.category, req.goals)
+    return {"status": "ok", "total_feedback": get_feedback_count(), "retrained": retrained}
 
 
 @router.get("/feedback/stats")

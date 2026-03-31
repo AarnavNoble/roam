@@ -125,12 +125,18 @@ export async function generateItineraryStreaming(
   return result;
 }
 
+export interface FeedbackResult {
+  total_feedback: number;
+  retrained: boolean;
+}
+
 export async function submitFeedback(
   poi_id: number,
   relevant: boolean,
   poi_name: string = '',
   category: string = '',
   goals: string[] = [],
-) {
-  await api.post('/feedback', { poi_id, relevant, poi_name, category, goals });
+): Promise<FeedbackResult> {
+  const res = await api.post<FeedbackResult>('/feedback', { poi_id, relevant, poi_name, category, goals });
+  return res.data;
 }

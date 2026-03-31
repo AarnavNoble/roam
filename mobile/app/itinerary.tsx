@@ -1,8 +1,8 @@
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import {
   View, Text, ScrollView, TouchableOpacity,
-  StyleSheet, SafeAreaView, Dimensions, Platform,
+  StyleSheet, SafeAreaView, Dimensions, Platform, Animated,
 } from 'react-native';
 import { Itinerary, Day, Stop, FeatureExplanation, submitFeedback, getStoredItinerary } from '../services/api';
 
@@ -26,6 +26,33 @@ const CATEGORY_COLORS: Record<string, string> = {
 
 // A distinct color per day index
 const DAY_COLORS = ['#3B82F6', '#10B981', '#F59E0B', '#EC4899', '#8B5CF6', '#EF4444'];
+
+// ── Toast ─────────────────────────────────────────────────────────────────────
+
+export function useToast() {
+  const [message, setMessage] = useState('');
+  const opacity = useRef(new Animated.Value(0)).current;
+  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const show = useCallback((msg: string) => {
+    if (timer.current) clearTimeout(timer.current);
+    setMessage(msg);
+    Animated.sequence([
+      Animated.timing(opacity, { toValue: 1, duration: 200, useNativeDriver: true }),
+      Animated.delay(2200),
+      Animated.timing(opacity, { toValue: 0, duration: 300, useNativeDriver: true }),
+    ]).start();
+    timer.current = setTimeout(() => setMessage(''), 2700);
+  }, [opacity]);
+
+  const Toast = message ? (
+    <Animated.View style={[styles.toast, { opacity }]} pointerEvents="none">
+      <Text style={styles.toastText}>{message}</Text>
+    </Animated.View>
+  ) : null;
+
+  return { show, Toast };
+}
 
 // ── List view components ──────────────────────────────────────────────────────
 
@@ -57,16 +84,19 @@ function ContributionBar({ name, value, max }: { name: string; value: number; ma
   );
 }
 
-function StopCard({ stop, goals, explanation }: { stop: Stop; goals: string[]; explanation?: FeatureExplanation }) {
+function StopCard({ stop, goals, explanation, onRetrained }: {
+  stop: Stop; goals: string[]; explanation?: FeatureExplanation; onRetrained?: () => void;
+}) {
   const [expanded, setExpanded] = useState(false);
   const [feedback, setFeedback] = useState<'up' | 'down' | null>(null);
   const color = CATEGORY_COLORS[stop.category] || '#6B7280';
 
   const handleFeedback = async (relevant: boolean) => {
-    const signal = relevant ? 'up' : 'down';
-    setFeedback(signal);
+    if (feedback) return;   // already voted
+    setFeedback(relevant ? 'up' : 'down');
     try {
-      await submitFeedback(stop.id || 0, relevant, stop.name, stop.category, goals);
+      const result = await submitFeedback(stop.id || 0, relevant, stop.name, stop.category, goals);
+      if (result.retrained) onRetrained?.();
     } catch {}
   };
 
@@ -79,11 +109,27 @@ function StopCard({ stop, goals, explanation }: { stop: Stop; goals: string[]; e
           <Text style={styles.stopDuration}>{stop.duration_min} min</Text>
         </View>
         <View style={styles.feedbackRow}>
-          <TouchableOpacity onPress={() => handleFeedback(true)} hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}>
-            <Text style={[styles.feedbackBtn, feedback === 'up' && styles.feedbackActive]}>+</Text>
+          <TouchableOpacity
+            onPress={() => handleFeedback(true)}
+            hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+            disabled={!!feedback}
+          >
+            <Text style={[
+              styles.feedbackBtn,
+              feedback === 'up' && styles.feedbackUp,
+              feedback === 'down' && styles.feedbackDimmed,
+            ]}>👍</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => handleFeedback(false)} hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}>
-            <Text style={[styles.feedbackBtn, feedback === 'down' && styles.feedbackActive]}>−</Text>
+          <TouchableOpacity
+            onPress={() => handleFeedback(false)}
+            hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+            disabled={!!feedback}
+          >
+            <Text style={[
+              styles.feedbackBtn,
+              feedback === 'down' && styles.feedbackDown,
+              feedback === 'up' && styles.feedbackDimmed,
+            ]}>👎</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -127,7 +173,9 @@ function StopCard({ stop, goals, explanation }: { stop: Stop; goals: string[]; e
   );
 }
 
-function DaySection({ day, goals, explanations }: { day: Day; goals: string[]; explanations?: Record<string, FeatureExplanation> }) {
+function DaySection({ day, goals, explanations, onRetrained }: {
+  day: Day; goals: string[]; explanations?: Record<string, FeatureExplanation>; onRetrained?: () => void;
+}) {
   return (
     <View style={styles.daySection}>
       <View style={styles.dayHeader}>
@@ -135,7 +183,7 @@ function DaySection({ day, goals, explanations }: { day: Day; goals: string[]; e
         <Text style={styles.dayTheme}>{day.theme}</Text>
       </View>
       {day.stops.map((stop, i) => (
-        <StopCard key={i} stop={stop} goals={goals} explanation={explanations?.[stop.name]} />
+        <StopCard key={i} stop={stop} goals={goals} explanation={explanations?.[stop.name]} onRetrained={onRetrained} />
       ))}
       <Text style={styles.daySummary}>{day.summary}</Text>
     </View>
@@ -328,6 +376,8 @@ export default function ItineraryScreen() {
   const router = useRouter();
   const itinerary = getStoredItinerary();
   const goals: string[] = goalsParam ? JSON.parse(goalsParam) : [];
+  const [view, setView] = useState<'list' | 'map'>('list');
+  const { show: showToast, Toast } = useToast();
 
   if (!itinerary) {
     return (
@@ -341,7 +391,6 @@ export default function ItineraryScreen() {
       </SafeAreaView>
     );
   }
-  const [view, setView] = useState<'list' | 'map'>('list');
 
   return (
     <SafeAreaView style={styles.container}>
@@ -363,11 +412,19 @@ export default function ItineraryScreen() {
       {view === 'list' ? (
         <ScrollView contentContainerStyle={styles.scroll}>
           <Text style={styles.overview}>{itinerary.overview}</Text>
-          {itinerary.days.map(day => <DaySection key={day.day} day={day} goals={goals} explanations={itinerary.ranking_explanations} />)}
+          {itinerary.days.map(day => (
+            <DaySection
+              key={day.day} day={day} goals={goals}
+              explanations={itinerary.ranking_explanations}
+              onRetrained={() => showToast('Model improved from your feedback')}
+            />
+          ))}
         </ScrollView>
       ) : (
         <MapScreen itinerary={itinerary} />
       )}
+
+      {Toast}
     </SafeAreaView>
   );
 }
@@ -441,9 +498,19 @@ const styles = StyleSheet.create({
   noCoordsText: { color: '#555', fontSize: 14 },
 
   // Feedback
-  feedbackRow: { flexDirection: 'row', gap: 8, marginLeft: 'auto' },
-  feedbackBtn: { color: '#555', fontSize: 18, fontWeight: '700', paddingHorizontal: 6 },
-  feedbackActive: { color: '#fff' },
+  feedbackRow: { flexDirection: 'row', gap: 6, marginLeft: 'auto' },
+  feedbackBtn: { fontSize: 16, opacity: 0.4, paddingHorizontal: 4 },
+  feedbackUp: { opacity: 1 },
+  feedbackDown: { opacity: 1 },
+  feedbackDimmed: { opacity: 0.15 },
+
+  // Toast
+  toast: {
+    position: 'absolute', bottom: 32, alignSelf: 'center',
+    backgroundColor: '#1a1a1a', borderRadius: 20, paddingHorizontal: 18, paddingVertical: 10,
+    borderWidth: 1, borderColor: '#2a2a2a',
+  },
+  toastText: { color: '#fff', fontSize: 13, fontWeight: '500' },
 
   // Explainability
   explainBox: { marginTop: 12, backgroundColor: '#111', borderRadius: 10, padding: 12 },

@@ -101,13 +101,14 @@ def _diversify(ranked: list[dict], top_k: int, user_goals: list[str]) -> list[di
     return selected[:top_k]
 
 
-def apply_feedback(poi_id: int, relevant: bool, poi_name: str = "", category: str = "", goals: list[str] = None) -> None:
+def apply_feedback(poi_id: int, relevant: bool, poi_name: str = "", category: str = "", goals: list[str] = None) -> bool:
     """
     Log feedback signal and trigger retraining if threshold is reached.
+    Returns True if retraining occurred.
     """
     from .feedback_store import log_feedback
     from .retrain import retrain_if_needed
 
     log_feedback(poi_id=poi_id, relevant=relevant, poi_name=poi_name, category=category, goals=goals)
     print(f"Feedback logged: POI {poi_id} ({poi_name}) → {'relevant' if relevant else 'not relevant'}")
-    retrain_if_needed()
+    return retrain_if_needed()
