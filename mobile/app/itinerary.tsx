@@ -1,5 +1,5 @@
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import {
   View, Text, ScrollView, TouchableOpacity,
   StyleSheet, SafeAreaView, Dimensions, Platform,
@@ -142,32 +142,146 @@ function DaySection({ day, goals, explanations }: { day: Day; goals: string[]; e
   );
 }
 
+// ── Web map (Leaflet) ─────────────────────────────────────────────────────────
+
+function WebMapView({ stops, color, mapId }: { stops: Stop[]; color: string; mapId: string }) {
+  const mapInstanceRef = useRef<any>(null);
+
+  useEffect(() => {
+    if (stops.length === 0) return;
+    let cancelled = false;
+
+    // Inject Leaflet CSS once
+    if (!document.getElementById('leaflet-css')) {
+      const link = document.createElement('link');
+      link.id = 'leaflet-css';
+      link.rel = 'stylesheet';
+      link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
+      document.head.appendChild(link);
+    }
+
+    // Destroy previous instance
+    if (mapInstanceRef.current) {
+      mapInstanceRef.current.remove();
+      mapInstanceRef.current = null;
+    }
+
+    import('leaflet').then((mod) => {
+      if (cancelled) return;
+      const container = document.getElementById(mapId);
+      if (!container) return;
+
+      const L = (mod as any).default ?? mod;
+      const latlngs: [number, number][] = stops.map(s => [s.lat, s.lon]);
+
+      const map = L.map(container, { zoomControl: true });
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors',
+        maxZoom: 19,
+      }).addTo(map);
+
+      // Route polyline
+      L.polyline(latlngs, { color, weight: 3, opacity: 0.85, dashArray: '8 5' }).addTo(map);
+
+      // Numbered markers
+      stops.forEach((stop, i) => {
+        const icon = L.divIcon({
+          html: `<div style="width:28px;height:28px;border-radius:50%;background:${color};color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;border:2px solid #0f0f0f;box-sizing:border-box;line-height:28px;text-align:center;">${i + 1}</div>`,
+          className: '',
+          iconSize: [28, 28],
+          iconAnchor: [14, 14],
+          popupAnchor: [0, -16],
+        });
+        L.marker([stop.lat, stop.lon], { icon })
+          .bindPopup(
+            `<div style="font-family:sans-serif;min-width:160px"><b style="font-size:13px">${stop.name}</b><br/><span style="color:#666;font-size:12px">${stop.arrival_time} · ${stop.duration_min} min</span></div>`,
+            { closeButton: false }
+          )
+          .addTo(map);
+      });
+
+      map.fitBounds(L.latLngBounds(latlngs), { padding: [40, 40] });
+      mapInstanceRef.current = map;
+    });
+
+    return () => {
+      cancelled = true;
+      if (mapInstanceRef.current) {
+        mapInstanceRef.current.remove();
+        mapInstanceRef.current = null;
+      }
+    };
+  }, [stops, color, mapId]);
+
+  return <View nativeID={mapId} style={styles.map} />;
+}
+
 // ── Map view ──────────────────────────────────────────────────────────────────
 
 function MapScreen({ itinerary }: { itinerary: Itinerary }) {
   const [activeDay, setActiveDay] = useState(0);
   const day = itinerary.days[activeDay];
 
+  if (!day) return null;
+
+  const stops = day.stops.filter(s => s.lat && s.lon);
+  const dayColor = DAY_COLORS[activeDay % DAY_COLORS.length];
+
+  const DayTabs = (
+    <ScrollView
+      horizontal
+      showsHorizontalScrollIndicator={false}
+      style={styles.dayTabs}
+      contentContainerStyle={styles.dayTabsContent}
+    >
+      {itinerary.days.map((d, i) => (
+        <TouchableOpacity
+          key={i}
+          style={[styles.dayTab, activeDay === i && { backgroundColor: DAY_COLORS[i % DAY_COLORS.length] }]}
+          onPress={() => setActiveDay(i)}
+        >
+          <Text style={[styles.dayTabText, activeDay === i && styles.dayTabTextActive]}>
+            Day {d.day}
+          </Text>
+        </TouchableOpacity>
+      ))}
+    </ScrollView>
+  );
+
+  const StopList = (
+    <ScrollView style={styles.mapStopList} contentContainerStyle={{ padding: 16 }}>
+      {stops.length === 0 ? (
+        <Text style={styles.noCoordsText}>No coordinates for this day.</Text>
+      ) : stops.map((stop, i) => (
+        <View key={i} style={styles.mapStopRow}>
+          <View style={[styles.mapStopNum, { backgroundColor: dayColor }]}>
+            <Text style={styles.mapStopNumText}>{i + 1}</Text>
+          </View>
+          <View style={styles.mapStopInfo}>
+            <Text style={styles.mapStopName}>{stop.name}</Text>
+            <Text style={styles.mapStopTime}>{stop.arrival_time} · {stop.duration_min} min</Text>
+          </View>
+        </View>
+      ))}
+    </ScrollView>
+  );
+
   if (Platform.OS === 'web') {
     return (
-      <View style={styles.noCoords}>
-        <Text style={styles.noCoordsText}>Map view is available in the mobile app.</Text>
+      <View style={styles.mapContainer}>
+        {DayTabs}
+        {stops.length > 0
+          ? <WebMapView key={`day-${activeDay}`} stops={stops} color={dayColor} mapId={`roam-map-${activeDay}`} />
+          : <View style={[styles.map, styles.noCoords]}><Text style={styles.noCoordsText}>No coordinates for this day.</Text></View>
+        }
+        {StopList}
       </View>
     );
   }
 
-  if (!day) return null;
-
-  const stops = day.stops.filter(s => s.lat && s.lon);
-  if (stops.length === 0) return (
-    <View style={styles.noCoords}>
-      <Text style={styles.noCoordsText}>No coordinates available for this day.</Text>
-    </View>
-  );
-
+  // Native: MapLibre
   const centerLon = stops.reduce((s, p) => s + p.lon, 0) / stops.length;
   const centerLat = stops.reduce((s, p) => s + p.lat, 0) / stops.length;
-  const dayColor = DAY_COLORS[activeDay % DAY_COLORS.length];
 
   const { MapView, Camera, ShapeSource, LineLayer, CircleLayer, SymbolLayer } = MapLibreGL;
 
@@ -188,69 +302,21 @@ function MapScreen({ itinerary }: { itinerary: Itinerary }) {
 
   return (
     <View style={styles.mapContainer}>
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        style={styles.dayTabs}
-        contentContainerStyle={styles.dayTabsContent}
-      >
-        {itinerary.days.map((d, i) => (
-          <TouchableOpacity
-            key={i}
-            style={[styles.dayTab, activeDay === i && { backgroundColor: DAY_COLORS[i % DAY_COLORS.length] }]}
-            onPress={() => setActiveDay(i)}
-          >
-            <Text style={[styles.dayTabText, activeDay === i && styles.dayTabTextActive]}>
-              Day {d.day}
-            </Text>
-          </TouchableOpacity>
-        ))}
-      </ScrollView>
-
-      <MapView style={styles.map} styleURL="https://demotiles.maplibre.org/style.json">
-        <Camera centerCoordinate={[centerLon, centerLat]} zoomLevel={13} animationDuration={500} />
-        <ShapeSource id="route" shape={routeLine}>
-          <LineLayer
-            id="routeLine"
-            style={{ lineColor: dayColor, lineWidth: 3, lineOpacity: 0.8, lineDasharray: [2, 1] }}
-          />
-        </ShapeSource>
-        <ShapeSource id="stops" shape={stopPoints}>
-          <CircleLayer
-            id="stopCircles"
-            style={{
-              circleRadius: 14,
-              circleColor: dayColor,
-              circleStrokeWidth: 2,
-              circleStrokeColor: '#0f0f0f',
-            }}
-          />
-          <SymbolLayer
-            id="stopLabels"
-            style={{
-              textField: ['get', 'index'],
-              textSize: 11,
-              textColor: '#fff',
-              textFont: ['DIN Offc Pro Bold', 'Arial Unicode MS Bold'],
-              textAllowOverlap: true,
-            }}
-          />
-        </ShapeSource>
-      </MapView>
-
-      <ScrollView style={styles.mapStopList} contentContainerStyle={{ padding: 16 }}>
-        {stops.map((stop, i) => (
-          <View key={i} style={styles.mapStopRow}>
-            <View style={[styles.mapStopNum, { backgroundColor: dayColor }]}>
-              <Text style={styles.mapStopNumText}>{i + 1}</Text>
-            </View>
-            <View style={styles.mapStopInfo}>
-              <Text style={styles.mapStopName}>{stop.name}</Text>
-              <Text style={styles.mapStopTime}>{stop.arrival_time} · {stop.duration_min} min</Text>
-            </View>
-          </View>
-        ))}
-      </ScrollView>
+      {DayTabs}
+      {stops.length === 0
+        ? <View style={[styles.map, styles.noCoords]}><Text style={styles.noCoordsText}>No coordinates for this day.</Text></View>
+        : <MapView style={styles.map} styleURL="https://demotiles.maplibre.org/style.json">
+            <Camera centerCoordinate={[centerLon, centerLat]} zoomLevel={13} animationDuration={500} />
+            <ShapeSource id="route" shape={routeLine}>
+              <LineLayer id="routeLine" style={{ lineColor: dayColor, lineWidth: 3, lineOpacity: 0.8, lineDasharray: [2, 1] }} />
+            </ShapeSource>
+            <ShapeSource id="stops" shape={stopPoints}>
+              <CircleLayer id="stopCircles" style={{ circleRadius: 14, circleColor: dayColor, circleStrokeWidth: 2, circleStrokeColor: '#0f0f0f' }} />
+              <SymbolLayer id="stopLabels" style={{ textField: ['get', 'index'], textSize: 11, textColor: '#fff', textFont: ['DIN Offc Pro Bold', 'Arial Unicode MS Bold'], textAllowOverlap: true }} />
+            </ShapeSource>
+          </MapView>
+      }
+      {StopList}
     </View>
   );
 }
