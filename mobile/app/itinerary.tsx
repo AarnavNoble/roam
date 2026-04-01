@@ -30,7 +30,6 @@ const CATEGORY_COLORS: Record<string, string> = {
   attraction: '#6B7280',
 };
 
-// A distinct color per day index
 const DAY_COLORS = ['#3B82F6', '#10B981', '#F59E0B', '#EC4899', '#8B5CF6', '#EF4444'];
 
 // ── Toast ─────────────────────────────────────────────────────────────────────
@@ -53,6 +52,7 @@ export function useToast() {
 
   const Toast = message ? (
     <Animated.View style={[styles.toast, { opacity }]} pointerEvents="none">
+      <View style={styles.toastDot} />
       <Text style={styles.toastText}>{message}</Text>
     </Animated.View>
   ) : null;
@@ -76,13 +76,12 @@ const FEATURE_LABELS: Record<string, string> = {
 function ContributionBar({ name, value, max }: { name: string; value: number; max: number }) {
   const finalWidth = max > 0 ? Math.abs(value) / max * 100 : 0;
   const widthAnim = useRef(new Animated.Value(0)).current;
-  const positive = value >= 0;
+  const positive  = value >= 0;
 
   useEffect(() => {
     Animated.timing(widthAnim, {
       toValue: Math.min(finalWidth, 100),
-      duration: 600,
-      delay: 100,
+      duration: 600, delay: 100,
       useNativeDriver: false,
     }).start();
   }, []);
@@ -94,10 +93,7 @@ function ContributionBar({ name, value, max }: { name: string; value: number; ma
         <Animated.View style={[
           styles.contribBar,
           {
-            width: widthAnim.interpolate({
-              inputRange: [0, 100],
-              outputRange: ['0%', '100%'],
-            }),
+            width: widthAnim.interpolate({ inputRange: [0, 100], outputRange: ['0%', '100%'] }),
             backgroundColor: positive ? '#10B981' : '#EF4444',
           },
         ]} />
@@ -107,18 +103,19 @@ function ContributionBar({ name, value, max }: { name: string; value: number; ma
   );
 }
 
-function StopCard({ stop, goals, explanation, onRetrained }: {
-  stop: Stop; goals: string[]; explanation?: FeatureExplanation; onRetrained?: () => void;
+function StopCard({ stop, goals, explanation, onRetrained, index }: {
+  stop: Stop; goals: string[]; explanation?: FeatureExplanation;
+  onRetrained?: () => void; index: number;
 }) {
   const [expanded, setExpanded] = useState(false);
   const [feedback, setFeedback] = useState<'up' | 'down' | null>(null);
   const pressScale = useRef(new Animated.Value(1)).current;
   const color = CATEGORY_COLORS[stop.category] || '#6B7280';
 
-  const onPressIn = () =>
+  const onPressIn  = () =>
     Animated.spring(pressScale, { toValue: 0.98, useNativeDriver: true, speed: 30, bounciness: 0 }).start();
   const onPressOut = () =>
-    Animated.spring(pressScale, { toValue: 1.0, useNativeDriver: true, speed: 20, bounciness: 4 }).start();
+    Animated.spring(pressScale, { toValue: 1.0,  useNativeDriver: true, speed: 20, bounciness: 4 }).start();
 
   const toggleExpand = () => {
     LayoutAnimation.configureNext(
@@ -145,16 +142,19 @@ function StopCard({ stop, goals, explanation, onRetrained }: {
         onPressOut={onPressOut}
         activeOpacity={1}
       >
+        {/* Top color bar */}
+        <View style={[styles.stopColorBar, { backgroundColor: color }]} />
+
         {stop.photo_url ? (
-          <Image
-            source={{ uri: stop.photo_url }}
-            style={styles.stopPhoto}
-            resizeMode="cover"
-          />
+          <Image source={{ uri: stop.photo_url }} style={styles.stopPhoto} resizeMode="cover" />
         ) : null}
+
         <View style={styles.stopContent}>
           <View style={styles.stopHeader}>
-            <View style={[styles.dot, { backgroundColor: color }]} />
+            {/* Stop number badge */}
+            <View style={[styles.stopNumBadge, { backgroundColor: color + '22', borderColor: color + '44' }]}>
+              <Text style={[styles.stopNumText, { color }]}>{index + 1}</Text>
+            </View>
             <View style={styles.stopMeta}>
               <Text style={styles.stopTime}>{stop.arrival_time}</Text>
               <Text style={styles.stopDuration}>{stop.duration_min} min</Text>
@@ -184,9 +184,11 @@ function StopCard({ stop, goals, explanation, onRetrained }: {
               </TouchableOpacity>
             </View>
           </View>
+
           <Text style={styles.stopName}>{stop.name}</Text>
+
           <View style={styles.stopSubRow}>
-            <View style={[styles.categoryBadge, { backgroundColor: color + '20' }]}>
+            <View style={[styles.categoryBadge, { backgroundColor: color + '18', borderColor: color + '30' }]}>
               <Text style={[styles.categoryText, { color }]}>{stop.category.toUpperCase()}</Text>
             </View>
             {stop.description ? (
@@ -195,6 +197,7 @@ function StopCard({ stop, goals, explanation, onRetrained }: {
               </Text>
             ) : null}
           </View>
+
           {expanded && (
             <View style={styles.stopDetails}>
               <Text style={styles.stopDescription}>{stop.description}</Text>
@@ -231,13 +234,17 @@ function DaySection({ day, goals, explanations, onRetrained }: {
 }) {
   const dayColor = DAY_COLORS[(day.day - 1) % DAY_COLORS.length];
   return (
-    <View style={[styles.daySection, { borderLeftColor: dayColor }]}>
-      <View style={styles.dayHeader}>
-        <Text style={styles.dayNumber}>Day {day.day}</Text>
+    <View style={styles.daySection}>
+      <View style={[styles.dayHeader, { borderLeftColor: dayColor }]}>
+        <Text style={[styles.dayNumber, { color: dayColor }]}>Day {day.day}</Text>
         <Text style={styles.dayTheme}>{day.theme}</Text>
       </View>
       {day.stops.map((stop, i) => (
-        <StopCard key={i} stop={stop} goals={goals} explanation={explanations?.[stop.name]} onRetrained={onRetrained} />
+        <StopCard
+          key={i} index={i} stop={stop} goals={goals}
+          explanation={explanations?.[stop.name]}
+          onRetrained={onRetrained}
+        />
       ))}
       <Text style={styles.daySummary}>{day.summary}</Text>
     </View>
@@ -253,7 +260,6 @@ function WebMapView({ stops, color, mapId }: { stops: Stop[]; color: string; map
     if (stops.length === 0) return;
     let cancelled = false;
 
-    // Inject Leaflet CSS once
     if (!document.getElementById('leaflet-css')) {
       const link = document.createElement('link');
       link.id = 'leaflet-css';
@@ -262,7 +268,6 @@ function WebMapView({ stops, color, mapId }: { stops: Stop[]; color: string; map
       document.head.appendChild(link);
     }
 
-    // Destroy previous instance
     if (mapInstanceRef.current) {
       mapInstanceRef.current.remove();
       mapInstanceRef.current = null;
@@ -282,17 +287,13 @@ function WebMapView({ stops, color, mapId }: { stops: Stop[]; color: string; map
         maxZoom: 19,
       }).addTo(map);
 
-      // Route polyline
       L.polyline(latlngs, { color, weight: 3, opacity: 0.85, dashArray: '8 5' }).addTo(map);
 
-      // Numbered markers
       stops.forEach((stop, i) => {
         const icon = L.divIcon({
-          html: `<div style="width:28px;height:28px;border-radius:50%;background:${color};color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;border:2px solid #0f0f0f;box-sizing:border-box;line-height:28px;text-align:center;">${i + 1}</div>`,
+          html: `<div style="width:28px;height:28px;border-radius:50%;background:${color};color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;border:2px solid #0a0a0a;box-sizing:border-box;line-height:28px;text-align:center;">${i + 1}</div>`,
           className: '',
-          iconSize: [28, 28],
-          iconAnchor: [14, 14],
-          popupAnchor: [0, -16],
+          iconSize: [28, 28], iconAnchor: [14, 14], popupAnchor: [0, -16],
         });
         L.marker([stop.lat, stop.lon], { icon })
           .bindPopup(
@@ -323,28 +324,23 @@ function WebMapView({ stops, color, mapId }: { stops: Stop[]; color: string; map
 function MapScreen({ itinerary }: { itinerary: Itinerary }) {
   const [activeDay, setActiveDay] = useState(0);
   const day = itinerary.days[activeDay];
-
   if (!day) return null;
 
-  const stops = day.stops.filter(s => s.lat && s.lon);
+  const stops    = day.stops.filter(s => s.lat && s.lon);
   const dayColor = DAY_COLORS[activeDay % DAY_COLORS.length];
 
   const DayTabs = (
     <ScrollView
-      horizontal
-      showsHorizontalScrollIndicator={false}
-      style={styles.dayTabs}
-      contentContainerStyle={styles.dayTabsContent}
+      horizontal showsHorizontalScrollIndicator={false}
+      style={styles.dayTabs} contentContainerStyle={styles.dayTabsContent}
     >
       {itinerary.days.map((d, i) => (
         <TouchableOpacity
           key={i}
-          style={[styles.dayTab, activeDay === i && { backgroundColor: DAY_COLORS[i % DAY_COLORS.length] }]}
+          style={[styles.dayTab, activeDay === i && { backgroundColor: DAY_COLORS[i % DAY_COLORS.length], borderColor: DAY_COLORS[i % DAY_COLORS.length] }]}
           onPress={() => setActiveDay(i)}
         >
-          <Text style={[styles.dayTabText, activeDay === i && styles.dayTabTextActive]}>
-            Day {d.day}
-          </Text>
+          <Text style={[styles.dayTabText, activeDay === i && styles.dayTabTextActive]}>Day {d.day}</Text>
         </TouchableOpacity>
       ))}
     </ScrollView>
@@ -381,10 +377,8 @@ function MapScreen({ itinerary }: { itinerary: Itinerary }) {
     );
   }
 
-  // Native: MapLibre
   const centerLon = stops.reduce((s, p) => s + p.lon, 0) / stops.length;
   const centerLat = stops.reduce((s, p) => s + p.lat, 0) / stops.length;
-
   const { MapView, Camera, ShapeSource, LineLayer, CircleLayer, SymbolLayer } = MapLibreGL;
 
   const routeLine: GeoJSON.Feature<GeoJSON.LineString> = {
@@ -392,7 +386,6 @@ function MapScreen({ itinerary }: { itinerary: Itinerary }) {
     geometry: { type: 'LineString', coordinates: stops.map(s => [s.lon, s.lat]) },
     properties: {},
   };
-
   const stopPoints: GeoJSON.FeatureCollection<GeoJSON.Point> = {
     type: 'FeatureCollection',
     features: stops.map((s, i) => ({
@@ -413,7 +406,7 @@ function MapScreen({ itinerary }: { itinerary: Itinerary }) {
               <LineLayer id="routeLine" style={{ lineColor: dayColor, lineWidth: 3, lineOpacity: 0.8, lineDasharray: [2, 1] }} />
             </ShapeSource>
             <ShapeSource id="stops" shape={stopPoints}>
-              <CircleLayer id="stopCircles" style={{ circleRadius: 14, circleColor: dayColor, circleStrokeWidth: 2, circleStrokeColor: '#0f0f0f' }} />
+              <CircleLayer id="stopCircles" style={{ circleRadius: 14, circleColor: dayColor, circleStrokeWidth: 2, circleStrokeColor: '#0a0a0a' }} />
               <SymbolLayer id="stopLabels" style={{ textField: ['get', 'index'], textSize: 11, textColor: '#fff', textFont: ['DIN Offc Pro Bold', 'Arial Unicode MS Bold'], textAllowOverlap: true }} />
             </ShapeSource>
           </MapView>
@@ -433,8 +426,7 @@ export default function ItineraryScreen() {
   const [view, setView] = useState<'list' | 'map'>('list');
   const { show: showToast, Toast } = useToast();
 
-  // Sliding pill toggle animation
-  const toggleSlide = useRef(new Animated.Value(0)).current;
+  const toggleSlide   = useRef(new Animated.Value(0)).current;
   const SEGMENT_WIDTH = 56;
 
   const setViewAnimated = (v: 'list' | 'map') => {
@@ -446,7 +438,6 @@ export default function ItineraryScreen() {
     }).start();
   };
 
-  // Staggered section entrance
   const sectionAnims = useRef(
     (itinerary?.days ?? []).map(() => new Animated.Value(0))
   ).current;
@@ -477,8 +468,9 @@ export default function ItineraryScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.topBar}>
-        <TouchableOpacity onPress={() => router.back()}>
-          <Text style={styles.back}>‹ Back</Text>
+        <TouchableOpacity onPress={() => router.back()} style={styles.backBtn}>
+          <Text style={styles.backChevron}>‹</Text>
+          <Text style={styles.backLabel}>Back</Text>
         </TouchableOpacity>
         <Text style={styles.screenTitle}>Your Trip</Text>
         <View style={styles.viewTogglePill}>
@@ -512,8 +504,7 @@ export default function ItineraryScreen() {
               opacity: sectionAnims[i],
               transform: [{
                 translateY: sectionAnims[i].interpolate({
-                  inputRange: [0, 1],
-                  outputRange: [20, 0],
+                  inputRange: [0, 1], outputRange: [20, 0],
                 }),
               }],
             }}>
@@ -539,19 +530,24 @@ export default function ItineraryScreen() {
 const { height } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#0f0f0f' },
+  container: { flex: 1, backgroundColor: '#0a0a0a' },
+
+  // ── Top bar ──
   topBar: {
     flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',
-    paddingHorizontal: 20, paddingVertical: 12, borderBottomWidth: 1, borderBottomColor: '#1a1a1a',
+    paddingHorizontal: 20, paddingVertical: 14,
+    borderBottomWidth: 1, borderBottomColor: '#1a1a1a',
   },
-  back: { color: '#888', fontSize: 17, fontWeight: '400' },
-  screenTitle: { color: '#fff', fontSize: 16, fontWeight: '600' },
+  backBtn:    { flexDirection: 'row', alignItems: 'center', gap: 2 },
+  backChevron: { color: '#666', fontSize: 22, fontWeight: '300', lineHeight: 26 },
+  backLabel:   { color: '#666', fontSize: 14 },
+  screenTitle: { color: '#fff', fontSize: 16, fontWeight: '700', letterSpacing: 0.3 },
 
-  // Sliding pill view toggle
+  // Pill toggle
   viewTogglePill: {
-    flexDirection: 'row', backgroundColor: '#1a1a1a',
+    flexDirection: 'row', backgroundColor: '#141414',
     borderRadius: 20, padding: 2,
-    borderWidth: 1, borderColor: '#2a2a2a',
+    borderWidth: 1, borderColor: '#2e2e2e',
     position: 'relative', width: 120,
   },
   pillSelector: {
@@ -559,114 +555,127 @@ const styles = StyleSheet.create({
     width: 56, height: 28,
     backgroundColor: '#fff', borderRadius: 18,
   },
-  pillOption: {
-    width: 56, height: 28,
-    alignItems: 'center', justifyContent: 'center',
-    zIndex: 1,
-  },
-  pillOptionText: { color: '#555', fontSize: 13, fontWeight: '500' },
+  pillOption:         { width: 56, height: 28, alignItems: 'center', justifyContent: 'center', zIndex: 1 },
+  pillOptionText:     { color: '#555', fontSize: 13, fontWeight: '500' },
   pillOptionTextActive: { color: '#000', fontWeight: '700' },
 
-  // List view
+  // ── List view ──
   scroll: { padding: 20, paddingBottom: 60 },
   overviewAccent: {
-    borderLeftWidth: 3, borderLeftColor: '#333',
-    paddingLeft: 12, marginBottom: 32,
+    borderLeftWidth: 2, borderLeftColor: '#2e2e2e',
+    paddingLeft: 14, marginBottom: 36,
   },
-  overview: { color: '#aaa', fontSize: 15, lineHeight: 22 },
-  daySection: {
-    marginBottom: 40,
-    borderLeftWidth: 3,
-    borderLeftColor: '#333',
-    paddingLeft: 14,
-  },
-  dayHeader: { marginBottom: 16 },
-  dayNumber: { color: '#fff', fontSize: 22, fontWeight: '700' },
-  dayTheme: { color: '#666', fontSize: 13, marginTop: 2 },
+  overview: { color: '#888', fontSize: 15, lineHeight: 24 },
 
-  // Card shadow wrapper (iOS shadow lives here, outside overflow:hidden)
+  // Day section
+  daySection: { marginBottom: 48 },
+  dayHeader: {
+    marginBottom: 18,
+    borderLeftWidth: 3, paddingLeft: 12,
+    borderLeftColor: '#333',
+  },
+  dayNumber: { fontSize: 24, fontWeight: '800', letterSpacing: -0.5 },
+  dayTheme:  { color: '#555', fontSize: 14, marginTop: 3 },
+
+  // Stop card
   stopCardShadow: {
-    marginBottom: 10,
-    borderRadius: 14,
+    marginBottom: 12,
+    borderRadius: 16,
     ...(Platform.OS === 'ios' ? {
       shadowColor: '#000',
-      shadowOffset: { width: 0, height: 4 },
-      shadowOpacity: 0.3,
-      shadowRadius: 8,
+      shadowOffset: { width: 0, height: 6 },
+      shadowOpacity: 0.35,
+      shadowRadius: 10,
     } : {}),
   },
   stopCard: {
-    backgroundColor: '#1a1a1a', borderRadius: 14,
+    backgroundColor: '#141414', borderRadius: 16,
     borderWidth: 1, borderColor: '#2a2a2a',
     overflow: 'hidden',
   },
-  stopPhoto: {
-    width: '100%', height: 140,
-  },
-  stopContent: { padding: 16 },
-  stopHeader: { flexDirection: 'row', alignItems: 'center', marginBottom: 8 },
-  dot: { width: 8, height: 8, borderRadius: 4, marginRight: 10 },
-  stopMeta: { flexDirection: 'row', gap: 12 },
-  stopTime: { color: '#fff', fontSize: 13, fontWeight: '600' },
-  stopDuration: { color: '#555', fontSize: 13 },
-  stopName: { color: '#fff', fontSize: 16, fontWeight: '600', marginBottom: 8 },
-  categoryBadge: { alignSelf: 'flex-start', paddingHorizontal: 10, paddingVertical: 4, borderRadius: 8 },
-  categoryText: { fontSize: 11, fontWeight: '600', textTransform: 'uppercase', letterSpacing: 0.5 },
-  stopSubRow: { flexDirection: 'row', alignItems: 'center', gap: 8, marginTop: 6, flexWrap: 'nowrap' },
-  stopDescPreview: { fontSize: 12, color: '#555', flex: 1 },
-  stopDetails: { marginTop: 12 },
-  stopDescription: { color: '#aaa', fontSize: 14, lineHeight: 20, marginBottom: 12 },
-  tipBox: { backgroundColor: '#111', borderRadius: 10, padding: 12 },
-  tipLabel: { color: '#555', fontSize: 11, fontWeight: '600', textTransform: 'uppercase', marginBottom: 4 },
-  tipText: { color: '#888', fontSize: 13, lineHeight: 18 },
-  daySummary: { color: '#444', fontSize: 13, fontStyle: 'italic', marginTop: 8 },
+  stopColorBar: { height: 2, width: '100%' },
+  stopPhoto:    { width: '100%', height: 140 },
+  stopContent:  { padding: 16 },
+  stopHeader:   { flexDirection: 'row', alignItems: 'center', marginBottom: 10 },
 
-  // Map view
-  mapContainer: { flex: 1 },
-  dayTabs: { maxHeight: 48, borderBottomWidth: 1, borderBottomColor: '#1a1a1a' },
-  dayTabsContent: { paddingHorizontal: 16, gap: 8, alignItems: 'center' },
+  // Stop number badge
+  stopNumBadge: {
+    width: 26, height: 26, borderRadius: 8,
+    alignItems: 'center', justifyContent: 'center',
+    borderWidth: 1, marginRight: 10,
+  },
+  stopNumText: { fontSize: 11, fontWeight: '800' },
+
+  stopMeta:     { flexDirection: 'row', gap: 10, flex: 1 },
+  stopTime:     { color: '#fff', fontSize: 13, fontWeight: '600' },
+  stopDuration: { color: '#444', fontSize: 13 },
+  stopName:     { color: '#fff', fontSize: 17, fontWeight: '700', marginBottom: 8, letterSpacing: -0.3 },
+
+  categoryBadge: {
+    alignSelf: 'flex-start', paddingHorizontal: 10, paddingVertical: 4,
+    borderRadius: 8, borderWidth: 1,
+  },
+  categoryText:  { fontSize: 11, fontWeight: '700', textTransform: 'uppercase', letterSpacing: 0.6 },
+  stopSubRow:    { flexDirection: 'row', alignItems: 'center', gap: 8, marginTop: 4, flexWrap: 'nowrap' },
+  stopDescPreview: { fontSize: 12, color: '#444', flex: 1 },
+
+  stopDetails:     { marginTop: 14, paddingTop: 14, borderTopWidth: 1, borderTopColor: '#1e1e1e' },
+  stopDescription: { color: '#999', fontSize: 14, lineHeight: 21, marginBottom: 12 },
+
+  tipBox:   { backgroundColor: '#0f0f0f', borderRadius: 10, padding: 12, borderWidth: 1, borderColor: '#1e1e1e' },
+  tipLabel: { color: '#444', fontSize: 11, fontWeight: '700', textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: 4 },
+  tipText:  { color: '#666', fontSize: 13, lineHeight: 18 },
+
+  daySummary: { color: '#333', fontSize: 13, fontStyle: 'italic', marginTop: 10, paddingLeft: 4 },
+
+  // ── Map view ──
+  mapContainer:    { flex: 1 },
+  dayTabs:         { maxHeight: 48, borderBottomWidth: 1, borderBottomColor: '#1a1a1a' },
+  dayTabsContent:  { paddingHorizontal: 16, gap: 8, alignItems: 'center' },
   dayTab: {
     paddingHorizontal: 16, paddingVertical: 8, borderRadius: 20,
-    backgroundColor: '#1a1a1a', borderWidth: 1, borderColor: '#2a2a2a',
+    backgroundColor: '#141414', borderWidth: 1, borderColor: '#2e2e2e',
   },
-  dayTabText: { color: '#666', fontSize: 13, fontWeight: '500' },
+  dayTabText:       { color: '#555', fontSize: 13, fontWeight: '500' },
   dayTabTextActive: { color: '#fff', fontWeight: '700' },
-  map: { height: height * 0.45 },
-  mapStopList: { flex: 1, backgroundColor: '#0f0f0f' },
-  mapStopRow: { flexDirection: 'row', alignItems: 'center', marginBottom: 14 },
+  map:              { height: height * 0.45 },
+  mapStopList:      { flex: 1, backgroundColor: '#0a0a0a' },
+  mapStopRow:       { flexDirection: 'row', alignItems: 'center', marginBottom: 14 },
   mapStopNum: {
     width: 28, height: 28, borderRadius: 14,
     alignItems: 'center', justifyContent: 'center', marginRight: 12,
   },
   mapStopNumText: { color: '#fff', fontSize: 12, fontWeight: '700' },
-  mapStopInfo: { flex: 1 },
-  mapStopName: { color: '#fff', fontSize: 14, fontWeight: '600' },
-  mapStopTime: { color: '#555', fontSize: 12, marginTop: 2 },
-  noCoords: { flex: 1, alignItems: 'center', justifyContent: 'center' },
-  noCoordsText: { color: '#555', fontSize: 14 },
+  mapStopInfo:    { flex: 1 },
+  mapStopName:    { color: '#fff', fontSize: 14, fontWeight: '600' },
+  mapStopTime:    { color: '#444', fontSize: 12, marginTop: 2 },
+  noCoords:       { flex: 1, alignItems: 'center', justifyContent: 'center' },
+  noCoordsText:   { color: '#444', fontSize: 14 },
 
-  // Feedback
-  feedbackRow: { flexDirection: 'row', gap: 6, marginLeft: 'auto' },
-  feedbackBtn: { fontSize: 16, opacity: 0.4, paddingHorizontal: 4 },
-  feedbackUp: { opacity: 1 },
-  feedbackDown: { opacity: 1 },
-  feedbackDimmed: { opacity: 0.15 },
+  // ── Feedback ──
+  feedbackRow:    { flexDirection: 'row', gap: 6, marginLeft: 'auto' },
+  feedbackBtn:    { fontSize: 15, opacity: 0.3, paddingHorizontal: 4 },
+  feedbackUp:     { opacity: 1 },
+  feedbackDown:   { opacity: 1 },
+  feedbackDimmed: { opacity: 0.1 },
 
-  // Toast
+  // ── Toast ──
   toast: {
     position: 'absolute', bottom: 32, alignSelf: 'center',
-    backgroundColor: '#1a1a1a', borderRadius: 20, paddingHorizontal: 18, paddingVertical: 10,
+    backgroundColor: '#141414', borderRadius: 20,
+    paddingHorizontal: 16, paddingVertical: 10,
     borderWidth: 1, borderColor: '#2a2a2a',
-    borderLeftWidth: 3, borderLeftColor: '#10B981',
+    flexDirection: 'row', alignItems: 'center', gap: 8,
   },
+  toastDot:  { width: 6, height: 6, borderRadius: 3, backgroundColor: '#10B981' },
   toastText: { color: '#fff', fontSize: 13, fontWeight: '500' },
 
-  // Explainability
-  explainBox: { marginTop: 12, backgroundColor: '#111', borderRadius: 10, padding: 12 },
-  explainTitle: { color: '#888', fontSize: 11, fontWeight: '600', textTransform: 'uppercase', marginBottom: 8, letterSpacing: 0.5 },
-  contribRow: { flexDirection: 'row', alignItems: 'center', marginBottom: 6 },
-  contribName: { color: '#888', fontSize: 11, width: 90 },
-  contribBarBg: { flex: 1, height: 6, backgroundColor: '#222', borderRadius: 3, marginHorizontal: 8 },
-  contribBar: { height: 6, borderRadius: 3 },
-  contribValue: { color: '#666', fontSize: 10, width: 42, textAlign: 'right' },
+  // ── Explainability ──
+  explainBox:   { marginTop: 12, backgroundColor: '#0f0f0f', borderRadius: 10, padding: 12, borderWidth: 1, borderColor: '#1e1e1e' },
+  explainTitle: { color: '#555', fontSize: 11, fontWeight: '700', textTransform: 'uppercase', marginBottom: 10, letterSpacing: 0.5 },
+  contribRow:   { flexDirection: 'row', alignItems: 'center', marginBottom: 8 },
+  contribName:  { color: '#666', fontSize: 11, width: 90 },
+  contribBarBg: { flex: 1, height: 4, backgroundColor: '#1e1e1e', borderRadius: 2, marginHorizontal: 8 },
+  contribBar:   { height: 4, borderRadius: 2 },
+  contribValue: { color: '#444', fontSize: 10, width: 42, textAlign: 'right' },
 });

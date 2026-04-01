@@ -26,16 +26,26 @@ const MOBILITY_LABELS = { easy: 'Easy (short walks)', moderate: 'Moderate', acti
 const FAMILIARITY_LABELS = { first_time: 'First time here', returning: 'I\'ve been before' };
 const DURATION_LABELS: Record<number, string> = { 2: '2h', 3: '3h', 4: '4h', 6: '6h', 8: '8h', 10: 'Full day' };
 
+// Per-goal accent colors for the chip dots
+const GOAL_COLORS: Record<string, string> = {
+  food: '#F59E0B',
+  nature: '#10B981',
+  history: '#8B5CF6',
+  culture: '#3B82F6',
+  nightlife: '#EC4899',
+  shopping: '#F97316',
+  adventure: '#EF4444',
+};
+
 const PIPELINE_STEPS = [
-  { key: 'geocoding',    label: 'Locating you' },
+  { key: 'geocoding',     label: 'Locating you' },
   { key: 'fetching_pois', label: 'Finding places' },
-  { key: 'ranking',     label: 'ML Ranking' },
-  { key: 'optimizing',  label: 'Building route' },
-  { key: 'retrieving',  label: 'Local knowledge' },
-  { key: 'generating',  label: 'Writing journey' },
+  { key: 'ranking',       label: 'ML Ranking' },
+  { key: 'optimizing',    label: 'Building route' },
+  { key: 'retrieving',    label: 'Local knowledge' },
+  { key: 'generating',    label: 'Writing journey' },
 ];
 
-// All chip keys for scale animation map
 const ALL_CHIP_KEYS = [
   ...GOAL_OPTIONS,
   ...DURATION_OPTIONS.map(String),
@@ -51,13 +61,10 @@ const ALL_CHIP_KEYS = [
 export default function HomeScreen() {
   const router = useRouter();
 
-  // Core
   const [city, setCity] = useState('');
   const [startLocation, setStartLocation] = useState('');
   const [goals, setGoals] = useState<string[]>([]);
   const [durationHours, setDurationHours] = useState<number>(6);
-
-  // Preferences
   const [pace, setPace] = useState<TripRequest['pace']>('moderate');
   const [budget, setBudget] = useState<TripRequest['budget']>('mid');
   const [style, setStyle] = useState<TripRequest['style']>('solo');
@@ -66,8 +73,6 @@ export default function HomeScreen() {
   const [familiarity, setFamiliarity] = useState<TripRequest['familiarity']>('first_time');
   const [startTime, setStartTime] = useState<TripRequest['start_time']>('morning');
   const [notes, setNotes] = useState('');
-
-  // UI state
   const [loading, setLoading] = useState(false);
   const [currentStep, setCurrentStep] = useState<string | null>(null);
   const [completedSteps, setCompletedSteps] = useState<string[]>([]);
@@ -75,44 +80,36 @@ export default function HomeScreen() {
 
   // ── Animation refs ───────────────────────────────────────────────────────────
 
-  // Hero entrance
   const heroTitleAnim    = useRef(new Animated.Value(0)).current;
   const heroSubtitleAnim = useRef(new Animated.Value(0)).current;
+  const heroAccentAnim   = useRef(new Animated.Value(0)).current;
 
-  // Per-chip scale (one Animated.Value per chip key)
   const chipScales = useRef<Record<string, Animated.Value>>(
     Object.fromEntries(ALL_CHIP_KEYS.map(k => [k, new Animated.Value(1)]))
   ).current;
 
-  // Input focus border color (0 = unfocused, 1 = focused)
   const cityBorderAnim     = useRef(new Animated.Value(0)).current;
   const locationBorderAnim = useRef(new Animated.Value(0)).current;
   const notesBorderAnim    = useRef(new Animated.Value(0)).current;
 
-  // Button
   const buttonScaleAnim  = useRef(new Animated.Value(1)).current;
   const loadingPulseAnim = useRef(new Animated.Value(1)).current;
 
-  // Progress: one slide-in value per step + an overall bar width
-  const stepSlideAnims = useRef(PIPELINE_STEPS.map(() => new Animated.Value(0))).current;
+  const stepSlideAnims  = useRef(PIPELINE_STEPS.map(() => new Animated.Value(0))).current;
   const progressBarAnim = useRef(new Animated.Value(0)).current;
 
   // ── Effects ──────────────────────────────────────────────────────────────────
 
-  // Hero entrance on mount
   useEffect(() => {
-    Animated.stagger(100, [
-      Animated.timing(heroTitleAnim,    { toValue: 1, duration: 500, useNativeDriver: true }),
+    Animated.stagger(80, [
+      Animated.timing(heroTitleAnim,    { toValue: 1, duration: 600, useNativeDriver: true }),
       Animated.timing(heroSubtitleAnim, { toValue: 1, duration: 500, useNativeDriver: true }),
+      Animated.timing(heroAccentAnim,   { toValue: 1, duration: 400, useNativeDriver: false }),
     ]).start();
   }, []);
 
-  // Pulsing opacity while generating
   useEffect(() => {
-    if (!loading) {
-      loadingPulseAnim.setValue(1);
-      return;
-    }
+    if (!loading) { loadingPulseAnim.setValue(1); return; }
     const pulse = Animated.loop(
       Animated.sequence([
         Animated.timing(loadingPulseAnim, { toValue: 0.75, duration: 900, useNativeDriver: true }),
@@ -123,7 +120,6 @@ export default function HomeScreen() {
     return () => pulse.stop();
   }, [loading]);
 
-  // Progress bar + step slide-in on step change
   useEffect(() => {
     if (!loading) {
       progressBarAnim.setValue(0);
@@ -132,19 +128,9 @@ export default function HomeScreen() {
     }
     const stepIndex = PIPELINE_STEPS.findIndex(s => s.key === currentStep);
     if (stepIndex < 0) return;
-
     const targetProgress = (completedSteps.length + 1) / PIPELINE_STEPS.length;
-    Animated.timing(progressBarAnim, {
-      toValue: targetProgress,
-      duration: 400,
-      useNativeDriver: false,
-    }).start();
-
-    Animated.timing(stepSlideAnims[stepIndex], {
-      toValue: 1,
-      duration: 250,
-      useNativeDriver: true,
-    }).start();
+    Animated.timing(progressBarAnim, { toValue: targetProgress, duration: 400, useNativeDriver: false }).start();
+    Animated.timing(stepSlideAnims[stepIndex], { toValue: 1, duration: 250, useNativeDriver: true }).start();
   }, [currentStep, loading]);
 
   // ── Helpers ──────────────────────────────────────────────────────────────────
@@ -153,8 +139,8 @@ export default function HomeScreen() {
     const anim = chipScales[key];
     if (!anim) return;
     Animated.sequence([
-      Animated.spring(anim, { toValue: 0.92, useNativeDriver: true, speed: 30, bounciness: 0 }),
-      Animated.spring(anim, { toValue: 1.0,  useNativeDriver: true, speed: 20, bounciness: 8 }),
+      Animated.spring(anim, { toValue: 0.90, useNativeDriver: true, speed: 30, bounciness: 0 }),
+      Animated.spring(anim, { toValue: 1.0,  useNativeDriver: true, speed: 20, bounciness: 10 }),
     ]).start();
   };
 
@@ -168,7 +154,7 @@ export default function HomeScreen() {
   const blurInput   = (anim: Animated.Value) =>
     Animated.timing(anim, { toValue: 0, duration: 200, useNativeDriver: false }).start();
   const borderColor = (anim: Animated.Value) =>
-    anim.interpolate({ inputRange: [0, 1], outputRange: ['#2a2a2a', '#555'] });
+    anim.interpolate({ inputRange: [0, 1], outputRange: ['#333', '#666'] });
 
   const toggleGoal = (goal: string) => {
     animateChip(goal);
@@ -193,19 +179,10 @@ export default function HomeScreen() {
     try {
       const itinerary = await generateItineraryStreaming(
         {
-          city: city.trim(),
-          start_location: startLocation.trim(),
-          duration_hours: durationHours,
-          goals,
-          transport: 'walking',
-          pace,
-          budget,
-          style,
-          dietary,
-          mobility,
-          familiarity,
-          start_time: startTime,
-          notes: notes.trim(),
+          city: city.trim(), start_location: startLocation.trim(),
+          duration_hours: durationHours, goals, transport: 'walking',
+          pace, budget, style, dietary, mobility, familiarity,
+          start_time: startTime, notes: notes.trim(),
         },
         (progress: PipelineProgress) => {
           setCurrentStep(prev => {
@@ -235,18 +212,31 @@ export default function HomeScreen() {
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
 
       {/* ── Hero ── */}
-      <Animated.View style={{
-        opacity: heroTitleAnim,
-        transform: [{ translateY: heroTitleAnim.interpolate({ inputRange: [0, 1], outputRange: [18, 0] }) }],
-      }}>
-        <Text style={styles.title}>roam</Text>
-      </Animated.View>
-      <Animated.View style={{
-        opacity: heroSubtitleAnim,
-        transform: [{ translateY: heroSubtitleAnim.interpolate({ inputRange: [0, 1], outputRange: [12, 0] }) }],
-      }}>
-        <Text style={styles.subtitle}>Your journey, crafted for you</Text>
-      </Animated.View>
+      <View style={styles.heroContainer}>
+        {/* Decorative glow blobs */}
+        <View style={styles.glow1} pointerEvents="none" />
+        <View style={styles.glow2} pointerEvents="none" />
+
+        <Animated.View style={{
+          opacity: heroTitleAnim,
+          transform: [{ translateY: heroTitleAnim.interpolate({ inputRange: [0, 1], outputRange: [20, 0] }) }],
+        }}>
+          <Text style={styles.title}>roam</Text>
+          <Animated.View style={[
+            styles.titleAccent,
+            {
+              width: heroAccentAnim.interpolate({ inputRange: [0, 1], outputRange: ['0%', '100%'] }),
+            },
+          ]} />
+        </Animated.View>
+
+        <Animated.View style={{
+          opacity: heroSubtitleAnim,
+          transform: [{ translateY: heroSubtitleAnim.interpolate({ inputRange: [0, 1], outputRange: [12, 0] }) }],
+        }}>
+          <Text style={styles.subtitle}>Your journey, crafted for you</Text>
+        </Animated.View>
+      </View>
 
       <View style={styles.divider} />
 
@@ -256,7 +246,7 @@ export default function HomeScreen() {
         <TextInput
           style={styles.inputInner}
           placeholder="Paris, Tokyo, New York..."
-          placeholderTextColor="#555"
+          placeholderTextColor="#444"
           value={city}
           onChangeText={setCity}
           onFocus={() => focusInput(cityBorderAnim)}
@@ -269,7 +259,7 @@ export default function HomeScreen() {
         <TextInput
           style={styles.inputInner}
           placeholder="Montmartre, Shibuya station, Times Square..."
-          placeholderTextColor="#555"
+          placeholderTextColor="#444"
           value={startLocation}
           onChangeText={setStartLocation}
           onFocus={() => focusInput(locationBorderAnim)}
@@ -277,18 +267,31 @@ export default function HomeScreen() {
         />
       </Animated.View>
 
+      {/* ── Goal chips with per-category color dots ── */}
       <Text style={styles.label}>What are you into?</Text>
       <View style={styles.row}>
-        {GOAL_OPTIONS.map(g => (
-          <Animated.View key={g} style={{ transform: [{ scale: chipScales[g] }] }}>
-            <TouchableOpacity
-              style={[styles.chip, goals.includes(g) && styles.chipSelected]}
-              onPress={() => toggleGoal(g)}
-            >
-              <Text style={[styles.chipText, goals.includes(g) && styles.chipTextSelected]}>{g}</Text>
-            </TouchableOpacity>
-          </Animated.View>
-        ))}
+        {GOAL_OPTIONS.map(g => {
+          const selected = goals.includes(g);
+          const accentColor = GOAL_COLORS[g];
+          return (
+            <Animated.View key={g} style={{ transform: [{ scale: chipScales[g] }] }}>
+              <TouchableOpacity
+                style={[
+                  styles.chip,
+                  selected && styles.chipSelected,
+                  selected && { borderColor: accentColor },
+                ]}
+                onPress={() => toggleGoal(g)}
+              >
+                <View style={[
+                  styles.goalDot,
+                  { backgroundColor: selected ? accentColor : accentColor + '55' },
+                ]} />
+                <Text style={[styles.chipText, selected && { color: accentColor, fontWeight: '700' }]}>{g}</Text>
+              </TouchableOpacity>
+            </Animated.View>
+          );
+        })}
       </View>
 
       <Text style={styles.label}>How much time do you have?</Text>
@@ -323,7 +326,10 @@ export default function HomeScreen() {
 
       {/* ── Preferences ── */}
       <View style={styles.divider} />
-      <Text style={styles.sectionHeader}>Your preferences</Text>
+      <View style={styles.sectionHeaderRow}>
+        <View style={styles.sectionHeaderAccent} />
+        <Text style={styles.sectionHeader}>Your preferences</Text>
+      </View>
 
       <Text style={styles.label}>Pace</Text>
       <View style={styles.row}>
@@ -418,7 +424,7 @@ export default function HomeScreen() {
         <TextInput
           style={[styles.inputInner, styles.inputMultiline]}
           placeholder="I love street food, hate tourist traps, want hidden gems..."
-          placeholderTextColor="#555"
+          placeholderTextColor="#444"
           value={notes}
           onChangeText={setNotes}
           onFocus={() => focusInput(notesBorderAnim)}
@@ -428,7 +434,11 @@ export default function HomeScreen() {
         />
       </Animated.View>
 
-      {error && <Text style={styles.errorText}>{error}</Text>}
+      {error && (
+        <View style={styles.errorBox}>
+          <Text style={styles.errorText}>{error}</Text>
+        </View>
+      )}
 
       {/* ── Generate button ── */}
       <Animated.View style={[
@@ -444,7 +454,6 @@ export default function HomeScreen() {
         >
           {loading ? (
             <View style={styles.progressContainer}>
-              {/* Thin progress bar */}
               <View style={styles.progressBarTrack}>
                 <Animated.View style={[
                   styles.progressBarFill,
@@ -466,14 +475,14 @@ export default function HomeScreen() {
                       isCompleted && styles.progressDotDone,
                       isCurrent && styles.progressDotCurrent,
                     ]}>
-                      {isCurrent   && <ActivityIndicator size="small" color="#000" />}
+                      {isCurrent   && <ActivityIndicator size="small" color="#fff" />}
                       {isCompleted && <Text style={styles.checkmark}>✓</Text>}
                     </View>
                     <Animated.Text style={[
                       styles.progressLabel,
                       (isCompleted || isCurrent) && styles.progressLabelActive,
                       {
-                        opacity: isCompleted || isCurrent ? 1 : 0.5,
+                        opacity: isCompleted || isCurrent ? 1 : 0.4,
                         transform: [{
                           translateX: stepSlideAnims[index].interpolate({
                             inputRange: [0, 1],
@@ -497,20 +506,75 @@ export default function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#0f0f0f' },
-  content: { padding: 24, paddingTop: 72, paddingBottom: 60 },
-  title: { fontSize: 36, fontWeight: '700', color: '#fff', letterSpacing: -1 },
-  subtitle: { fontSize: 14, color: '#555', marginTop: 4 },
-  divider: { height: 1, backgroundColor: '#1a1a1a', marginVertical: 24 },
+  container: { flex: 1, backgroundColor: '#0a0a0a' },
+  content:   { padding: 24, paddingTop: 72, paddingBottom: 60 },
+
+  // ── Hero ──
+  heroContainer: {
+    paddingBottom: 16,
+    overflow: 'hidden',
+    marginBottom: 4,
+  },
+  glow1: {
+    position: 'absolute',
+    top: -30, left: -50,
+    width: 240, height: 240,
+    borderRadius: 120,
+    backgroundColor: '#3B82F6',
+    opacity: 0.10,
+  },
+  glow2: {
+    position: 'absolute',
+    top: 20, right: -30,
+    width: 160, height: 160,
+    borderRadius: 80,
+    backgroundColor: '#8B5CF6',
+    opacity: 0.07,
+  },
+  title: {
+    fontSize: 56,
+    fontWeight: '800',
+    color: '#fff',
+    letterSpacing: -3,
+  },
+  titleAccent: {
+    height: 3,
+    width: 36,
+    backgroundColor: '#3B82F6',
+    borderRadius: 2,
+    marginTop: 6,
+    marginBottom: 10,
+  },
+  subtitle: {
+    fontSize: 15,
+    color: '#666',
+    letterSpacing: 0.2,
+  },
+
+  // ── Layout ──
+  divider: { height: 1, backgroundColor: '#1e1e1e', marginVertical: 28 },
+  sectionHeaderRow: {
+    flexDirection: 'row', alignItems: 'center', gap: 10,
+    marginBottom: 4,
+  },
+  sectionHeaderAccent: {
+    width: 18, height: 1.5,
+    backgroundColor: '#3B82F6', borderRadius: 1, opacity: 0.8,
+  },
   sectionHeader: {
-    fontSize: 11, color: '#444', marginBottom: 4,
+    fontSize: 11, color: '#555',
     textTransform: 'uppercase', letterSpacing: 1.5,
   },
-  label: { fontSize: 13, color: '#888', marginBottom: 10, marginTop: 24, textTransform: 'uppercase', letterSpacing: 0.5 },
+  label: {
+    fontSize: 12, color: '#666',
+    marginBottom: 10, marginTop: 24,
+    textTransform: 'uppercase', letterSpacing: 0.8,
+  },
 
-  // Inputs
+  // ── Inputs ──
   inputWrapper: {
-    backgroundColor: '#1a1a1a', borderRadius: 12,
+    backgroundColor: '#141414',
+    borderRadius: 12,
     borderWidth: 1,
   },
   inputInner: {
@@ -518,56 +582,73 @@ const styles = StyleSheet.create({
   },
   inputMultiline: { minHeight: 80, textAlignVertical: 'top' },
 
-  // Chips
-  row: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
+  // ── Chips ──
+  row:    { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
   column: { gap: 8 },
   chip: {
-    paddingHorizontal: 14, paddingVertical: 8, borderRadius: 20,
-    backgroundColor: '#1a1a1a', borderWidth: 1, borderColor: '#2a2a2a',
+    flexDirection: 'row', alignItems: 'center', gap: 6,
+    paddingHorizontal: 14, paddingVertical: 9,
+    borderRadius: 20,
+    backgroundColor: '#141414', borderWidth: 1, borderColor: '#2e2e2e',
   },
-  chipSelected: { backgroundColor: '#fff', borderColor: '#fff' },
-  chipText: { color: '#888', fontSize: 13 },
-  chipTextSelected: { color: '#000', fontWeight: '600' },
+  chipSelected: { backgroundColor: '#1a1a1a', borderColor: '#fff' },
+  chipText:         { color: '#777', fontSize: 13 },
+  chipTextSelected: { color: '#fff', fontWeight: '600' },
+  goalDot: { width: 7, height: 7, borderRadius: 3.5 },
   optionRow: {
-    paddingHorizontal: 16, paddingVertical: 12, borderRadius: 12,
-    backgroundColor: '#1a1a1a', borderWidth: 1, borderColor: '#2a2a2a',
+    paddingHorizontal: 16, paddingVertical: 13, borderRadius: 12,
+    backgroundColor: '#141414', borderWidth: 1, borderColor: '#2e2e2e',
   },
-  optionRowSelected: { backgroundColor: '#fff', borderColor: '#fff' },
+  optionRowSelected: { backgroundColor: '#1a1a1a', borderColor: '#fff' },
 
-  // Button
+  // ── Error ──
+  errorBox: {
+    backgroundColor: '#1a0a0a', borderRadius: 10,
+    borderWidth: 1, borderColor: '#3a1a1a',
+    padding: 12, marginTop: 16,
+  },
+  errorText: { color: '#EF4444', fontSize: 13, textAlign: 'center' },
+
+  // ── Button ──
   button: {
-    backgroundColor: '#fff', borderRadius: 14, padding: 18,
+    backgroundColor: '#fff', borderRadius: 16, padding: 20,
     alignItems: 'center', marginTop: 40, marginBottom: 40,
+    ...(Platform.OS === 'ios' ? {
+      shadowColor: '#fff',
+      shadowOffset: { width: 0, height: 0 },
+      shadowOpacity: 0.15,
+      shadowRadius: 20,
+    } : {}),
   },
-  buttonDisabled: { opacity: 0.9, paddingVertical: 20 },
-  buttonText: { color: '#000', fontSize: 16, fontWeight: '700' },
-  errorText: { color: '#EF4444', fontSize: 13, textAlign: 'center', marginTop: 16, marginBottom: 4 },
+  buttonDisabled: { opacity: 0.9, paddingVertical: 22, backgroundColor: '#111' },
+  buttonText: { color: '#000', fontSize: 16, fontWeight: '700', letterSpacing: 0.3 },
 
-  // Progress
-  progressContainer: { width: '100%', gap: 8 },
+  // ── Progress ──
+  progressContainer: { width: '100%', gap: 10 },
   progressBarTrack: {
-    width: '100%', height: 2, backgroundColor: '#e0e0e0',
-    borderRadius: 1, marginBottom: 8, overflow: 'hidden',
+    width: '100%', height: 2, backgroundColor: '#333',
+    borderRadius: 1, marginBottom: 6, overflow: 'hidden',
   },
   progressBarFill: {
     height: 2, backgroundColor: '#3B82F6', borderRadius: 1,
   },
-  progressStep: { flexDirection: 'row', alignItems: 'center', gap: 10 },
+  progressStep:  { flexDirection: 'row', alignItems: 'center', gap: 10 },
   progressDot: {
     width: 24, height: 24, borderRadius: 12,
-    backgroundColor: '#e0e0e0', alignItems: 'center', justifyContent: 'center',
+    backgroundColor: '#222', borderWidth: 1, borderColor: '#333',
+    alignItems: 'center', justifyContent: 'center',
   },
-  progressDotDone: { backgroundColor: '#10B981' },
+  progressDotDone:    { backgroundColor: '#10B981', borderColor: '#10B981' },
   progressDotCurrent: {
-    backgroundColor: '#3B82F6',
+    backgroundColor: '#3B82F6', borderColor: '#3B82F6',
     ...(Platform.OS === 'ios' ? {
       shadowColor: '#3B82F6',
       shadowOffset: { width: 0, height: 0 },
-      shadowOpacity: 0.8,
-      shadowRadius: 6,
+      shadowOpacity: 0.9,
+      shadowRadius: 8,
     } : {}),
   },
-  progressLabel: { color: '#999', fontSize: 13 },
-  progressLabelActive: { color: '#000', fontWeight: '600' },
+  progressLabel:       { color: '#555', fontSize: 13 },
+  progressLabelActive: { color: '#fff', fontWeight: '600' },
   checkmark: { color: '#fff', fontSize: 12, fontWeight: '700' },
 });
