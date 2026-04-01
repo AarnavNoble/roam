@@ -3,8 +3,14 @@ import { useState, useRef, useEffect, useCallback } from 'react';
 import {
   View, Text, ScrollView, TouchableOpacity,
   StyleSheet, SafeAreaView, Dimensions, Platform, Animated, Image,
+  LayoutAnimation, UIManager,
 } from 'react-native';
 import { Itinerary, Day, Stop, FeatureExplanation, submitFeedback, getStoredItinerary } from '../services/api';
+
+// Enable LayoutAnimation on Android
+if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
+  UIManager.setLayoutAnimationEnabledExperimental(true);
+}
 
 // MapLibre is native-only — conditionally import to avoid web crashes
 let MapLibreGL: any = null;
@@ -68,15 +74,32 @@ const FEATURE_LABELS: Record<string, string> = {
 };
 
 function ContributionBar({ name, value, max }: { name: string; value: number; max: number }) {
-  const width = max > 0 ? Math.abs(value) / max * 100 : 0;
+  const finalWidth = max > 0 ? Math.abs(value) / max * 100 : 0;
+  const widthAnim = useRef(new Animated.Value(0)).current;
   const positive = value >= 0;
+
+  useEffect(() => {
+    Animated.timing(widthAnim, {
+      toValue: Math.min(finalWidth, 100),
+      duration: 600,
+      delay: 100,
+      useNativeDriver: false,
+    }).start();
+  }, []);
+
   return (
     <View style={styles.contribRow}>
       <Text style={styles.contribName}>{FEATURE_LABELS[name] ?? name}</Text>
       <View style={styles.contribBarBg}>
-        <View style={[
+        <Animated.View style={[
           styles.contribBar,
-          { width: `${Math.min(width, 100)}%`, backgroundColor: positive ? '#10B981' : '#EF4444' },
+          {
+            width: widthAnim.interpolate({
+              inputRange: [0, 100],
+              outputRange: ['0%', '100%'],
+            }),
+            backgroundColor: positive ? '#10B981' : '#EF4444',
+          },
         ]} />
       </View>
       <Text style={styles.contribValue}>{value > 0 ? '+' : ''}{value.toFixed(2)}</Text>
@@ -89,10 +112,23 @@ function StopCard({ stop, goals, explanation, onRetrained }: {
 }) {
   const [expanded, setExpanded] = useState(false);
   const [feedback, setFeedback] = useState<'up' | 'down' | null>(null);
+  const pressScale = useRef(new Animated.Value(1)).current;
   const color = CATEGORY_COLORS[stop.category] || '#6B7280';
 
+  const onPressIn = () =>
+    Animated.spring(pressScale, { toValue: 0.98, useNativeDriver: true, speed: 30, bounciness: 0 }).start();
+  const onPressOut = () =>
+    Animated.spring(pressScale, { toValue: 1.0, useNativeDriver: true, speed: 20, bounciness: 4 }).start();
+
+  const toggleExpand = () => {
+    LayoutAnimation.configureNext(
+      LayoutAnimation.create(250, LayoutAnimation.Types.easeInEaseOut, LayoutAnimation.Properties.opacity)
+    );
+    setExpanded(e => !e);
+  };
+
   const handleFeedback = async (relevant: boolean) => {
-    if (feedback) return;   // already voted
+    if (feedback) return;
     setFeedback(relevant ? 'up' : 'down');
     try {
       const result = await submitFeedback(stop.id || 0, relevant, stop.name, stop.category, goals);
@@ -101,92 +137,101 @@ function StopCard({ stop, goals, explanation, onRetrained }: {
   };
 
   return (
-    <TouchableOpacity style={styles.stopCard} onPress={() => setExpanded(e => !e)} activeOpacity={0.8}>
-      {stop.photo_url ? (
-        <Image
-          source={{ uri: stop.photo_url }}
-          style={styles.stopPhoto}
-          resizeMode="cover"
-        />
-      ) : null}
-      <View style={styles.stopContent}>
-      <View style={styles.stopHeader}>
-        <View style={[styles.dot, { backgroundColor: color }]} />
-        <View style={styles.stopMeta}>
-          <Text style={styles.stopTime}>{stop.arrival_time}</Text>
-          <Text style={styles.stopDuration}>{stop.duration_min} min</Text>
-        </View>
-        <View style={styles.feedbackRow}>
-          <TouchableOpacity
-            onPress={() => handleFeedback(true)}
-            hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
-            disabled={!!feedback}
-          >
-            <Text style={[
-              styles.feedbackBtn,
-              feedback === 'up' && styles.feedbackUp,
-              feedback === 'down' && styles.feedbackDimmed,
-            ]}>👍</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => handleFeedback(false)}
-            hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
-            disabled={!!feedback}
-          >
-            <Text style={[
-              styles.feedbackBtn,
-              feedback === 'down' && styles.feedbackDown,
-              feedback === 'up' && styles.feedbackDimmed,
-            ]}>👎</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-      <Text style={styles.stopName}>{stop.name}</Text>
-      <View style={styles.stopSubRow}>
-        <View style={[styles.categoryBadge, { backgroundColor: color + '20' }]}>
-          <Text style={[styles.categoryText, { color }]}>{stop.category.toUpperCase()}</Text>
-        </View>
-        {stop.description ? (
-          <Text style={styles.stopDescPreview} numberOfLines={1}>
-            {stop.description}
-          </Text>
+    <Animated.View style={[styles.stopCardShadow, { transform: [{ scale: pressScale }] }]}>
+      <TouchableOpacity
+        style={styles.stopCard}
+        onPress={toggleExpand}
+        onPressIn={onPressIn}
+        onPressOut={onPressOut}
+        activeOpacity={1}
+      >
+        {stop.photo_url ? (
+          <Image
+            source={{ uri: stop.photo_url }}
+            style={styles.stopPhoto}
+            resizeMode="cover"
+          />
         ) : null}
-      </View>
-      {expanded && (
-        <View style={styles.stopDetails}>
-          <Text style={styles.stopDescription}>{stop.description}</Text>
-          <View style={styles.tipBox}>
-            <Text style={styles.tipLabel}>Tip</Text>
-            <Text style={styles.tipText}>{stop.tip}</Text>
+        <View style={styles.stopContent}>
+          <View style={styles.stopHeader}>
+            <View style={[styles.dot, { backgroundColor: color }]} />
+            <View style={styles.stopMeta}>
+              <Text style={styles.stopTime}>{stop.arrival_time}</Text>
+              <Text style={styles.stopDuration}>{stop.duration_min} min</Text>
+            </View>
+            <View style={styles.feedbackRow}>
+              <TouchableOpacity
+                onPress={() => handleFeedback(true)}
+                hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+                disabled={!!feedback}
+              >
+                <Text style={[
+                  styles.feedbackBtn,
+                  feedback === 'up' && styles.feedbackUp,
+                  feedback === 'down' && styles.feedbackDimmed,
+                ]}>👍</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => handleFeedback(false)}
+                hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+                disabled={!!feedback}
+              >
+                <Text style={[
+                  styles.feedbackBtn,
+                  feedback === 'down' && styles.feedbackDown,
+                  feedback === 'up' && styles.feedbackDimmed,
+                ]}>👎</Text>
+              </TouchableOpacity>
+            </View>
           </View>
-          {explanation && (
-            <View style={styles.explainBox}>
-              <Text style={styles.explainTitle}>Why this place?</Text>
-              {(() => {
-                const features = explanation.features;
-                const maxVal = Math.max(...Object.values(features), 0.01);
-                return Object.entries(features)
-                  .filter(([, v]) => v > 0)
-                  .sort((a, b) => b[1] - a[1])
-                  .slice(0, 4)
-                  .map(([name, value]) => (
-                    <ContributionBar key={name} name={name} value={value} max={maxVal} />
-                  ));
-              })()}
+          <Text style={styles.stopName}>{stop.name}</Text>
+          <View style={styles.stopSubRow}>
+            <View style={[styles.categoryBadge, { backgroundColor: color + '20' }]}>
+              <Text style={[styles.categoryText, { color }]}>{stop.category.toUpperCase()}</Text>
+            </View>
+            {stop.description ? (
+              <Text style={styles.stopDescPreview} numberOfLines={1}>
+                {stop.description}
+              </Text>
+            ) : null}
+          </View>
+          {expanded && (
+            <View style={styles.stopDetails}>
+              <Text style={styles.stopDescription}>{stop.description}</Text>
+              <View style={styles.tipBox}>
+                <Text style={styles.tipLabel}>Tip</Text>
+                <Text style={styles.tipText}>{stop.tip}</Text>
+              </View>
+              {explanation && (
+                <View style={styles.explainBox}>
+                  <Text style={styles.explainTitle}>Why this place?</Text>
+                  {(() => {
+                    const features = explanation.features;
+                    const maxVal = Math.max(...Object.values(features), 0.01);
+                    return Object.entries(features)
+                      .filter(([, v]) => v > 0)
+                      .sort((a, b) => b[1] - a[1])
+                      .slice(0, 4)
+                      .map(([name, value]) => (
+                        <ContributionBar key={name} name={name} value={value} max={maxVal} />
+                      ));
+                  })()}
+                </View>
+              )}
             </View>
           )}
         </View>
-      )}
-      </View>
-    </TouchableOpacity>
+      </TouchableOpacity>
+    </Animated.View>
   );
 }
 
 function DaySection({ day, goals, explanations, onRetrained }: {
   day: Day; goals: string[]; explanations?: Record<string, FeatureExplanation>; onRetrained?: () => void;
 }) {
+  const dayColor = DAY_COLORS[(day.day - 1) % DAY_COLORS.length];
   return (
-    <View style={styles.daySection}>
+    <View style={[styles.daySection, { borderLeftColor: dayColor }]}>
       <View style={styles.dayHeader}>
         <Text style={styles.dayNumber}>Day {day.day}</Text>
         <Text style={styles.dayTheme}>{day.theme}</Text>
@@ -388,6 +433,34 @@ export default function ItineraryScreen() {
   const [view, setView] = useState<'list' | 'map'>('list');
   const { show: showToast, Toast } = useToast();
 
+  // Sliding pill toggle animation
+  const toggleSlide = useRef(new Animated.Value(0)).current;
+  const SEGMENT_WIDTH = 56;
+
+  const setViewAnimated = (v: 'list' | 'map') => {
+    setView(v);
+    Animated.timing(toggleSlide, {
+      toValue: v === 'list' ? 0 : 1,
+      duration: 200,
+      useNativeDriver: true,
+    }).start();
+  };
+
+  // Staggered section entrance
+  const sectionAnims = useRef(
+    (itinerary?.days ?? []).map(() => new Animated.Value(0))
+  ).current;
+
+  useEffect(() => {
+    if (!itinerary) return;
+    const timeout = setTimeout(() => {
+      Animated.stagger(80, sectionAnims.map(anim =>
+        Animated.timing(anim, { toValue: 1, duration: 450, useNativeDriver: true })
+      )).start();
+    }, 100);
+    return () => clearTimeout(timeout);
+  }, []);
+
   if (!itinerary) {
     return (
       <SafeAreaView style={styles.container}>
@@ -405,28 +478,51 @@ export default function ItineraryScreen() {
     <SafeAreaView style={styles.container}>
       <View style={styles.topBar}>
         <TouchableOpacity onPress={() => router.back()}>
-          <Text style={styles.back}>← Back</Text>
+          <Text style={styles.back}>‹ Back</Text>
         </TouchableOpacity>
         <Text style={styles.screenTitle}>Your Trip</Text>
-        <View style={styles.viewToggle}>
-          <TouchableOpacity onPress={() => setView('list')}>
-            <Text style={[styles.toggleBtn, view === 'list' && styles.toggleBtnActive]}>List</Text>
+        <View style={styles.viewTogglePill}>
+          <Animated.View style={[
+            styles.pillSelector,
+            {
+              transform: [{
+                translateX: toggleSlide.interpolate({
+                  inputRange: [0, 1],
+                  outputRange: [2, SEGMENT_WIDTH + 2],
+                }),
+              }],
+            },
+          ]} />
+          <TouchableOpacity style={styles.pillOption} onPress={() => setViewAnimated('list')}>
+            <Text style={[styles.pillOptionText, view === 'list' && styles.pillOptionTextActive]}>List</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => setView('map')}>
-            <Text style={[styles.toggleBtn, view === 'map' && styles.toggleBtnActive]}>Map</Text>
+          <TouchableOpacity style={styles.pillOption} onPress={() => setViewAnimated('map')}>
+            <Text style={[styles.pillOptionText, view === 'map' && styles.pillOptionTextActive]}>Map</Text>
           </TouchableOpacity>
         </View>
       </View>
 
       {view === 'list' ? (
         <ScrollView contentContainerStyle={styles.scroll}>
-          <Text style={styles.overview}>{itinerary.overview}</Text>
-          {itinerary.days.map(day => (
-            <DaySection
-              key={day.day} day={day} goals={goals}
-              explanations={itinerary.ranking_explanations}
-              onRetrained={() => showToast('Model improved from your feedback')}
-            />
+          <View style={styles.overviewAccent}>
+            <Text style={styles.overview}>{itinerary.overview}</Text>
+          </View>
+          {itinerary.days.map((day, i) => (
+            <Animated.View key={day.day} style={{
+              opacity: sectionAnims[i],
+              transform: [{
+                translateY: sectionAnims[i].interpolate({
+                  inputRange: [0, 1],
+                  outputRange: [20, 0],
+                }),
+              }],
+            }}>
+              <DaySection
+                day={day} goals={goals}
+                explanations={itinerary.ranking_explanations}
+                onRetrained={() => showToast('Model improved from your feedback')}
+              />
+            </Animated.View>
           ))}
         </ScrollView>
       ) : (
@@ -448,22 +544,60 @@ const styles = StyleSheet.create({
     flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',
     paddingHorizontal: 20, paddingVertical: 12, borderBottomWidth: 1, borderBottomColor: '#1a1a1a',
   },
-  back: { color: '#888', fontSize: 14 },
+  back: { color: '#888', fontSize: 17, fontWeight: '400' },
   screenTitle: { color: '#fff', fontSize: 16, fontWeight: '600' },
-  viewToggle: { flexDirection: 'row', gap: 12 },
-  toggleBtn: { color: '#555', fontSize: 14, fontWeight: '500' },
-  toggleBtnActive: { color: '#fff', fontWeight: '700' },
+
+  // Sliding pill view toggle
+  viewTogglePill: {
+    flexDirection: 'row', backgroundColor: '#1a1a1a',
+    borderRadius: 20, padding: 2,
+    borderWidth: 1, borderColor: '#2a2a2a',
+    position: 'relative', width: 120,
+  },
+  pillSelector: {
+    position: 'absolute', top: 2, left: 0,
+    width: 56, height: 28,
+    backgroundColor: '#fff', borderRadius: 18,
+  },
+  pillOption: {
+    width: 56, height: 28,
+    alignItems: 'center', justifyContent: 'center',
+    zIndex: 1,
+  },
+  pillOptionText: { color: '#555', fontSize: 13, fontWeight: '500' },
+  pillOptionTextActive: { color: '#000', fontWeight: '700' },
 
   // List view
   scroll: { padding: 20, paddingBottom: 60 },
-  overview: { color: '#aaa', fontSize: 15, lineHeight: 22, marginBottom: 32 },
-  daySection: { marginBottom: 40 },
+  overviewAccent: {
+    borderLeftWidth: 3, borderLeftColor: '#333',
+    paddingLeft: 12, marginBottom: 32,
+  },
+  overview: { color: '#aaa', fontSize: 15, lineHeight: 22 },
+  daySection: {
+    marginBottom: 40,
+    borderLeftWidth: 3,
+    borderLeftColor: '#333',
+    paddingLeft: 14,
+  },
   dayHeader: { marginBottom: 16 },
   dayNumber: { color: '#fff', fontSize: 22, fontWeight: '700' },
   dayTheme: { color: '#666', fontSize: 13, marginTop: 2 },
+
+  // Card shadow wrapper (iOS shadow lives here, outside overflow:hidden)
+  stopCardShadow: {
+    marginBottom: 10,
+    borderRadius: 14,
+    ...(Platform.OS === 'ios' ? {
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 4 },
+      shadowOpacity: 0.3,
+      shadowRadius: 8,
+    } : {}),
+  },
   stopCard: {
     backgroundColor: '#1a1a1a', borderRadius: 14,
-    marginBottom: 10, borderWidth: 1, borderColor: '#2a2a2a',
+    borderWidth: 1, borderColor: '#2a2a2a',
     overflow: 'hidden',
   },
   stopPhoto: {
@@ -523,6 +657,7 @@ const styles = StyleSheet.create({
     position: 'absolute', bottom: 32, alignSelf: 'center',
     backgroundColor: '#1a1a1a', borderRadius: 20, paddingHorizontal: 18, paddingVertical: 10,
     borderWidth: 1, borderColor: '#2a2a2a',
+    borderLeftWidth: 3, borderLeftColor: '#10B981',
   },
   toastText: { color: '#fff', fontSize: 13, fontWeight: '500' },
 
