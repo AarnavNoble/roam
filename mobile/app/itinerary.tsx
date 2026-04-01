@@ -2,7 +2,7 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useState, useRef, useEffect, useCallback } from 'react';
 import {
   View, Text, ScrollView, TouchableOpacity,
-  StyleSheet, SafeAreaView, Dimensions, Platform, Animated,
+  StyleSheet, SafeAreaView, Dimensions, Platform, Animated, Image,
 } from 'react-native';
 import { Itinerary, Day, Stop, FeatureExplanation, submitFeedback, getStoredItinerary } from '../services/api';
 
@@ -102,6 +102,14 @@ function StopCard({ stop, goals, explanation, onRetrained }: {
 
   return (
     <TouchableOpacity style={styles.stopCard} onPress={() => setExpanded(e => !e)} activeOpacity={0.8}>
+      {stop.photo_url ? (
+        <Image
+          source={{ uri: stop.photo_url }}
+          style={styles.stopPhoto}
+          resizeMode="cover"
+        />
+      ) : null}
+      <View style={styles.stopContent}>
       <View style={styles.stopHeader}>
         <View style={[styles.dot, { backgroundColor: color }]} />
         <View style={styles.stopMeta}>
@@ -169,6 +177,7 @@ function StopCard({ stop, goals, explanation, onRetrained }: {
           )}
         </View>
       )}
+      </View>
     </TouchableOpacity>
   );
 }
@@ -453,9 +462,14 @@ const styles = StyleSheet.create({
   dayNumber: { color: '#fff', fontSize: 22, fontWeight: '700' },
   dayTheme: { color: '#666', fontSize: 13, marginTop: 2 },
   stopCard: {
-    backgroundColor: '#1a1a1a', borderRadius: 14, padding: 16,
+    backgroundColor: '#1a1a1a', borderRadius: 14,
     marginBottom: 10, borderWidth: 1, borderColor: '#2a2a2a',
+    overflow: 'hidden',
   },
+  stopPhoto: {
+    width: '100%', height: 140,
+  },
+  stopContent: { padding: 16 },
   stopHeader: { flexDirection: 'row', alignItems: 'center', marginBottom: 8 },
   dot: { width: 8, height: 8, borderRadius: 4, marginRight: 10 },
   stopMeta: { flexDirection: 'row', gap: 12 },

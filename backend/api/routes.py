@@ -5,6 +5,7 @@ FastAPI route handlers. Wires the full ML pipeline together.
 import json
 import math
 import asyncio
+import threading
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from sse_starlette.sse import EventSourceResponse
@@ -12,6 +13,7 @@ from sse_starlette.sse import EventSourceResponse
 from backend.services.nominatim import geocode
 from backend.services.overpass import fetch_pois
 from backend.services.groq_client import generate_itinerary
+from backend.services.wiki_photos import fetch_photos_for_itinerary
 from backend.ml.rag.retriever import retrieve, format_context
 from backend.ml.ranker.scorer import rank_pois, get_ranker
 from backend.ml.optimizer.scheduler import build_itinerary
@@ -122,14 +124,29 @@ def _run_pipeline(req: TripRequest, explain: bool = False) -> dict:
         start_hour=_start_hour(req.start_time),
     )
 
-    # 5. RAG retrieval
+    # 5. RAG retrieval + photo fetch (run photo fetch in background while RAG+LLM run)
     query = f"{req.city} {' '.join(req.goals)}"
     chunks = retrieve(query=query, destination=req.city, top_k=5)
     rag_context = format_context(chunks)
 
+    photo_map: dict[str, str] = {}
+    def _bg_photos():
+        nonlocal photo_map
+        photo_map = fetch_photos_for_itinerary(itinerary)
+    photo_thread = threading.Thread(target=_bg_photos, daemon=True)
+    photo_thread.start()
+
     # 6. Groq synthesis
     trip = _build_trip_dict(req, start_lat, start_lon)
     result = generate_itinerary(trip=trip, itinerary=itinerary, rag_context=rag_context)
+
+    # Attach photos (thread should be done by now — LLM takes ~5s, photos ~3s)
+    photo_thread.join(timeout=10)
+    for day in result.get("days", []):
+        for stop in day.get("stops", []):
+            url = photo_map.get(stop.get("name", ""))
+            if url:
+                stop["photo_url"] = url
 
     if explain:
         result["ranking_explanations"] = {
@@ -191,16 +208,31 @@ async def create_itinerary_stream(req: TripRequest):
                 start_lat, start_lon, _start_hour(req.start_time),
             )
 
-            # Step 5: RAG
+            # Step 5: RAG + kick off photo fetch in background
             yield {"event": "progress", "data": json.dumps({"step": "retrieving", "message": "Gathering local knowledge...", "progress": 75})}
             query = f"{req.city} {' '.join(req.goals)}"
             chunks = await asyncio.to_thread(retrieve, query=query, destination=req.city, top_k=5)
             rag_context = format_context(chunks)
 
+            photo_task = asyncio.create_task(
+                asyncio.to_thread(fetch_photos_for_itinerary, itinerary)
+            )
+
             # Step 6: LLM synthesis
             yield {"event": "progress", "data": json.dumps({"step": "generating", "message": "Writing your journey...", "progress": 90})}
             trip = _build_trip_dict(req, start_lat, start_lon)
             result = await asyncio.to_thread(generate_itinerary, trip, itinerary, rag_context)
+
+            # Attach photos
+            try:
+                photo_map = await asyncio.wait_for(photo_task, timeout=10)
+                for day in result.get("days", []):
+                    for stop in day.get("stops", []):
+                        url = photo_map.get(stop.get("name", ""))
+                        if url:
+                            stop["photo_url"] = url
+            except Exception:
+                pass
 
             # Attach ML metadata
             result["ranking_explanations"] = {

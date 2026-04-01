@@ -30,6 +30,7 @@ export interface Stop {
   lat: number;
   lon: number;
   category: string;
+  photo_url?: string;
 }
 
 export interface Day {
