@@ -474,6 +474,7 @@ const styles = StyleSheet.create({
   stopCard: {
     backgroundColor: '#111113', borderRadius: 15,
     overflow: 'hidden',
+    borderTopWidth: 1, borderTopColor: 'rgba(255,255,255,0.06)',
   },
   stopPhoto:   { width: '100%', height: 140 },
   stopContent: { padding: 16 },

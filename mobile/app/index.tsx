@@ -172,7 +172,7 @@ export default function HomeScreen() {
           onPress={() => toggleGoal(g)}
         >
           <View style={[styles.goalDot, { backgroundColor: selected ? accent : accent + '44' }]} />
-          <Text style={[styles.chipText, selected && { color: accent, fontWeight: '600' }]}>{g}</Text>
+          <Text style={[styles.chipText, selected && { color: accent, fontWeight: '600' }]}>{g[0].toUpperCase() + g.slice(1)}</Text>
         </TouchableOpacity>
       </Animated.View>
     );
@@ -189,7 +189,7 @@ export default function HomeScreen() {
           style={[styles.chip, selected && styles.chipSelected]}
           onPress={() => selectChip(key, setter, value)}
         >
-          <Text style={[styles.chipText, selected && styles.chipTextSelected]}>{label ?? key}</Text>
+          <Text style={[styles.chipText, selected && styles.chipTextSelected]}>{(label ?? key).replace(/^\w/, c => c.toUpperCase())}</Text>
         </TouchableOpacity>
       </Animated.View>
     );
@@ -418,7 +418,7 @@ const styles = StyleSheet.create({
   label: { fontSize: 12, color: 'rgba(255,255,255,0.4)', marginBottom: 10, marginTop: 24, textTransform: 'uppercase', letterSpacing: 0.8 },
 
   // ── Inputs ──
-  inputWrapper: { backgroundColor: 'rgba(255,255,255,0.04)', borderRadius: 12, borderWidth: 1 },
+  inputWrapper: { backgroundColor: 'rgba(255,255,255,0.04)', borderRadius: 12, borderWidth: 1, borderTopColor: 'rgba(255,255,255,0.10)' },
   inputInner: { color: '#fff', padding: 16, fontSize: 15 },
   inputMultiline: { minHeight: 80, textAlignVertical: 'top' },
 
