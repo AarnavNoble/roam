@@ -6,7 +6,7 @@ import {
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
-import { generateItineraryStreaming, storeItinerary, TripRequest, PipelineProgress } from '../services/api';
+import { generateItineraryStreaming, storeItinerary, saveTrip, TripRequest, PipelineProgress } from '../services/api';
 
 if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
   UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -172,7 +172,8 @@ export default function HomeScreen() {
         },
       );
       storeItinerary(itinerary);
-      router.push({ pathname: '/itinerary', params: { goals: JSON.stringify(goals) } });
+      saveTrip(city.trim(), goals, itinerary); // fire-and-forget
+      router.push({ pathname: '/itinerary', params: { goals: JSON.stringify(goals), city: city.trim() } });
     } catch (e: any) {
       const msg = e?.message || '';
       setError(msg.includes('504') || msg.includes('Gateway') || msg.includes('mirrors failed')
@@ -225,6 +226,10 @@ export default function HomeScreen() {
       <View style={styles.heroContainer}>
         <View style={styles.glow1} pointerEvents="none" />
         <View style={styles.glow2} pointerEvents="none" />
+
+        <TouchableOpacity style={styles.historyBtn} onPress={() => router.push('/history' as any)}>
+          <Text style={styles.historyBtnText}>Saved</Text>
+        </TouchableOpacity>
 
         <Animated.View style={{
           opacity: heroTitleAnim,
@@ -421,6 +426,14 @@ const styles = StyleSheet.create({
 
   // ── Hero ──
   heroContainer: { paddingBottom: 16, marginBottom: 4, overflow: 'hidden' },
+  historyBtn: {
+    position: 'absolute', top: 0, right: 0,
+    paddingHorizontal: 12, paddingVertical: 6,
+    backgroundColor: 'rgba(255,255,255,0.06)',
+    borderRadius: 100, borderWidth: 1, borderColor: 'rgba(255,255,255,0.10)',
+    zIndex: 2,
+  },
+  historyBtnText: { color: 'rgba(255,255,255,0.5)', fontSize: 12, fontWeight: '500' },
   glow1: {
     position: 'absolute', top: -30, left: -60,
     width: 260, height: 260, borderRadius: 130,

@@ -3,10 +3,10 @@ import { useState, useRef, useEffect, useCallback } from 'react';
 import {
   View, Text, ScrollView, TouchableOpacity,
   StyleSheet, SafeAreaView, Dimensions, Platform, Animated, Image,
-  LayoutAnimation, UIManager,
+  LayoutAnimation, UIManager, Share,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Itinerary, Day, Stop, FeatureExplanation, submitFeedback, getStoredItinerary } from '../services/api';
+import { Itinerary, Day, Stop, FeatureExplanation, submitFeedback, getStoredItinerary, formatItineraryAsText } from '../services/api';
 
 if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
   UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -327,10 +327,11 @@ function MapScreen({ itinerary }: { itinerary: Itinerary }) {
 // ── Main screen ───────────────────────────────────────────────────────────────
 
 export default function ItineraryScreen() {
-  const { goals: goalsParam } = useLocalSearchParams<{ goals: string }>();
+  const { goals: goalsParam, city: cityParam } = useLocalSearchParams<{ goals: string; city: string }>();
   const router = useRouter();
   const itinerary = getStoredItinerary();
   const goals: string[] = goalsParam ? JSON.parse(goalsParam) : [];
+  const city = cityParam ?? 'My Trip';
   const [view, setView] = useState<'list' | 'map'>('list');
   const { show: showToast, Toast } = useToast();
 
@@ -370,7 +371,13 @@ export default function ItineraryScreen() {
           <Text style={styles.backChevron}>‹</Text>
           <Text style={styles.backLabel}>Back</Text>
         </TouchableOpacity>
-        <Text style={styles.screenTitle}>Your Trip</Text>
+        <Text style={styles.screenTitle}>{city}</Text>
+        <TouchableOpacity
+          style={styles.shareBtn}
+          onPress={() => Share.share({ message: formatItineraryAsText(city, itinerary) })}
+        >
+          <Text style={styles.shareBtnText}>Share</Text>
+        </TouchableOpacity>
         <View style={styles.viewTogglePill}>
           <Animated.View style={[styles.pillSelector, {
             transform: [{ translateX: toggleSlide.interpolate({ inputRange: [0, 1], outputRange: [2, SEGMENT_WIDTH + 2] }) }],
@@ -423,6 +430,13 @@ const styles = StyleSheet.create({
   backChevron: { color: 'rgba(255,255,255,0.4)', fontSize: 22, fontWeight: '300', lineHeight: 26 },
   backLabel:   { color: 'rgba(255,255,255,0.4)', fontSize: 14 },
   screenTitle: { color: '#fff', fontSize: 16, fontWeight: '700', letterSpacing: 0.3 },
+
+  shareBtn: {
+    paddingHorizontal: 12, paddingVertical: 6,
+    backgroundColor: 'rgba(255,255,255,0.06)',
+    borderRadius: 100, borderWidth: 1, borderColor: 'rgba(255,255,255,0.10)',
+  },
+  shareBtnText: { color: 'rgba(255,255,255,0.5)', fontSize: 12, fontWeight: '500' },
 
   // Pill toggle
   viewTogglePill: {

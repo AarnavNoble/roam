@@ -1,4 +1,5 @@
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const BASE_URL = process.env.EXPO_PUBLIC_API_URL || 'http://localhost:8000/api';
 
@@ -62,6 +63,50 @@ export interface PipelineProgress {
 let _lastItinerary: Itinerary | null = null;
 export function storeItinerary(it: Itinerary) { _lastItinerary = it; }
 export function getStoredItinerary(): Itinerary | null { return _lastItinerary; }
+
+// ── Saved trips ───────────────────────────────────────────────────────────────
+
+const SAVED_KEY = 'roam_saved_trips';
+
+export interface SavedTrip {
+  id: string;
+  city: string;
+  goals: string[];
+  savedAt: number; // timestamp
+  itinerary: Itinerary;
+}
+
+export async function getSavedTrips(): Promise<SavedTrip[]> {
+  try {
+    const raw = await AsyncStorage.getItem(SAVED_KEY);
+    return raw ? JSON.parse(raw) : [];
+  } catch { return []; }
+}
+
+export async function saveTrip(city: string, goals: string[], itinerary: Itinerary): Promise<SavedTrip> {
+  const trips = await getSavedTrips();
+  const trip: SavedTrip = { id: Date.now().toString(), city, goals, savedAt: Date.now(), itinerary };
+  await AsyncStorage.setItem(SAVED_KEY, JSON.stringify([trip, ...trips].slice(0, 20)));
+  return trip;
+}
+
+export async function deleteTrip(id: string): Promise<void> {
+  const trips = await getSavedTrips();
+  await AsyncStorage.setItem(SAVED_KEY, JSON.stringify(trips.filter(t => t.id !== id)));
+}
+
+export function formatItineraryAsText(city: string, itinerary: Itinerary): string {
+  const lines: string[] = [`🗺️ ${city} — Roam Itinerary`, '', itinerary.overview, ''];
+  for (const day of itinerary.days) {
+    lines.push(`Day ${day.day}: ${day.theme}`);
+    for (const stop of day.stops) {
+      lines.push(`  ${stop.arrival_time}  ${stop.name} (${stop.duration_min} min)`);
+      if (stop.tip) lines.push(`  💡 ${stop.tip}`);
+    }
+    lines.push('');
+  }
+  return lines.join('\n');
+}
 
 export async function generateItinerary(req: TripRequest): Promise<Itinerary> {
   const res = await api.post<Itinerary>('/itinerary', req);
