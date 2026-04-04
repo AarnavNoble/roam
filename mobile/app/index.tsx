@@ -65,6 +65,8 @@ export default function HomeScreen() {
   const [currentStep, setCurrentStep] = useState<string | null>(null);
   const [completedSteps, setCompletedSteps] = useState<string[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [cityError, setCityError] = useState<string | null>(null);
+  const [locationError, setLocationError] = useState<string | null>(null);
 
   // ── Animations ───────────────────────────────────────────────────────────────
 
@@ -121,6 +123,23 @@ export default function HomeScreen() {
     animateChip(key); setter(value);
   };
 
+  const validateLocation = (value: string): string | null => {
+    const v = value.trim();
+    if (!v) return null; // empty handled separately on submit
+    if (v.length < 3) return 'Too short — enter a real place';
+    if (!/[a-zA-Z]/.test(v)) return 'Must contain letters';
+    if (!/[aeiouAEIOU]/.test(v)) return 'Doesn\'t look like a real place';
+    // Check for keyboard mashing: more than 40% repeated single char
+    const freq = [...v.replace(/\s/g, '')].reduce<Record<string, number>>((acc, c) => {
+      acc[c.toLowerCase()] = (acc[c.toLowerCase()] || 0) + 1; return acc;
+    }, {});
+    const maxFreq = Math.max(...Object.values(freq));
+    if (maxFreq / v.replace(/\s/g, '').length > 0.5) return 'Doesn\'t look like a real place';
+    // Check consonant runs — 5+ consonants in a row is gibberish
+    if (/[^aeiou\s\d]{5,}/i.test(v)) return 'Doesn\'t look like a real place';
+    return null;
+  };
+
   const focusInput = (anim: Animated.Value) =>
     Animated.timing(anim, { toValue: 1, duration: 200, useNativeDriver: false }).start();
   const blurInput = (anim: Animated.Value) =>
@@ -139,7 +158,11 @@ export default function HomeScreen() {
   const handleGenerate = async () => {
     if (!city.trim())          { setError('Enter a city or area'); return; }
     if (!startLocation.trim()) { setError('Enter where you\'re starting from'); return; }
-    if (goals.length === 0)    { setError('Pick at least one interest'); return; }
+    const cityErr = validateLocation(city);
+    const locErr  = validateLocation(startLocation);
+    if (cityErr)    { setCityError(cityErr); setError('Fix the fields above'); return; }
+    if (locErr)     { setLocationError(locErr); setError('Fix the fields above'); return; }
+    if (goals.length === 0) { setError('Pick at least one interest'); return; }
     setLoading(true); setCurrentStep(null); setCompletedSteps([]); setError(null);
     try {
       const itinerary = await generateItineraryStreaming(
@@ -230,10 +253,13 @@ export default function HomeScreen() {
           style={styles.inputInner}
           placeholder="Paris, Tokyo, New York..."
           placeholderTextColor="rgba(255,255,255,0.25)"
-          value={city} onChangeText={setCity}
-          onFocus={() => focusInput(cityBorderAnim)} onBlur={() => blurInput(cityBorderAnim)}
+          value={city} onChangeText={v => { setCity(v); if (cityError) setCityError(validateLocation(v)); }}
+          onFocus={() => focusInput(cityBorderAnim)}
+          onBlur={() => { blurInput(cityBorderAnim); setCityError(validateLocation(city)); }}
         />
       </Animated.View>
+
+      {cityError && <Text style={styles.fieldError}>{cityError}</Text>}
 
       <Text style={styles.label}>Starting from</Text>
       <Animated.View style={[styles.inputWrapper, { borderColor: inputBorder(locationBorderAnim) }]}>
@@ -241,10 +267,13 @@ export default function HomeScreen() {
           style={styles.inputInner}
           placeholder="Montmartre, Shibuya station, Times Square..."
           placeholderTextColor="rgba(255,255,255,0.25)"
-          value={startLocation} onChangeText={setStartLocation}
-          onFocus={() => focusInput(locationBorderAnim)} onBlur={() => blurInput(locationBorderAnim)}
+          value={startLocation} onChangeText={v => { setStartLocation(v); if (locationError) setLocationError(validateLocation(v)); }}
+          onFocus={() => focusInput(locationBorderAnim)}
+          onBlur={() => { blurInput(locationBorderAnim); setLocationError(validateLocation(startLocation)); }}
         />
       </Animated.View>
+
+      {locationError && <Text style={styles.fieldError}>{locationError}</Text>}
 
       <Text style={styles.label}>Interests</Text>
       <View style={styles.row}>{GOAL_OPTIONS.map(renderGoalChip)}</View>
@@ -443,6 +472,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255,255,255,0.04)', borderWidth: 1, borderColor: 'rgba(255,255,255,0.08)',
   },
   optionRowSelected: { backgroundColor: 'rgba(255,255,255,0.10)', borderColor: 'rgba(255,255,255,0.25)' },
+
+  fieldError: { color: '#EF4444', fontSize: 12, marginTop: 6, marginLeft: 2, opacity: 0.85 },
 
   // ── Error ──
   errorBox: {
