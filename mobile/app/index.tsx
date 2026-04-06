@@ -6,7 +6,9 @@ import {
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { generateItineraryStreaming, storeItinerary, saveTrip, TripRequest, PipelineProgress } from '../services/api';
+import { ONBOARDING_KEY } from './onboarding';
 
 if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
   UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -83,6 +85,13 @@ export default function HomeScreen() {
   const loadingPulseAnim   = useRef(new Animated.Value(1)).current;
   const stepSlideAnims     = useRef(PIPELINE_STEPS.map(() => new Animated.Value(0))).current;
   const progressBarAnim    = useRef(new Animated.Value(0)).current;
+
+  // Redirect to onboarding on first launch
+  useEffect(() => {
+    AsyncStorage.getItem(ONBOARDING_KEY).then(val => {
+      if (!val) router.replace('/onboarding' as any);
+    });
+  }, []);
 
   useEffect(() => {
     Animated.stagger(80, [
