@@ -6,7 +6,7 @@ import {
   LayoutAnimation, UIManager, Share,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Itinerary, Day, Stop, FeatureExplanation, submitFeedback, getStoredItinerary, formatItineraryAsText } from '../services/api';
+import { Itinerary, Day, Stop, FeatureExplanation, WeatherDay, submitFeedback, getStoredItinerary, formatItineraryAsText, fetchWeather } from '../services/api';
 
 if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
   UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -176,8 +176,8 @@ function StopCard({ stop, goals, explanation, onRetrained, index, isLast, dayCol
   );
 }
 
-function DaySection({ day, goals, explanations, onRetrained }: {
-  day: Day; goals: string[]; explanations?: Record<string, FeatureExplanation>; onRetrained?: () => void;
+function DaySection({ day, goals, explanations, onRetrained, weather }: {
+  day: Day; goals: string[]; explanations?: Record<string, FeatureExplanation>; onRetrained?: () => void; weather?: WeatherDay;
 }) {
   const dayColor = DAY_COLORS[(day.day - 1) % DAY_COLORS.length];
   return (
@@ -187,8 +187,15 @@ function DaySection({ day, goals, explanations, onRetrained }: {
           <Text style={[styles.dayNumber, { color: dayColor }]}>Day {day.day}</Text>
           <Text style={styles.dayTheme}>{day.theme}</Text>
         </View>
-        <View style={[styles.dayStopCount, { backgroundColor: dayColor + '18', borderColor: dayColor + '30' }]}>
-          <Text style={[styles.dayStopCountText, { color: dayColor }]}>{day.stops.length} stops</Text>
+        <View style={styles.dayHeaderRight}>
+          {weather && (
+            <View style={[styles.weatherBadge, { backgroundColor: weather.color + '15', borderColor: weather.color + '30' }]}>
+              <Text style={[styles.weatherText, { color: weather.color }]}>{weather.tempMax}° · {weather.label}</Text>
+            </View>
+          )}
+          <View style={[styles.dayStopCount, { backgroundColor: dayColor + '18', borderColor: dayColor + '30' }]}>
+            <Text style={[styles.dayStopCountText, { color: dayColor }]}>{day.stops.length} stops</Text>
+          </View>
         </View>
       </View>
 
@@ -333,6 +340,7 @@ export default function ItineraryScreen() {
   const goals: string[] = goalsParam ? JSON.parse(goalsParam) : [];
   const city = cityParam ?? 'My Trip';
   const [view, setView] = useState<'list' | 'map'>('list');
+  const [weather, setWeather] = useState<WeatherDay[]>([]);
   const { show: showToast, Toast } = useToast();
 
   const toggleSlide = useRef(new Animated.Value(0)).current;
@@ -345,6 +353,15 @@ export default function ItineraryScreen() {
   const sectionAnims = useRef((itinerary?.days ?? []).map(() => new Animated.Value(0))).current;
   const headerAnim   = useRef(new Animated.Value(0)).current;
   const overviewAnim = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    if (!itinerary) return;
+    // Fetch weather using first available stop's coords
+    const firstStop = itinerary.days.flatMap(d => d.stops).find(s => s.lat && s.lon);
+    if (firstStop) {
+      fetchWeather(firstStop.lat, firstStop.lon, itinerary.days.length).then(setWeather);
+    }
+  }, []);
 
   useEffect(() => {
     if (!itinerary) return;
@@ -412,7 +429,7 @@ export default function ItineraryScreen() {
               opacity: sectionAnims[i],
               transform: [{ translateY: sectionAnims[i].interpolate({ inputRange: [0, 1], outputRange: [20, 0] }) }],
             }}>
-              <DaySection day={day} goals={goals} explanations={itinerary.ranking_explanations} onRetrained={() => showToast('Model improved from your feedback')} />
+              <DaySection day={day} goals={goals} explanations={itinerary.ranking_explanations} onRetrained={() => showToast('Model improved from your feedback')} weather={weather[i]} />
             </Animated.View>
           ))}
         </ScrollView>
@@ -477,10 +494,13 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1, borderBottomColor: 'rgba(255,255,255,0.06)',
   },
   dayHeaderLeft: {},
+  dayHeaderRight: { flexDirection: 'row', alignItems: 'center', gap: 6 },
   dayNumber: { fontSize: 24, fontWeight: '800', letterSpacing: -0.5 },
   dayTheme:  { color: 'rgba(255,255,255,0.35)', fontSize: 14, marginTop: 2 },
   dayStopCount: { paddingHorizontal: 10, paddingVertical: 4, borderRadius: 100, borderWidth: 1 },
   dayStopCountText: { fontSize: 11, fontWeight: '600' },
+  weatherBadge: { paddingHorizontal: 9, paddingVertical: 4, borderRadius: 100, borderWidth: 1 },
+  weatherText: { fontSize: 11, fontWeight: '600' },
 
   // Timeline
   timelineRow: { flexDirection: 'row', minHeight: 80 },

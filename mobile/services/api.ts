@@ -143,6 +143,50 @@ export function formatItineraryAsText(city: string, itinerary: Itinerary): strin
   return lines.join('\n');
 }
 
+// ── Weather ───────────────────────────────────────────────────────────────────
+
+export interface WeatherDay {
+  tempMax: number;
+  code: number;
+  label: string;
+  color: string;
+}
+
+const WMO_LABELS: [number[], string, string][] = [
+  [[0],                        'Clear',         '#F59E0B'],
+  [[1, 2],                     'Partly Cloudy', '#9CA3AF'],
+  [[3],                        'Overcast',      '#6B7280'],
+  [[45, 48],                   'Foggy',         '#6B7280'],
+  [[51, 53, 55],               'Drizzle',       '#60A5FA'],
+  [[61, 63, 65],               'Rain',          '#3B82F6'],
+  [[71, 73, 75, 77],           'Snow',          '#93C5FD'],
+  [[80, 81, 82],               'Showers',       '#3B82F6'],
+  [[95, 96, 99],               'Thunderstorm',  '#8B5CF6'],
+];
+
+function wmoToLabel(code: number): { label: string; color: string } {
+  for (const [codes, label, color] of WMO_LABELS) {
+    if (codes.includes(code)) return { label, color };
+  }
+  return { label: 'Unknown', color: '#6B7280' };
+}
+
+export async function fetchWeather(lat: number, lon: number, days: number): Promise<WeatherDay[]> {
+  try {
+    const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=temperature_2m_max,weathercode&timezone=auto&forecast_days=${Math.min(days, 7)}`;
+    const res = await fetch(url);
+    if (!res.ok) return [];
+    const data = await res.json();
+    const temps: number[] = data.daily?.temperature_2m_max ?? [];
+    const codes: number[] = data.daily?.weathercode ?? [];
+    return temps.map((temp, i) => {
+      const code = codes[i] ?? 0;
+      const { label, color } = wmoToLabel(code);
+      return { tempMax: Math.round(temp), code, label, color };
+    });
+  } catch { return []; }
+}
+
 export async function generateItinerary(req: TripRequest): Promise<Itinerary> {
   const res = await api.post<Itinerary>('/itinerary', req);
   return res.data;
