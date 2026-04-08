@@ -1,0 +1,180 @@
+import { useState, useCallback } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView, ScrollView, Alert } from 'react-native';
+import { useRouter, useFocusEffect } from 'expo-router';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getSavedTrips, clearPrefs, clearAllSavedTrips, loadPrefs, UserPrefs } from '../services/api';
+import { ONBOARDING_KEY } from './onboarding';
+
+const PREFS_LABELS: Record<keyof Omit<UserPrefs, 'goals'>, string> = {
+  pace: 'Pace', budget: 'Budget', style: 'Traveling as',
+  dietary: 'Dietary', mobility: 'Walking comfort',
+  familiarity: 'Familiarity', durationHours: 'Duration', startTime: 'Start time',
+};
+
+const VALUE_LABELS: Record<string, string> = {
+  relaxed: 'Relaxed', moderate: 'Moderate', packed: 'Packed',
+  free: 'Free', budget: 'Budget', mid: 'Mid', splurge: 'Splurge',
+  solo: 'Solo', couple: 'Couple', family: 'Family', group: 'Group',
+  none: 'None', vegetarian: 'Vegetarian', vegan: 'Vegan', halal: 'Halal', kosher: 'Kosher',
+  easy: 'Easy', active: 'Active',
+  first_time: 'First time', returning: 'Returning',
+  morning: 'Morning', afternoon: 'Afternoon', evening: 'Evening',
+};
+
+export default function SettingsScreen() {
+  const router = useRouter();
+  const [tripCount, setTripCount] = useState(0);
+  const [prefs, setPrefs] = useState<Partial<UserPrefs>>({});
+
+  useFocusEffect(useCallback(() => {
+    getSavedTrips().then(t => setTripCount(t.length));
+    loadPrefs().then(setPrefs);
+  }, []));
+
+  const confirmClearTrips = () => {
+    Alert.alert('Clear saved trips', 'This will delete all your saved itineraries. This can\'t be undone.', [
+      { text: 'Cancel', style: 'cancel' },
+      { text: 'Clear', style: 'destructive', onPress: async () => {
+        await clearAllSavedTrips();
+        setTripCount(0);
+      }},
+    ]);
+  };
+
+  const confirmResetPrefs = () => {
+    Alert.alert('Reset preferences', 'Your saved defaults will be cleared and reset on next trip.', [
+      { text: 'Cancel', style: 'cancel' },
+      { text: 'Reset', style: 'destructive', onPress: async () => {
+        await clearPrefs();
+        setPrefs({});
+      }},
+    ]);
+  };
+
+  const confirmResetOnboarding = () => {
+    Alert.alert('Replay onboarding', 'You\'ll see the intro screens next time you open the app.', [
+      { text: 'Cancel', style: 'cancel' },
+      { text: 'Reset', onPress: async () => {
+        await AsyncStorage.removeItem(ONBOARDING_KEY);
+      }},
+    ]);
+  };
+
+  const hasPrefs = Object.keys(prefs).length > 0;
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <View style={styles.topBar}>
+        <TouchableOpacity onPress={() => router.back()} style={styles.backBtn}>
+          <Text style={styles.backChevron}>‹</Text>
+          <Text style={styles.backLabel}>Back</Text>
+        </TouchableOpacity>
+        <Text style={styles.title}>Settings</Text>
+        <View style={{ width: 56 }} />
+      </View>
+
+      <ScrollView contentContainerStyle={styles.scroll}>
+
+        {/* Saved defaults */}
+        {hasPrefs && (
+          <View style={styles.section}>
+            <Text style={styles.sectionLabel}>Your defaults</Text>
+            <View style={styles.card}>
+              {(Object.keys(PREFS_LABELS) as (keyof typeof PREFS_LABELS)[]).map((key, i, arr) => {
+                const raw = prefs[key];
+                if (raw === undefined) return null;
+                const display = typeof raw === 'number'
+                  ? raw === 10 ? 'Full day' : `${raw}h`
+                  : VALUE_LABELS[raw as string] ?? raw;
+                return (
+                  <View key={key} style={[styles.row, i < arr.length - 1 && styles.rowBorder]}>
+                    <Text style={styles.rowLabel}>{PREFS_LABELS[key]}</Text>
+                    <Text style={styles.rowValue}>{display as string}</Text>
+                  </View>
+                );
+              })}
+              {prefs.goals && prefs.goals.length > 0 && (
+                <View style={[styles.row, styles.rowBorder]}>
+                  <Text style={styles.rowLabel}>Interests</Text>
+                  <Text style={styles.rowValue}>{prefs.goals.map(g => g[0].toUpperCase() + g.slice(1)).join(', ')}</Text>
+                </View>
+              )}
+            </View>
+            <TouchableOpacity style={styles.dangerRow} onPress={confirmResetPrefs}>
+              <Text style={styles.dangerText}>Reset defaults</Text>
+            </TouchableOpacity>
+          </View>
+        )}
+
+        {/* Saved trips */}
+        <View style={styles.section}>
+          <Text style={styles.sectionLabel}>Saved trips</Text>
+          <View style={styles.card}>
+            <View style={styles.row}>
+              <Text style={styles.rowLabel}>Trips saved</Text>
+              <Text style={styles.rowValue}>{tripCount}</Text>
+            </View>
+          </View>
+          {tripCount > 0 && (
+            <TouchableOpacity style={styles.dangerRow} onPress={confirmClearTrips}>
+              <Text style={styles.dangerText}>Clear all saved trips</Text>
+            </TouchableOpacity>
+          )}
+        </View>
+
+        {/* App */}
+        <View style={styles.section}>
+          <Text style={styles.sectionLabel}>App</Text>
+          <View style={styles.card}>
+            <TouchableOpacity style={[styles.row]} onPress={confirmResetOnboarding}>
+              <Text style={styles.rowLabel}>Replay intro</Text>
+              <Text style={styles.rowChevron}>›</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+
+        <Text style={styles.version}>roam · built with ❤️</Text>
+
+      </ScrollView>
+    </SafeAreaView>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: { flex: 1, backgroundColor: '#09090b' },
+
+  topBar: {
+    flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',
+    paddingHorizontal: 20, paddingVertical: 14,
+    borderBottomWidth: 1, borderBottomColor: 'rgba(255,255,255,0.06)',
+  },
+  backBtn:     { flexDirection: 'row', alignItems: 'center', gap: 2, width: 56 },
+  backChevron: { color: 'rgba(255,255,255,0.4)', fontSize: 22, fontWeight: '300', lineHeight: 26 },
+  backLabel:   { color: 'rgba(255,255,255,0.4)', fontSize: 14 },
+  title:       { color: '#fff', fontSize: 16, fontWeight: '700', letterSpacing: 0.3 },
+
+  scroll: { padding: 20, paddingBottom: 60, gap: 8 },
+
+  section:      { gap: 4, marginBottom: 16 },
+  sectionLabel: { fontSize: 11, color: 'rgba(255,255,255,0.3)', textTransform: 'uppercase', letterSpacing: 1.2, marginBottom: 4, marginLeft: 4 },
+
+  card: {
+    backgroundColor: '#111113', borderRadius: 14,
+    borderWidth: 1, borderColor: 'rgba(255,255,255,0.07)',
+    borderTopColor: 'rgba(255,255,255,0.10)',
+    overflow: 'hidden',
+  },
+  row: {
+    flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',
+    paddingHorizontal: 16, paddingVertical: 13,
+  },
+  rowBorder:  { borderBottomWidth: 1, borderBottomColor: 'rgba(255,255,255,0.05)' },
+  rowLabel:   { color: 'rgba(255,255,255,0.7)', fontSize: 14 },
+  rowValue:   { color: 'rgba(255,255,255,0.35)', fontSize: 14 },
+  rowChevron: { color: 'rgba(255,255,255,0.25)', fontSize: 18 },
+
+  dangerRow:  { paddingHorizontal: 4, paddingVertical: 8 },
+  dangerText: { color: '#EF4444', fontSize: 13, opacity: 0.8 },
+
+  version: { color: 'rgba(255,255,255,0.15)', fontSize: 12, textAlign: 'center', marginTop: 16 },
+});

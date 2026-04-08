@@ -7,6 +7,7 @@ export default function Layout() {
       <Stack.Screen name="itinerary" options={{ presentation: 'card' }} />
       <Stack.Screen name="history"    options={{ presentation: 'card' }} />
       <Stack.Screen name="onboarding" options={{ presentation: 'card' }} />
+      <Stack.Screen name="settings"   options={{ presentation: 'card' }} />
     </Stack>
   );
 }

@@ -7,7 +7,7 @@ import {
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { generateItineraryStreaming, storeItinerary, saveTrip, TripRequest, PipelineProgress } from '../services/api';
+import { generateItineraryStreaming, storeItinerary, saveTrip, loadPrefs, savePrefs, TripRequest, PipelineProgress } from '../services/api';
 import { ONBOARDING_KEY } from './onboarding';
 
 if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
@@ -86,10 +86,21 @@ export default function HomeScreen() {
   const stepSlideAnims     = useRef(PIPELINE_STEPS.map(() => new Animated.Value(0))).current;
   const progressBarAnim    = useRef(new Animated.Value(0)).current;
 
-  // Redirect to onboarding on first launch
+  // Redirect to onboarding on first launch, then restore saved prefs
   useEffect(() => {
     AsyncStorage.getItem(ONBOARDING_KEY).then(val => {
-      if (!val) router.replace('/onboarding' as any);
+      if (!val) { router.replace('/onboarding' as any); return; }
+      loadPrefs().then(p => {
+        if (p.pace)         setPace(p.pace);
+        if (p.budget)       setBudget(p.budget);
+        if (p.style)        setStyle(p.style);
+        if (p.dietary)      setDietary(p.dietary);
+        if (p.mobility)     setMobility(p.mobility);
+        if (p.familiarity)  setFamiliarity(p.familiarity);
+        if (p.durationHours) setDurationHours(p.durationHours);
+        if (p.startTime)    setStartTime(p.startTime);
+        if (p.goals?.length) setGoals(p.goals);
+      });
     });
   }, []);
 
@@ -181,7 +192,8 @@ export default function HomeScreen() {
         },
       );
       storeItinerary(itinerary);
-      saveTrip(city.trim(), goals, itinerary); // fire-and-forget
+      saveTrip(city.trim(), goals, itinerary);
+      savePrefs({ pace, budget, style, dietary, mobility, familiarity, durationHours, startTime, goals });
       router.push({ pathname: '/itinerary', params: { goals: JSON.stringify(goals), city: city.trim() } });
     } catch (e: any) {
       const msg = e?.message || '';
@@ -236,9 +248,14 @@ export default function HomeScreen() {
         <View style={styles.glow1} pointerEvents="none" />
         <View style={styles.glow2} pointerEvents="none" />
 
-        <TouchableOpacity style={styles.historyBtn} onPress={() => router.push('/history' as any)}>
-          <Text style={styles.historyBtnText}>Saved</Text>
-        </TouchableOpacity>
+        <View style={styles.heroBtns}>
+          <TouchableOpacity style={styles.heroBtn} onPress={() => router.push('/history' as any)}>
+            <Text style={styles.heroBtnText}>Saved</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.heroBtn} onPress={() => router.push('/settings' as any)}>
+            <Text style={styles.heroBtnText}>⚙</Text>
+          </TouchableOpacity>
+        </View>
 
         <Animated.View style={{
           opacity: heroTitleAnim,
@@ -435,14 +452,16 @@ const styles = StyleSheet.create({
 
   // ── Hero ──
   heroContainer: { paddingBottom: 16, marginBottom: 4, overflow: 'hidden' },
-  historyBtn: {
+  heroBtns: {
     position: 'absolute', top: 0, right: 0,
+    flexDirection: 'row', gap: 8, zIndex: 2,
+  },
+  heroBtn: {
     paddingHorizontal: 12, paddingVertical: 6,
     backgroundColor: 'rgba(255,255,255,0.06)',
     borderRadius: 100, borderWidth: 1, borderColor: 'rgba(255,255,255,0.10)',
-    zIndex: 2,
   },
-  historyBtnText: { color: 'rgba(255,255,255,0.5)', fontSize: 12, fontWeight: '500' },
+  heroBtnText: { color: 'rgba(255,255,255,0.5)', fontSize: 12, fontWeight: '500' },
   glow1: {
     position: 'absolute', top: -30, left: -60,
     width: 260, height: 260, borderRadius: 130,

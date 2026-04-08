@@ -95,6 +95,41 @@ export async function deleteTrip(id: string): Promise<void> {
   await AsyncStorage.setItem(SAVED_KEY, JSON.stringify(trips.filter(t => t.id !== id)));
 }
 
+// ── User preferences ─────────────────────────────────────────────────────────
+
+const PREFS_KEY = 'roam_user_prefs';
+
+export interface UserPrefs {
+  pace: TripRequest['pace'];
+  budget: TripRequest['budget'];
+  style: TripRequest['style'];
+  dietary: TripRequest['dietary'];
+  mobility: TripRequest['mobility'];
+  familiarity: TripRequest['familiarity'];
+  durationHours: number;
+  startTime: TripRequest['start_time'];
+  goals: string[];
+}
+
+export async function loadPrefs(): Promise<Partial<UserPrefs>> {
+  try {
+    const raw = await AsyncStorage.getItem(PREFS_KEY);
+    return raw ? JSON.parse(raw) : {};
+  } catch { return {}; }
+}
+
+export async function savePrefs(prefs: UserPrefs): Promise<void> {
+  try { await AsyncStorage.setItem(PREFS_KEY, JSON.stringify(prefs)); } catch {}
+}
+
+export async function clearPrefs(): Promise<void> {
+  try { await AsyncStorage.removeItem(PREFS_KEY); } catch {}
+}
+
+export async function clearAllSavedTrips(): Promise<void> {
+  try { await AsyncStorage.removeItem(SAVED_KEY); } catch {}
+}
+
 export function formatItineraryAsText(city: string, itinerary: Itinerary): string {
   const lines: string[] = [`🗺️ ${city} — Roam Itinerary`, '', itinerary.overview, ''];
   for (const day of itinerary.days) {
