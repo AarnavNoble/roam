@@ -343,12 +343,17 @@ export default function ItineraryScreen() {
   };
 
   const sectionAnims = useRef((itinerary?.days ?? []).map(() => new Animated.Value(0))).current;
+  const headerAnim   = useRef(new Animated.Value(0)).current;
+  const overviewAnim = useRef(new Animated.Value(0)).current;
+
   useEffect(() => {
     if (!itinerary) return;
-    const t = setTimeout(() => {
-      Animated.stagger(80, sectionAnims.map(a => Animated.timing(a, { toValue: 1, duration: 450, useNativeDriver: true }))).start();
-    }, 100);
-    return () => clearTimeout(t);
+    // Header fades in first, then overview, then sections stagger
+    Animated.sequence([
+      Animated.timing(headerAnim,   { toValue: 1, duration: 220, useNativeDriver: true }),
+      Animated.timing(overviewAnim, { toValue: 1, duration: 260, useNativeDriver: true }),
+      Animated.stagger(80, sectionAnims.map(a => Animated.timing(a, { toValue: 1, duration: 420, useNativeDriver: true }))),
+    ]).start();
   }, []);
 
   if (!itinerary) {
@@ -366,7 +371,10 @@ export default function ItineraryScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.topBar}>
+      <Animated.View style={[styles.topBar, {
+        opacity: headerAnim,
+        transform: [{ translateY: headerAnim.interpolate({ inputRange: [0, 1], outputRange: [-8, 0] }) }],
+      }]}>
         <TouchableOpacity onPress={() => router.back()} style={styles.backBtn}>
           <Text style={styles.backChevron}>‹</Text>
           <Text style={styles.backLabel}>Back</Text>
@@ -389,13 +397,16 @@ export default function ItineraryScreen() {
             <Text style={[styles.pillOptionText, view === 'map' && styles.pillOptionTextActive]}>Map</Text>
           </TouchableOpacity>
         </View>
-      </View>
+      </Animated.View>
 
       {view === 'list' ? (
         <ScrollView contentContainerStyle={styles.scroll}>
-          <View style={styles.overviewAccent}>
+          <Animated.View style={[styles.overviewAccent, {
+            opacity: overviewAnim,
+            transform: [{ translateY: overviewAnim.interpolate({ inputRange: [0, 1], outputRange: [10, 0] }) }],
+          }]}>
             <Text style={styles.overview}>{itinerary.overview}</Text>
-          </View>
+          </Animated.View>
           {itinerary.days.map((day, i) => (
             <Animated.View key={day.day} style={{
               opacity: sectionAnims[i],

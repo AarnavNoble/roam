@@ -2,12 +2,52 @@ import { Stack } from 'expo-router';
 
 export default function Layout() {
   return (
-    <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: '#0f0f0f' } }}>
+    <Stack
+      screenOptions={{
+        headerShown: false,
+        contentStyle: { backgroundColor: '#09090b' },
+        gestureEnabled: true,
+        fullScreenGestureEnabled: true,
+        animationDuration: 280,
+      }}
+    >
       <Stack.Screen name="index" />
-      <Stack.Screen name="itinerary" options={{ presentation: 'card' }} />
-      <Stack.Screen name="history"    options={{ presentation: 'card' }} />
-      <Stack.Screen name="onboarding" options={{ presentation: 'card' }} />
-      <Stack.Screen name="settings"   options={{ presentation: 'card' }} />
+
+      {/* Itinerary slides up from bottom — feels like revealing a result */}
+      <Stack.Screen
+        name="itinerary"
+        options={{
+          animation: 'slide_from_bottom',
+          animationDuration: 380,
+          gestureDirection: 'vertical',
+        }}
+      />
+
+      {/* History + Settings slide in from the right */}
+      <Stack.Screen
+        name="history"
+        options={{
+          animation: 'slide_from_right',
+          animationDuration: 260,
+        }}
+      />
+      <Stack.Screen
+        name="settings"
+        options={{
+          animation: 'slide_from_right',
+          animationDuration: 260,
+        }}
+      />
+
+      {/* Onboarding fades in — first launch shouldn't feel like navigation */}
+      <Stack.Screen
+        name="onboarding"
+        options={{
+          animation: 'fade',
+          animationDuration: 320,
+          gestureEnabled: false,
+        }}
+      />
     </Stack>
   );
 }

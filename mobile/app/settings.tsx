@@ -1,5 +1,5 @@
-import { useState, useCallback } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView, ScrollView, Alert } from 'react-native';
+import { useState, useCallback, useRef, useEffect } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView, ScrollView, Alert, Animated } from 'react-native';
 import { useRouter, useFocusEffect } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getSavedTrips, clearPrefs, clearAllSavedTrips, loadPrefs, UserPrefs } from '../services/api';
@@ -25,6 +25,15 @@ export default function SettingsScreen() {
   const router = useRouter();
   const [tripCount, setTripCount] = useState(0);
   const [prefs, setPrefs] = useState<Partial<UserPrefs>>({});
+  const fadeAnim  = useRef(new Animated.Value(0)).current;
+  const slideAnim = useRef(new Animated.Value(16)).current;
+
+  useEffect(() => {
+    Animated.parallel([
+      Animated.timing(fadeAnim,  { toValue: 1, duration: 260, useNativeDriver: true }),
+      Animated.timing(slideAnim, { toValue: 0, duration: 280, useNativeDriver: true }),
+    ]).start();
+  }, []);
 
   useFocusEffect(useCallback(() => {
     getSavedTrips().then(t => setTripCount(t.length));
@@ -73,7 +82,7 @@ export default function SettingsScreen() {
         <View style={{ width: 56 }} />
       </View>
 
-      <ScrollView contentContainerStyle={styles.scroll}>
+      <Animated.ScrollView contentContainerStyle={styles.scroll} style={{ opacity: fadeAnim, transform: [{ translateY: slideAnim }] }}>
 
         {/* Saved defaults */}
         {hasPrefs && (
@@ -135,7 +144,7 @@ export default function SettingsScreen() {
 
         <Text style={styles.version}>roam · built with ❤️</Text>
 
-      </ScrollView>
+      </Animated.ScrollView>
     </SafeAreaView>
   );
 }

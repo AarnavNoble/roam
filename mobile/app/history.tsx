@@ -1,5 +1,5 @@
-import { useState, useCallback } from 'react';
-import { View, Text, ScrollView, TouchableOpacity, StyleSheet, SafeAreaView } from 'react-native';
+import { useState, useCallback, useRef, useEffect } from 'react';
+import { View, Text, ScrollView, TouchableOpacity, StyleSheet, SafeAreaView, Animated } from 'react-native';
 import { useRouter, useFocusEffect } from 'expo-router';
 import { SavedTrip, getSavedTrips, deleteTrip, storeItinerary } from '../services/api';
 
@@ -20,6 +20,15 @@ function timeAgo(ts: number): string {
 export default function HistoryScreen() {
   const router = useRouter();
   const [trips, setTrips] = useState<SavedTrip[]>([]);
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+  const slideAnim = useRef(new Animated.Value(16)).current;
+
+  useEffect(() => {
+    Animated.parallel([
+      Animated.timing(fadeAnim,  { toValue: 1, duration: 260, useNativeDriver: true }),
+      Animated.timing(slideAnim, { toValue: 0, duration: 280, useNativeDriver: true }),
+    ]).start();
+  }, []);
 
   useFocusEffect(useCallback(() => {
     getSavedTrips().then(setTrips);
@@ -46,6 +55,7 @@ export default function HistoryScreen() {
         <View style={{ width: 56 }} />
       </View>
 
+      <Animated.View style={{ flex: 1, opacity: fadeAnim, transform: [{ translateY: slideAnim }] }}>
       {trips.length === 0 ? (
         <View style={styles.empty}>
           <Text style={styles.emptyIcon}>🗺️</Text>
@@ -93,6 +103,7 @@ export default function HistoryScreen() {
           })}
         </ScrollView>
       )}
+      </Animated.View>
     </SafeAreaView>
   );
 }
