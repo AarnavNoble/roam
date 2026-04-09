@@ -53,6 +53,9 @@ export default function HomeScreen() {
 
   const [city, setCity] = useState('');
   const [startLocation, setStartLocation] = useState('');
+  const [tripDate, setTripDate] = useState<Date>(() => {
+    const d = new Date(); d.setHours(0, 0, 0, 0); return d;
+  });
   const [goals, setGoals] = useState<string[]>([]);
   const [durationHours, setDurationHours] = useState<number>(6);
   const [pace, setPace] = useState<TripRequest['pace']>('moderate');
@@ -185,8 +188,9 @@ export default function HomeScreen() {
     if (goals.length === 0) { setError('Pick at least one interest'); return; }
     setLoading(true); setCurrentStep(null); setCompletedSteps([]); setError(null);
     try {
+      const isoDate = tripDate.toISOString().split('T')[0];
       const itinerary = await generateItineraryStreaming(
-        { city: city.trim(), start_location: startLocation.trim(), duration_hours: durationHours, goals, transport: 'walking', pace, budget, style, dietary, mobility, familiarity, start_time: startTime, notes: notes.trim() },
+        { city: city.trim(), start_location: startLocation.trim(), duration_hours: durationHours, goals, transport: 'walking', pace, budget, style, dietary, mobility, familiarity, start_time: startTime, notes: notes.trim(), trip_date: isoDate },
         (progress: PipelineProgress) => {
           setCurrentStep(prev => { if (prev) setCompletedSteps(c => c.includes(prev) ? c : [...c, prev]); return progress.step; });
         },
@@ -194,7 +198,7 @@ export default function HomeScreen() {
       storeItinerary(itinerary);
       saveTrip(city.trim(), goals, itinerary);
       savePrefs({ pace, budget, style, dietary, mobility, familiarity, durationHours, startTime, goals });
-      router.push({ pathname: '/itinerary', params: { goals: JSON.stringify(goals), city: city.trim() } });
+      router.push({ pathname: '/itinerary', params: { goals: JSON.stringify(goals), city: city.trim(), tripDate: tripDate.toISOString() } });
     } catch (e: any) {
       const msg = e?.message || '';
       setError(msg.includes('504') || msg.includes('Gateway') || msg.includes('mirrors failed')
@@ -305,6 +309,27 @@ export default function HomeScreen() {
       </Animated.View>
 
       {locationError && <Text style={styles.fieldError}>{locationError}</Text>}
+
+      <Text style={styles.label}>Trip date</Text>
+      <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.dateRow} contentContainerStyle={styles.dateRowContent}>
+        {Array.from({ length: 7 }, (_, i) => {
+          const d = new Date(); d.setHours(0, 0, 0, 0); d.setDate(d.getDate() + i);
+          const selected = d.toDateString() === tripDate.toDateString();
+          const dayLabel = i === 0 ? 'Today' : i === 1 ? 'Tomorrow'
+            : d.toLocaleDateString(undefined, { weekday: 'short' });
+          const dateNum = d.getDate();
+          return (
+            <TouchableOpacity
+              key={i}
+              style={[styles.dateChip, selected && styles.dateChipSelected]}
+              onPress={() => setTripDate(d)}
+            >
+              <Text style={[styles.dateChipDay, selected && styles.dateChipDaySelected]}>{dayLabel}</Text>
+              {i > 1 && <Text style={[styles.dateChipNum, selected && styles.dateChipNumSelected]}>{dateNum}</Text>}
+            </TouchableOpacity>
+          );
+        })}
+      </ScrollView>
 
       <Text style={styles.label}>Interests</Text>
       <View style={styles.row}>{GOAL_OPTIONS.map(renderGoalChip)}</View>
@@ -513,6 +538,21 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255,255,255,0.04)', borderWidth: 1, borderColor: 'rgba(255,255,255,0.08)',
   },
   optionRowSelected: { backgroundColor: 'rgba(255,255,255,0.10)', borderColor: 'rgba(255,255,255,0.25)' },
+
+  // ── Date picker ──
+  dateRow:        { marginRight: -24 },
+  dateRowContent: { gap: 8, paddingRight: 24 },
+  dateChip: {
+    alignItems: 'center', justifyContent: 'center',
+    paddingHorizontal: 16, paddingVertical: 10, borderRadius: 12, minWidth: 68,
+    backgroundColor: 'rgba(255,255,255,0.05)',
+    borderWidth: 1, borderColor: 'rgba(255,255,255,0.08)',
+  },
+  dateChipSelected:    { backgroundColor: 'rgba(255,255,255,0.12)', borderColor: 'rgba(255,255,255,0.30)' },
+  dateChipDay:         { color: 'rgba(255,255,255,0.45)', fontSize: 13 },
+  dateChipDaySelected: { color: '#fff', fontWeight: '600' },
+  dateChipNum:         { color: 'rgba(255,255,255,0.3)', fontSize: 11, marginTop: 2 },
+  dateChipNumSelected: { color: 'rgba(255,255,255,0.6)' },
 
   fieldError: { color: '#EF4444', fontSize: 12, marginTop: 6, marginLeft: 2, opacity: 0.85 },
 

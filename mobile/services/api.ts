@@ -19,6 +19,7 @@ export interface TripRequest {
   familiarity: 'first_time' | 'returning';
   start_time: 'morning' | 'afternoon' | 'evening';
   notes: string;
+  trip_date?: string; // ISO date e.g. "2026-04-12"
 }
 
 export interface Stop {
@@ -129,6 +130,54 @@ export async function clearPrefs(): Promise<void> {
 
 export async function clearAllSavedTrips(): Promise<void> {
   try { await AsyncStorage.removeItem(SAVED_KEY); } catch {}
+}
+
+export function generateICS(city: string, tripDate: Date, itinerary: Itinerary): string {
+  const pad = (n: number) => n.toString().padStart(2, '0');
+  const fmtDate = (d: Date) =>
+    `${d.getFullYear()}${pad(d.getMonth() + 1)}${pad(d.getDate())}`;
+
+  const lines: string[] = [
+    'BEGIN:VCALENDAR',
+    'VERSION:2.0',
+    'PRODID:-//Roam//Travel Itinerary//EN',
+    'CALSCALE:GREGORIAN',
+    'METHOD:PUBLISH',
+  ];
+
+  for (const day of itinerary.days) {
+    const dayDate = new Date(tripDate);
+    dayDate.setDate(dayDate.getDate() + day.day - 1);
+    const ds = fmtDate(dayDate);
+
+    for (const stop of day.stops) {
+      const [h, m] = stop.arrival_time.split(':').map(Number);
+      const startMin = h * 60 + m;
+      const endMin   = startMin + (stop.duration_min || 60);
+      const endH = Math.floor(endMin / 60) % 24;
+      const endM = endMin % 60;
+      const dtStart = `${ds}T${pad(h)}${pad(m)}00`;
+      const dtEnd   = `${ds}T${pad(endH)}${pad(endM)}00`;
+
+      const desc = (stop.description || '').replace(/\n/g, '\\n').replace(/,/g, '\\,');
+      const tip  = stop.tip ? `\\nTip: ${stop.tip.replace(/\n/g, '\\n').replace(/,/g, '\\,')}` : '';
+
+      lines.push('BEGIN:VEVENT');
+      lines.push(`DTSTART:${dtStart}`);
+      lines.push(`DTEND:${dtEnd}`);
+      lines.push(`SUMMARY:${stop.name}`);
+      lines.push(`DESCRIPTION:${desc}${tip}`);
+      if (stop.lat && stop.lon) {
+        lines.push(`GEO:${stop.lat};${stop.lon}`);
+        lines.push(`LOCATION:${stop.lat},${stop.lon}`);
+      }
+      lines.push(`CATEGORIES:${city}`);
+      lines.push('END:VEVENT');
+    }
+  }
+
+  lines.push('END:VCALENDAR');
+  return lines.join('\r\n');
 }
 
 export function formatItineraryAsText(city: string, itinerary: Itinerary): string {

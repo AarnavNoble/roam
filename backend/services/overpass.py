@@ -197,6 +197,7 @@ def fetch_pois(
     dietary: str = "none",
     visit_start_h: int = 9,
     visit_end_h: int = 23,
+    weekday: int | None = None,
 ) -> list[POI]:
     """
     Fetch POIs from Overpass API around a coordinate.
@@ -204,9 +205,11 @@ def fetch_pois(
     gets fair representation regardless of OSM node density.
     dietary: filter food POIs by diet tag (none | vegetarian | vegan | halal | kosher)
     visit_start_h / visit_end_h: trip window in hours (0-24) used to filter
-      places that are closed for the entire visit — today's weekday is assumed.
+      places that are closed for the entire visit.
+    weekday: 0=Mon…6=Sun, defaults to today if not provided.
     """
-    weekday = datetime.now().weekday()   # 0=Mon … 6=Sun
+    if weekday is None:
+        weekday = datetime.now().weekday()
     seen_ids: set[int] = set()
     all_pois: list[POI] = []
 

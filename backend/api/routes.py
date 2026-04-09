@@ -6,6 +6,7 @@ import json
 import math
 import asyncio
 import threading
+from datetime import date as _date, datetime as _datetime
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from sse_starlette.sse import EventSourceResponse
@@ -37,6 +38,16 @@ def _top_k(duration_hours: int, pace: str, n_goals: int) -> int:
     return max(n_days * base, n_goals * 2)
 
 
+def _trip_weekday(trip_date: str) -> int:
+    """Return weekday (0=Mon…6=Sun) from ISO date string, defaulting to today."""
+    if trip_date:
+        try:
+            return _datetime.fromisoformat(trip_date).weekday()
+        except ValueError:
+            pass
+    return _date.today().weekday()
+
+
 def _start_hour(start_time: str) -> int:
     return {"morning": 9, "afternoon": 13, "evening": 17}.get(start_time, 9)
 
@@ -62,6 +73,7 @@ class TripRequest(BaseModel):
     familiarity: str = "first_time"        # first_time | returning
     start_time: str = "morning"            # morning | afternoon | evening
     notes: str = ""
+    trip_date: str = ""                    # ISO date string e.g. "2026-04-12", defaults to today
 
 
 class FeedbackRequest(BaseModel):
@@ -104,6 +116,7 @@ def _run_pipeline(req: TripRequest, explain: bool = False) -> dict:
     pois = fetch_pois(
         start_lat, start_lon, categories=effective_goals, radius_m=radius_m,
         dietary=req.dietary, visit_start_h=start_h, visit_end_h=min(start_h + req.duration_hours, 23),
+        weekday=_trip_weekday(req.trip_date),
     )
     if not pois:
         raise HTTPException(status_code=404, detail=f"No POIs found near {req.start_location}")
@@ -198,6 +211,7 @@ async def create_itinerary_stream(req: TripRequest):
             pois = await asyncio.to_thread(
                 fetch_pois, start_lat, start_lon, effective_goals, radius_m,
                 req.dietary, start_h, min(start_h + req.duration_hours, 23),
+                _trip_weekday(req.trip_date),
             )
             if not pois:
                 yield {"event": "error", "data": json.dumps({"message": f"No places found near {req.start_location}"})}

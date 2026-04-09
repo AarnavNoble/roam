@@ -6,7 +6,9 @@ import {
   LayoutAnimation, UIManager, Share, Linking,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Itinerary, Day, Stop, FeatureExplanation, WeatherDay, submitFeedback, getStoredItinerary, formatItineraryAsText, fetchWeather } from '../services/api';
+import { Itinerary, Day, Stop, FeatureExplanation, WeatherDay, submitFeedback, getStoredItinerary, formatItineraryAsText, fetchWeather, generateICS } from '../services/api';
+import * as FileSystem from 'expo-file-system';
+import * as Sharing from 'expo-sharing';
 
 if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
   UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -388,11 +390,12 @@ function MapScreen({ itinerary }: { itinerary: Itinerary }) {
 // ── Main screen ───────────────────────────────────────────────────────────────
 
 export default function ItineraryScreen() {
-  const { goals: goalsParam, city: cityParam } = useLocalSearchParams<{ goals: string; city: string }>();
+  const { goals: goalsParam, city: cityParam, tripDate: tripDateParam } = useLocalSearchParams<{ goals: string; city: string; tripDate: string }>();
   const router = useRouter();
   const itinerary = getStoredItinerary();
   const goals: string[] = goalsParam ? JSON.parse(goalsParam) : [];
   const city = cityParam ?? 'My Trip';
+  const tripDate = tripDateParam ? new Date(tripDateParam) : new Date();
   const [view, setView] = useState<'list' | 'map'>('list');
   const [weather, setWeather] = useState<WeatherDay[]>([]);
   const { show: showToast, Toast } = useToast();
@@ -404,16 +407,37 @@ export default function ItineraryScreen() {
     Animated.timing(toggleSlide, { toValue: v === 'list' ? 0 : 1, duration: 200, useNativeDriver: true }).start();
   };
 
+  const exportToCalendar = async () => {
+    if (!itinerary) return;
+    const ics = generateICS(city, tripDate, itinerary);
+    if (Platform.OS === 'web') {
+      const blob = new Blob([ics], { type: 'text/calendar' });
+      const url  = URL.createObjectURL(blob);
+      const a    = document.createElement('a');
+      a.href = url; a.download = `${city.replace(/\s/g, '_')}_trip.ics`; a.click();
+      URL.revokeObjectURL(url);
+      return;
+    }
+    const path = `${FileSystem.cacheDirectory}${city.replace(/\s/g, '_')}_trip.ics`;
+    await FileSystem.writeAsStringAsync(path, ics, { encoding: FileSystem.EncodingType.UTF8 });
+    if (await Sharing.isAvailableAsync()) {
+      await Sharing.shareAsync(path, { mimeType: 'text/calendar', dialogTitle: 'Add to Calendar', UTI: 'public.calendar' });
+    }
+  };
+
   const sectionAnims = useRef((itinerary?.days ?? []).map(() => new Animated.Value(0))).current;
   const headerAnim   = useRef(new Animated.Value(0)).current;
   const overviewAnim = useRef(new Animated.Value(0)).current;
 
+  const dayOffset = Math.max(0, Math.round((tripDate.getTime() - new Date().setHours(0,0,0,0)) / 86400000));
+
   useEffect(() => {
     if (!itinerary) return;
-    // Fetch weather using first available stop's coords
     const firstStop = itinerary.days.flatMap(d => d.stops).find(s => s.lat && s.lon);
     if (firstStop) {
-      fetchWeather(firstStop.lat, firstStop.lon, itinerary.days.length).then(setWeather);
+      // Fetch enough days to cover offset + trip length (max 7 from Open-Meteo free tier)
+      const needed = Math.min(dayOffset + itinerary.days.length, 7);
+      fetchWeather(firstStop.lat, firstStop.lon, needed).then(setWeather);
     }
   }, []);
 
@@ -451,12 +475,14 @@ export default function ItineraryScreen() {
           <Text style={styles.backLabel}>Back</Text>
         </TouchableOpacity>
         <Text style={styles.screenTitle}>{city}</Text>
-        <TouchableOpacity
-          style={styles.shareBtn}
-          onPress={() => Share.share({ message: formatItineraryAsText(city, itinerary) })}
-        >
-          <Text style={styles.shareBtnText}>Share</Text>
-        </TouchableOpacity>
+        <View style={styles.topBarActions}>
+          <TouchableOpacity style={styles.shareBtn} onPress={() => Share.share({ message: formatItineraryAsText(city, itinerary) })}>
+            <Text style={styles.shareBtnText}>Share</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.shareBtn} onPress={exportToCalendar}>
+            <Text style={styles.shareBtnText}>Cal</Text>
+          </TouchableOpacity>
+        </View>
         <View style={styles.viewTogglePill}>
           <Animated.View style={[styles.pillSelector, {
             transform: [{ translateX: toggleSlide.interpolate({ inputRange: [0, 1], outputRange: [2, SEGMENT_WIDTH + 2] }) }],
@@ -476,6 +502,9 @@ export default function ItineraryScreen() {
             opacity: overviewAnim,
             transform: [{ translateY: overviewAnim.interpolate({ inputRange: [0, 1], outputRange: [10, 0] }) }],
           }]}>
+            <Text style={styles.tripDateLabel}>
+              {tripDate.toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' })}
+            </Text>
             <Text style={styles.overview}>{itinerary.overview}</Text>
           </Animated.View>
           {itinerary.days.map((day, i) => (
@@ -483,7 +512,7 @@ export default function ItineraryScreen() {
               opacity: sectionAnims[i],
               transform: [{ translateY: sectionAnims[i].interpolate({ inputRange: [0, 1], outputRange: [20, 0] }) }],
             }}>
-              <DaySection day={day} goals={goals} explanations={itinerary.ranking_explanations} onRetrained={() => showToast('Model improved from your feedback')} weather={weather[i]} />
+              <DaySection day={day} goals={goals} explanations={itinerary.ranking_explanations} onRetrained={() => showToast('Model improved from your feedback')} weather={weather[dayOffset + i]} />
             </Animated.View>
           ))}
         </ScrollView>
@@ -513,6 +542,7 @@ const styles = StyleSheet.create({
   backLabel:   { color: 'rgba(255,255,255,0.4)', fontSize: 14 },
   screenTitle: { color: '#fff', fontSize: 16, fontWeight: '700', letterSpacing: 0.3 },
 
+  topBarActions: { flexDirection: 'row', gap: 6 },
   shareBtn: {
     paddingHorizontal: 12, paddingVertical: 6,
     backgroundColor: 'rgba(255,255,255,0.06)',
@@ -537,8 +567,9 @@ const styles = StyleSheet.create({
 
   // List
   scroll: { padding: 20, paddingBottom: 60 },
-  overviewAccent: { borderLeftWidth: 2, borderLeftColor: 'rgba(255,255,255,0.08)', paddingLeft: 14, marginBottom: 36 },
-  overview: { color: 'rgba(255,255,255,0.55)', fontSize: 15, lineHeight: 24 },
+  overviewAccent:  { borderLeftWidth: 2, borderLeftColor: 'rgba(255,255,255,0.08)', paddingLeft: 14, marginBottom: 36 },
+  tripDateLabel:   { color: 'rgba(255,255,255,0.25)', fontSize: 12, fontWeight: '500', letterSpacing: 0.3, marginBottom: 8, textTransform: 'uppercase' },
+  overview:        { color: 'rgba(255,255,255,0.55)', fontSize: 15, lineHeight: 24 },
 
   // Day section
   daySection: { marginBottom: 48 },
