@@ -142,11 +142,19 @@ def _run_pipeline(req: TripRequest, explain: bool = False) -> dict:
 
     # Attach photos (thread should be done by now — LLM takes ~5s, photos ~3s)
     photo_thread.join(timeout=10)
+    oh_map: dict[str, str] = {
+        p["name"]: p.get("tags", {}).get("opening_hours", "")
+        for p in ranked_pois if p.get("name")
+    }
     for day in result.get("days", []):
         for stop in day.get("stops", []):
-            url = photo_map.get(stop.get("name", ""))
+            name = stop.get("name", "")
+            url = photo_map.get(name)
             if url:
                 stop["photo_url"] = url
+            oh = oh_map.get(name, "")
+            if oh:
+                stop["opening_hours"] = oh
 
     if explain:
         result["ranking_explanations"] = {
@@ -223,16 +231,24 @@ async def create_itinerary_stream(req: TripRequest):
             trip = _build_trip_dict(req, start_lat, start_lon)
             result = await asyncio.to_thread(generate_itinerary, trip, itinerary, rag_context)
 
-            # Attach photos
+            # Attach photos + opening hours
+            oh_map: dict[str, str] = {
+                p["name"]: p.get("tags", {}).get("opening_hours", "")
+                for p in ranked_pois if p.get("name")
+            }
             try:
                 photo_map = await asyncio.wait_for(photo_task, timeout=10)
-                for day in result.get("days", []):
-                    for stop in day.get("stops", []):
-                        url = photo_map.get(stop.get("name", ""))
-                        if url:
-                            stop["photo_url"] = url
             except Exception:
-                pass
+                photo_map = {}
+            for day in result.get("days", []):
+                for stop in day.get("stops", []):
+                    name = stop.get("name", "")
+                    url = photo_map.get(name)
+                    if url:
+                        stop["photo_url"] = url
+                    oh = oh_map.get(name, "")
+                    if oh:
+                        stop["opening_hours"] = oh
 
             # Attach ML metadata
             result["ranking_explanations"] = {

@@ -3,7 +3,7 @@ import { useState, useRef, useEffect, useCallback } from 'react';
 import {
   View, Text, ScrollView, TouchableOpacity,
   StyleSheet, SafeAreaView, Dimensions, Platform, Animated, Image,
-  LayoutAnimation, UIManager, Share,
+  LayoutAnimation, UIManager, Share, Linking,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Itinerary, Day, Stop, FeatureExplanation, WeatherDay, submitFeedback, getStoredItinerary, formatItineraryAsText, fetchWeather } from '../services/api';
@@ -23,6 +23,49 @@ const CATEGORY_COLORS: Record<string, string> = {
   nightlife: '#EC4899', shopping: '#F97316', adventure: '#EF4444', attraction: '#6B7280',
 };
 const DAY_COLORS = ['#3B82F6', '#10B981', '#F59E0B', '#EC4899', '#8B5CF6', '#EF4444'];
+
+// ── Helpers ───────────────────────────────────────────────────────────────────
+
+const DAY_ABBR: Record<string, string> = {
+  Mo: 'Mon', Tu: 'Tue', We: 'Wed', Th: 'Thu', Fr: 'Fri', Sa: 'Sat', Su: 'Sun',
+};
+
+function fmtTime(t: string): string {
+  const [h, m] = t.split(':').map(Number);
+  const ampm = h < 12 ? 'am' : 'pm';
+  const h12 = h === 0 ? 12 : h > 12 ? h - 12 : h;
+  return m === 0 ? `${h12}${ampm}` : `${h12}:${m.toString().padStart(2, '0')}${ampm}`;
+}
+
+function formatOpeningHours(oh: string): string {
+  if (!oh) return '';
+  if (oh.trim().toLowerCase() === '24/7') return '24/7';
+  const rules = oh.split(';').map(r => r.trim()).filter(Boolean).slice(0, 2);
+  return rules.map(rule => {
+    const m = rule.match(/^([A-Za-z]{2}(?:[-,][A-Za-z]{2})*)\s+(.+)$/);
+    const [dayPart, timePart] = m ? [m[1], m[2].trim()] : ['', rule.trim()];
+    const days = dayPart.replace(/Mo|Tu|We|Th|Fr|Sa|Su/g, k => DAY_ABBR[k] ?? k).replace(/-/g, '–');
+    if (timePart.toLowerCase() === 'off') return days ? `${days}: closed` : 'closed';
+    const tm = timePart.match(/^(\d{1,2}:\d{2})-(\d{1,2}:\d{2})$/);
+    if (tm) {
+      const range = `${fmtTime(tm[1])}–${fmtTime(tm[2])}`;
+      return days ? `${days} ${range}` : range;
+    }
+    return days ? `${days} ${timePart}` : timePart;
+  }).join(' · ');
+}
+
+function openInMaps(lat: number, lon: number, name: string) {
+  const encoded = encodeURIComponent(name);
+  const url = Platform.select({
+    ios:     `maps://maps.apple.com/?daddr=${lat},${lon}&q=${encoded}`,
+    android: `geo:${lat},${lon}?q=${encoded}`,
+    default: `https://www.google.com/maps/dir/?api=1&destination=${lat},${lon}`,
+  })!;
+  Linking.canOpenURL(url).then(can => {
+    Linking.openURL(can ? url : `https://www.google.com/maps/dir/?api=1&destination=${lat},${lon}`);
+  });
+}
 
 // ── Toast ─────────────────────────────────────────────────────────────────────
 
@@ -147,10 +190,21 @@ function StopCard({ stop, goals, explanation, onRetrained, index, isLast, dayCol
                 </View>
                 {stop.description ? <Text style={styles.stopDescPreview} numberOfLines={1}>{stop.description}</Text> : null}
               </View>
+              {stop.opening_hours ? (
+                <Text style={styles.hoursText}>{formatOpeningHours(stop.opening_hours)}</Text>
+              ) : null}
 
               {expanded && (
                 <View style={styles.stopDetails}>
                   <Text style={styles.stopDescription}>{stop.description}</Text>
+                  <TouchableOpacity
+                    style={styles.navigateBtn}
+                    onPress={() => openInMaps(stop.lat, stop.lon, stop.name)}
+                    activeOpacity={0.75}
+                  >
+                    <Text style={styles.navigateBtnText}>Navigate</Text>
+                    <Text style={styles.navigateArrow}>↗</Text>
+                  </TouchableOpacity>
                   <View style={styles.tipBox}>
                     <Text style={styles.tipLabel}>Tip</Text>
                     <Text style={styles.tipText}>{stop.tip}</Text>
@@ -534,8 +588,19 @@ const styles = StyleSheet.create({
   stopSubRow:    { flexDirection: 'row', alignItems: 'center', gap: 8, marginTop: 4, flexWrap: 'nowrap' },
   stopDescPreview: { fontSize: 12, color: 'rgba(255,255,255,0.3)', flex: 1 },
 
+  hoursText: { color: 'rgba(255,255,255,0.28)', fontSize: 11, marginTop: 6 },
+
   stopDetails:     { marginTop: 14, paddingTop: 14, borderTopWidth: 1, borderTopColor: 'rgba(255,255,255,0.06)' },
   stopDescription: { color: 'rgba(255,255,255,0.6)', fontSize: 14, lineHeight: 21, marginBottom: 12 },
+  navigateBtn: {
+    flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 6,
+    backgroundColor: 'rgba(59,130,246,0.1)', borderRadius: 10,
+    borderWidth: 1, borderColor: 'rgba(59,130,246,0.25)',
+    paddingVertical: 10, marginBottom: 12,
+  },
+  navigateBtnText: { color: '#3B82F6', fontSize: 13, fontWeight: '600' },
+  navigateArrow:   { color: '#3B82F6', fontSize: 14 },
+
   tipBox:   { backgroundColor: 'rgba(255,255,255,0.03)', borderRadius: 10, padding: 12, borderWidth: 1, borderColor: 'rgba(255,255,255,0.06)' },
   tipLabel: { color: 'rgba(255,255,255,0.3)', fontSize: 11, fontWeight: '700', textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: 4 },
   tipText:  { color: 'rgba(255,255,255,0.5)', fontSize: 13, lineHeight: 18 },

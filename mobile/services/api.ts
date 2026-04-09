@@ -32,6 +32,7 @@ export interface Stop {
   lon: number;
   category: string;
   photo_url?: string;
+  opening_hours?: string;
 }
 
 export interface Day {
