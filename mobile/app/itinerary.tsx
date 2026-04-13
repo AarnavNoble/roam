@@ -374,7 +374,7 @@ function MapScreen({ itinerary }: { itinerary: Itinerary }) {
       {DayTabs}
       {stops.length === 0
         ? <View style={[styles.map, styles.noCoords]}><Text style={styles.noCoordsText}>No coordinates.</Text></View>
-        : <MapView style={styles.map} styleURL="https://demotiles.maplibre.org/style.json">
+        : <MapView style={styles.map} styleURL="https://tiles.openfreemap.org/styles/liberty">
             <Camera centerCoordinate={[cLon, cLat]} zoomLevel={13} animationDuration={500} />
             <ShapeSource id="route" shape={routeLine}><LineLayer id="routeLine" style={{ lineColor: dayColor, lineWidth: 3, lineOpacity: 0.8, lineDasharray: [2, 1] }} /></ShapeSource>
             <ShapeSource id="stops" shape={stopPoints}>
