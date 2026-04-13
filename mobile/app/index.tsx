@@ -315,12 +315,14 @@ export default function HomeScreen() {
 
       <Text style={styles.label}>Trip date</Text>
       <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.dateRow} contentContainerStyle={styles.dateRowContent}>
-        {Array.from({ length: 7 }, (_, i) => {
+        {Array.from({ length: 30 }, (_, i) => {
           const d = new Date(); d.setHours(0, 0, 0, 0); d.setDate(d.getDate() + i);
           const selected = d.toDateString() === tripDate.toDateString();
           const dayLabel = i === 0 ? 'Today' : i === 1 ? 'Tomorrow'
             : d.toLocaleDateString(undefined, { weekday: 'short' });
           const dateNum = d.getDate();
+          const monthLabel = i > 1 ? d.toLocaleDateString(undefined, { month: 'short' }) : undefined;
+          const showMonth = i > 1 && d.getDate() === 1;
           return (
             <TouchableOpacity
               key={i}
@@ -328,7 +330,7 @@ export default function HomeScreen() {
               onPress={() => setTripDate(d)}
             >
               <Text style={[styles.dateChipDay, selected && styles.dateChipDaySelected]}>{dayLabel}</Text>
-              {i > 1 && <Text style={[styles.dateChipNum, selected && styles.dateChipNumSelected]}>{dateNum}</Text>}
+              {i > 1 && <Text style={[styles.dateChipNum, selected && styles.dateChipNumSelected]}>{showMonth ? monthLabel : dateNum}</Text>}
             </TouchableOpacity>
           );
         })}
