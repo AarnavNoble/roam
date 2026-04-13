@@ -36,7 +36,7 @@ export default function HistoryScreen() {
 
   const handleOpen = (trip: SavedTrip) => {
     storeItinerary(trip.itinerary);
-    router.push({ pathname: '/itinerary', params: { goals: JSON.stringify(trip.goals) } });
+    router.push({ pathname: '/itinerary', params: { goals: JSON.stringify(trip.goals), city: trip.city, tripDate: trip.tripDate } });
   };
 
   const handleDelete = async (id: string) => {

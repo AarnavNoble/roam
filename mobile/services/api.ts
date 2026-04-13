@@ -75,6 +75,7 @@ export interface SavedTrip {
   city: string;
   goals: string[];
   savedAt: number; // timestamp
+  tripDate?: string; // ISO date the trip was planned for
   itinerary: Itinerary;
 }
 
@@ -85,9 +86,9 @@ export async function getSavedTrips(): Promise<SavedTrip[]> {
   } catch { return []; }
 }
 
-export async function saveTrip(city: string, goals: string[], itinerary: Itinerary): Promise<SavedTrip> {
+export async function saveTrip(city: string, goals: string[], itinerary: Itinerary, tripDate?: string): Promise<SavedTrip> {
   const trips = await getSavedTrips();
-  const trip: SavedTrip = { id: Date.now().toString(), city, goals, savedAt: Date.now(), itinerary };
+  const trip: SavedTrip = { id: Date.now().toString(), city, goals, savedAt: Date.now(), tripDate, itinerary };
   await AsyncStorage.setItem(SAVED_KEY, JSON.stringify([trip, ...trips].slice(0, 20)));
   return trip;
 }
@@ -108,6 +109,7 @@ export interface UserPrefs {
   dietary: TripRequest['dietary'];
   mobility: TripRequest['mobility'];
   familiarity: TripRequest['familiarity'];
+  transport: TripRequest['transport'];
   durationHours: number;
   startTime: TripRequest['start_time'];
   goals: string[];

@@ -102,6 +102,7 @@ export default function HomeScreen() {
         if (p.dietary)      setDietary(p.dietary);
         if (p.mobility)     setMobility(p.mobility);
         if (p.familiarity)  setFamiliarity(p.familiarity);
+        if (p.transport)    setTransport(p.transport);
         if (p.durationHours) setDurationHours(p.durationHours);
         if (p.startTime)    setStartTime(p.startTime);
         if (p.goals?.length) setGoals(p.goals);
@@ -198,8 +199,8 @@ export default function HomeScreen() {
         },
       );
       storeItinerary(itinerary);
-      saveTrip(city.trim(), goals, itinerary);
-      savePrefs({ pace, budget, style, dietary, mobility, familiarity, durationHours, startTime, goals });
+      saveTrip(city.trim(), goals, itinerary, isoDate);
+      savePrefs({ pace, budget, style, dietary, mobility, familiarity, transport, durationHours, startTime, goals });
       router.push({ pathname: '/itinerary', params: { goals: JSON.stringify(goals), city: city.trim(), tripDate: tripDate.toISOString() } });
     } catch (e: any) {
       const msg = e?.message || '';
