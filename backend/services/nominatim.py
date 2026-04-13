@@ -4,11 +4,13 @@ Converts destination name to lat/lon. Completely free.
 """
 
 import httpx
+from functools import lru_cache
 
 NOMINATIM_URL = "https://nominatim.openstreetmap.org/search"
 HEADERS = {"User-Agent": "roam-app/1.0"}
 
 
+@lru_cache(maxsize=512)
 def geocode(destination: str) -> tuple[float, float]:
     """
     Returns (lat, lon) for a destination name.
