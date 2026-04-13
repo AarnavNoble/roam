@@ -47,12 +47,14 @@ TRAVELER'S NOTES:
 - Do NOT drop a stop just because it wasn't explicitly requested — the ML pipeline already selected the best matches.
 """
 
+    transport_desc = "public transit" if trip.get("transport") == "transit" else "walking"
+
     return f"""You are a local expert crafting a personalized journey for someone in {city}.
 
 TRAVELER PROFILE:
 - Starting from: {start_location}, {city}
 - Time available: {duration_hours} hours
-- Getting around: {trip.get("transport", "walking")} and public transport
+- Getting around: {transport_desc}
 - Interests: {', '.join(trip.get("goals", []))}
 - Pace: {pace}
 - Budget: {budget}

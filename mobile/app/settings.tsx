@@ -8,7 +8,8 @@ import { ONBOARDING_KEY } from './onboarding';
 const PREFS_LABELS: Record<keyof Omit<UserPrefs, 'goals'>, string> = {
   pace: 'Pace', budget: 'Budget', style: 'Traveling as',
   dietary: 'Dietary', mobility: 'Walking comfort',
-  familiarity: 'Familiarity', durationHours: 'Duration', startTime: 'Start time',
+  familiarity: 'Familiarity', transport: 'Getting around',
+  durationHours: 'Duration', startTime: 'Start time',
 };
 
 const VALUE_LABELS: Record<string, string> = {
@@ -19,6 +20,7 @@ const VALUE_LABELS: Record<string, string> = {
   easy: 'Easy', active: 'Active',
   first_time: 'First time', returning: 'Returning',
   morning: 'Morning', afternoon: 'Afternoon', evening: 'Evening',
+  walking: 'Walking', transit: 'Transit',
 };
 
 export default function SettingsScreen() {
