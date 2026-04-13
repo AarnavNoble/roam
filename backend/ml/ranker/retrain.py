@@ -12,7 +12,20 @@ from .model import POIRanker
 from .trainer import generate_training_data
 
 RETRAIN_THRESHOLD = 10  # retrain after every 10 new feedback signals
-_feedback_count_at_last_train = 0
+
+def _init_last_train_count() -> int:
+    """
+    Initialize the baseline feedback count on startup.
+    Round down to the nearest completed threshold so we don't spuriously
+    retrain immediately after a server restart.
+    """
+    try:
+        count = get_feedback_count()
+        return (count // RETRAIN_THRESHOLD) * RETRAIN_THRESHOLD
+    except Exception:
+        return 0
+
+_feedback_count_at_last_train = _init_last_train_count()
 
 
 def build_feedback_training_data() -> tuple[np.ndarray, np.ndarray, list[int]] | None:

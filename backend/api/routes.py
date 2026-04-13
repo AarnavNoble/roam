@@ -186,11 +186,13 @@ def _run_pipeline(req: TripRequest, explain: bool = False) -> dict:
 async def create_itinerary(req: TripRequest):
     """Full pipeline — returns complete result with ML explanations."""
     try:
-        geocode(f"{req.start_location}, {req.city}")
+        result = await asyncio.to_thread(_run_pipeline, req, True)
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
-
-    result = await asyncio.to_thread(_run_pipeline, req, True)
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Pipeline error: {str(e)}")
     return result
 
 

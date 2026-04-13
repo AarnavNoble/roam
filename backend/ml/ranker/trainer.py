@@ -71,6 +71,28 @@ TRAINING_SCENARIOS = [
         ],
         "relevance": [4, 4, 2, 0, 4],
     },
+    {
+        "goals": ["shopping", "markets", "retail", "souvenirs"],
+        "pois": [
+            {"name": "Chatuchak Weekend Market", "category": "shopping", "description": "chatuchak market shopping stalls clothes gifts souvenirs", "tags": {"shop": "market"}},
+            {"name": "MBK Center", "category": "shopping", "description": "mbk center mall shopping retail clothes electronics", "tags": {"shop": "mall"}},
+            {"name": "Wat Pho Temple", "category": "history", "description": "wat pho temple historic buddhist monument reclining buddha", "tags": {"historic": "temple"}},
+            {"name": "Lumpini Park", "category": "nature", "description": "lumpini park green space nature outdoor lake", "tags": {"leisure": "park"}},
+            {"name": "Asiatique Night Market", "category": "shopping", "description": "asiatique riverside night market shopping food entertainment", "tags": {"shop": "market"}},
+        ],
+        "relevance": [4, 3, 0, 0, 4],
+    },
+    {
+        "goals": ["adventure", "thrills", "theme park", "zoo"],
+        "pois": [
+            {"name": "Universal Studios", "category": "attraction", "description": "universal studios theme park rides adventure thrills entertainment", "tags": {"tourism": "theme_park"}},
+            {"name": "Singapore Zoo", "category": "attraction", "description": "singapore zoo animals wildlife adventure outdoor nature", "tags": {"tourism": "zoo"}},
+            {"name": "Marina Bay Sands", "category": "attraction", "description": "marina bay sands hotel rooftop pool infinity view landmark", "tags": {"tourism": "attraction"}},
+            {"name": "Hawker Centre", "category": "food", "description": "hawker centre local food stalls singaporean cuisine cheap", "tags": {"amenity": "food_court"}},
+            {"name": "Sentosa Adventure Cove", "category": "attraction", "description": "adventure cove waterpark aquarium thrills slides marine life", "tags": {"tourism": "aquarium"}},
+        ],
+        "relevance": [4, 4, 1, 0, 4],
+    },
 ]
 
 
