@@ -23,6 +23,7 @@ const MOBILITY_OPTIONS = ['easy', 'moderate', 'active'] as const;
 const FAMILIARITY_OPTIONS = ['first_time', 'returning'] as const;
 const START_TIME_OPTIONS = ['morning', 'afternoon', 'evening'] as const;
 const DURATION_OPTIONS = [2, 3, 4, 6, 8, 10] as const;
+const TRANSPORT_OPTIONS = ['walking', 'transit'] as const;
 
 const MOBILITY_LABELS = { easy: 'Easy (short walks)', moderate: 'Moderate', active: 'Active (lots of walking)' };
 const FAMILIARITY_LABELS = { first_time: 'First time here', returning: 'I\'ve been before' };
@@ -44,7 +45,7 @@ const PIPELINE_STEPS = [
 
 const ALL_CHIP_KEYS = [
   ...GOAL_OPTIONS, ...DURATION_OPTIONS.map(String), ...START_TIME_OPTIONS,
-  ...PACE_OPTIONS, ...BUDGET_OPTIONS, ...STYLE_OPTIONS,
+  ...TRANSPORT_OPTIONS, ...PACE_OPTIONS, ...BUDGET_OPTIONS, ...STYLE_OPTIONS,
   ...DIETARY_OPTIONS, ...MOBILITY_OPTIONS, ...FAMILIARITY_OPTIONS,
 ];
 
@@ -58,6 +59,7 @@ export default function HomeScreen() {
   });
   const [goals, setGoals] = useState<string[]>([]);
   const [durationHours, setDurationHours] = useState<number>(6);
+  const [transport, setTransport] = useState<TripRequest['transport']>('walking');
   const [pace, setPace] = useState<TripRequest['pace']>('moderate');
   const [budget, setBudget] = useState<TripRequest['budget']>('mid');
   const [style, setStyle] = useState<TripRequest['style']>('solo');
@@ -190,7 +192,7 @@ export default function HomeScreen() {
     try {
       const isoDate = tripDate.toISOString().split('T')[0];
       const itinerary = await generateItineraryStreaming(
-        { city: city.trim(), start_location: startLocation.trim(), duration_hours: durationHours, goals, transport: 'walking', pace, budget, style, dietary, mobility, familiarity, start_time: startTime, notes: notes.trim(), trip_date: isoDate },
+        { city: city.trim(), start_location: startLocation.trim(), duration_hours: durationHours, goals, transport, pace, budget, style, dietary, mobility, familiarity, start_time: startTime, notes: notes.trim(), trip_date: isoDate },
         (progress: PipelineProgress) => {
           setCurrentStep(prev => { if (prev) setCompletedSteps(c => c.includes(prev) ? c : [...c, prev]); return progress.step; });
         },
@@ -342,6 +344,11 @@ export default function HomeScreen() {
       <Text style={styles.label}>Start time</Text>
       <View style={styles.row}>
         {START_TIME_OPTIONS.map(t => renderChip(t, startTime, setStartTime as any))}
+      </View>
+
+      <Text style={styles.label}>Getting around</Text>
+      <View style={styles.row}>
+        {TRANSPORT_OPTIONS.map(t => renderChip(t, transport, setTransport as any, t === 'walking' ? 'Walking' : 'Transit'))}
       </View>
 
       <View style={styles.divider} />
