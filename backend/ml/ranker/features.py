@@ -55,7 +55,9 @@ def extract_features(user_goals: list[str], pois: list[dict]) -> np.ndarray:
         nature_match = 1.0 if any(w in goal_text for w in ("nature", "park", "outdoor", "hiking", "beach")) and category == "nature" else 0.0
         history_match = 1.0 if any(w in goal_text for w in ("history", "historic", "museum", "culture", "art")) and category in ("history", "culture") else 0.0
         nightlife_match = 1.0 if any(w in goal_text for w in ("nightlife", "bar", "club", "party", "drinks")) and category == "nightlife" else 0.0
-        category_match = (cuisine_match + nature_match + history_match + nightlife_match)
+        shopping_match = 1.0 if any(w in goal_text for w in ("shopping", "shop", "market", "mall", "retail")) and category == "shopping" else 0.0
+        adventure_match = 1.0 if any(w in goal_text for w in ("adventure", "theme park", "zoo", "aquarium", "thrill")) and category == "attraction" else 0.0
+        category_match = (cuisine_match + nature_match + history_match + nightlife_match + shopping_match + adventure_match)
 
         features.append([
             semantic_score,

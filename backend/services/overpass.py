@@ -270,15 +270,18 @@ def _infer_category(tags: dict) -> str:
     historic = tags.get("historic", "")
     leisure = tags.get("leisure", "")
     natural = tags.get("natural", "")
+    shop = tags.get("shop", "")
 
-    if amenity in ("restaurant", "cafe", "bar", "food_court", "fast_food"):
+    if amenity in ("restaurant", "cafe", "food_court", "fast_food"):
         return "food"
-    if amenity in ("nightclub", "pub"):
+    if amenity in ("bar", "nightclub", "pub", "biergarten"):
         return "nightlife"
-    if tourism in ("museum", "gallery"):
+    if tourism in ("museum", "gallery") or amenity in ("theatre", "arts_centre"):
         return "culture"
     if historic:
         return "history"
     if leisure in ("park", "nature_reserve", "garden") or natural:
         return "nature"
+    if shop:
+        return "shopping"
     return "attraction"
