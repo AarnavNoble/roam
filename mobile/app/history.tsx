@@ -1,5 +1,5 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
-import { View, Text, ScrollView, TouchableOpacity, StyleSheet, SafeAreaView, Animated } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity, StyleSheet, SafeAreaView, Animated, RefreshControl } from 'react-native';
 import { useRouter, useFocusEffect } from 'expo-router';
 import { SavedTrip, getSavedTrips, deleteTrip, storeItinerary } from '../services/api';
 
@@ -20,6 +20,7 @@ function timeAgo(ts: number): string {
 export default function HistoryScreen() {
   const router = useRouter();
   const [trips, setTrips] = useState<SavedTrip[]>([]);
+  const [refreshing, setRefreshing] = useState(false);
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const slideAnim = useRef(new Animated.Value(16)).current;
 
@@ -37,6 +38,13 @@ export default function HistoryScreen() {
   const handleOpen = (trip: SavedTrip) => {
     storeItinerary(trip.itinerary);
     router.push({ pathname: '/itinerary', params: { goals: JSON.stringify(trip.goals), city: trip.city, ...(trip.tripDate ? { tripDate: trip.tripDate } : {}) } });
+  };
+
+  const handleRefresh = async () => {
+    setRefreshing(true);
+    const updated = await getSavedTrips();
+    setTrips(updated);
+    setRefreshing(false);
   };
 
   const handleDelete = async (id: string) => {
@@ -69,7 +77,16 @@ export default function HistoryScreen() {
           <Text style={styles.emptySubtitle}>Generate a trip and it'll appear here</Text>
         </View>
       ) : (
-        <ScrollView contentContainerStyle={styles.list}>
+        <ScrollView
+          contentContainerStyle={styles.list}
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={handleRefresh}
+              tintColor="rgba(255,255,255,0.3)"
+            />
+          }
+        >
           {trips.map((trip, i) => {
             const color = DAY_COLORS[i % DAY_COLORS.length];
             const stopCount = trip.itinerary.days.reduce((s, d) => s + d.stops.length, 0);
