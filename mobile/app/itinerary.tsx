@@ -7,7 +7,7 @@ import {
   LayoutAnimation, UIManager, Share, Linking,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Itinerary, Day, Stop, FeatureExplanation, WeatherDay, submitFeedback, getStoredItinerary, formatItineraryAsText, fetchWeather, generateICS } from '../services/api';
+import { Itinerary, Day, Stop, FeatureExplanation, WeatherDay, submitFeedback, getStoredItinerary, formatItineraryAsText, fetchWeather, generateICS, storeSelectedStop } from '../services/api';
 import * as FileSystem from 'expo-file-system';
 import * as Sharing from 'expo-sharing';
 
@@ -160,10 +160,16 @@ function StopCard({ stop, goals, explanation, onRetrained, index, isLast, dayCol
   stop: Stop; goals: string[]; explanation?: FeatureExplanation;
   onRetrained?: () => void; index: number; isLast: boolean; dayColor: string;
 }) {
+  const router = useRouter();
   const [expanded, setExpanded] = useState(false);
   const [feedback, setFeedback] = useState<'up' | 'down' | null>(null);
   const pressScale = useRef(new Animated.Value(1)).current;
   const color = CATEGORY_COLORS[stop.category] || '#6B7280';
+
+  const openDetail = () => {
+    storeSelectedStop(stop, goals, dayColor);
+    router.push('/stop' as any);
+  };
 
   const onPressIn  = () => Animated.spring(pressScale, { toValue: 0.98, useNativeDriver: true, speed: 30, bounciness: 0 }).start();
   const onPressOut = () => Animated.spring(pressScale, { toValue: 1.0,  useNativeDriver: true, speed: 20, bounciness: 4 }).start();
@@ -215,7 +221,10 @@ function StopCard({ stop, goals, explanation, onRetrained, index, isLast, dayCol
                 </View>
               </View>
 
-              <Text style={styles.stopName}>{stop.name}</Text>
+              <TouchableOpacity onPress={openDetail} activeOpacity={0.75} style={styles.stopNameRow}>
+                <Text style={styles.stopName}>{stop.name}</Text>
+                <Text style={styles.stopDetailArrow}>›</Text>
+              </TouchableOpacity>
 
               <View style={styles.stopSubRow}>
                 <View style={[styles.categoryBadge, { backgroundColor: color + '15', borderColor: color + '30' }]}>
@@ -654,7 +663,9 @@ const styles = StyleSheet.create({
   stopMeta:    { flexDirection: 'row', gap: 10, flex: 1 },
   stopTime:     { color: '#fff', fontSize: 13, fontWeight: '600' },
   stopDuration: { color: 'rgba(255,255,255,0.3)', fontSize: 13 },
-  stopName:     { color: '#fff', fontSize: 17, fontWeight: '700', marginBottom: 8, letterSpacing: -0.3 },
+  stopNameRow:   { flexDirection: 'row', alignItems: 'center', gap: 6, marginBottom: 8 },
+  stopName:     { color: '#fff', fontSize: 17, fontWeight: '700', letterSpacing: -0.3, flex: 1 },
+  stopDetailArrow: { color: 'rgba(255,255,255,0.2)', fontSize: 20, fontWeight: '300' },
 
   categoryBadge: { alignSelf: 'flex-start', paddingHorizontal: 10, paddingVertical: 4, borderRadius: 8, borderWidth: 1 },
   categoryText:  { fontSize: 10, fontWeight: '700', textTransform: 'uppercase', letterSpacing: 0.6 },

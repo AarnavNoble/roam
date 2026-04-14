@@ -39,6 +39,16 @@ export default function Layout() {
         }}
       />
 
+      {/* Stop detail slides up — feels like zooming into a place */}
+      <Stack.Screen
+        name="stop"
+        options={{
+          animation: 'slide_from_bottom',
+          animationDuration: 320,
+          gestureDirection: 'vertical',
+        }}
+      />
+
       {/* Onboarding fades in — first launch shouldn't feel like navigation */}
       <Stack.Screen
         name="onboarding"

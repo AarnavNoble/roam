@@ -66,6 +66,14 @@ let _lastItinerary: Itinerary | null = null;
 export function storeItinerary(it: Itinerary) { _lastItinerary = it; }
 export function getStoredItinerary(): Itinerary | null { return _lastItinerary; }
 
+// Selected stop for detail screen
+interface SelectedStop { stop: Stop; goals: string[]; dayColor: string; }
+let _selectedStop: SelectedStop | null = null;
+export function storeSelectedStop(stop: Stop, goals: string[], dayColor: string) {
+  _selectedStop = { stop, goals, dayColor };
+}
+export function getSelectedStop(): SelectedStop | null { return _selectedStop; }
+
 // ── Saved trips ───────────────────────────────────────────────────────────────
 
 const SAVED_KEY = 'roam_saved_trips';
