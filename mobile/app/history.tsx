@@ -58,7 +58,13 @@ export default function HistoryScreen() {
       <Animated.View style={{ flex: 1, opacity: fadeAnim, transform: [{ translateY: slideAnim }] }}>
       {trips.length === 0 ? (
         <View style={styles.empty}>
-          <Text style={styles.emptyIcon}>🗺️</Text>
+          {/* Geometric illustration — three stacked route dots */}
+          <View style={styles.emptyIllustration}>
+            <View style={styles.emptyGlow} />
+            <View style={[styles.emptyRing, { width: 80, height: 80, borderRadius: 40, borderColor: 'rgba(59,130,246,0.15)' }]} />
+            <View style={[styles.emptyRing, { width: 48, height: 48, borderRadius: 24, borderColor: 'rgba(59,130,246,0.3)' }]} />
+            <View style={styles.emptyDot} />
+          </View>
           <Text style={styles.emptyTitle}>No saved trips yet</Text>
           <Text style={styles.emptySubtitle}>Generate a trip and it'll appear here</Text>
         </View>
@@ -121,8 +127,11 @@ const styles = StyleSheet.create({
   backLabel:   { color: 'rgba(255,255,255,0.4)', fontSize: 14 },
   title:       { color: '#fff', fontSize: 16, fontWeight: '700', letterSpacing: 0.3 },
 
-  empty: { flex: 1, alignItems: 'center', justifyContent: 'center', gap: 8 },
-  emptyIcon:     { fontSize: 40, marginBottom: 8 },
+  empty: { flex: 1, alignItems: 'center', justifyContent: 'center', gap: 12 },
+  emptyIllustration: { width: 100, height: 100, alignItems: 'center', justifyContent: 'center', marginBottom: 8 },
+  emptyGlow:    { position: 'absolute', width: 100, height: 100, borderRadius: 50, backgroundColor: '#3B82F6', opacity: 0.07 },
+  emptyRing:    { position: 'absolute', borderWidth: 1 },
+  emptyDot:     { width: 14, height: 14, borderRadius: 7, backgroundColor: '#3B82F6' },
   emptyTitle:    { color: '#fff', fontSize: 18, fontWeight: '600' },
   emptySubtitle: { color: 'rgba(255,255,255,0.4)', fontSize: 14 },
 

@@ -486,9 +486,16 @@ function ItineraryScreen() {
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.noCoords}>
-          <Text style={styles.noCoordsText}>No itinerary loaded.</Text>
-          <TouchableOpacity onPress={() => router.replace('/')} style={{ marginTop: 16 }}>
-            <Text style={{ color: '#3B82F6', fontSize: 14 }}>← Go home</Text>
+          <View style={styles.noItinIllustration}>
+            <View style={styles.noItinGlow} />
+            <View style={[styles.noItinRing, { width: 72, height: 72, borderRadius: 36, borderColor: 'rgba(255,255,255,0.08)' }]} />
+            <View style={[styles.noItinRing, { width: 40, height: 40, borderRadius: 20, borderColor: 'rgba(255,255,255,0.12)' }]} />
+            <View style={styles.noItinDot} />
+          </View>
+          <Text style={styles.noItinTitle}>Nothing here</Text>
+          <Text style={styles.noCoordsText}>Go back and generate a trip first</Text>
+          <TouchableOpacity onPress={() => router.replace('/')} style={styles.noItinBtn}>
+            <Text style={styles.noItinBtnText}>Back to home</Text>
           </TouchableOpacity>
         </View>
       </SafeAreaView>
@@ -690,8 +697,15 @@ const styles = StyleSheet.create({
   mapStopInfo:      { flex: 1 },
   mapStopName:      { color: '#fff', fontSize: 14, fontWeight: '600' },
   mapStopTime:      { color: 'rgba(255,255,255,0.3)', fontSize: 12, marginTop: 2 },
-  noCoords:         { flex: 1, alignItems: 'center', justifyContent: 'center' },
+  noCoords:         { flex: 1, alignItems: 'center', justifyContent: 'center', gap: 8 },
   noCoordsText:     { color: 'rgba(255,255,255,0.3)', fontSize: 14 },
+  noItinIllustration: { width: 90, height: 90, alignItems: 'center', justifyContent: 'center', marginBottom: 8 },
+  noItinGlow: { position: 'absolute', width: 90, height: 90, borderRadius: 45, backgroundColor: '#3B82F6', opacity: 0.06 },
+  noItinRing: { position: 'absolute', borderWidth: 1 },
+  noItinDot:  { width: 12, height: 12, borderRadius: 6, backgroundColor: 'rgba(255,255,255,0.2)' },
+  noItinTitle: { color: '#fff', fontSize: 17, fontWeight: '600' },
+  noItinBtn:   { marginTop: 8, paddingHorizontal: 20, paddingVertical: 10, backgroundColor: 'rgba(255,255,255,0.06)', borderRadius: 100, borderWidth: 1, borderColor: 'rgba(255,255,255,0.10)' },
+  noItinBtnText: { color: 'rgba(255,255,255,0.6)', fontSize: 14 },
 
   // Feedback
   feedbackRow:    { flexDirection: 'row', gap: 6, marginLeft: 'auto' },
