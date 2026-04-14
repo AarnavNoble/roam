@@ -23,12 +23,14 @@ build/
 !**/.env.example
 
 # Data / Models
-data/raw/
+data/
 *.faiss
+*.index
 *.pkl
 *.bin
 *.pt
 *.pth
+*.db
 
 # OS
 .DS_Store

@@ -1,4 +1,5 @@
 import { useLocalSearchParams, useRouter } from 'expo-router';
+import { Component } from 'react';
 import { useState, useRef, useEffect, useCallback } from 'react';
 import {
   View, Text, ScrollView, TouchableOpacity,
@@ -67,6 +68,36 @@ function openInMaps(lat: number, lon: number, name: string) {
   Linking.canOpenURL(url).then(can => {
     Linking.openURL(can ? url : `https://www.google.com/maps/dir/?api=1&destination=${lat},${lon}`);
   });
+}
+
+// ── Error boundary ───────────────────────────────────────────────────────────
+
+class ErrorBoundary extends Component<
+  { children: React.ReactNode },
+  { error: Error | null }
+> {
+  state = { error: null };
+  static getDerivedStateFromError(error: Error) { return { error }; }
+  render() {
+    if (this.state.error) {
+      return (
+        <SafeAreaView style={{ flex: 1, backgroundColor: '#09090b' }}>
+          <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', padding: 32, gap: 12 }}>
+            <Text style={{ color: 'rgba(255,255,255,0.35)', fontSize: 13, textAlign: 'center' }}>
+              Something went wrong displaying this itinerary.
+            </Text>
+            <TouchableOpacity
+              onPress={() => this.setState({ error: null })}
+              style={{ paddingHorizontal: 20, paddingVertical: 10, backgroundColor: 'rgba(255,255,255,0.07)', borderRadius: 10 }}
+            >
+              <Text style={{ color: '#fff', fontSize: 14 }}>Try again</Text>
+            </TouchableOpacity>
+          </View>
+        </SafeAreaView>
+      );
+    }
+    return this.props.children;
+  }
 }
 
 // ── Toast ─────────────────────────────────────────────────────────────────────
@@ -389,7 +420,7 @@ function MapScreen({ itinerary }: { itinerary: Itinerary }) {
 
 // ── Main screen ───────────────────────────────────────────────────────────────
 
-export default function ItineraryScreen() {
+function ItineraryScreen() {
   const { goals: goalsParam, city: cityParam, tripDate: tripDateParam } = useLocalSearchParams<{ goals: string; city: string; tripDate: string }>();
   const router = useRouter();
   const itinerary = getStoredItinerary();
@@ -522,6 +553,10 @@ export default function ItineraryScreen() {
       {Toast}
     </SafeAreaView>
   );
+}
+
+export default function ItineraryScreenWithBoundary() {
+  return <ErrorBoundary><ItineraryScreen /></ErrorBoundary>;
 }
 
 // ── Styles ────────────────────────────────────────────────────────────────────
