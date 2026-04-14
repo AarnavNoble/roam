@@ -23,9 +23,15 @@ const VALUE_LABELS: Record<string, string> = {
   walking: 'Walking', transit: 'Transit',
 };
 
+const GOAL_COLORS: Record<string, string> = {
+  food: '#F59E0B', nature: '#10B981', history: '#8B5CF6',
+  culture: '#3B82F6', nightlife: '#EC4899', shopping: '#F97316', adventure: '#EF4444',
+};
+
 export default function SettingsScreen() {
   const router = useRouter();
   const [tripCount, setTripCount] = useState(0);
+  const [totalStops, setTotalStops] = useState(0);
   const [prefs, setPrefs] = useState<Partial<UserPrefs>>({});
   const fadeAnim  = useRef(new Animated.Value(0)).current;
   const slideAnim = useRef(new Animated.Value(16)).current;
@@ -38,7 +44,10 @@ export default function SettingsScreen() {
   }, []);
 
   useFocusEffect(useCallback(() => {
-    getSavedTrips().then(t => setTripCount(t.length));
+    getSavedTrips().then(trips => {
+      setTripCount(trips.length);
+      setTotalStops(trips.reduce((sum, t) => sum + t.itinerary.days.reduce((s, d) => s + d.stops.length, 0), 0));
+    });
     loadPrefs().then(setPrefs);
   }, []));
 
@@ -48,6 +57,7 @@ export default function SettingsScreen() {
       { text: 'Clear', style: 'destructive', onPress: async () => {
         await clearAllSavedTrips();
         setTripCount(0);
+        setTotalStops(0);
       }},
     ]);
   };
@@ -86,6 +96,19 @@ export default function SettingsScreen() {
 
       <Animated.ScrollView contentContainerStyle={styles.scroll} style={{ opacity: fadeAnim, transform: [{ translateY: slideAnim }] }}>
 
+        {/* Stats strip */}
+        <View style={styles.statsRow}>
+          <View style={styles.statCell}>
+            <Text style={styles.statNum}>{tripCount}</Text>
+            <Text style={styles.statLabel}>Trips saved</Text>
+          </View>
+          <View style={styles.statDivider} />
+          <View style={styles.statCell}>
+            <Text style={styles.statNum}>{totalStops}</Text>
+            <Text style={styles.statLabel}>Stops discovered</Text>
+          </View>
+        </View>
+
         {/* Saved defaults */}
         {hasPrefs && (
           <View style={styles.section}>
@@ -105,9 +128,19 @@ export default function SettingsScreen() {
                 );
               })}
               {prefs.goals && prefs.goals.length > 0 && (
-                <View style={[styles.row, styles.rowBorder]}>
+                <View style={[styles.row, styles.goalRow]}>
                   <Text style={styles.rowLabel}>Interests</Text>
-                  <Text style={styles.rowValue}>{prefs.goals.map(g => g[0].toUpperCase() + g.slice(1)).join(', ')}</Text>
+                  <View style={styles.goalPills}>
+                    {prefs.goals.map(g => {
+                      const color = GOAL_COLORS[g] ?? '#6B7280';
+                      return (
+                        <View key={g} style={[styles.goalPill, { backgroundColor: color + '18', borderColor: color + '35' }]}>
+                          <View style={[styles.goalDot, { backgroundColor: color }]} />
+                          <Text style={[styles.goalPillText, { color }]}>{g[0].toUpperCase() + g.slice(1)}</Text>
+                        </View>
+                      );
+                    })}
+                  </View>
                 </View>
               )}
             </View>
@@ -118,33 +151,33 @@ export default function SettingsScreen() {
         )}
 
         {/* Saved trips */}
-        <View style={styles.section}>
-          <Text style={styles.sectionLabel}>Saved trips</Text>
-          <View style={styles.card}>
-            <View style={styles.row}>
-              <Text style={styles.rowLabel}>Trips saved</Text>
-              <Text style={styles.rowValue}>{tripCount}</Text>
+        {tripCount > 0 && (
+          <View style={styles.section}>
+            <Text style={styles.sectionLabel}>Data</Text>
+            <View style={styles.card}>
+              <TouchableOpacity style={[styles.row, styles.rowBorder]} onPress={() => router.push('/history' as any)}>
+                <Text style={styles.rowLabel}>View saved trips</Text>
+                <Text style={styles.rowChevron}>›</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.row} onPress={confirmClearTrips}>
+                <Text style={[styles.rowLabel, { color: '#EF4444', opacity: 0.85 }]}>Clear all saved trips</Text>
+              </TouchableOpacity>
             </View>
           </View>
-          {tripCount > 0 && (
-            <TouchableOpacity style={styles.dangerRow} onPress={confirmClearTrips}>
-              <Text style={styles.dangerText}>Clear all saved trips</Text>
-            </TouchableOpacity>
-          )}
-        </View>
+        )}
 
         {/* App */}
         <View style={styles.section}>
           <Text style={styles.sectionLabel}>App</Text>
           <View style={styles.card}>
-            <TouchableOpacity style={[styles.row]} onPress={confirmResetOnboarding}>
+            <TouchableOpacity style={styles.row} onPress={confirmResetOnboarding}>
               <Text style={styles.rowLabel}>Replay intro</Text>
               <Text style={styles.rowChevron}>›</Text>
             </TouchableOpacity>
           </View>
         </View>
 
-        <Text style={styles.version}>roam · built with ❤️</Text>
+        <Text style={styles.version}>roam — your journey, crafted for you</Text>
 
       </Animated.ScrollView>
     </SafeAreaView>
@@ -166,6 +199,19 @@ const styles = StyleSheet.create({
 
   scroll: { padding: 20, paddingBottom: 60, gap: 8 },
 
+  // ── Stats ──
+  statsRow: {
+    flexDirection: 'row', alignItems: 'center',
+    backgroundColor: '#111113', borderRadius: 14,
+    borderWidth: 1, borderColor: 'rgba(255,255,255,0.07)',
+    borderTopColor: 'rgba(255,255,255,0.10)',
+    marginBottom: 24, overflow: 'hidden',
+  },
+  statCell:    { flex: 1, alignItems: 'center', paddingVertical: 18, gap: 4 },
+  statDivider: { width: 1, height: 32, backgroundColor: 'rgba(255,255,255,0.07)' },
+  statNum:     { color: '#fff', fontSize: 26, fontWeight: '700', letterSpacing: -0.5 },
+  statLabel:   { color: 'rgba(255,255,255,0.35)', fontSize: 11, textTransform: 'uppercase', letterSpacing: 0.8 },
+
   section:      { gap: 4, marginBottom: 16 },
   sectionLabel: { fontSize: 11, color: 'rgba(255,255,255,0.3)', textTransform: 'uppercase', letterSpacing: 1.2, marginBottom: 4, marginLeft: 4 },
 
@@ -183,6 +229,13 @@ const styles = StyleSheet.create({
   rowLabel:   { color: 'rgba(255,255,255,0.7)', fontSize: 14 },
   rowValue:   { color: 'rgba(255,255,255,0.35)', fontSize: 14 },
   rowChevron: { color: 'rgba(255,255,255,0.25)', fontSize: 18 },
+
+  // ── Goals row ──
+  goalRow:     { alignItems: 'flex-start', flexDirection: 'column', gap: 10 },
+  goalPills:   { flexDirection: 'row', flexWrap: 'wrap', gap: 6 },
+  goalPill:    { flexDirection: 'row', alignItems: 'center', gap: 5, paddingHorizontal: 9, paddingVertical: 4, borderRadius: 100, borderWidth: 1 },
+  goalDot:     { width: 5, height: 5, borderRadius: 2.5 },
+  goalPillText:{ fontSize: 12, fontWeight: '500' },
 
   dangerRow:  { paddingHorizontal: 4, paddingVertical: 8 },
   dangerText: { color: '#EF4444', fontSize: 13, opacity: 0.8 },
