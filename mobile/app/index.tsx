@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import {
   View, Text, TextInput, TouchableOpacity,
   ScrollView, StyleSheet, ActivityIndicator,
@@ -49,6 +49,75 @@ const ALL_CHIP_KEYS = [
   ...DIETARY_OPTIONS, ...MOBILITY_OPTIONS, ...FAMILIARITY_OPTIONS,
 ];
 
+// ── Nominatim autocomplete ────────────────────────────────────────────────────
+
+function useAutocomplete() {
+  const [suggestions, setSuggestions] = useState<string[]>([]);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const query = useCallback((text: string) => {
+    if (timerRef.current) clearTimeout(timerRef.current);
+    if (text.length < 3) { setSuggestions([]); return; }
+    timerRef.current = setTimeout(async () => {
+      try {
+        const res = await fetch(
+          `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(text)}&format=json&limit=5`,
+          { headers: { 'Accept-Language': 'en' } }
+        );
+        const data = await res.json();
+        setSuggestions(data.map((r: any) => r.display_name as string));
+      } catch { setSuggestions([]); }
+    }, 350);
+  }, []);
+
+  const clear = useCallback(() => {
+    if (timerRef.current) clearTimeout(timerRef.current);
+    setSuggestions([]);
+  }, []);
+
+  return { suggestions, query, clear };
+}
+
+function SuggestionsList({ suggestions, onSelect }: { suggestions: string[]; onSelect: (s: string) => void }) {
+  if (suggestions.length === 0) return null;
+  return (
+    <View style={acStyles.container}>
+      {suggestions.map((s, i) => (
+        <TouchableOpacity
+          key={i}
+          style={[acStyles.item, i < suggestions.length - 1 && acStyles.itemBorder]}
+          onPress={() => onSelect(s)}
+          activeOpacity={0.7}
+        >
+          <View style={acStyles.dot} />
+          <Text style={acStyles.text} numberOfLines={2}>{s}</Text>
+        </TouchableOpacity>
+      ))}
+    </View>
+  );
+}
+
+const acStyles = StyleSheet.create({
+  container: {
+    backgroundColor: '#18181b',
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.10)',
+    borderTopColor: 'rgba(255,255,255,0.06)',
+    marginTop: 4,
+    overflow: 'hidden',
+  },
+  item: {
+    flexDirection: 'row', alignItems: 'center', gap: 10,
+    paddingHorizontal: 14, paddingVertical: 11,
+  },
+  itemBorder: { borderBottomWidth: 1, borderBottomColor: 'rgba(255,255,255,0.05)' },
+  dot: { width: 5, height: 5, borderRadius: 2.5, backgroundColor: 'rgba(255,255,255,0.2)', flexShrink: 0 },
+  text: { color: 'rgba(255,255,255,0.6)', fontSize: 13, flex: 1, lineHeight: 18 },
+});
+
+// ─────────────────────────────────────────────────────────────────────────────
+
 export default function HomeScreen() {
   const router = useRouter();
 
@@ -74,6 +143,9 @@ export default function HomeScreen() {
   const [error, setError] = useState<string | null>(null);
   const [cityError, setCityError] = useState<string | null>(null);
   const [locationError, setLocationError] = useState<string | null>(null);
+
+  const cityAC     = useAutocomplete();
+  const locationAC = useAutocomplete();
 
   // ── Animations ───────────────────────────────────────────────────────────────
 
@@ -291,11 +363,20 @@ export default function HomeScreen() {
           style={styles.inputInner}
           placeholder="Paris, Tokyo, New York..."
           placeholderTextColor="rgba(255,255,255,0.25)"
-          value={city} onChangeText={v => { setCity(v); if (cityError) setCityError(validateLocation(v)); }}
+          value={city}
+          onChangeText={v => {
+            setCity(v);
+            cityAC.query(v);
+            if (cityError) setCityError(validateLocation(v));
+          }}
           onFocus={() => focusInput(cityBorderAnim)}
           onBlur={() => { blurInput(cityBorderAnim); setCityError(validateLocation(city)); }}
         />
       </Animated.View>
+      <SuggestionsList
+        suggestions={cityAC.suggestions}
+        onSelect={s => { setCity(s); cityAC.clear(); }}
+      />
 
       {cityError && <Text style={styles.fieldError}>{cityError}</Text>}
 
@@ -305,11 +386,20 @@ export default function HomeScreen() {
           style={styles.inputInner}
           placeholder="Montmartre, Shibuya station, Times Square..."
           placeholderTextColor="rgba(255,255,255,0.25)"
-          value={startLocation} onChangeText={v => { setStartLocation(v); if (locationError) setLocationError(validateLocation(v)); }}
+          value={startLocation}
+          onChangeText={v => {
+            setStartLocation(v);
+            locationAC.query(v);
+            if (locationError) setLocationError(validateLocation(v));
+          }}
           onFocus={() => focusInput(locationBorderAnim)}
           onBlur={() => { blurInput(locationBorderAnim); setLocationError(validateLocation(startLocation)); }}
         />
       </Animated.View>
+      <SuggestionsList
+        suggestions={locationAC.suggestions}
+        onSelect={s => { setStartLocation(s); locationAC.clear(); }}
+      />
 
       {locationError && <Text style={styles.fieldError}>{locationError}</Text>}
 
