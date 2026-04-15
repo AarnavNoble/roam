@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as Haptics from 'expo-haptics';
-import { Itinerary, Day, Stop, FeatureExplanation, WeatherDay, submitFeedback, getStoredItinerary, formatItineraryAsText, fetchWeather, generateICS, storeSelectedStop } from '../services/api';
+import { Itinerary, Day, Stop, FeatureExplanation, WeatherDay, submitFeedback, getStoredItinerary, loadLastItinerary, formatItineraryAsText, fetchWeather, generateICS, storeSelectedStop } from '../services/api';
 import * as FileSystem from 'expo-file-system';
 import * as Sharing from 'expo-sharing';
 
@@ -435,11 +435,18 @@ function MapScreen({ itinerary }: { itinerary: Itinerary }) {
 function ItineraryScreen() {
   const { goals: goalsParam, city: cityParam, tripDate: tripDateParam } = useLocalSearchParams<{ goals: string; city: string; tripDate: string }>();
   const router = useRouter();
-  const itinerary = getStoredItinerary();
+  const [itinerary, setItinerary] = useState<Itinerary | null>(getStoredItinerary());
   const goals: string[] = goalsParam ? JSON.parse(goalsParam) : [];
   const city = cityParam ?? 'My Trip';
   const tripDate = tripDateParam ? new Date(tripDateParam) : new Date();
   const [view, setView] = useState<'list' | 'map'>('list');
+
+  // Hydrate from AsyncStorage if in-memory cache is empty (e.g. after app restart)
+  useEffect(() => {
+    if (!itinerary) {
+      loadLastItinerary().then(it => { if (it) setItinerary(it); });
+    }
+  }, []);
   const [weather, setWeather] = useState<WeatherDay[]>([]);
   const { show: showToast, Toast } = useToast();
 

@@ -62,9 +62,21 @@ export interface PipelineProgress {
 }
 
 // Module-level cache to avoid URL param size limits
+const LAST_ITINERARY_KEY = 'roam_last_itinerary';
 let _lastItinerary: Itinerary | null = null;
-export function storeItinerary(it: Itinerary) { _lastItinerary = it; }
+export function storeItinerary(it: Itinerary) {
+  _lastItinerary = it;
+  AsyncStorage.setItem(LAST_ITINERARY_KEY, JSON.stringify(it)).catch(() => {});
+}
 export function getStoredItinerary(): Itinerary | null { return _lastItinerary; }
+export async function loadLastItinerary(): Promise<Itinerary | null> {
+  if (_lastItinerary) return _lastItinerary;
+  try {
+    const raw = await AsyncStorage.getItem(LAST_ITINERARY_KEY);
+    if (raw) { _lastItinerary = JSON.parse(raw); }
+  } catch {}
+  return _lastItinerary;
+}
 
 // Selected stop for detail screen
 interface SelectedStop { stop: Stop; goals: string[]; dayColor: string; }
