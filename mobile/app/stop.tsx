@@ -5,6 +5,7 @@ import {
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { getSelectedStop, submitFeedback } from '../services/api';
+import * as Haptics from 'expo-haptics';
 
 const CATEGORY_COLORS: Record<string, string> = {
   food: '#F59E0B', nature: '#10B981', history: '#8B5CF6', culture: '#3B82F6',
@@ -40,7 +41,8 @@ function formatOpeningHours(oh: string): string {
   }).join('\n');
 }
 
-function openInMaps(lat: number, lon: number, name: string) {
+function openInMaps(lat: number, lon: number, name: string, haptic = false) {
+  if (haptic) Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
   const encoded = encodeURIComponent(name);
   const url = Platform.select({
     ios:     `maps://maps.apple.com/?daddr=${lat},${lon}&q=${encoded}`,
@@ -97,6 +99,7 @@ export default function StopDetailScreen() {
 
   const handleFeedback = async (relevant: boolean) => {
     if (feedback) return;
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
     setFeedback(relevant ? 'up' : 'down');
     try { await submitFeedback(stop.id || 0, relevant, stop.name, stop.category, goals); } catch {}
   };
@@ -178,7 +181,7 @@ export default function StopDetailScreen() {
           {(stop.lat && stop.lon) ? (
             <TouchableOpacity
               style={[styles.navBtn, { borderColor: dayColor + '40' }]}
-              onPress={() => openInMaps(stop.lat, stop.lon, stop.name)}
+              onPress={() => openInMaps(stop.lat, stop.lon, stop.name, true)}
               activeOpacity={0.75}
             >
               <Text style={[styles.navBtnText, { color: dayColor }]}>Get directions</Text>

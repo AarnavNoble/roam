@@ -7,6 +7,7 @@ import {
   LayoutAnimation, UIManager, Share, Linking,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import * as Haptics from 'expo-haptics';
 import { Itinerary, Day, Stop, FeatureExplanation, WeatherDay, submitFeedback, getStoredItinerary, formatItineraryAsText, fetchWeather, generateICS, storeSelectedStop } from '../services/api';
 import * as FileSystem from 'expo-file-system';
 import * as Sharing from 'expo-sharing';
@@ -175,12 +176,14 @@ function StopCard({ stop, goals, explanation, onRetrained, index, isLast, dayCol
   const onPressOut = () => Animated.spring(pressScale, { toValue: 1.0,  useNativeDriver: true, speed: 20, bounciness: 4 }).start();
 
   const toggleExpand = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     LayoutAnimation.configureNext(LayoutAnimation.create(250, LayoutAnimation.Types.easeInEaseOut, LayoutAnimation.Properties.opacity));
     setExpanded(e => !e);
   };
 
   const handleFeedback = async (relevant: boolean) => {
     if (feedback) return;
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
     setFeedback(relevant ? 'up' : 'down');
     try { const r = await submitFeedback(stop.id || 0, relevant, stop.name, stop.category, goals); if (r.retrained) onRetrained?.(); } catch {}
   };

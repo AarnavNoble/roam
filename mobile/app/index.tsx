@@ -8,6 +8,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { generateItineraryStreaming, storeItinerary, saveTrip, loadPrefs, savePrefs, TripRequest, PipelineProgress } from '../services/api';
+import * as Haptics from 'expo-haptics';
 import { ONBOARDING_KEY } from './onboarding';
 
 if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
@@ -212,6 +213,7 @@ export default function HomeScreen() {
 
   const animateChip = (key: string) => {
     const anim = chipScales[key]; if (!anim) return;
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     Animated.sequence([
       Animated.spring(anim, { toValue: 0.90, useNativeDriver: true, speed: 30, bounciness: 0 }),
       Animated.spring(anim, { toValue: 1.0,  useNativeDriver: true, speed: 20, bounciness: 10 }),
@@ -250,7 +252,7 @@ export default function HomeScreen() {
     setGoals(prev => prev.includes(goal) ? prev.filter(g => g !== goal) : [...prev, goal]);
   };
 
-  const onBtnIn  = () => Animated.spring(buttonScaleAnim, { toValue: 0.97, useNativeDriver: true, speed: 30, bounciness: 0 }).start();
+  const onBtnIn  = () => { Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium); Animated.spring(buttonScaleAnim, { toValue: 0.97, useNativeDriver: true, speed: 30, bounciness: 0 }).start(); };
   const onBtnOut = () => Animated.spring(buttonScaleAnim, { toValue: 1.0,  useNativeDriver: true, speed: 20, bounciness: 6 }).start();
 
   const handleGenerate = async () => {
@@ -273,6 +275,7 @@ export default function HomeScreen() {
       storeItinerary(itinerary);
       saveTrip(city.trim(), goals, itinerary, isoDate);
       savePrefs({ pace, budget, style, dietary, mobility, familiarity, transport, durationHours, startTime, goals });
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
       router.push({ pathname: '/itinerary', params: { goals: JSON.stringify(goals), city: city.trim(), tripDate: tripDate.toISOString() } });
     } catch (e: any) {
       const msg = e?.message || '';
