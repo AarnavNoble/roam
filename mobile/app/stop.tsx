@@ -1,7 +1,7 @@
 import { useRef, useEffect, useState } from 'react';
 import {
   View, Text, ScrollView, TouchableOpacity, StyleSheet,
-  SafeAreaView, Image, Animated, Platform, Linking,
+  SafeAreaView, Image, Animated, Platform, Linking, Share,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { getSelectedStop, submitFeedback } from '../services/api';
@@ -86,6 +86,15 @@ export default function StopDetailScreen() {
   const catColor = CATEGORY_COLORS[stop.category] ?? '#6B7280';
   const hours = stop.opening_hours ? formatOpeningHours(stop.opening_hours) : null;
 
+  const handleShare = () => {
+    const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${stop.lat},${stop.lon}`;
+    const lines = [stop.name];
+    if (stop.description) lines.push('', stop.description);
+    if (stop.tip) lines.push('', `Tip: ${stop.tip}`);
+    if (stop.lat && stop.lon) lines.push('', mapsUrl);
+    Share.share({ message: lines.join('\n') });
+  };
+
   const handleFeedback = async (relevant: boolean) => {
     if (feedback) return;
     setFeedback(relevant ? 'up' : 'down');
@@ -99,6 +108,9 @@ export default function StopDetailScreen() {
         <TouchableOpacity onPress={() => router.back()} style={styles.backBtn}>
           <Text style={styles.backChevron}>‹</Text>
           <Text style={styles.backLabel}>Back</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={handleShare} style={styles.shareBtn}>
+          <Text style={styles.shareBtnText}>Share</Text>
         </TouchableOpacity>
         <View style={[styles.topBarAccent, { backgroundColor: dayColor }]} />
       </View>
@@ -217,9 +229,15 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20, paddingVertical: 14,
     borderBottomWidth: 1, borderBottomColor: 'rgba(255,255,255,0.06)',
   },
-  backBtn:     { flexDirection: 'row', alignItems: 'center', gap: 2 },
+  backBtn:     { flexDirection: 'row', alignItems: 'center', gap: 2, flex: 1 },
   backChevron: { color: 'rgba(255,255,255,0.4)', fontSize: 22, fontWeight: '300', lineHeight: 26 },
   backLabel:   { color: 'rgba(255,255,255,0.4)', fontSize: 14 },
+  shareBtn: {
+    paddingHorizontal: 12, paddingVertical: 6,
+    backgroundColor: 'rgba(255,255,255,0.06)',
+    borderRadius: 100, borderWidth: 1, borderColor: 'rgba(255,255,255,0.10)',
+  },
+  shareBtnText: { color: 'rgba(255,255,255,0.5)', fontSize: 12, fontWeight: '500' },
   topBarAccent: { position: 'absolute', bottom: 0, left: 0, right: 0, height: 2, opacity: 0.6 },
 
   empty:     { flex: 1, alignItems: 'center', justifyContent: 'center' },

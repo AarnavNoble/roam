@@ -101,6 +101,11 @@ export default function HistoryScreen() {
                     <Text style={styles.cardMeta}>
                       {trip.itinerary.days.length} {trip.itinerary.days.length === 1 ? 'day' : 'days'}  ·  {stopCount} stops  ·  {timeAgo(trip.savedAt)}
                     </Text>
+                    {trip.tripDate ? (
+                      <Text style={styles.cardDate}>
+                        {new Date(trip.tripDate + 'T00:00:00').toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
+                      </Text>
+                    ) : null}
                     <View style={styles.goalRow}>
                       {trip.goals.slice(0, 4).map(g => (
                         <View key={g} style={styles.goalPill}>
@@ -166,6 +171,7 @@ const styles = StyleSheet.create({
   cardMain: { flex: 1, gap: 6 },
   cardCity: { color: '#fff', fontSize: 18, fontWeight: '700', letterSpacing: -0.3 },
   cardMeta: { color: 'rgba(255,255,255,0.35)', fontSize: 13 },
+  cardDate: { color: 'rgba(255,255,255,0.22)', fontSize: 11, marginTop: -2 },
 
   goalRow:      { flexDirection: 'row', flexWrap: 'wrap', gap: 6, marginTop: 2 },
   goalPill:     { backgroundColor: 'rgba(255,255,255,0.07)', borderRadius: 100, paddingHorizontal: 10, paddingVertical: 3 },
