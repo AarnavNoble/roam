@@ -1,7 +1,12 @@
 from contextlib import asynccontextmanager
+from pathlib import Path
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from backend.api.routes import router
+
+STATIC_DIR = Path(__file__).resolve().parent / "static"
 
 
 @asynccontextmanager
@@ -32,3 +37,8 @@ app.add_middleware(
 )
 
 app.include_router(router, prefix="/api")
+
+
+@app.get("/")
+async def index():
+    return FileResponse(STATIC_DIR / "index.html")

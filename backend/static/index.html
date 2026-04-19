@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>roam — AI Travel Itinerary Generator</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #09090b; --surface: #111113; --border: rgba(255,255,255,0.07);
+    --border-hover: rgba(255,255,255,0.15); --text: #fff; --text-muted: rgba(255,255,255,0.4);
+    --text-dim: rgba(255,255,255,0.25); --blue: #3B82F6; --green: #10B981;
+    --purple: #8B5CF6; --amber: #F59E0B; --pink: #EC4899; --orange: #F97316; --red: #EF4444;
+  }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; min-height: 100vh; }
+  a { color: var(--blue); text-decoration: none; }
+
+  /* ── Layout ─────────────────────────────────── */
+  .wrapper { max-width: 720px; margin: 0 auto; padding: 48px 24px 80px; }
+  .hero { margin-bottom: 48px; position: relative; }
+  .hero::before { content: ''; position: absolute; top: -40px; left: -80px; width: 260px; height: 260px; border-radius: 50%; background: var(--blue); opacity: 0.07; pointer-events: none; }
+  .hero::after  { content: ''; position: absolute; top: 0; right: -50px; width: 180px; height: 180px; border-radius: 50%; background: var(--purple); opacity: 0.05; pointer-events: none; }
+  .wordmark { font-size: 56px; font-weight: 800; letter-spacing: -3px; position: relative; }
+  .wordmark-accent { display: block; width: 40px; height: 3px; background: var(--blue); border-radius: 2px; margin-top: 10px; }
+  .hero-sub { color: var(--text-muted); font-size: 15px; margin-top: 14px; letter-spacing: 0.2px; }
+  .hero-tech { color: var(--text-dim); font-size: 12px; margin-top: 8px; letter-spacing: 0.3px; }
+
+  /* ── Form ───────────────────────────────────── */
+  .form-section { margin-bottom: 32px; }
+  .label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 10px; }
+  .input { width: 100%; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; color: var(--text); font-size: 15px; outline: none; transition: border-color 0.2s; }
+  .input::placeholder { color: var(--text-dim); }
+  .input:focus { border-color: var(--border-hover); }
+  .input-row { display: flex; gap: 12px; }
+  .input-row > * { flex: 1; }
+  .divider { height: 1px; background: rgba(255,255,255,0.06); margin: 32px 0; }
+  .section-header { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .section-dot { width: 6px; height: 6px; border-radius: 3px; background: var(--blue); opacity: 0.8; }
+  .section-label { font-size: 11px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1.5px; }
+
+  /* ── Chips ──────────────────────────────────── */
+  .chip-row { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip { padding: 8px 14px; border-radius: 100px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); color: var(--text-muted); font-size: 13px; cursor: pointer; transition: all 0.15s; user-select: none; display: flex; align-items: center; gap: 7px; }
+  .chip:hover { border-color: var(--border-hover); }
+  .chip.selected { background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.30); color: var(--text); font-weight: 600; }
+  .goal-dot { width: 7px; height: 7px; border-radius: 50%; opacity: 0.4; transition: opacity 0.15s; }
+  .chip.selected .goal-dot { opacity: 1; }
+
+  /* ── CTA ────────────────────────────────────── */
+  .cta-wrap { margin-top: 48px; position: relative; }
+  .cta-glow { position: absolute; top: 8px; left: 50%; transform: translateX(-50%); width: 50%; height: 44px; border-radius: 40px; background: rgba(255,255,255,0.06); filter: blur(20px); pointer-events: none; }
+  .cta { width: 100%; padding: 18px; border-radius: 14px; background: linear-gradient(to bottom, #fff, #e8e8e8); border: none; color: var(--bg); font-size: 16px; font-weight: 700; letter-spacing: 0.3px; cursor: pointer; transition: transform 0.15s, opacity 0.15s; }
+  .cta:hover { transform: scale(0.99); }
+  .cta:active { transform: scale(0.97); }
+  .cta:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+  /* ── Progress ───────────────────────────────── */
+  .progress { display: none; margin-top: 48px; }
+  .progress.active { display: block; }
+  .progress-bar-track { width: 100%; height: 2px; background: rgba(255,255,255,0.08); border-radius: 1px; margin-bottom: 16px; overflow: hidden; }
+  .progress-bar-fill { height: 2px; background: var(--blue); border-radius: 1px; transition: width 0.4s ease; width: 0%; }
+  .progress-steps { display: flex; flex-direction: column; gap: 10px; }
+  .progress-step { display: flex; align-items: center; gap: 12px; opacity: 0.25; transition: opacity 0.3s; }
+  .progress-step.active { opacity: 1; }
+  .progress-step.done { opacity: 1; }
+  .step-dot { width: 24px; height: 24px; border-radius: 50%; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; transition: all 0.3s; flex-shrink: 0; }
+  .step-dot.active { background: var(--blue); border-color: var(--blue); box-shadow: 0 0 12px rgba(59,130,246,0.5); }
+  .step-dot.done { background: var(--green); border-color: var(--green); }
+  .step-label { color: var(--text-muted); font-size: 13px; transition: color 0.3s, font-weight 0.3s; }
+  .progress-step.active .step-label, .progress-step.done .step-label { color: var(--text); font-weight: 600; }
+
+  /* ── Spinner ────────────────────────────────── */
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .spinner { width: 14px; height: 14px; border: 2px solid rgba(255,255,255,0.3); border-top-color: #fff; border-radius: 50%; animation: spin 0.6s linear infinite; }
+
+  /* ── Error ──────────────────────────────────── */
+  .error { background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.2); border-radius: 10px; padding: 12px; text-align: center; color: var(--red); font-size: 13px; margin-top: 16px; display: none; }
+  .error.visible { display: block; }
+
+  /* ── Results ────────────────────────────────── */
+  .results { display: none; margin-top: 48px; }
+  .results.active { display: block; }
+  .results-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+  .results-title { font-size: 20px; font-weight: 700; letter-spacing: -0.3px; }
+  .results-back { color: var(--text-muted); font-size: 13px; cursor: pointer; padding: 6px 12px; border-radius: 8px; background: rgba(255,255,255,0.06); border: 1px solid var(--border); transition: border-color 0.15s; }
+  .results-back:hover { border-color: var(--border-hover); }
+  .overview { color: var(--text-muted); font-size: 14px; line-height: 1.6; margin-bottom: 32px; }
+
+  /* ── Map ────────────────────────────────────── */
+  .map-container { width: 100%; height: 320px; border-radius: 16px; overflow: hidden; margin-bottom: 32px; border: 1px solid var(--border); }
+
+  /* ── Day section ────────────────────────────── */
+  .day-section { margin-bottom: 36px; }
+  .day-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+  .day-num { font-size: 13px; font-weight: 700; padding: 4px 10px; border-radius: 8px; }
+  .day-theme { color: var(--text); font-size: 16px; font-weight: 600; }
+  .day-summary { color: var(--text-dim); font-size: 13px; font-style: italic; margin-top: 12px; padding-left: 12px; border-left: 2px solid rgba(255,255,255,0.06); }
+
+  /* ── Stop card ──────────────────────────────── */
+  .timeline-row { display: flex; gap: 16px; }
+  .timeline-track { display: flex; flex-direction: column; align-items: center; width: 28px; flex-shrink: 0; }
+  .timeline-dot { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 12px; font-weight: 700; flex-shrink: 0; }
+  .timeline-line { width: 2px; flex: 1; min-height: 20px; opacity: 0.3; }
+  .stop-card { flex: 1; background: var(--surface); border-radius: 14px; border: 1px solid var(--border); overflow: hidden; margin-bottom: 12px; }
+  .stop-photo { width: 100%; height: 140px; object-fit: cover; }
+  .stop-content { padding: 16px; }
+  .stop-meta { display: flex; gap: 10px; align-items: center; margin-bottom: 6px; }
+  .stop-time { color: var(--text-muted); font-size: 12px; font-weight: 600; }
+  .stop-duration { color: var(--text-dim); font-size: 12px; }
+  .stop-name { font-size: 16px; font-weight: 700; letter-spacing: -0.2px; margin-bottom: 6px; }
+  .stop-badge { display: inline-block; padding: 2px 8px; border-radius: 100px; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+  .stop-desc { color: var(--text-muted); font-size: 13px; margin-top: 10px; line-height: 1.6; }
+  .stop-tip { margin-top: 10px; padding: 10px 12px; background: rgba(255,255,255,0.03); border-radius: 10px; border: 1px solid rgba(255,255,255,0.05); }
+  .stop-tip-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--amber); margin-bottom: 4px; }
+  .stop-tip-text { color: var(--text-muted); font-size: 12px; line-height: 1.5; }
+
+  /* ── Footer ────────────────────────────────── */
+  .footer { margin-top: 64px; padding-top: 32px; border-top: 1px solid rgba(255,255,255,0.06); text-align: center; }
+  .footer-text { color: var(--text-dim); font-size: 12px; line-height: 1.8; }
+  .footer-stack { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; margin-top: 12px; }
+  .footer-tag { padding: 3px 10px; border-radius: 100px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); color: var(--text-dim); font-size: 11px; }
+
+  /* ── Responsive ─────────────────────────────── */
+  @media (max-width: 520px) {
+    .wrapper { padding: 32px 16px 60px; }
+    .wordmark { font-size: 42px; }
+    .input-row { flex-direction: column; }
+    .map-container { height: 240px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrapper">
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="wordmark">roam<span class="wordmark-accent"></span></div>
+    <p class="hero-sub">Your journey, crafted by ML</p>
+    <p class="hero-tech">RAG retrieval &middot; LightGBM ranking &middot; VRP route optimization &middot; LLM synthesis</p>
+  </div>
+
+  <!-- Form -->
+  <div id="form-section">
+    <div class="form-section">
+      <div class="label">Where to?</div>
+      <input class="input" id="city" placeholder="Paris, Tokyo, Barcelona..." autocomplete="off">
+    </div>
+
+    <div class="form-section">
+      <div class="label">Starting from</div>
+      <input class="input" id="start-location" placeholder="Montmartre, Shibuya station, Las Ramblas..." autocomplete="off">
+    </div>
+
+    <div class="form-section">
+      <div class="label">Interests</div>
+      <div class="chip-row" id="goals-row">
+        <button class="chip goal-chip" data-goal="food"><span class="goal-dot" style="background:#F59E0B"></span>Food</button>
+        <button class="chip goal-chip" data-goal="nature"><span class="goal-dot" style="background:#10B981"></span>Nature</button>
+        <button class="chip goal-chip" data-goal="history"><span class="goal-dot" style="background:#8B5CF6"></span>History</button>
+        <button class="chip goal-chip" data-goal="culture"><span class="goal-dot" style="background:#3B82F6"></span>Culture</button>
+        <button class="chip goal-chip" data-goal="nightlife"><span class="goal-dot" style="background:#EC4899"></span>Nightlife</button>
+        <button class="chip goal-chip" data-goal="shopping"><span class="goal-dot" style="background:#F97316"></span>Shopping</button>
+        <button class="chip goal-chip" data-goal="adventure"><span class="goal-dot" style="background:#EF4444"></span>Adventure</button>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <div class="label">Duration</div>
+      <div class="chip-row" id="duration-row">
+        <button class="chip dur-chip" data-dur="2">2h</button>
+        <button class="chip dur-chip" data-dur="3">3h</button>
+        <button class="chip dur-chip selected" data-dur="6">6h</button>
+        <button class="chip dur-chip" data-dur="8">8h</button>
+        <button class="chip dur-chip" data-dur="10">Full day</button>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <div class="label">Start time</div>
+      <div class="chip-row" id="starttime-row">
+        <button class="chip st-chip selected" data-st="morning">Morning</button>
+        <button class="chip st-chip" data-st="afternoon">Afternoon</button>
+        <button class="chip st-chip" data-st="evening">Evening</button>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <div class="label">Getting around</div>
+      <div class="chip-row" id="transport-row">
+        <button class="chip tr-chip selected" data-tr="walking">Walking</button>
+        <button class="chip tr-chip" data-tr="transit">Transit</button>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section-header">
+      <div class="section-dot"></div>
+      <span class="section-label">Preferences</span>
+    </div>
+
+    <div class="form-section" style="margin-top:20px">
+      <div class="input-row">
+        <div>
+          <div class="label">Pace</div>
+          <div class="chip-row" id="pace-row">
+            <button class="chip pace-chip" data-pace="relaxed">Relaxed</button>
+            <button class="chip pace-chip selected" data-pace="moderate">Moderate</button>
+            <button class="chip pace-chip" data-pace="packed">Packed</button>
+          </div>
+        </div>
+        <div>
+          <div class="label">Budget</div>
+          <div class="chip-row" id="budget-row">
+            <button class="chip bud-chip" data-bud="free">Free</button>
+            <button class="chip bud-chip selected" data-bud="mid">Mid</button>
+            <button class="chip bud-chip" data-bud="splurge">Splurge</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="error" class="error"></div>
+
+    <div class="cta-wrap">
+      <div class="cta-glow"></div>
+      <button class="cta" id="generate-btn" onclick="generate()">Build My Journey</button>
+    </div>
+  </div>
+
+  <!-- Progress -->
+  <div class="progress" id="progress">
+    <div class="progress-bar-track"><div class="progress-bar-fill" id="progress-bar"></div></div>
+    <div class="progress-steps" id="progress-steps">
+      <div class="progress-step" data-step="geocoding"><div class="step-dot"></div><span class="step-label">Locating you</span></div>
+      <div class="progress-step" data-step="fetching_pois"><div class="step-dot"></div><span class="step-label">Finding places</span></div>
+      <div class="progress-step" data-step="ranking"><div class="step-dot"></div><span class="step-label">ML Ranking</span></div>
+      <div class="progress-step" data-step="optimizing"><div class="step-dot"></div><span class="step-label">Building route</span></div>
+      <div class="progress-step" data-step="retrieving"><div class="step-dot"></div><span class="step-label">Local knowledge</span></div>
+      <div class="progress-step" data-step="generating"><div class="step-dot"></div><span class="step-label">Writing journey</span></div>
+    </div>
+  </div>
+
+  <!-- Results -->
+  <div class="results" id="results">
+    <div class="results-header">
+      <div class="results-title" id="results-title"></div>
+      <button class="results-back" onclick="resetForm()">New trip</button>
+    </div>
+    <div class="overview" id="results-overview"></div>
+    <div class="map-container" id="map"></div>
+    <div id="results-days"></div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer" id="footer">
+    <div class="footer-text">
+      Built with real ML &mdash; not an LLM wrapper.<br>
+      <a href="https://github.com/AarnavNoble/roam" target="_blank">View source on GitHub</a>
+    </div>
+    <div class="footer-stack">
+      <span class="footer-tag">FAISS</span>
+      <span class="footer-tag">LightGBM</span>
+      <span class="footer-tag">OR-Tools</span>
+      <span class="footer-tag">sentence-transformers</span>
+      <span class="footer-tag">Groq</span>
+      <span class="footer-tag">FastAPI</span>
+    </div>
+  </div>
+
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+const CATEGORY_COLORS = { food:'#F59E0B', nature:'#10B981', history:'#8B5CF6', culture:'#3B82F6', nightlife:'#EC4899', shopping:'#F97316', adventure:'#EF4444', attraction:'#6B7280' };
+const DAY_COLORS = ['#3B82F6','#10B981','#F59E0B','#EC4899','#8B5CF6','#EF4444'];
+const STEPS = ['geocoding','fetching_pois','ranking','optimizing','retrieving','generating'];
+
+let selectedGoals = new Set();
+let selectedDur = 6;
+let selectedSt = 'morning';
+let selectedTr = 'walking';
+let selectedPace = 'moderate';
+let selectedBud = 'mid';
+let map = null;
+
+// ── Chip selection ───────────────────────────────
+document.querySelectorAll('.goal-chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    const g = chip.dataset.goal;
+    if (selectedGoals.has(g)) { selectedGoals.delete(g); chip.classList.remove('selected'); }
+    else { selectedGoals.add(g); chip.classList.add('selected'); }
+  });
+});
+
+function singleSelect(selector, varSetter) {
+  document.querySelectorAll(selector).forEach(chip => {
+    chip.addEventListener('click', () => {
+      document.querySelectorAll(selector).forEach(c => c.classList.remove('selected'));
+      chip.classList.add('selected');
+      varSetter(chip);
+    });
+  });
+}
+singleSelect('.dur-chip', c => selectedDur = parseInt(c.dataset.dur));
+singleSelect('.st-chip', c => selectedSt = c.dataset.st);
+singleSelect('.tr-chip', c => selectedTr = c.dataset.tr);
+singleSelect('.pace-chip', c => selectedPace = c.dataset.pace);
+singleSelect('.bud-chip', c => selectedBud = c.dataset.bud);
+
+// ── Form validation + generation ─────────────────
+function showError(msg) {
+  const el = document.getElementById('error');
+  el.textContent = msg;
+  el.classList.add('visible');
+}
+function hideError() { document.getElementById('error').classList.remove('visible'); }
+
+function generate() {
+  hideError();
+  const city = document.getElementById('city').value.trim();
+  const start = document.getElementById('start-location').value.trim();
+  if (!city) return showError('Enter a city or area');
+  if (!start) return showError('Enter where you\'re starting from');
+  if (selectedGoals.size === 0) return showError('Pick at least one interest');
+
+  const btn = document.getElementById('generate-btn');
+  btn.disabled = true;
+  btn.textContent = 'Generating...';
+
+  document.getElementById('form-section').style.display = 'none';
+  document.getElementById('footer').style.display = 'none';
+  const progress = document.getElementById('progress');
+  progress.classList.add('active');
+
+  // Reset progress steps
+  document.querySelectorAll('.progress-step').forEach(s => { s.classList.remove('active','done'); s.querySelector('.step-dot').innerHTML = ''; });
+  document.getElementById('progress-bar').style.width = '0%';
+
+  const body = {
+    city, start_location: start,
+    duration_hours: selectedDur,
+    goals: [...selectedGoals],
+    transport: selectedTr,
+    pace: selectedPace,
+    budget: selectedBud,
+    style: 'solo',
+    dietary: 'none',
+    mobility: 'moderate',
+    familiarity: 'first_time',
+    start_time: selectedSt,
+    notes: '',
+    trip_date: new Date().toISOString().split('T')[0],
+  };
+
+  let currentStep = null;
+  const completedSteps = new Set();
+
+  fetch('/api/itinerary/stream', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Accept': 'text/event-stream' },
+    body: JSON.stringify(body),
+  }).then(async response => {
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const reader = response.body.getReader();
+    const decoder = new TextDecoder();
+    let buffer = '';
+
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      buffer += decoder.decode(value, { stream: true });
+      const lines = buffer.split('\n');
+      buffer = lines.pop() || '';
+
+      for (const line of lines) {
+        const trimmed = line.trim();
+        if (!trimmed.startsWith('data: ')) continue;
+        const raw = trimmed.slice(6).trim();
+        if (!raw) continue;
+        try {
+          const data = JSON.parse(raw);
+          if (data.step) {
+            if (currentStep) {
+              completedSteps.add(currentStep);
+              markStep(currentStep, 'done');
+            }
+            currentStep = data.step;
+            markStep(currentStep, 'active');
+            const pct = ((completedSteps.size + 1) / STEPS.length) * 100;
+            document.getElementById('progress-bar').style.width = pct + '%';
+          } else if (data.days) {
+            if (currentStep) { completedSteps.add(currentStep); markStep(currentStep, 'done'); }
+            document.getElementById('progress-bar').style.width = '100%';
+            setTimeout(() => renderResults(city, data), 400);
+            return;
+          } else if (data.message && !data.step) {
+            throw new Error(data.message);
+          }
+        } catch (e) { if (!(e instanceof SyntaxError)) throw e; }
+      }
+    }
+  }).catch(err => {
+    progress.classList.remove('active');
+    document.getElementById('form-section').style.display = '';
+    document.getElementById('footer').style.display = '';
+    btn.disabled = false;
+    btn.textContent = 'Build My Journey';
+    const msg = err.message || '';
+    if (msg.includes('504') || msg.includes('Gateway') || msg.includes('mirrors failed'))
+      showError('Location service timed out. Try a different area or fewer interests.');
+    else if (msg.includes('No POIs') || msg.includes('No places'))
+      showError('No places found there. Try a different starting point or broader interests.');
+    else showError(msg || 'Something went wrong. Please try again.');
+  });
+}
+
+function markStep(stepKey, state) {
+  const el = document.querySelector(`.progress-step[data-step="${stepKey}"]`);
+  if (!el) return;
+  el.classList.remove('active', 'done');
+  el.classList.add(state);
+  const dot = el.querySelector('.step-dot');
+  if (state === 'active') dot.innerHTML = '<div class="spinner"></div>';
+  else if (state === 'done') dot.innerHTML = '<span style="color:#fff;font-size:12px;font-weight:700">&#10003;</span>';
+}
+
+// ── Render results ───────────────────────────────
+function renderResults(city, data) {
+  document.getElementById('progress').classList.remove('active');
+  document.getElementById('results-title').textContent = city;
+  document.getElementById('results-overview').textContent = data.overview || '';
+
+  // Render days
+  const daysEl = document.getElementById('results-days');
+  daysEl.innerHTML = '';
+  const allStops = [];
+
+  data.days.forEach((day, di) => {
+    const color = DAY_COLORS[di % DAY_COLORS.length];
+    const section = document.createElement('div');
+    section.className = 'day-section';
+
+    let html = `<div class="day-header">
+      <span class="day-num" style="background:${color}18;color:${color};border:1px solid ${color}30">Day ${day.day}</span>
+      <span class="day-theme">${esc(day.theme)}</span>
+    </div>`;
+
+    day.stops.forEach((stop, si) => {
+      allStops.push({ ...stop, dayColor: color, dayIndex: di });
+      const catColor = CATEGORY_COLORS[stop.category] || '#6B7280';
+      const isLast = si === day.stops.length - 1;
+      html += `<div class="timeline-row">
+        <div class="timeline-track">
+          <div class="timeline-dot" style="background:${color}">${si + 1}</div>
+          ${!isLast ? `<div class="timeline-line" style="background:${color}"></div>` : ''}
+        </div>
+        <div class="stop-card">
+          ${stop.photo_url ? `<img class="stop-photo" src="${esc(stop.photo_url)}" alt="${esc(stop.name)}" loading="lazy" onerror="this.remove()">` : ''}
+          <div class="stop-content">
+            <div class="stop-meta">
+              <span class="stop-time">${esc(stop.arrival_time)}</span>
+              <span class="stop-duration">${stop.duration_min} min</span>
+            </div>
+            <div class="stop-name">${esc(stop.name)}</div>
+            <span class="stop-badge" style="background:${catColor}15;color:${catColor};border:1px solid ${catColor}30">${esc(stop.category)}</span>
+            <div class="stop-desc">${esc(stop.description)}</div>
+            ${stop.tip ? `<div class="stop-tip"><div class="stop-tip-label">Tip</div><div class="stop-tip-text">${esc(stop.tip)}</div></div>` : ''}
+          </div>
+        </div>
+      </div>`;
+    });
+
+    if (day.summary) html += `<div class="day-summary">${esc(day.summary)}</div>`;
+    section.innerHTML = html;
+    daysEl.appendChild(section);
+  });
+
+  // Render map
+  renderMap(allStops);
+
+  document.getElementById('results').classList.add('active');
+  document.getElementById('footer').style.display = '';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function renderMap(stops) {
+  const container = document.getElementById('map');
+  if (map) { map.remove(); map = null; }
+  const valid = stops.filter(s => s.lat && s.lon);
+  if (valid.length === 0) { container.style.display = 'none'; return; }
+  container.style.display = '';
+
+  map = L.map(container, { zoomControl: true, attributionControl: false });
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OSM contributors', maxZoom: 19
+  }).addTo(map);
+
+  // Group by day
+  const byDay = {};
+  valid.forEach(s => { (byDay[s.dayIndex] = byDay[s.dayIndex] || []).push(s); });
+
+  Object.entries(byDay).forEach(([di, dayStops]) => {
+    const color = DAY_COLORS[parseInt(di) % DAY_COLORS.length];
+    const latlngs = dayStops.map(s => [s.lat, s.lon]);
+    L.polyline(latlngs, { color, weight: 3, opacity: 0.7, dashArray: '8 5' }).addTo(map);
+
+    dayStops.forEach((stop, i) => {
+      const icon = L.divIcon({
+        html: `<div style="width:26px;height:26px;border-radius:50%;background:${color};color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;border:2px solid #09090b">${i + 1}</div>`,
+        className: '', iconSize: [26, 26], iconAnchor: [13, 13],
+      });
+      L.marker([stop.lat, stop.lon], { icon }).bindPopup(
+        `<div style="font-family:system-ui;min-width:140px"><b style="font-size:13px">${esc(stop.name)}</b><br><span style="color:#666;font-size:12px">${stop.arrival_time} &middot; ${stop.duration_min} min</span></div>`,
+        { closeButton: false }
+      ).addTo(map);
+    });
+  });
+
+  const bounds = L.latLngBounds(valid.map(s => [s.lat, s.lon]));
+  map.fitBounds(bounds, { padding: [30, 30] });
+}
+
+function resetForm() {
+  document.getElementById('results').classList.remove('active');
+  document.getElementById('form-section').style.display = '';
+  const btn = document.getElementById('generate-btn');
+  btn.disabled = false;
+  btn.textContent = 'Build My Journey';
+  if (map) { map.remove(); map = null; }
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function esc(str) { if (!str) return ''; const d = document.createElement('div'); d.textContent = str; return d.innerHTML; }
+</script>
+</body>
+</html>
