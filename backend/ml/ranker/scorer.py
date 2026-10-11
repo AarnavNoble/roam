@@ -115,10 +115,10 @@ def _diversify(ranked: list[dict], top_k: int, user_goals: list[str]) -> list[di
     return selected[:top_k]
 
 
-def apply_feedback(poi_id: int, relevant: bool, poi_name: str = "", category: str = "", goals: list[str] = None) -> bool:
+def apply_feedback(poi_id: int, relevant: bool, poi_name: str = "", category: str = "", goals: list[str] = None) -> str:
     """
     Log feedback signal and trigger retraining if threshold is reached.
-    Returns True if retraining occurred.
+    Returns the retraining outcome: "skipped", "promoted" or "rejected".
     """
     from .feedback_store import log_feedback
     from .retrain import retrain_if_needed

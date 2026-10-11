@@ -10,5 +10,4494 @@
   "transport": "walking",
   "start_lat": 41.8911586,
   "start_lon": 12.4668459,
-  "pois": []
+  "pool_categories": [
+    "food",
+    "nature",
+    "history",
+    "culture",
+    "nightlife",
+    "shopping",
+    "adventure",
+    "hidden_gems"
+  ],
+  "pois": [
+    {
+      "id": 248733730,
+      "name": "rgb46 - relax gallery books",
+      "lat": 41.880572,
+      "lon": 12.4748965,
+      "category": "food",
+      "description": "rgb46 - relax gallery books food cafe",
+      "tags": {
+        "addr:city": "Roma",
+        "addr:housenumber": "46",
+        "addr:postcode": "00153",
+        "addr:street": "Piazza di Santa Maria Liberatrice",
+        "amenity": "cafe",
+        "email": "info@rgb46.it",
+        "fax": "+39 06 45421608",
+        "name": "rgb46 - relax gallery books",
+        "phone": "+39 06 45421608",
+        "shop": "books",
+        "website": "http://www.rgb46.it/"
+      }
+    },
+    {
+      "id": 252440275,
+      "name": "Pizzeria ai Marmi",
+      "lat": 41.8882634,
+      "lon": 12.4737899,
+      "category": "food",
+      "description": "Pizzeria ai Marmi food pizza restaurant",
+      "tags": {
+        "addr:city": "Roma",
+        "addr:housenumber": "53",
+        "addr:postcode": "00153",
+        "addr:street": "Viale di Trastevere",
+        "air_conditioning": "yes",
+        "amenity": "restaurant",
+        "cuisine": "pizza",
+        "indoor_seating": "yes",
+        "name": "Pizzeria ai Marmi",
+        "opening_hours": "Th-Tu 18:30-02:30",
+        "outdoor_seating": "yes",
+        "phone": "+39 06 5800919",
+        "website": "http://m.facebook.com/aimarmi"
+      }
+    },
+    {
+      "id": 257351831,
+      "name": "Bar San Calisto",
+      "lat": 41.8890547,
+      "lon": 12.4707375,
+      "category": "nightlife",
+      "description": "Bar San Calisto nightlife bar",
+      "tags": {
+        "addr:city": "Roma",
+        "addr:country": "IT",
+        "addr:housenumber": "3/4/5",
+        "addr:postcode": "00153",
+        "addr:street": "Piazza di San Calisto",
+        "amenity": "bar",
+        "brewery": "peroni",
+        "contact:website": "https://barsancalisto.it",
+        "name": "Bar San Calisto",
+        "operator": "Marcello Forti",
+        "panoramax": "c4a2e0b8-0d8b-42a4-bd23-a1fee4d317dd",
+        "panoramax:0": "4fa55ca8-f128-4cbc-b423-7872ce379719",
+        "panoramax:1": "f290dcff-aafd-48a3-98e4-8c1d3b5cc629",
+        "panoramax:2": "fd5d0f57-41a9-4a4f-bf92-89f49f5c232a",
+        "phone": "+39 06 5835678",
+        "ref:vatin": "IT00795850585",
+        "shop": "beverages",
+        "toilets": "yes",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": 257355946,
+      "name": "Dar filettaro a Santa Barbara",
+      "lat": 41.8946709,
+      "lon": 12.473696,
+      "category": "food",
+      "description": "Dar filettaro a Santa Barbara food italian restaurant",
+      "tags": {
+        "addr:city": "Roma",
+        "addr:country": "IT",
+        "addr:housenumber": "88",
+        "addr:postcode": "00186",
+        "addr:street": "Largo dei Librari",
+        "alt_name": "Filetti di baccalà",
+        "amenity": "restaurant",
+        "cuisine": "italian",
+        "name": "Dar filettaro a Santa Barbara",
+        "opening_hours": "Mo-Sa 17:30+",
+        "phone": "+39 06 6864018",
+        "source": "Bing, Local knowledge"
+      }
+    },
+    {
+      "id": 261859476,
+      "name": "La Casa del Caffè Tazza D’oro",
+      "lat": 41.8995925,
+      "lon": 12.4774865,
+      "category": "food",
+      "description": "La Casa del Caffè Tazza D’oro food cafe",
+      "tags": {
+        "addr:housenumber": "84",
+        "addr:postcode": "00186",
+        "addr:street": "Via degli Orfani",
+        "amenity": "cafe",
+        "name": "La Casa del Caffè Tazza D’oro",
+        "name:zh": "金杯咖啡",
+        "opening_hours": "Mo-Sa 07:00-20:00; Su 10:30-19:15",
+        "phone": "+39 06 6789792",
+        "website": "https://www.tazzadorocoffeeshop.com/",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "id": 301351789,
+      "name": "Da Francesco",
+      "lat": 41.8993181,
+      "lon": 12.4704034,
+      "category": "food",
+      "description": "Da Francesco food pasta restaurant",
+      "tags": {
+        "addr:city": "Roma",
+        "addr:country": "IT",
+        "addr:housenumber": "29",
+        "addr:postcode": "00186",
+        "addr:street": "Piazza del Fico",
+        "amenity": "restaurant",
+        "check_date": "2026-03-24",
+        "check_date:opening_hours": "2026-03-24",
+        "cuisine": "pasta",
+        "email": "info@dafrancesco.it",
+        "ethnicity": "Italian",
+        "name": "Da Francesco",
+        "opening_hours": "Mo-Su 12:30-16:30, 19:00-23:00",
+        "phone": "+39 06 686 4009",
+        "website": "https://www.dafrancesco.it"
+      }
+    },
+    {
+      "id": 301351809,
+      "name": "Jonathan",
+      "lat": 41.8991754,
+      "lon": 12.4707372,
+      "category": "food",
+      "description": "Jonathan food cafe",
+      "tags": {
+        "amenity": "cafe",
+        "name": "Jonathan"
+      }
+    },
+    {
+      "id": 303869418,
+      "name": "Pizzeria Nuovo Mondo",
+      "lat": 41.88212,
+      "lon": 12.4761722,
+      "category": "food",
+      "description": "Pizzeria Nuovo Mondo food pizza restaurant",
+      "tags": {
+        "addr:city": "Roma",
+        "addr:housenumber": "9;11;13;15;17",
+        "addr:postcode": "00153",
+        "addr:street": "Via Amerigo Vespucci",
+        "air_conditioning": "yes",
+        "amenity": "restaurant",
+        "cuisine": "pizza",
+        "name": "Pizzeria Nuovo Mondo",
+        "operator": "Pizzeria Nuovo Mondo SNC di Angelo Bonavita & C.",
+        "outdoor_seating": "yes",
+        "oven": "wood_fired",
+        "phone": "+39 06 5746004",
+        "ref:vatin": "IT01621091006",
+        "restaurant:type:it": "pizzeria;birreria"
+      }
+    },
+    {
+      "id": 550325597,
+      "name": "Il Baffetto",
+      "lat": 41.8983047,
+      "lon": 12.4703507,
+      "category": "food",
+      "description": "Il Baffetto food pizza restaurant",
+      "tags": {
+        "addr:city": "Roma",
+        "addr:country": "IT",
+        "addr:housenumber": "114",
+        "addr:postcode": "00186",
+        "addr:street": "Via del Governo Vecchio",
+        "amenity": "restaurant",
+        "cuisine": "pizza",
+        "name": "Il Baffetto",
+        "name:it": "Pizzeria Da Baffetto",
+        "opening_hours": "Mo-Su 12:00-15:00, 18:00-00:30",
+        "oven": "wood_fired",
+        "phone": "+39 06 6861617",
+        "website": "https://www.pizzeriabaffetto.it/",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "id": 589999198,
+      "name": "L'Orange - Restaurant Wine Bar",
+      "lat": 41.8807244,
+      "lon": 12.4666495,
+      "category": "food",
+      "description": "L'Orange - Restaurant Wine Bar food italian restaurant",
+      "tags": {
+        "amenity": "restaurant",
+        "cuisine": "italian",
+        "name": "L'Orange - Restaurant Wine Bar"
+      }
+    },
+    {
+      "id": 606079759,
+      "name": "Lettere Caffè",
+      "lat": 41.8858115,
+      "lon": 12.4725707,
+      "category": "food",
+      "description": "Lettere Caffè food cafe",
+      "tags": {
+        "addr:city": "Roma",
+        "addr:country": "IT",
+        "addr:housenumber": "100",
+        "addr:postcode": "00153",
+        "addr:street": "Via di San Francesco a Ripa",
+        "amenity": "cafe",
+        "name": "Lettere Caffè",
+        "website": "https://www.letterecaffe.org/"
+      }
+    },
+    {
+      "id": 608401518,
+      "name": "Antica Trattoria Tritone",
+      "lat": 41.9024028,
+      "lon": 12.4854491,
+      "category": "food",
+      "description": "Antica Trattoria Tritone food italian restaurant",
+      "tags": {
+        "addr:city": "Roma",
+        "addr:country": "IT",
+        "addr:housenumber": "1",
+        "addr:street": "Via dei Maroniti",
+        "amenity": "restaurant",
+        "cuisine": "italian",
+        "email": "info@trattoriatritone.com",
+        "name": "Antica Trattoria Tritone",
+        "phone": "+39 06 6798181",
+        "website": "https://www.trattoriatritone.com/"
+      }
+    },
+    {
+      "id": 630680592,
+      "name": "Tiberino",
+      "lat": 41.8906948,
+      "lon": 12.477909,
+      "category": "food",
+      "description": "Tiberino food restaurant",
+      "tags": {
+        "addr:city": "Roma",
+        "addr:country": "IT",
+        "addr:housenumber": "17-18",
+        "addr:postcode": "00186",
+        "addr:street": "Via di Ponte Quattro Capi",
+        "amenity": "restaurant",
+        "indoor_seating": "yes",
+        "name": "Tiberino",
+        "outdoor_seating": "yes",
+        "phone": "+39 06 6877662",
+        "website": "https://www.tiberinoroma.it/"
+      }
+    },
+    {
+      "id": 665946000,
+      "name": "Caffetteria al Parlamento",
+      "lat": 41.9025614,
+      "lon": 12.4779967,
+      "category": "food",
+      "description": "Caffetteria al Parlamento food breakfast;italian cafe",
+      "tags": {
+        "addr:housenumber": "4",
+        "addr:street": "Piazza del Parlamento",
+        "amenity": "cafe",
+        "cuisine": "breakfast;italian",
+        "internet_access": "wlan",
+        "name": "Caffetteria al Parlamento"
+      }
+    },
+    {
+      "id": 668954580,
+      "name": "La Fontanella Borghese",
+      "lat": 41.903563,
+      "lon": 12.476709,
+      "category": "food",
+      "description": "La Fontanella Borghese food restaurant",
+      "tags": {
+        "amenity": "restaurant",
+        "name": "La Fontanella Borghese",
+        "name:zh": "佛坦内拉伯毕塞酒店"
+      }
+    },
+    {
+      "id": 668954649,
+      "name": "Bar Borghese",
+      "lat": 41.903579,
+      "lon": 12.4768378,
+      "category": "food",
+      "description": "Bar Borghese food cafe",
+      "tags": {
+        "amenity": "cafe",
+        "name": "Bar Borghese"
+      }
+    },
+    {
+      "id": 685467514,
+      "name": "Pizzeria Ristorante Marcantonio",
+      "lat": 41.9038773,
+      "lon": 12.4599903,
+      "category": "food",
+      "description": "Pizzeria Ristorante Marcantonio food italian restaurant",
+      "tags": {
+        "addr:city": "Roma",
+        "addr:housenumber": "146",
+        "addr:postcode": "00193",
+        "addr:street": "Borgo Pio",
+        "amenity": "restaurant",
+        "cuisine": "italian",
+        "name": "Pizzeria Ristorante Marcantonio",
+        "outdoor_seating": "yes",
+        "phone": "+39 06 686 1413",
+        "website": "https://ristorantemarcantonio.it/",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "id": 745931041,
+      "name": "Caffè Braccio",
+      "lat": 41.8803063,
+      "lon": 12.4843363,
+      "category": "food",
+      "description": "Caffè Braccio food cafe",
+      "tags": {
+        "amenity": "cafe",
+        "name": "Caffè Braccio"
+      }
+    },
+    {
+      "id": 748757852,
+      "name": "La Pimpaccia",
+      "lat": 41.879381,
+      "lon": 12.4507835,
+      "category": "food",
+      "description": "La Pimpaccia food regional restaurant",
+      "tags": {
+        "addr:city": "Roma",
+        "addr:housenumber": "16",
+        "addr:postcode": "00152",
+        "addr:street": "Via di Donna Olimpia",
+        "amenity": "restaurant",
+        "cuisine": "regional",
+        "name": "La Pimpaccia",
+        "source": "PCN"
+      }
+    },
+    {
+      "id": 907726813,
+      "name": "The Burger Factory Roma",
+      "lat": 41.8755751,
+      "lon": 12.4685359,
+      "category": "food",
+      "description": "The Burger Factory Roma food restaurant",
+      "tags": {
+        "addr:city": "Roma",
+        "addr:country": "IT",
+        "addr:housenumber": "20",
+        "addr:postcode": "00153",
+        "addr:street": "Via Giovanni da Castel Bolognese",
+        "amenity": "restaurant",
+        "diet:vegetarian": "yes",
+        "name": "The Burger Factory Roma",
+        "operator": "ragù S.r.l.",
+        "phone": "+39 06 3209 0588",
+        "website": "https://the-burger-factory-roma.business.site/"
+      }
+    },
+    {
+      "id": 935387198,
+      "name": "Taverna Parione",
+      "lat": 41.8987579,
+      "lon": 12.4707661,
+      "category": "food",
+      "description": "Taverna Parione food italian restaurant",
+      "tags": {
+        "addr:city": "Roma",
+        "addr:country": "IT",
+        "addr:housenumber": "38",
+        "addr:postcode": "00186",
+        "addr:street": "Via di Parione",
+        "amenity": "restaurant",
+        "cuisine": "italian",
+        "name": "Taverna Parione"
+      }
+    },
+    {
+      "id": 1119375594,
+      "name": "Nick e Tony",
+      "lat": 41.8875975,
+      "lon": 12.4716518,
+      "category": "food",
+      "description": "Nick e Tony food pizza fast food",
+      "tags": {
+        "amenity": "fast_food",
+        "cuisine": "pizza",
+        "name": "Nick e Tony"
+      }
+    },
+    {
+      "id": 1133973247,
+      "name": "Osteria del Gallo",
+      "lat": 41.8996789,
+      "lon": 12.4710991,
+      "category": "food",
+      "description": "Osteria del Gallo food italian restaurant",
+      "tags": {
+        "addr:city": "Roma",
+        "addr:country": "IT",
+        "addr:housenumber": "27",
+        "addr:postcode": "00186",
+        "addr:street": "Vicolo di Montevecchio",
+        "amenity": "restaurant",
+        "cuisine": "italian",
+        "ethnicity": "Italian",
+        "name": "Osteria del Gallo",
+        "phone": "+39 06 6873781"
+      }
+    },
+    {
+      "id": 1133982857,
+      "name": "Trattoria Da Lucia",
+      "lat": 41.8903815,
+      "lon": 12.4676344,
+      "category": "food",
+      "description": "Trattoria Da Lucia food italian restaurant",
+      "tags": {
+        "addr:city": "Roma",
+        "addr:country": "IT",
+        "addr:housenumber": "2b",
+        "addr:postcode": "00153",
+        "addr:street": "Vicolo del Mattonato",
+        "amenity": "restaurant",
+        "cuisine": "italian",
+        "ethnicity": "Italian",
+        "name": "Trattoria Da Lucia",
+        "opening_hours": "Tu-Su 12:30-15:30,19:30-24:00",
+        "phone": "+39 06 5803601",
+        "website": "http://www.trattoriadalucia.com"
+      }
+    },
+    {
+      "id": 1213721131,
+      "name": "Osteria Palmira",
+      "lat": 41.8783043,
+      "lon": 12.4534671,
+      "category": "food",
+      "description": "Osteria Palmira food restaurant",
+      "tags": {
+        "addr:city": "Roma",
+        "addr:housenumber": "29",
+        "addr:postcode": "00152",
+        "addr:street": "Via Abate Ugone",
+        "amenity": "restaurant",
+        "name": "Osteria Palmira",
+        "website": "https://www.osteriapalmira.it/"
+      }
+    },
+    {
+      "id": 1217629777,
+      "name": "L'insalata ricca",
+      "lat": 41.9065707,
+      "lon": 12.4565469,
+      "category": "food",
+      "description": "L'insalata ricca food regional;italian pizza restaurant",
+      "tags": {
+        "addr:city": "Roma",
+        "addr:postcode": "00192",
+        "addr:street": "Piazza del Risorgimento",
+        "amenity": "restaurant",
+        "cuisine": "regional;italian_pizza",
+        "name": "L'insalata ricca",
+        "wheelchair": "limited"
+      }
+    },
+    {
+      "id": 1253159209,
+      "name": "Il Miraggio",
+      "lat": 41.8991429,
+      "lon": 12.4815024,
+      "category": "food",
+      "description": "Il Miraggio food italian;pasta;pizza restaurant",
+      "tags": {
+        "addr:city": "Roma",
+        "addr:country": "IT",
+        "addr:housenumber": "59",
+        "addr:street": "Vicolo Sciarra",
+        "amenity": "restaurant",
+        "cuisine": "italian;pasta;pizza",
+        "diet:gluten_free": "yes",
+        "name": "Il Miraggio"
+      }
+    },
+    {
+      "id": 1253235860,
+      "name": "Trinity College",
+      "lat": 41.8988399,
+      "lon": 12.4808093,
+      "category": "nightlife",
+      "description": "Trinity College nightlife bar",
+      "tags": {
+        "amenity": "bar",
+        "name": "Trinity College",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "id": 1261077845,
+      "name": "l'Orso 80",
+      "lat": 41.9018539,
+      "lon": 12.4736215,
+      "category": "food",
+      "description": "l'Orso 80 food italian restaurant",
+      "tags": {
+        "amenity": "restaurant",
+        "cuisine": "italian",
+        "name": "l'Orso 80",
+        "opening_hours": "Tu-Su 13:00-15:00, 19:00-23:00",
+        "phone": "+39066864904",
+        "source": "local_survey"
+      }
+    },
+    {
+      "id": 1261098051,
+      "name": "Papa's Cafe",
+      "lat": 41.901766,
+      "lon": 12.4732701,
+      "category": "food",
+      "description": "Papa's Cafe food cafe",
+      "tags": {
+        "amenity": "cafe",
+        "name": "Papa's Cafe",
+        "source": "survey"
+      }
+    },
+    {
+      "id": 1302759918,
+      "name": "Ni Hao",
+      "lat": 41.9070084,
+      "lon": 12.4568416,
+      "category": "food",
+      "description": "Ni Hao food chinese;japanese restaurant",
+      "tags": {
+        "addr:city": "Roma",
+        "addr:country": "IT",
+        "addr:housenumber": "15",
+        "addr:postcode": "00192",
+        "addr:street": "Via Vespasiano",
+        "amenity": "restaurant",
+        "cuisine": "chinese;japanese",
+        "name": "Ni Hao",
+        "phone": "+39 06 39723790",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": 1319030071,
+      "name": "La Pace",
+      "lat": 41.8944211,
+      "lon": 12.4905606,
+      "category": "food",
+      "description": "La Pace food chinese restaurant",
+      "tags": {
+        "addr:city": "Roma",
+        "addr:housenumber": "53-56",
+        "addr:street": "Via Madonna dei Monti",
+        "amenity": "restaurant",
+        "cuisine": "chinese",
+        "name": "La Pace",
+        "operator": "Wong Chuang Liang & C. s.a.s.",
+        "ref:vatin": "IT03799441005"
+      }
+    },
+    {
+      "id": 1324874753,
+      "name": "Cafe' dei Desideri",
+      "lat": 41.9039788,
+      "lon": 12.4602934,
+      "category": "food",
+      "description": "Cafe' dei Desideri food cafe",
+      "tags": {
+        "addr:city": "Roma",
+        "addr:country": "IT",
+        "addr:housenumber": "23",
+        "addr:postcode": "00193",
+        "addr:street": "Via Plauto",
+        "amenity": "cafe",
+        "name": "Cafe' dei Desideri",
+        "operator": "Effeci Global Service Group s.r.l.",
+        "phone": "+39 06 6893207",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": 1334007068,
+      "name": "Cremì",
+      "lat": 41.8992366,
+      "lon": 12.4724961,
+      "category": "food",
+      "description": "Cremì food ice cream fast food",
+      "tags": {
+        "addr:housenumber": "20",
+        "addr:street": "Via di Sant'Agnese in Agone",
+        "amenity": "fast_food",
+        "cuisine": "ice_cream",
+        "name": "Cremì",
+        "phone": "+39 06 8007 7615"
+      }
+    },
+    {
+      "id": 1349038368,
+      "name": "Osteria der Belli",
+      "lat": 41.8898692,
+      "lon": 12.470797,
+      "category": "food",
+      "description": "Osteria der Belli food italian restaurant",
+      "tags": {
+        "addr:city": "Roma",
+        "addr:country": "IT",
+        "addr:housenumber": "9",
+        "addr:postcode": "00153",
+        "addr:street": "Piazza di Sant'Apollonia",
+        "amenity": "restaurant",
+        "cuisine": "italian",
+        "name": "Osteria der Belli",
+        "source": "Bing, Local knowledge",
+        "toilets:wheelchair": "no",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": 2688549543,
+      "name": "Cedro 1",
+      "lat": 41.8804854,
+      "lon": 12.4810749,
+      "category": "nature",
+      "description": "Cedro 1 nature park",
+      "tags": {
+        "fixme": "Local unkown",
+        "leisure": "park",
+        "name": "Cedro 1"
+      }
+    },
+    {
+      "id": 2688549545,
+      "name": "Cedro 2",
+      "lat": 41.8805143,
+      "lon": 12.4811278,
+      "category": "nature",
+      "description": "Cedro 2 nature park",
+      "tags": {
+        "fixme": "Local unkown",
+        "leisure": "park",
+        "name": "Cedro 2"
+      }
+    },
+    {
+      "id": 2688549554,
+      "name": "Magnolia",
+      "lat": 41.8804514,
+      "lon": 12.4810232,
+      "category": "nature",
+      "description": "Magnolia nature park",
+      "tags": {
+        "fixme": "Local unkown",
+        "leisure": "park",
+        "name": "Magnolia"
+      }
+    },
+    {
+      "id": 5301393723,
+      "name": "Colle Vaticano",
+      "lat": 41.9027753,
+      "lon": 12.449895,
+      "category": "nature",
+      "description": "Colle Vaticano nature",
+      "tags": {
+        "ele": "75",
+        "name": "Colle Vaticano",
+        "name:ar": "تلة الفاتيكان",
+        "name:de": "Vatikanischer Hügel",
+        "name:en": "Vatican Hill",
+        "name:es": "Colina Vaticana",
+        "name:fr": "Colline du Vatican",
+        "name:hr": "Vatikanski brijeg",
+        "name:hy": "Վատիկանյան բլուր",
+        "name:it": "Colle Vaticano",
+        "name:la": "Mons Vaticanus",
+        "name:nl": "Vaticaanse Heuvel",
+        "name:pt": "Colina do Vaticano",
+        "name:ru": "Ватиканский холм",
+        "name:sr": "Ватиканско брдо",
+        "natural": "peak",
+        "wikidata": "Q1053000",
+        "wikimedia_commons": "Category:Vatican hill",
+        "wikipedia": "it:Colle Vaticano"
+      }
+    },
+    {
+      "id": 13121237513,
+      "name": "Aventino",
+      "lat": 41.8836945,
+      "lon": 12.4794173,
+      "category": "nature",
+      "description": "Aventino nature",
+      "tags": {
+        "name": "Aventino",
+        "name:de": "Aventin",
+        "name:en": "Aventine Hill",
+        "name:la": "Aventinus",
+        "natural": "peak",
+        "peak": "hill",
+        "wikidata": "Q194103",
+        "wikimedia_commons": "Category:Aventine Hill",
+        "wikipedia": "it:Aventino"
+      }
+    },
+    {
+      "id": 23353065,
+      "name": "Giardino Famiglia di Consiglio",
+      "lat": 41.8802481,
+      "lon": 12.4752092,
+      "category": "nature",
+      "description": "Giardino Famiglia di Consiglio nature park",
+      "tags": {
+        "alt_name": "Piazza Francesco Totti VIII Re di Roma",
+        "leisure": "park",
+        "name": "Giardino Famiglia di Consiglio"
+      }
+    },
+    {
+      "id": 23694978,
+      "name": "Villa Aldobrandini",
+      "lat": 41.8966025,
+      "lon": 12.4879413,
+      "category": "nature",
+      "description": "Villa Aldobrandini nature garden",
+      "tags": {
+        "leisure": "garden",
+        "name": "Villa Aldobrandini",
+        "wikidata": "Q4011748",
+        "wikimedia_commons": "Category:Villa Aldobrandini (Rome)",
+        "wikipedia": "it:Villa Aldobrandini (Roma)"
+      }
+    },
+    {
+      "id": 24189189,
+      "name": "Giardino Luigi Bigiarelli",
+      "lat": 41.9091248,
+      "lon": 12.471266,
+      "category": "nature",
+      "description": "Giardino Luigi Bigiarelli nature park",
+      "tags": {
+        "leisure": "park",
+        "name": "Giardino Luigi Bigiarelli",
+        "name:etymology:wikidata": "Q277347"
+      }
+    },
+    {
+      "id": 27350575,
+      "name": "Foro Boario",
+      "lat": 41.8888528,
+      "lon": 12.4808938,
+      "category": "history",
+      "description": "Foro Boario history archaeological site park",
+      "tags": {
+        "historic": "archaeological_site",
+        "historic:civilization": "ancient_roman",
+        "leisure": "park",
+        "name": "Foro Boario",
+        "name:de": "Forum Boarium",
+        "name:en": "Forum Boarium",
+        "name:etymology:wikidata": "Q283650",
+        "name:la": "Forum Boarium",
+        "name:pt": "Fórum Boário",
+        "name:ru": "Бычий Форум",
+        "wikidata": "Q283650",
+        "wikimedia_commons": "Category:Foro Boario (Rome)",
+        "wikipedia": "it:Foro Boario"
+      }
+    },
+    {
+      "id": 35884332,
+      "name": "Villa Sciarra",
+      "lat": 41.8837228,
+      "lon": 12.4638373,
+      "category": "nature",
+      "description": "Villa Sciarra nature park",
+      "tags": {
+        "addr:city": "Roma",
+        "addr:housename": "12",
+        "addr:postcode": "00152",
+        "addr:street": "Via Dandolo",
+        "addr:unit": "1",
+        "leisure": "park",
+        "name": "Villa Sciarra",
+        "wikidata": "Q14479150",
+        "wikimedia_commons": "Category:Villa Sciarra (Rome)",
+        "wikipedia": "it:Villa Sciarra (Roma)"
+      }
+    },
+    {
+      "id": 95928168,
+      "name": "Piazza Albania",
+      "lat": 41.8798453,
+      "lon": 12.4829012,
+      "category": "nature",
+      "description": "Piazza Albania nature park",
+      "tags": {
+        "leisure": "park",
+        "name": "Piazza Albania",
+        "name:sq": "Sheshi Shqipëria"
+      }
+    },
+    {
+      "id": 301361919,
+      "name": "Statua \"parlante\" di Pasquino",
+      "lat": 41.8977153,
+      "lon": 12.4723082,
+      "category": "history",
+      "description": "Statua \"parlante\" di Pasquino history memorial",
+      "tags": {
+        "historic": "memorial",
+        "material": "stone",
+        "memorial": "statue",
+        "name": "Statua \"parlante\" di Pasquino",
+        "name:ru": "Статуя Пасквино",
+        "name:uk": "Пасквіль",
+        "wikidata": "Q958448",
+        "wikimedia_commons": "Category:Pasquino",
+        "wikipedia": "it:Pasquino"
+      }
+    },
+    {
+      "id": 307878083,
+      "name": "Arco di Paolo V",
+      "lat": 41.8889773,
+      "lon": 12.4531168,
+      "category": "history",
+      "description": "Arco di Paolo V history monument",
+      "tags": {
+        "access": "yes",
+        "barrier": "entrance",
+        "historic": "monument",
+        "name": "Arco di Paolo V"
+      }
+    },
+    {
+      "id": 685957631,
+      "name": "Monumento a Terenzio Mamiani della Rovere",
+      "lat": 41.8997977,
+      "lon": 12.4657508,
+      "category": "history",
+      "description": "Monumento a Terenzio Mamiani della Rovere history memorial artwork",
+      "tags": {
+        "artist_name": "Mauro Benini",
+        "artwork_type": "statue",
+        "historic": "memorial",
+        "memorial": "statue",
+        "name": "Monumento a Terenzio Mamiani della Rovere",
+        "start_date": "1892",
+        "subject:wikidata": "Q1045355",
+        "tourism": "artwork"
+      }
+    },
+    {
+      "id": 1274807963,
+      "name": "San Pietro",
+      "lat": 41.90351,
+      "lon": 12.452071,
+      "category": "history",
+      "description": "San Pietro history memorial",
+      "tags": {
+        "historic": "memorial",
+        "memorial": "statue",
+        "name": "San Pietro",
+        "name:cs": "Svatý Petr",
+        "name:de": "Sankt Petrus",
+        "name:en": "Saint Peter",
+        "name:es": "San Pedro",
+        "name:fr": "Saint Pierre",
+        "name:grc": "Ἅγιος Πέτρος",
+        "name:hu": "Szent Péter",
+        "name:it": "San Pietro",
+        "name:la": "Sancti Petri",
+        "name:nl": "Sint Pieter",
+        "name:ru": "Апостол Пётр",
+        "name:zh": "聖彼得大教堂",
+        "subject:wikidata": "Q33923",
+        "wheelchair": "limited",
+        "wikidata": "Q12055206"
+      }
+    },
+    {
+      "id": 1274830455,
+      "name": "Campana del Giubileo 2000",
+      "lat": 41.9011923,
+      "lon": 12.4488423,
+      "category": "history",
+      "description": "Campana del Giubileo 2000 history memorial",
+      "tags": {
+        "historic": "memorial",
+        "memorial": "sculpture",
+        "name": "Campana del Giubileo 2000",
+        "name:cs": "Jubilejní zvon 2000",
+        "name:en": "Jubilee 2000 Bell",
+        "name:es": "Campana del Jubileo 2000",
+        "name:it": "Campana del Giubileo 2000",
+        "name:la": "Campana Lubilaei MM",
+        "wheelchair": "limited"
+      }
+    },
+    {
+      "id": 1327232072,
+      "name": "San Paolo",
+      "lat": 41.9025452,
+      "lon": 12.4557528,
+      "category": "history",
+      "description": "San Paolo history memorial",
+      "tags": {
+        "direction": "90",
+        "height": "10",
+        "historic": "memorial",
+        "memorial": "statue",
+        "name": "San Paolo",
+        "name:de": "Heiliger Paulus",
+        "name:en": "Saint Paul",
+        "name:es": "San Pablo",
+        "name:hu": "Szent Pál",
+        "name:it": "San Paolo",
+        "name:la": "Sanctus Paulus",
+        "name:nl": "Sint Pieter",
+        "name:ru": "Святой Павел",
+        "subject:wikidata": "Q9200"
+      }
+    },
+    {
+      "id": 1327232077,
+      "name": "San Pietro",
+      "lat": 41.9018541,
+      "lon": 12.4557603,
+      "category": "history",
+      "description": "San Pietro history memorial",
+      "tags": {
+        "direction": "90",
+        "height": "10",
+        "historic": "memorial",
+        "image": "https://photos.app.goo.gl/Vu3GD7KcCLv3GCf58",
+        "memorial": "statue",
+        "name": "San Pietro",
+        "name:ar": "القديس بطرس",
+        "name:arz": "القديس بطرس",
+        "name:br": "Sant Pêr",
+        "name:de": "Heiliger Petrus",
+        "name:en": "Saint Peter",
+        "name:es": "San Pedro",
+        "name:fr": "Saint Pierre",
+        "name:grc": "Ἅγιος Πέτρος",
+        "name:hu": "Szent Péter",
+        "name:it": "San Pietro",
+        "name:la": "Sanctus Petrus",
+        "name:lt": "Šventas Petras",
+        "name:ru": "Святой Петр",
+        "name:zh": "聖伯多祿",
+        "name:zh-Hans": "圣伯多禄",
+        "name:zh-Hant": "聖伯多祿",
+        "subject:wikidata": "Q33923",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": 1340656195,
+      "name": "Obelisco della Minerva",
+      "lat": 41.8979741,
+      "lon": 12.4775597,
+      "category": "history",
+      "description": "Obelisco della Minerva history monument",
+      "tags": {
+        "alt_name": "Pulcin della Minerva",
+        "artwork_type": "sculpture",
+        "historic": "monument",
+        "historic:civilization": "ancient_egyptian",
+        "historic:era": "Psamtik_II",
+        "historic:period": "late_period",
+        "man_made": "obelisk",
+        "name": "Obelisco della Minerva",
+        "name:en": "Elephant and Obelisk",
+        "name:it": "Obelisco della Minerva",
+        "obelisk:height": "5.47",
+        "obelisk:material": "red_granite",
+        "obelisk:size": "monumental",
+        "wikidata": "Q826635",
+        "wikimedia_commons": "Category:Pulcino della Minerva",
+        "wikipedia": "it:Obelisco della Minerva"
+      }
+    },
+    {
+      "id": 1379492229,
+      "name": "Testa di Costantino",
+      "lat": 41.8928946,
+      "lon": 12.4824892,
+      "category": "history",
+      "description": "Testa di Costantino history memorial",
+      "tags": {
+        "historic": "memorial",
+        "memorial": "statue",
+        "name": "Testa di Costantino",
+        "name:hu": "Nagy Konstantin feje",
+        "subject:wikidata": "Q8413",
+        "wikidata": "Q1289781",
+        "wikimedia_commons": "Category:Colossus of Constantine",
+        "wikipedia": "en:Colossus of Constantine"
+      }
+    },
+    {
+      "id": 1387899467,
+      "name": "Altare di città Zara",
+      "lat": 41.8943436,
+      "lon": 12.4829117,
+      "category": "history",
+      "description": "Altare di città Zara history memorial",
+      "tags": {
+        "historic": "memorial",
+        "image": "https://upload.wikimedia.org/wikipedia/commons/0/05/Vittoriano_altare_Zara_P1000745.jpg",
+        "inscription": "ZARA",
+        "memorial": "sculpture",
+        "name": "Altare di città Zara",
+        "name:de": "Altar der Stadt Zadar",
+        "subject:wikidata": "Q3370"
+      }
+    },
+    {
+      "id": 1387899470,
+      "name": "Altare di città Pola",
+      "lat": 41.8943554,
+      "lon": 12.4830046,
+      "category": "history",
+      "description": "Altare di città Pola history memorial",
+      "tags": {
+        "historic": "memorial",
+        "image": "https://upload.wikimedia.org/wikipedia/commons/0/04/Vittoriano_altare_Pola_P1000741.jpg",
+        "inscription": "POLA",
+        "memorial": "sculpture",
+        "name": "Altare di città Pola",
+        "name:de": "Altar der Stadt Pula",
+        "subject:wikidata": "Q4656"
+      }
+    },
+    {
+      "id": 1387899487,
+      "name": "Altare di città Gorizia",
+      "lat": 41.89442,
+      "lon": 12.4832915,
+      "category": "history",
+      "description": "Altare di città Gorizia history memorial",
+      "tags": {
+        "historic": "memorial",
+        "image": "https://upload.wikimedia.org/wikipedia/commons/9/90/Vittoriano_altare_Gorizia_P1000744.jpg",
+        "inscription": "GORIZIA",
+        "memorial": "sculpture",
+        "name": "Altare di città Gorizia",
+        "name:de": "Altar der Stadt Görz",
+        "subject:wikidata": "Q6596"
+      }
+    },
+    {
+      "id": 1387899494,
+      "name": "Altare di città Trento",
+      "lat": 41.8944504,
+      "lon": 12.4833819,
+      "category": "history",
+      "description": "Altare di città Trento history memorial",
+      "tags": {
+        "historic": "memorial",
+        "image": "https://upload.wikimedia.org/wikipedia/commons/7/7b/Vittoriano_altare_Trento_P1000743.jpg",
+        "inscription": "TRENTO",
+        "memorial": "sculpture",
+        "name": "Altare di città Trento",
+        "name:de": "Altar der Stadt Trient",
+        "subject:wikidata": "Q3376"
+      }
+    },
+    {
+      "id": 1387899502,
+      "name": "Altare di città Trieste",
+      "lat": 41.8944843,
+      "lon": 12.4834699,
+      "category": "history",
+      "description": "Altare di città Trieste history memorial",
+      "tags": {
+        "historic": "memorial",
+        "image": "https://upload.wikimedia.org/wikipedia/commons/f/f3/Vittoriano_altare_Trieste_P1000742.jpg",
+        "inscription": "TRIESTE",
+        "memorial": "sculpture",
+        "name": "Altare di città Trieste",
+        "name:de": "Altar der Stadt Triest",
+        "subject:wikidata": "Q546"
+      }
+    },
+    {
+      "id": 1416733018,
+      "name": "Ufficio scavi vaticano",
+      "lat": 41.9016831,
+      "lon": 12.4540108,
+      "category": "history",
+      "description": "Ufficio scavi vaticano history archaeological site",
+      "tags": {
+        "access": "yes",
+        "addr:city": "Città del Vaticano",
+        "archaeological_site": "tomb",
+        "email": "scavi@fsp.va",
+        "historic": "archaeological_site",
+        "historic:civilization": "roman",
+        "name": "Ufficio scavi vaticano",
+        "name:ar": "مكتب الفاتيكان للحفريات",
+        "name:de": "Vatikanisches Ausgrabungsbüro",
+        "name:en": "Vatican Excavation Office",
+        "name:es": "Oficina de Excavación del Vaticano",
+        "name:fr": "Bureau des Fouilles",
+        "name:it": "Ufficio scavi vaticano",
+        "name:ru": "Ватиканские раскопки",
+        "phone": "+39 06 69885318",
+        "website": "https://www.scavi.va/content/scavi/it.html"
+      }
+    },
+    {
+      "id": 1447566609,
+      "name": "Tabularium",
+      "lat": 41.8928562,
+      "lon": 12.4838503,
+      "category": "history",
+      "description": "Tabularium history ruins",
+      "tags": {
+        "historic": "ruins",
+        "name": "Tabularium",
+        "ruins": "yes"
+      }
+    },
+    {
+      "id": 1447566610,
+      "name": "Tempio di Augusto",
+      "lat": 41.8913995,
+      "lon": 12.485294,
+      "category": "history",
+      "description": "Tempio di Augusto history archaeological site",
+      "tags": {
+        "alt_name:la": "Templum Novum Divi Augusti",
+        "building": "temple",
+        "historic": "archaeological_site",
+        "historic:civilization": "ancient_roman",
+        "name": "Tempio di Augusto",
+        "name:fr": "Temple d'Auguste",
+        "name:la": "Templum Divi Augusti",
+        "official_name:la": "Templum Divi Augusti ad Minervam",
+        "ruins": "yes",
+        "wikidata": "Q927222",
+        "wikimedia_commons": "Category:Temple of Augustus (Rome)",
+        "wikipedia": "it:Tempio di Augusto"
+      }
+    },
+    {
+      "id": 1448531164,
+      "name": "Portico degli Dei Consenti",
+      "lat": 41.8925351,
+      "lon": 12.4837323,
+      "category": "history",
+      "description": "Portico degli Dei Consenti history ruins",
+      "tags": {
+        "historic": "ruins",
+        "name": "Portico degli Dei Consenti",
+        "ruins": "yes"
+      }
+    },
+    {
+      "id": 1510795500,
+      "name": "Criptoportico Neroniano",
+      "lat": 41.890019,
+      "lon": 12.4871741,
+      "category": "history",
+      "description": "Criptoportico Neroniano history archaeological site",
+      "tags": {
+        "historic": "archaeological_site",
+        "historic:civilization": "ancient_roman",
+        "name": "Criptoportico Neroniano",
+        "name:de": "Kryptoportikus des Nero",
+        "wikidata": "Q660398",
+        "wikimedia_commons": "Category:Cryptoporticus",
+        "wikipedia": "it:Criptoportico"
+      }
+    },
+    {
+      "id": 2249937204,
+      "name": "Ghetto ebraico",
+      "lat": 41.893806,
+      "lon": 12.477811,
+      "category": "history",
+      "description": "Ghetto ebraico history memorial",
+      "tags": {
+        "historic": "memorial",
+        "name": "Ghetto ebraico",
+        "name:en": "Jewish Ghetto"
+      }
+    },
+    {
+      "id": 2263021094,
+      "name": "Domus Augustana - Peristilio",
+      "lat": 41.8878622,
+      "lon": 12.4865652,
+      "category": "history",
+      "description": "Domus Augustana - Peristilio history archaeological site",
+      "tags": {
+        "historic": "archaeological_site",
+        "name": "Domus Augustana - Peristilio",
+        "name:ru": "дворец Августа",
+        "wikidata": "Q908472",
+        "wikimedia_commons": "Category:Domus Augustana",
+        "wikipedia": "en:Domus Augustana"
+      }
+    },
+    {
+      "id": 2375319820,
+      "name": "San Michele Arcangelo",
+      "lat": 41.9016497,
+      "lon": 12.4508512,
+      "category": "history",
+      "description": "San Michele Arcangelo history memorial",
+      "tags": {
+        "historic": "memorial",
+        "memorial": "statue",
+        "name": "San Michele Arcangelo",
+        "name:cs": "Svatý archanděl Michael",
+        "name:de": "Heiliger Erzengel Michael",
+        "name:en": "Saint Michael Archangel",
+        "name:es": "San Miguel Arcángel",
+        "name:fr": "Saint Michel Archange",
+        "name:hu": "Szent Mihály arkangyal",
+        "name:it": "San Michele Arcangelo",
+        "name:lt": "Šv. Mykolas Arkangelas",
+        "name:pt": "São Miguel Arcanjo",
+        "name:ru": "Архангел Михаил",
+        "subject:wikidata": "Q45581",
+        "wheelchair": "limited"
+      }
+    },
+    {
+      "id": 2514023657,
+      "name": "Teodoro di Amasea",
+      "lat": 41.901808,
+      "lon": 12.4580518,
+      "category": "history",
+      "description": "Teodoro di Amasea history memorial artwork",
+      "tags": {
+        "artist_name": "Lazzaro Morelli",
+        "artwork_type": "statue",
+        "direction": "292",
+        "height": "22",
+        "historic": "memorial",
+        "memorial": "statue",
+        "min_height": "17",
+        "name": "Teodoro di Amasea",
+        "name:de": "Theodoros von Euchaïta",
+        "subject:wikidata": "Q37599",
+        "tourism": "artwork",
+        "wheelchair": "limited"
+      }
+    },
+    {
+      "id": 2514765540,
+      "name": "Giacinto Odrovaz",
+      "lat": 41.9013389,
+      "lon": 12.4573756,
+      "category": "history",
+      "description": "Giacinto Odrovaz history memorial artwork",
+      "tags": {
+        "artist_name": "Lazzaro Morelli",
+        "artwork_type": "statue",
+        "direction": "0",
+        "height": "22",
+        "historic": "memorial",
+        "memorial": "statue",
+        "min_height": "17",
+        "name": "Giacinto Odrovaz",
+        "name:de": "Hyazinth von Polen",
+        "subject:wikidata": "Q8689031",
+        "tourism": "artwork"
+      }
+    },
+    {
+      "id": 2514765541,
+      "name": "Papa Marcellino",
+      "lat": 41.901338,
+      "lon": 12.4572306,
+      "category": "history",
+      "description": "Papa Marcellino history memorial artwork",
+      "tags": {
+        "artist_name": "Lazzaro Morelli",
+        "artwork_type": "statue",
+        "direction": "0",
+        "height": "22",
+        "historic": "memorial",
+        "memorial": "statue",
+        "min_height": "17",
+        "name": "Papa Marcellino",
+        "name:de": "Papst Marcellinus",
+        "name:hu": "Marcellinus pápa",
+        "subject:wikidata": "Q160373",
+        "tourism": "artwork"
+      }
+    },
+    {
+      "id": 2514765542,
+      "name": "Papa Silvestro I",
+      "lat": 41.90134,
+      "lon": 12.4571857,
+      "category": "history",
+      "description": "Papa Silvestro I history memorial artwork",
+      "tags": {
+        "artist_name": "Lazzaro Morelli",
+        "artwork_type": "statue",
+        "direction": "0",
+        "height": "22",
+        "historic": "memorial",
+        "memorial": "statue",
+        "min_height": "17",
+        "name": "Papa Silvestro I",
+        "name:de": "Papst Silvester I.",
+        "name:hu": "I. Szilveszter pápa",
+        "subject:wikidata": "Q47149",
+        "tourism": "artwork"
+      }
+    },
+    {
+      "id": 2514765543,
+      "name": "Papa Martino I",
+      "lat": 41.9013451,
+      "lon": 12.4571382,
+      "category": "history",
+      "description": "Papa Martino I history memorial artwork",
+      "tags": {
+        "artist_name": "Lazzaro Morelli",
+        "artwork_type": "statue",
+        "direction": "0",
+        "height": "22",
+        "historic": "memorial",
+        "memorial": "statue",
+        "min_height": "17",
+        "name": "Papa Martino I",
+        "name:de": "Papst Martin I.",
+        "name:hu": "I. Márton pápa",
+        "subject:wikidata": "Q172390",
+        "tourism": "artwork"
+      }
+    },
+    {
+      "id": 2514765544,
+      "name": "Francesco Saverio",
+      "lat": 41.9013453,
+      "lon": 12.4574219,
+      "category": "history",
+      "description": "Francesco Saverio history memorial artwork",
+      "tags": {
+        "artist_name": "Lazzaro Morelli",
+        "artwork_type": "statue",
+        "direction": "0",
+        "height": "22",
+        "historic": "memorial",
+        "memorial": "statue",
+        "min_height": "17",
+        "name": "Francesco Saverio",
+        "name:de": "Franz Xaver",
+        "name:hu": "Xavéri Szent Ferenc",
+        "subject:wikidata": "Q163900",
+        "tourism": "artwork"
+      }
+    },
+    {
+      "id": 2514765545,
+      "name": "Papa Marcello I",
+      "lat": 41.9013529,
+      "lon": 12.4570852,
+      "category": "history",
+      "description": "Papa Marcello I history memorial artwork",
+      "tags": {
+        "artist_name": "Lazzaro Morelli",
+        "artwork_type": "statue",
+        "direction": "0",
+        "height": "22",
+        "historic": "memorial",
+        "memorial": "statue",
+        "min_height": "17",
+        "name": "Papa Marcello I",
+        "name:de": "Papst Marcellus I.",
+        "name:hu": "I. Marcellus pápa",
+        "subject:wikidata": "Q102131",
+        "tourism": "artwork"
+      }
+    },
+    {
+      "id": 2514765546,
+      "name": "Gaetano Thiene",
+      "lat": 41.9013537,
+      "lon": 12.4574729,
+      "category": "history",
+      "description": "Gaetano Thiene history memorial artwork",
+      "tags": {
+        "artist_name": "Lazzaro Morelli",
+        "artwork_type": "statue",
+        "direction": "0",
+        "height": "22",
+        "historic": "memorial",
+        "memorial": "statue",
+        "min_height": "17",
+        "name": "Gaetano Thiene",
+        "name:de": "Kajetan von Thiene",
+        "subject:wikidata": "Q379914",
+        "tourism": "artwork"
+      }
+    },
+    {
+      "id": 2514765547,
+      "name": "Papa Celestino V",
+      "lat": 41.9013633,
+      "lon": 12.4570363,
+      "category": "history",
+      "description": "Papa Celestino V history memorial artwork",
+      "tags": {
+        "artist_name": "Lazzaro Morelli",
+        "artwork_type": "statue",
+        "direction": "22",
+        "height": "22",
+        "historic": "memorial",
+        "memorial": "statue",
+        "min_height": "17",
+        "name": "Papa Celestino V",
+        "name:de": "Papst Cölestin V.",
+        "name:hu": "V. Celesztin pápa",
+        "subject:wikidata": "Q118081",
+        "tourism": "artwork"
+      }
+    },
+    {
+      "id": 2514765548,
+      "name": "Filippo Benizi",
+      "lat": 41.9013645,
+      "lon": 12.4575219,
+      "category": "history",
+      "description": "Filippo Benizi history memorial artwork",
+      "tags": {
+        "artist_name": "Lazzaro Morelli",
+        "artwork_type": "statue",
+        "direction": "0",
+        "height": "22",
+        "historic": "memorial",
+        "memorial": "statue",
+        "min_height": "17",
+        "name": "Filippo Benizi",
+        "name:de": "Philipp Benizi",
+        "subject:wikidata": "Q141900",
+        "tourism": "artwork"
+      }
+    },
+    {
+      "id": 2514765549,
+      "name": "Filippo Neri",
+      "lat": 41.9013761,
+      "lon": 12.45757,
+      "category": "history",
+      "description": "Filippo Neri history memorial artwork",
+      "tags": {
+        "artist_name": "Lazzaro Morelli",
+        "artwork_type": "statue",
+        "direction": "337",
+        "height": "22",
+        "historic": "memorial",
+        "memorial": "statue",
+        "min_height": "17",
+        "name": "Filippo Neri",
+        "name:de": "Philipp Neri",
+        "name:hu": "Neri Szent Fülöp",
+        "subject:wikidata": "Q217791",
+        "tourism": "artwork"
+      }
+    },
+    {
+      "id": 2514765550,
+      "name": "Papa Clemente I",
+      "lat": 41.9013768,
+      "lon": 12.4569837,
+      "category": "history",
+      "description": "Papa Clemente I history memorial artwork",
+      "tags": {
+        "artist_name": "Filippo Carcani",
+        "artwork_type": "statue",
+        "direction": "22",
+        "height": "22",
+        "historic": "memorial",
+        "memorial": "statue",
+        "min_height": "17",
+        "name": "Papa Clemente I",
+        "name:de": "Papst Clemens I.",
+        "name:hu": "I. Kelemen pápa",
+        "subject:wikidata": "Q42887",
+        "tourism": "artwork"
+      }
+    },
+    {
+      "id": 2514765551,
+      "name": "Carlo Borromeo",
+      "lat": 41.9013911,
+      "lon": 12.4576164,
+      "category": "history",
+      "description": "Carlo Borromeo history memorial artwork",
+      "tags": {
+        "artist_name": "Lazzaro Morelli",
+        "artwork_type": "statue",
+        "direction": "337",
+        "height": "22",
+        "historic": "memorial",
+        "memorial": "statue",
+        "min_height": "17",
+        "name": "Carlo Borromeo",
+        "name:de": "Karl Borromäus",
+        "name:hu": "Borromeo Szent Károly",
+        "subject:wikidata": "Q216946",
+        "tourism": "artwork"
+      }
+    },
+    {
+      "id": 2514765552,
+      "name": "Papa Leone IV",
+      "lat": 41.9013904,
+      "lon": 12.4569386,
+      "category": "history",
+      "description": "Papa Leone IV history memorial artwork",
+      "tags": {
+        "artwork_type": "statue",
+        "direction": "22",
+        "height": "22",
+        "historic": "memorial",
+        "memorial": "statue",
+        "min_height": "17",
+        "name": "Papa Leone IV",
+        "name:de": "Papst Leo IV.",
+        "name:hu": "IV. Leó pápa",
+        "subject:wikidata": "Q228205",
+        "tourism": "artwork"
+      }
+    },
+    {
+      "id": 2514765554,
+      "name": "Gregorio Nazianzeno",
+      "lat": 41.9014081,
+      "lon": 12.456892,
+      "category": "history",
+      "description": "Gregorio Nazianzeno history memorial artwork",
+      "tags": {
+        "artist_name": "Giovanni Maria de Rossi",
+        "artwork_type": "statue",
+        "direction": "22",
+        "height": "22",
+        "historic": "memorial",
+        "memorial": "statue",
+        "min_height": "17",
+        "name": "Gregorio Nazianzeno",
+        "name:de": "Gregor von Nazianz",
+        "subject:wikidata": "Q44011",
+        "tourism": "artwork",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": 252419164,
+      "name": "Teatro Vittoria",
+      "lat": 41.8797422,
+      "lon": 12.4750116,
+      "category": "culture",
+      "description": "Teatro Vittoria culture theatre",
+      "tags": {
+        "addr:housenumber": "10",
+        "addr:postcode": "00153",
+        "addr:street": "Piazza di Santa Maria Liberatrice",
+        "amenity": "theatre",
+        "email": "info@teatrovittoria.it",
+        "name": "Teatro Vittoria",
+        "phone": "+39 065781960",
+        "website": "https://www.teatrovittoria.it/"
+      }
+    },
+    {
+      "id": 259653354,
+      "name": "Auditorium Conciliazione",
+      "lat": 41.9025871,
+      "lon": 12.4636471,
+      "category": "culture",
+      "description": "Auditorium Conciliazione culture theatre",
+      "tags": {
+        "amenity": "theatre",
+        "check_date": "2025-09-06",
+        "name": "Auditorium Conciliazione",
+        "website": "https://auditoriumconciliazione.it/",
+        "wheelchair": "limited",
+        "wikidata": "Q5650373",
+        "wikipedia": "it:Auditorium Conciliazione"
+      }
+    },
+    {
+      "id": 656532697,
+      "name": "Galleria Spada",
+      "lat": 41.8938866,
+      "lon": 12.4722011,
+      "category": "culture",
+      "description": "Galleria Spada culture museum",
+      "tags": {
+        "addr:city": "Roma",
+        "addr:housenumber": "13",
+        "addr:postcode": "00186",
+        "addr:street": "Piazza Capo di Ferro",
+        "email": "palazzospada@gebart.it",
+        "fee": "yes",
+        "fee:icom_member": "no",
+        "name": "Galleria Spada",
+        "name:ko": "스파다 궁",
+        "name:ru": "Галерея Спада",
+        "opening_hours": "We-Mo 08:30-19:30; Tu off; May 1 off; Dec 25 off",
+        "phone": "+39 06 683 2409",
+        "tourism": "museum",
+        "website": "https://galleriaspada.beniculturali.it/index.php?it/1/home",
+        "wikidata": "Q3757699",
+        "wikimedia_commons": "Category:Galleria Spada (Rome)",
+        "wikipedia": "it:Galleria Spada"
+      }
+    },
+    {
+      "id": 656829698,
+      "name": "Museo di Roma",
+      "lat": 41.8972775,
+      "lon": 12.4727772,
+      "category": "culture",
+      "description": "Museo di Roma culture museum",
+      "tags": {
+        "addr:city": "Roma",
+        "addr:housenumber": "10",
+        "addr:postcode": "00186",
+        "addr:street": "Piazza di San Pantaleo",
+        "email": "museodiroma@comune.roma.it",
+        "fee": "yes",
+        "fee:icom_member": "no",
+        "museum": "art",
+        "name": "Museo di Roma",
+        "name:it": "Museo di Roma",
+        "name:zh": "罗马博物馆",
+        "opening_hours": "Tu-Su 10:00-19:00; Jan 01 11:00-19:30; Dec 24,31 10:00-14:00; Jan 01 off; Mo off; May 01 off; Dec 25 off",
+        "phone": "+39 06 0608",
+        "tourism": "museum",
+        "website": "https://www.museodiroma.it/",
+        "wheelchair": "yes",
+        "wikidata": "Q3868175",
+        "wikimedia_commons": "Category:Museo di Roma a Palazzo Braschi",
+        "wikipedia": "it:Museo di Roma a palazzo Braschi"
+      }
+    },
+    {
+      "id": 677476578,
+      "name": "Museo Nazionale Romano",
+      "lat": 41.9011978,
+      "lon": 12.4728382,
+      "category": "culture",
+      "description": "Museo Nazionale Romano culture museum",
+      "tags": {
+        "addr:city": "Roma",
+        "addr:housenumber": "46",
+        "addr:postcode": "00186",
+        "addr:street": "Piazza di Sant'Apollinare",
+        "fee": "yes",
+        "fee:icom_member": "no",
+        "name": "Museo Nazionale Romano",
+        "name:hu": "Nemzeti Római Kori Múzeum",
+        "name:uk": "Палаццо Альтемпс",
+        "name:zh": "罗马国家博物馆阿尔滕普斯宫",
+        "opening_hours": "Tu-Su 09:00-19:45",
+        "operator": "Soprintendenza Speciale per i Beni Archeologici di Roma",
+        "phone": "+39 06 39967700",
+        "tourism": "museum",
+        "website": "https://www.museonazionaleromano.beniculturali.it",
+        "wheelchair": "yes",
+        "wikidata": "Q1816007",
+        "wikimedia_commons": "Category:Palazzo Altemps (Rome)",
+        "wikipedia": "it:Museo nazionale romano di palazzo Altemps"
+      }
+    },
+    {
+      "id": 706793341,
+      "name": "Palazzo Doria Pamphilj",
+      "lat": 41.8978235,
+      "lon": 12.4815609,
+      "category": "culture",
+      "description": "Palazzo Doria Pamphilj culture Private collection and home with Caravaggio, Velasquez, Tiziano, Raffaello, Lippi, and others Available also for private visits and functions museum",
+      "tags": {
+        "addr:housenumber": "305",
+        "addr:street": "Via del Corso",
+        "description": "Private collection and home with Caravaggio, Velasquez, Tiziano, Raffaello, Lippi, and others Available also for private visits and functions",
+        "fee": "yes",
+        "name": "Palazzo Doria Pamphilj",
+        "name:zh": "多利亚潘菲利美术馆",
+        "opening_hours": "Mo-Th 09:00-19:00; Fr-Su 10:00-20:00",
+        "phone": "+39 06 6797323",
+        "tourism": "museum",
+        "website": "https://www.dopart.it/",
+        "wheelchair": "limited",
+        "wikidata": "Q1203458",
+        "wikimedia_commons": "Category:Galleria Doria Pamphilj (Rome)",
+        "wikipedia": "it:Galleria Doria Pamphilj"
+      }
+    },
+    {
+      "id": 1142943804,
+      "name": "Teatro dell'Orologio",
+      "lat": 41.8985499,
+      "lon": 12.4684698,
+      "category": "culture",
+      "description": "Teatro dell'Orologio culture theatre",
+      "tags": {
+        "addr:city": "Roma",
+        "addr:country": "IT",
+        "addr:housenumber": "17a",
+        "addr:street": "Via dei Filippini",
+        "amenity": "theatre",
+        "culture": "theatre",
+        "disused": "yes",
+        "name": "Teatro dell'Orologio"
+      }
+    },
+    {
+      "id": 1201568109,
+      "name": "Vascello",
+      "lat": 41.8824682,
+      "lon": 12.460607,
+      "category": "culture",
+      "description": "Vascello culture theatre",
+      "tags": {
+        "addr:housenumber": "78",
+        "addr:postcode": "00152",
+        "addr:street": "Via Giacinto Carini",
+        "amenity": "theatre",
+        "contact:facebook": "https://facebook.com/pages/Teatro-Il-Vascello/105634906151016",
+        "contact:instagram": "teatrovascello",
+        "contact:twitter": "TeatroVascello",
+        "email": "botteghino@teatrovascello.it",
+        "name": "Vascello",
+        "phone": "+39065881021;+39065898031",
+        "website": "https://www.teatrovascello.it",
+        "wheelchair": "limited"
+      }
+    },
+    {
+      "id": 1387899682,
+      "name": "Sacrario delle Bandiere delle Forze Armate",
+      "lat": 41.8949213,
+      "lon": 12.4835868,
+      "category": "culture",
+      "description": "Sacrario delle Bandiere delle Forze Armate culture museum",
+      "tags": {
+        "fee": "no",
+        "name": "Sacrario delle Bandiere delle Forze Armate",
+        "name:hu": "Hadizászlók Múzeuma",
+        "name:zh": "军旗寺庙",
+        "tourism": "museum",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": 1553116334,
+      "name": "F.A.D. room",
+      "lat": 41.8932906,
+      "lon": 12.4773895,
+      "category": "culture",
+      "description": "F.A.D. room culture gallery",
+      "tags": {
+        "addr:city": "Roma",
+        "addr:country": "IT",
+        "addr:housenumber": "12",
+        "addr:postcode": "00186",
+        "addr:street": "Via della Reginella",
+        "culture": "art_gallery",
+        "email": "info@fadroom.it",
+        "gallery": "art",
+        "name": "F.A.D. room",
+        "operator": "HANASI design;Veronica Montanino;franjipani",
+        "phone": "+39 06 6833795",
+        "tourism": "gallery",
+        "website": "http://www.fadroom.it/"
+      }
+    },
+    {
+      "id": 1565344046,
+      "name": "Teatro Argot Studio",
+      "lat": 41.8870844,
+      "lon": 12.4699785,
+      "category": "culture",
+      "description": "Teatro Argot Studio culture theatre",
+      "tags": {
+        "amenity": "theatre",
+        "name": "Teatro Argot Studio",
+        "source": "Bing, Local knowledge",
+        "website": "http://www.teatroargotstudio.com"
+      }
+    },
+    {
+      "id": 1649776329,
+      "name": "Galleria Colonna",
+      "lat": 41.8974483,
+      "lon": 12.484845,
+      "category": "culture",
+      "description": "Galleria Colonna culture gallery",
+      "tags": {
+        "addr:city": "Roma",
+        "addr:country": "IT",
+        "addr:housenumber": "17",
+        "addr:street": "Via della Pilotta",
+        "name": "Galleria Colonna",
+        "name:ja": "コロンナ宮殿",
+        "opening_hours": "Sa 09:00-13:15",
+        "tourism": "gallery",
+        "website": "https://www.galleriacolonna.it/",
+        "wheelchair": "limited",
+        "wikidata": "Q1971299",
+        "wikimedia_commons": "Category:Palazzo Colonna (Rome)",
+        "wikipedia": "it:Palazzo Colonna"
+      }
+    },
+    {
+      "id": 1662303156,
+      "name": "Museo Universale",
+      "lat": 41.8987436,
+      "lon": 12.4865874,
+      "category": "culture",
+      "description": "Museo Universale culture museum",
+      "tags": {
+        "fee": "yes",
+        "name": "Museo Universale",
+        "tourism": "museum",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": 1674754682,
+      "name": "Chiostro del Bramante",
+      "lat": 41.9000215,
+      "lon": 12.4715028,
+      "category": "culture",
+      "description": "Chiostro del Bramante culture museum",
+      "tags": {
+        "addr:city": "Roma",
+        "addr:housenumber": "5",
+        "addr:postcode": "00186",
+        "addr:street": "Arco della Pace",
+        "fee": "yes",
+        "name": "Chiostro del Bramante",
+        "name:en": "Cloisters of Bramante",
+        "name:hu": "Bramante kerengője",
+        "phone": "+39 06 6880 9035",
+        "tourism": "museum",
+        "website": "https://www.chiostrodelbramante.it/",
+        "wheelchair": "limited",
+        "wikidata": "Q25100007",
+        "wikimedia_commons": "Category:Santa Maria della Pace (Rome) - Cloister",
+        "wikipedia": "en:Chiostro del Bramante"
+      }
+    },
+    {
+      "id": 1754895755,
+      "name": "Teatro Ghione",
+      "lat": 41.8987753,
+      "lon": 12.456389,
+      "category": "culture",
+      "description": "Teatro Ghione culture theatre",
+      "tags": {
+        "amenity": "theatre",
+        "check_date": "2024-03-18",
+        "name": "Teatro Ghione"
+      }
+    },
+    {
+      "id": 1938346422,
+      "name": "Museo napoleonico di Roma",
+      "lat": 41.901781,
+      "lon": 12.4720387,
+      "category": "culture",
+      "description": "Museo napoleonico di Roma culture museum",
+      "tags": {
+        "addr:city": "Roma",
+        "addr:country": "IT",
+        "addr:housenumber": "1",
+        "addr:postcode": "00186",
+        "addr:street": "Piazza di Ponte Umberto I",
+        "email": "museonapoleonico@comune.roma.it",
+        "fee": "no",
+        "name": "Museo napoleonico di Roma",
+        "opening_hours": "Tu-Su 10:00-18:00; Dec 24,31 10:00-14:00; Mo off; Jan 01 off; May 01 off; Dec 25 off",
+        "phone": "+39 06 6874240",
+        "tourism": "museum",
+        "website": "https://www.museonapoleonico.it/",
+        "wheelchair": "no",
+        "wikidata": "Q15141205",
+        "wikimedia_commons": "Category:Museo napoleonico (Rome)",
+        "wikipedia": "it:Museo napoleonico di Roma"
+      }
+    },
+    {
+      "id": 2296913458,
+      "name": "Stadio di Domiziano",
+      "lat": 41.9002046,
+      "lon": 12.4725609,
+      "category": "culture",
+      "description": "Stadio di Domiziano culture Piazza Navona, ai tempi dell'antica Roma, era lo Stadio di Domiziano, costruito dall'imperatore Domiziano nell'85. Era lungo 276 m, largo 106 e poteva ospitare 30.000 spettatori. museum",
+      "tags": {
+        "addr:city": "Roma",
+        "addr:country": "IT",
+        "addr:housenumber": "3",
+        "addr:postcode": "00186",
+        "addr:street": "Via di Tor Sanguigna",
+        "concessionaire": "MKT121 Srl.",
+        "description": "Piazza Navona, ai tempi dell'antica Roma, era lo Stadio di Domiziano, costruito dall'imperatore Domiziano nell'85. Era lungo 276 m, largo 106 e poteva ospitare 30.000 spettatori.",
+        "email": "info@stadiodomiziano.com",
+        "fee": "yes",
+        "museum": "archaeological",
+        "name": "Stadio di Domiziano",
+        "name:en": "Stadium of Domitian",
+        "opening_hours": "Mo-Fr 10:00-19:00, Su 10:00-19:00; Sa 10:00-20:00",
+        "operator": "Sovrintendenza Capitolina ai Beni Culturali",
+        "phone": "+39 06 6880 5311;+39 06 4568 6100",
+        "ref:vatin": "IT09993821009",
+        "tourism": "museum",
+        "website": "https://stadiodomiziano.com/",
+        "wheelchair": "no",
+        "wikidata": "Q963671",
+        "wikimedia_commons": "Category:Stadium of Domitian (Rome)",
+        "wikipedia": "it:Stadio di Domiziano"
+      }
+    },
+    {
+      "id": 2737700137,
+      "name": "Teatro Petrolini",
+      "lat": 41.8802723,
+      "lon": 12.4739586,
+      "category": "culture",
+      "description": "Teatro Petrolini culture theatre",
+      "tags": {
+        "addr:city": "Roma",
+        "addr:housenumber": "5",
+        "addr:postcode": "00153",
+        "addr:street": "Via Rubattino",
+        "amenity": "theatre",
+        "name": "Teatro Petrolini",
+        "wikidata": "Q16612514",
+        "wikimedia_commons": "Category:Teatro Petrolini",
+        "wikipedia": "it:Teatro Petrolini"
+      }
+    },
+    {
+      "id": 3218242360,
+      "name": "Mattatoio",
+      "lat": 41.8761617,
+      "lon": 12.4730895,
+      "category": "culture",
+      "description": "Mattatoio culture arts centre",
+      "tags": {
+        "addr:city": "Roma",
+        "addr:housenumber": "4",
+        "addr:postcode": "00153",
+        "addr:street": "Piazza Orazio Giustiniani",
+        "amenity": "arts_centre",
+        "name": "Mattatoio",
+        "old_name": "MACRO Testaccio",
+        "operator": "Azienda Speciale PalaExpo",
+        "operator:type": "public",
+        "phone": "+390639967500",
+        "website": "https://www.mattatoioroma.it"
+      }
+    },
+    {
+      "id": 3242620877,
+      "name": "Rialto",
+      "lat": 41.8933949,
+      "lon": 12.4777078,
+      "category": "culture",
+      "description": "Rialto culture Circolo culturale Arci arts centre",
+      "tags": {
+        "addr:city": "Roma",
+        "addr:country": "IT",
+        "addr:housenumber": "4",
+        "addr:postcode": "00186",
+        "addr:street": "Via di Sant'Ambrogio",
+        "amenity": "arts_centre",
+        "description": "Circolo culturale Arci",
+        "name": "Rialto"
+      }
+    },
+    {
+      "id": 3761580107,
+      "name": "Giacomo Guidi Arte Contemporanea",
+      "lat": 41.8985849,
+      "lon": 12.4675164,
+      "category": "culture",
+      "description": "Giacomo Guidi Arte Contemporanea culture museum",
+      "tags": {
+        "addr:city": "Roma",
+        "addr:country": "IT",
+        "addr:housenumber": "282-284",
+        "addr:postcode": "00186",
+        "addr:street": "Corso Vittorio Emanuele II",
+        "fee": "no",
+        "name": "Giacomo Guidi Arte Contemporanea",
+        "name:hu": "Giacomo Guidi Kortárs Művészeti Múzeum",
+        "tourism": "museum"
+      }
+    },
+    {
+      "id": 4218903353,
+      "name": "Anfiteatro Quercia del Tasso",
+      "lat": 41.8957602,
+      "lon": 12.4610604,
+      "category": "culture",
+      "description": "Anfiteatro Quercia del Tasso culture theatre",
+      "tags": {
+        "amenity": "theatre",
+        "name": "Anfiteatro Quercia del Tasso",
+        "name:etymology:wikidata": "Q3616672",
+        "theatre:type": "open_air",
+        "wikidata": "Q3616672",
+        "wikimedia_commons": "Category:Quercia del Tasso (Rome)",
+        "wikipedia": "it:Anfiteatro Quercia del Tasso"
+      }
+    },
+    {
+      "id": 4228668019,
+      "name": "Teatro Quirino",
+      "lat": 41.8999229,
+      "lon": 12.4825803,
+      "category": "culture",
+      "description": "Teatro Quirino culture theatre",
+      "tags": {
+        "addr:housenumber": "7",
+        "addr:street": "Via delle Vergini",
+        "amenity": "theatre",
+        "name": "Teatro Quirino",
+        "website": "https://www.teatroquirino.it/",
+        "wikidata": "Q3982110",
+        "wikimedia_commons": "Category:Teatro Quirino (Rome)",
+        "wikipedia": "it:Teatro Quirino"
+      }
+    },
+    {
+      "id": 4258490090,
+      "name": "Museo Criminologico",
+      "lat": 41.8976775,
+      "lon": 12.4666323,
+      "category": "culture",
+      "description": "Museo Criminologico culture museum",
+      "tags": {
+        "addr:city": "Roma",
+        "addr:country": "IT",
+        "addr:housenumber": "29",
+        "addr:postcode": "00186",
+        "addr:street": "Via del Gonfalone",
+        "fee": "yes",
+        "name": "Museo Criminologico",
+        "name:hu": "Bűnügyi Múzeum",
+        "name:it": "Museo Criminologico",
+        "name:ru": "Музей криминологи",
+        "short_name": "MUCRI",
+        "tourism": "museum",
+        "website": "https://www.museocriminologico.it/",
+        "wikidata": "Q3867843",
+        "wikipedia": "it:Museo criminologico"
+      }
+    },
+    {
+      "id": 4292016589,
+      "name": "Real Academia de España",
+      "lat": 41.8889045,
+      "lon": 12.4666124,
+      "category": "culture",
+      "description": "Real Academia de España culture museum",
+      "tags": {
+        "addr:housenumber": "3",
+        "addr:postcode": "00153",
+        "addr:street": "Piazza di San Pietro in Montorio",
+        "fee": "no",
+        "name": "Real Academia de España",
+        "tourism": "museum",
+        "wikidata": "Q531779",
+        "wikimedia_commons": "Category:Real Academia de España en Roma",
+        "wikipedia": "it:Accademia di Spagna"
+      }
+    },
+    {
+      "id": 4376017562,
+      "name": "Museo Nazionale del Palazzo di Venezia",
+      "lat": 41.8963664,
+      "lon": 12.4815341,
+      "category": "culture",
+      "description": "Museo Nazionale del Palazzo di Venezia culture collezione: tele dal XV al XVIII secolo,sculture, pastelli, miniature, rilievi in terracotta, avori, bronzetti, tessuti, arazzi e tappeti. museum",
+      "tags": {
+        "addr:city": "Roma",
+        "addr:country": "IT",
+        "addr:housenumber": "1",
+        "addr:postcode": "00186",
+        "addr:street": "Piazza Venezia",
+        "description": "collezione: tele dal XV al XVIII secolo,sculture, pastelli, miniature, rilievi in terracotta, avori, bronzetti, tessuti, arazzi e tappeti.",
+        "email": "pm-laz@beniculturali.it",
+        "fee": "yes",
+        "name": "Museo Nazionale del Palazzo di Venezia",
+        "opening_hours": "Tu-Su 08:30-19:30; Mo off; Jan 1 off; May 1 off; Dec 25 off",
+        "operator": "Ministero della Cultura",
+        "operator:type": "public",
+        "phone": "+39 06 6780131",
+        "tourism": "museum",
+        "website": "https://vive.cultura.gov.it/it/palazzo-venezia",
+        "wheelchair": "yes",
+        "wikidata": "Q1954305",
+        "wikimedia_commons": "Category:Museo nazionale del Palazzo di Venezia",
+        "wikipedia": "it:Museo nazionale del Palazzo di Venezia"
+      }
+    },
+    {
+      "id": 4418775773,
+      "name": "Quirinetta",
+      "lat": 41.9000281,
+      "lon": 12.4822714,
+      "category": "culture",
+      "description": "Quirinetta culture theatre",
+      "tags": {
+        "addr:city": "Roma",
+        "addr:housenumber": "5",
+        "addr:postcode": "00187",
+        "addr:street": "Via Marco Minghetti",
+        "amenity": "theatre",
+        "name": "Quirinetta",
+        "phone": "+39 06 69925616",
+        "website": "http://www.quirinetta.com/"
+      }
+    },
+    {
+      "id": 4470099910,
+      "name": "Museo Ebraico di Roma",
+      "lat": 41.8919593,
+      "lon": 12.4779863,
+      "category": "culture",
+      "description": "Museo Ebraico di Roma culture museum",
+      "tags": {
+        "addr:street": "Largo Stefano Gaj Tachè",
+        "check_date": "2024-07-28",
+        "fee": "yes",
+        "name": "Museo Ebraico di Roma",
+        "name:en": "Jewish Museum of Rome",
+        "name:fr": "Musée Juif de Rome",
+        "name:he": "מוזיאון יהודי ברומא",
+        "name:ru": "еврейский музей Рима",
+        "opening_hours": "Apr 18-20 off; Apr 25-26 off; Aug 15 off; Aug 09 off; Fr 09:00-13:15; Jan 01 off; Jun 08-09 off; Mar 20 off; May 10 off; Oct 13-14 off; Oct 19-21 off; Oct 07-08 off; Sa off; Sep 29-30 off; Su-Tu 10:00-16:15",
+        "payment:cash": "yes",
+        "payment:maestro": "yes",
+        "payment:mastercard": "yes",
+        "payment:visa": "yes",
+        "start_date": "1960",
+        "tourism": "museum",
+        "wheelchair": "limited",
+        "wikidata": "Q6756984",
+        "wikimedia_commons": "Category:Jewish museum (Rome)",
+        "wikipedia": "it:Museo ebraico (Roma)"
+      }
+    },
+    {
+      "id": 4473463243,
+      "name": "Mostra Leonardo da Vinci",
+      "lat": 41.8965492,
+      "lon": 12.4713343,
+      "category": "culture",
+      "description": "Mostra Leonardo da Vinci culture museum",
+      "tags": {
+        "addr:housenumber": "1",
+        "addr:postcode": "00186",
+        "addr:street": "Piazza della Cancelleria",
+        "contact:email": "info@mostradileonardo.com",
+        "contact:facebook": "Mostradileonardo",
+        "contact:fax": "+39 06 2932 509",
+        "contact:instagram": "mostradileonardo",
+        "contact:phone": "+39 06 6988 7616",
+        "contact:twitter": "leonardoilgenio",
+        "fee": "yes",
+        "name": "Mostra Leonardo da Vinci",
+        "opening_hours": "Mo-Fr 09:30-19:00; Sa-Su 09:30-19:30",
+        "tourism": "museum",
+        "website": "https://www.mostradileonardo.com/"
+      }
+    },
+    {
+      "id": 4609745956,
+      "name": "Teatro Trastevere",
+      "lat": 41.8851338,
+      "lon": 12.4727318,
+      "category": "culture",
+      "description": "Teatro Trastevere culture theatre",
+      "tags": {
+        "addr:city": "Roma",
+        "addr:housenumber": "3",
+        "addr:postcode": "00153",
+        "addr:street": "Via Jacopa de' Settesoli",
+        "amenity": "theatre",
+        "check_date": "2025-12-28",
+        "name": "Teatro Trastevere",
+        "phone": "+39 06 5814004",
+        "website": "https://www.teatrotrastevere.it/"
+      }
+    },
+    {
+      "id": 4616142689,
+      "name": "Palazzo Cipolla",
+      "lat": 41.8995494,
+      "lon": 12.4809031,
+      "category": "culture",
+      "description": "Palazzo Cipolla culture museum",
+      "tags": {
+        "addr:city": "Roma",
+        "addr:housenumber": "320",
+        "addr:postcode": "00186",
+        "addr:street": "Via del Corso",
+        "email": "info@museodelcorso.com",
+        "fee": "no",
+        "museum": "art",
+        "name": "Palazzo Cipolla",
+        "name:it": "Palazzo Cipolla",
+        "opening_hours": "Mo-Su 10:00-20:00",
+        "phone": "+39 06 22877077",
+        "tourism": "museum",
+        "website": "https://museodelcorso.com/",
+        "wikidata": "Q131862330",
+        "wikimedia_commons": "File:Roma - palazzo Cipolla.jpg"
+      }
+    },
+    {
+      "id": 4617103889,
+      "name": "Fox Gallery",
+      "lat": 41.8960582,
+      "lon": 12.4787295,
+      "category": "culture",
+      "description": "Fox Gallery culture museum",
+      "tags": {
+        "fee": "no",
+        "name": "Fox Gallery",
+        "name:it": "Fox Gallery",
+        "tourism": "museum"
+      }
+    },
+    {
+      "id": 4704278419,
+      "name": "Teatro Verde",
+      "lat": 41.873626,
+      "lon": 12.4650804,
+      "category": "culture",
+      "description": "Teatro Verde culture theatre",
+      "tags": {
+        "addr:housenumber": "10",
+        "addr:street": "Circonvallazione Gianicolense",
+        "amenity": "theatre",
+        "email": "teatroverderoma@gmail.com",
+        "name": "Teatro Verde",
+        "phone": "+39 06 5882034",
+        "website": "https://www.teatroverde.it/",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": 4711620948,
+      "name": "Teatro Sala Umberto",
+      "lat": 41.9030339,
+      "lon": 12.4817518,
+      "category": "culture",
+      "description": "Teatro Sala Umberto culture theatre",
+      "tags": {
+        "addr:city": "Roma",
+        "addr:housenumber": "50",
+        "addr:postcode": "00187",
+        "addr:street": "Via della Mercede",
+        "amenity": "theatre",
+        "name": "Teatro Sala Umberto",
+        "phone": "+39 06 8068 7234",
+        "website": "https://www.salaumberto.com/",
+        "wikidata": "Q3982125",
+        "wikipedia": "it:Teatro Sala Umberto"
+      }
+    },
+    {
+      "id": 4711620949,
+      "name": "Museo Parigino",
+      "lat": 41.9025331,
+      "lon": 12.481927,
+      "category": "culture",
+      "description": "Museo Parigino culture museum",
+      "tags": {
+        "name": "Museo Parigino",
+        "tourism": "museum"
+      }
+    },
+    {
+      "id": 4711620951,
+      "name": "Teatro de' Servi",
+      "lat": 41.901594,
+      "lon": 12.4821907,
+      "category": "culture",
+      "description": "Teatro de' Servi culture theatre",
+      "tags": {
+        "addr:city": "Roma",
+        "addr:housenumber": "22",
+        "addr:postcode": "00187",
+        "addr:street": "Via del Mortaro",
+        "amenity": "theatre",
+        "name": "Teatro de' Servi",
+        "phone": "+39 06 678 0506",
+        "website": "https://teatroservi.it/"
+      }
+    },
+    {
+      "id": 4724460906,
+      "name": "Teatro della Cometa",
+      "lat": 41.893501,
+      "lon": 12.4814895,
+      "category": "culture",
+      "description": "Teatro della Cometa culture theatre",
+      "tags": {
+        "amenity": "theatre",
+        "check_date": "2025-04-07",
+        "name": "Teatro della Cometa"
+      }
+    },
+    {
+      "id": 4724463805,
+      "name": "Teatro Due Roma",
+      "lat": 41.9034036,
+      "lon": 12.4843967,
+      "category": "culture",
+      "description": "Teatro Due Roma culture theatre",
+      "tags": {
+        "addr:city": "Roma",
+        "addr:housenumber": "37",
+        "addr:postcode": "00187",
+        "addr:street": "Vicolo dei Due Macelli",
+        "amenity": "theatre",
+        "name": "Teatro Due Roma",
+        "website": "https://www.teatrodueroma.it/"
+      }
+    },
+    {
+      "id": 4798279227,
+      "name": "Domus Romane di Palazzo Valentini",
+      "lat": 41.8961,
+      "lon": 12.4841,
+      "category": "culture",
+      "description": "Domus Romane di Palazzo Valentini culture museum",
+      "tags": {
+        "addr:city": "Roma",
+        "addr:housenumber": "85",
+        "addr:postcode": "00186",
+        "addr:street": "Foro Traiano",
+        "fee": "€ 12",
+        "name": "Domus Romane di Palazzo Valentini",
+        "name:ja": "ヴァレンティーニ宮殿",
+        "opening_hours": "We-Mo 09:30-18:30",
+        "tourism": "museum",
+        "website": "https://www.palazzovalentini.it/"
+      }
+    },
+    {
+      "id": 5070171858,
+      "name": "Galleria nazionale d'arte antica di palazzo Corsini",
+      "lat": 41.8932889,
+      "lon": 12.4666902,
+      "category": "culture",
+      "description": "Galleria nazionale d'arte antica di palazzo Corsini culture museum",
+      "tags": {
+        "addr:housenumber": "10",
+        "addr:street": "Via della Lungara",
+        "contact:facebook": "BarberiniCorsini",
+        "contact:instagram": "barberinicorsini",
+        "contact:twitter": "BarberiniCorsin",
+        "fee": "yes",
+        "name": "Galleria nazionale d'arte antica di palazzo Corsini",
+        "opening_hours": "Tu-Su 10:00-19:00",
+        "tourism": "museum",
+        "website": "https://www.barberinicorsini.org",
+        "wikidata": "Q3757768",
+        "wikimedia_commons": "Category:Galleria Nazionale di Palazzo Corsini",
+        "wikipedia": "it:Galleria nazionale d'arte antica di palazzo Corsini"
+      }
+    },
+    {
+      "id": 307961799,
+      "name": "404 Name Not Found",
+      "lat": 41.8876051,
+      "lon": 12.4771625,
+      "category": "nightlife",
+      "description": "404 Name Not Found nightlife italian pub",
+      "tags": {
+        "addr:city": "Roma",
+        "addr:country": "IT",
+        "addr:housenumber": "31",
+        "addr:postcode": "00153",
+        "addr:street": "Via di Santa Cecilia",
+        "amenity": "pub",
+        "contact:tripadvisor": "https://www.tripadvisor.com/Restaurant_Review-g187791-d11688866-Reviews-404_Name_Not_Found-Rome_Lazio.html",
+        "cuisine": "italian",
+        "internet_access": "wlan",
+        "internet_access:fee": "no",
+        "kids_area": "no",
+        "level": "0",
+        "name": "404 Name Not Found",
+        "opening_hours": "Tu-Th 06:30-23:00; Fr-Su 06:30-25:00",
+        "operator": "SIFE s.r.l.s.",
+        "outdoor_seating": "yes",
+        "phone": "+39 327 094 8005",
+        "ref:vatin": "IT13883021001",
+        "smoking": "no",
+        "toilets": "yes",
+        "toilets:access": "customers",
+        "toilets:wheelchair": "no",
+        "wheelchair": "limited"
+      }
+    },
+    {
+      "id": 394279886,
+      "name": "Fayenas",
+      "lat": 41.8809273,
+      "lon": 12.4706688,
+      "category": "nightlife",
+      "description": "Fayenas nightlife pub",
+      "tags": {
+        "amenity": "pub",
+        "name": "Fayenas"
+      }
+    },
+    {
+      "id": 1253223527,
+      "name": "Scholars Lounge Irish Pub",
+      "lat": 41.8962459,
+      "lon": 12.4799884,
+      "category": "nightlife",
+      "description": "Scholars Lounge Irish Pub nightlife irish pub pub",
+      "tags": {
+        "addr:housenumber": "101b",
+        "addr:postcode": "00186",
+        "addr:street": "Via del Plebiscito",
+        "amenity": "pub",
+        "brewery": "Guinness",
+        "contact:website": "http://www.scholarsloungerome.com/",
+        "description": "irish pub",
+        "internet_access": "wlan",
+        "name": "Scholars Lounge Irish Pub",
+        "theme": "irish"
+      }
+    },
+    {
+      "id": 1253979817,
+      "name": "Ketumbar",
+      "lat": 41.8769694,
+      "lon": 12.4750611,
+      "category": "nightlife",
+      "description": "Ketumbar nightlife pub",
+      "tags": {
+        "addr:city": "Roma",
+        "addr:country": "IT",
+        "addr:housenumber": "24",
+        "addr:street": "Via Galvani",
+        "amenity": "pub",
+        "name": "Ketumbar",
+        "outdoor_seating": "yes",
+        "phone": "+39 06 5730 5338",
+        "website": "https://www.ketumbar.it/"
+      }
+    },
+    {
+      "id": 1695279656,
+      "name": "Chocolat",
+      "lat": 41.8973551,
+      "lon": 12.4751519,
+      "category": "nightlife",
+      "description": "Chocolat nightlife bar",
+      "tags": {
+        "addr:city": "Roma",
+        "addr:country": "IT",
+        "addr:housenumber": "54a",
+        "addr:street": "Via del Teatro Valle",
+        "amenity": "bar",
+        "name": "Chocolat",
+        "operator": "Chocolatini d'Autore s.r.l.",
+        "phone": "+39 06 68135545",
+        "ref:vatin": "IT10419111009",
+        "shop": "pastry"
+      }
+    },
+    {
+      "id": 2135162066,
+      "name": "Birreria Trilussa",
+      "lat": 41.8916907,
+      "lon": 12.4689935,
+      "category": "nightlife",
+      "description": "Birreria Trilussa nightlife pub",
+      "tags": {
+        "addr:city": "Roma",
+        "addr:country": "IT",
+        "addr:housenumber": "19",
+        "addr:postcode": "00153",
+        "addr:street": "Via Benedetta",
+        "amenity": "pub",
+        "microbrewery": "yes",
+        "name": "Birreria Trilussa",
+        "phone": "+39 06 5819067",
+        "smoking": "no",
+        "source": "First hand",
+        "website": "www.birreriatrilussa.it",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": 2189156343,
+      "name": "Bulldog Inn Rome",
+      "lat": 41.8965526,
+      "lon": 12.4746374,
+      "category": "nightlife",
+      "description": "Bulldog Inn Rome nightlife bar",
+      "tags": {
+        "amenity": "bar",
+        "name": "Bulldog Inn Rome"
+      }
+    },
+    {
+      "id": 2244935532,
+      "name": "Capitan Cosmo",
+      "lat": 41.897772,
+      "lon": 12.468306,
+      "category": "nightlife",
+      "description": "Capitan Cosmo nightlife bar",
+      "tags": {
+        "addr:housenumber": "7",
+        "addr:street": "Via dei Cartari",
+        "amenity": "bar",
+        "name": "Capitan Cosmo",
+        "source": "+39 06 6880 2766",
+        "website": "http://www.facebook.com/CapitanCosmo"
+      }
+    },
+    {
+      "id": 2244950710,
+      "name": "Pub Cuccagna",
+      "lat": 41.8973235,
+      "lon": 12.4731474,
+      "category": "nightlife",
+      "description": "Pub Cuccagna nightlife bar",
+      "tags": {
+        "addr:housenumber": "17/18",
+        "addr:street": "Via della Cuccagna",
+        "amenity": "bar",
+        "indoor_seating": "yes",
+        "name": "Pub Cuccagna",
+        "outdoor_seating": "yes",
+        "phone": "+39 06 6874848",
+        "source": "+39 06 687 4848",
+        "website": "http://www.cucagnapub.it"
+      }
+    },
+    {
+      "id": 2244954388,
+      "name": "Escopazzo",
+      "lat": 41.8953891,
+      "lon": 12.4793833,
+      "category": "nightlife",
+      "description": "Escopazzo nightlife nightclub",
+      "tags": {
+        "addr:housenumber": "41",
+        "addr:street": "Via d'Aracoeli",
+        "amenity": "nightclub",
+        "name": "Escopazzo",
+        "source": "+38 96835618",
+        "website": "https://www.escopazzo.it/"
+      }
+    },
+    {
+      "id": 2244959592,
+      "name": "Level Club",
+      "lat": 41.8994514,
+      "lon": 12.4702273,
+      "category": "nightlife",
+      "description": "Level Club nightlife nightclub",
+      "tags": {
+        "addr:city": "Roma",
+        "addr:housenumber": "3",
+        "addr:postcode": "00186",
+        "addr:street": "Vicolo del Fico",
+        "amenity": "nightclub",
+        "name": "Level Club",
+        "source": "+39 06 6880 8866",
+        "website": "http://levelroma.eu/"
+      }
+    },
+    {
+      "id": 2244977014,
+      "name": "Cesari's Terrace",
+      "lat": 41.899936,
+      "lon": 12.4799276,
+      "category": "nightlife",
+      "description": "Cesari's Terrace nightlife bar",
+      "tags": {
+        "addr:housenumber": "89",
+        "addr:postcode": "00186",
+        "addr:street": "Via di Pietra",
+        "amenity": "bar",
+        "check_date": "2026-07-18",
+        "email": "info@9hotelcesari.com",
+        "name": "Cesari's Terrace",
+        "name:it": "La terrazza del Cesàri",
+        "phone": "+39 06 6749701",
+        "source": "Bing, Local knowledge",
+        "website": "https://www.9-hotel-cesari-rome.it"
+      }
+    },
+    {
+      "id": 2273997542,
+      "name": "L'Antica Birreria Peroni",
+      "lat": 41.8987739,
+      "lon": 12.4824596,
+      "category": "nightlife",
+      "description": "L'Antica Birreria Peroni nightlife italian pub",
+      "tags": {
+        "addr:city": "Roma",
+        "addr:country": "IT",
+        "addr:housenumber": "19",
+        "addr:street": "Via di San Marcello",
+        "amenity": "pub",
+        "cuisine": "italian",
+        "email": "info@anticabirreriaperoni.it",
+        "name": "L'Antica Birreria Peroni",
+        "phone": "+39 06 6795310",
+        "source": "Bing, Local knowledge",
+        "website": "https://www.anticabirreriaperoni.net/"
+      }
+    },
+    {
+      "id": 2274002831,
+      "name": "Minerva Roof Garden",
+      "lat": 41.8976836,
+      "lon": 12.4776021,
+      "category": "nightlife",
+      "description": "Minerva Roof Garden nightlife bar",
+      "tags": {
+        "addr:housenumber": "69",
+        "addr:street": "Piazza della Minerva",
+        "amenity": "bar",
+        "name": "Minerva Roof Garden",
+        "phone": "+39 06 695201",
+        "source": "Bing, Local knowledge",
+        "website": "https://www.minervaroofgarden.it/"
+      }
+    },
+    {
+      "id": 2274883508,
+      "name": "Le Coppelle 52",
+      "lat": 41.9008303,
+      "lon": 12.4762727,
+      "category": "nightlife",
+      "description": "Le Coppelle 52 nightlife pub",
+      "tags": {
+        "addr:city": "Roma",
+        "addr:country": "IT",
+        "addr:housenumber": "52",
+        "addr:street": "Piazza delle Coppelle",
+        "amenity": "pub",
+        "name": "Le Coppelle 52",
+        "source": "+39 349 7404620",
+        "website": "http://www.facebook.com/pages/Coppelle52-cocktail-e-wine/142575442456507"
+      }
+    },
+    {
+      "id": 2279394345,
+      "name": "Grande Franco",
+      "lat": 41.9087302,
+      "lon": 12.4666155,
+      "category": "nightlife",
+      "description": "Grande Franco nightlife bar",
+      "tags": {
+        "addr:city": "Roma",
+        "addr:housenumber": "9",
+        "addr:postcode": "00192",
+        "addr:street": "Via Ezio",
+        "amenity": "bar",
+        "name": "Grande Franco",
+        "phone": "+39 06 3213008",
+        "ref:vatin": "IT07452330587",
+        "restaurant:type:it": "bar;latteria"
+      }
+    },
+    {
+      "id": 2296865963,
+      "name": "Salotto 42",
+      "lat": 41.9001142,
+      "lon": 12.4793878,
+      "category": "nightlife",
+      "description": "Salotto 42 nightlife bar",
+      "tags": {
+        "addr:housenumber": "42",
+        "addr:street": "Piazza di Pietra",
+        "amenity": "bar",
+        "name": "Salotto 42",
+        "name:it": "Salotto 42 Знакомства хорошие",
+        "phone": "+39 06 6785804",
+        "source": "Bing, Local knowledge",
+        "website": "https://www.salotto42.it/",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "id": 2835819625,
+      "name": "Peso Bistrot",
+      "lat": 41.8737647,
+      "lon": 12.4699893,
+      "category": "nightlife",
+      "description": "Peso Bistrot nightlife Cocktail Bar bar",
+      "tags": {
+        "addr:street": "Lungotevere degli Artigiani",
+        "amenity": "bar",
+        "description": "Cocktail Bar",
+        "internet_access:fee": "yes",
+        "name": "Peso Bistrot",
+        "website": "http://www.pesoroma.it"
+      }
+    },
+    {
+      "id": 3209697225,
+      "name": "Bar Marmorata",
+      "lat": 41.8806533,
+      "lon": 12.4775455,
+      "category": "nightlife",
+      "description": "Bar Marmorata nightlife bar",
+      "tags": {
+        "addr:housenumber": "127",
+        "addr:street": "Via Marmorata",
+        "amenity": "bar",
+        "name": "Bar Marmorata",
+        "shop": "ice_cream"
+      }
+    },
+    {
+      "id": 3736269126,
+      "name": "Finn Pub",
+      "lat": 41.8824916,
+      "lon": 12.4566223,
+      "category": "nightlife",
+      "description": "Finn Pub nightlife burger pub",
+      "tags": {
+        "addr:city": "Roma",
+        "addr:housenumber": "54/56",
+        "addr:postcode": "00152",
+        "addr:street": "Viale di Villa Pamphili",
+        "amenity": "pub",
+        "contact:facebook": "FinnPubRoma",
+        "contact:instagram": "finnpubroma",
+        "contact:twitter": "finnpubroma",
+        "cuisine": "burger",
+        "name": "Finn Pub",
+        "opening_hours": "Su, Tu-Th 18:00-01:00; Fr-Sa 18:00-02:00",
+        "phone": "+390694847815",
+        "website": "https://www.finnpub.it/"
+      }
+    },
+    {
+      "id": 3737958534,
+      "name": "Bar Marisa",
+      "lat": 41.8816408,
+      "lon": 12.460468,
+      "category": "nightlife",
+      "description": "Bar Marisa nightlife bar",
+      "tags": {
+        "amenity": "bar",
+        "check_date": "2024-02-18",
+        "name": "Bar Marisa"
+      }
+    },
+    {
+      "id": 3739059086,
+      "name": "Bar del Cinque",
+      "lat": 41.8905648,
+      "lon": 12.4690402,
+      "category": "nightlife",
+      "description": "Bar del Cinque nightlife bar",
+      "tags": {
+        "amenity": "bar",
+        "name": "Bar del Cinque",
+        "outdoor_seating": "yes"
+      }
+    },
+    {
+      "id": 3781269001,
+      "name": "Vini e Cucina Blasi",
+      "lat": 41.8967781,
+      "lon": 12.4764444,
+      "category": "nightlife",
+      "description": "Vini e Cucina Blasi nightlife bar",
+      "tags": {
+        "addr:city": "Roma",
+        "addr:housenumber": "12",
+        "addr:postcode": "00186",
+        "addr:street": "Via di Torre Argentina",
+        "amenity": "bar",
+        "check_date": "2024-02-18",
+        "name": "Vini e Cucina Blasi",
+        "website": "http://viniecucinapantheon.it"
+      }
+    },
+    {
+      "id": 3997755066,
+      "name": "Shari Vari",
+      "lat": 41.8971366,
+      "lon": 12.4763166,
+      "category": "nightlife",
+      "description": "Shari Vari nightlife Club in Rome italian bar",
+      "tags": {
+        "addr:city": "Roma",
+        "addr:housenumber": "78",
+        "addr:postcode": "00186",
+        "addr:street": "Via di Torre Argentina",
+        "amenity": "bar",
+        "cuisine": "italian",
+        "description": "Club in Rome",
+        "internet_access": "wlan",
+        "name": "Shari Vari",
+        "opening_hours": "08:00-16:00",
+        "phone": "+39 334 253 2673",
+        "smoking": "no",
+        "website": "https://www.sharivari.it/"
+      }
+    },
+    {
+      "id": 4086833684,
+      "name": "The Hole",
+      "lat": 41.8883969,
+      "lon": 12.4780945,
+      "category": "nightlife",
+      "description": "The Hole nightlife pub",
+      "tags": {
+        "addr:city": "Roma",
+        "addr:housenumber": "16",
+        "addr:postcode": "00153",
+        "addr:street": "Via dei Vascellari",
+        "amenity": "pub",
+        "name": "The Hole",
+        "website": "https://www.facebook.com/The-Hole-Trastevere-141126852915526/"
+      }
+    },
+    {
+      "id": 4176683414,
+      "name": "Ciampino bistrot",
+      "lat": 41.9041576,
+      "lon": 12.4780063,
+      "category": "nightlife",
+      "description": "Ciampino bistrot nightlife bar",
+      "tags": {
+        "amenity": "bar",
+        "name": "Ciampino bistrot"
+      }
+    },
+    {
+      "id": 4394361989,
+      "name": "Bar Circo Massimo",
+      "lat": 41.8833093,
+      "lon": 12.4873351,
+      "category": "nightlife",
+      "description": "Bar Circo Massimo nightlife italian bar",
+      "tags": {
+        "addr:street": "Viale Aventino",
+        "amenity": "bar",
+        "cuisine": "italian",
+        "name": "Bar Circo Massimo",
+        "name:it": "Bar Circo Massimo"
+      }
+    },
+    {
+      "id": 4447296449,
+      "name": "La Rosa dei 4 Venti",
+      "lat": 41.8773908,
+      "lon": 12.4739284,
+      "category": "nightlife",
+      "description": "La Rosa dei 4 Venti nightlife bar",
+      "tags": {
+        "addr:city": "Roma",
+        "addr:housename": "Nuovo Mercato Testaccio",
+        "addr:housenumber": "65",
+        "addr:postcode": "00153",
+        "addr:street": "Via Alessandro Volta",
+        "amenity": "bar",
+        "fixme": "position estimated",
+        "name": "La Rosa dei 4 Venti",
+        "operator": "La Rosa dei 4 Venti Srl.",
+        "phone": "+39 06 5758983",
+        "ref:vatin": "IT09112471009"
+      }
+    },
+    {
+      "id": 1071282079,
+      "name": "Trussardi",
+      "lat": 41.9040728,
+      "lon": 12.4810366,
+      "category": "shopping",
+      "description": "Trussardi shopping",
+      "tags": {
+        "addr:city": "Roma",
+        "addr:housenumber": "42",
+        "addr:street": "Via Frattina",
+        "name": "Trussardi",
+        "shop": "clothes"
+      }
+    },
+    {
+      "id": 1278768751,
+      "name": "Supermercato Vaticano",
+      "lat": 41.9046709,
+      "lon": 12.4565937,
+      "category": "shopping",
+      "description": "Supermercato Vaticano shopping",
+      "tags": {
+        "check_date": "2026-01-19",
+        "name": "Supermercato Vaticano",
+        "name:en": "Vatican Supermarket",
+        "name:fr": "Supermarché du Vatican",
+        "name:it": "Supermercato Vaticano",
+        "name:pt": "Supermercado Vaticano",
+        "name:ru": "Ватиканский супермаркет",
+        "opening_hours": "Mo-Fr 07:00-18:00; Sa 07:00-13:30",
+        "shop": "supermarket"
+      }
+    },
+    {
+      "id": 2122846390,
+      "name": "The Butcher",
+      "lat": 41.8881776,
+      "lon": 12.4712532,
+      "category": "shopping",
+      "description": "The Butcher shopping",
+      "tags": {
+        "addr:city": "Roma",
+        "addr:country": "IT",
+        "addr:housenumber": "16",
+        "addr:postcode": "00153",
+        "name": "The Butcher",
+        "shop": "clothes",
+        "source": "Bing, Local knowledge"
+      }
+    },
+    {
+      "id": 2398129745,
+      "name": "Madame Verdu",
+      "lat": 41.893134,
+      "lon": 12.4751116,
+      "category": "shopping",
+      "description": "Madame Verdu shopping",
+      "tags": {
+        "addr:city": "Roma",
+        "addr:housenumber": "75",
+        "addr:street": "Via Arenula",
+        "name": "Madame Verdu",
+        "operator": "Fiorina Segni",
+        "phone": "+39 06 68806276",
+        "shop": "clothes"
+      }
+    },
+    {
+      "id": 2513694983,
+      "name": "Articoli Religiosi",
+      "lat": 41.899957,
+      "lon": 12.483827,
+      "category": "shopping",
+      "description": "Articoli Religiosi shopping",
+      "tags": {
+        "name": "Articoli Religiosi",
+        "shop": "gift"
+      }
+    },
+    {
+      "id": 2514094438,
+      "name": "Rechicle",
+      "lat": 41.907693,
+      "lon": 12.460848,
+      "category": "shopping",
+      "description": "Rechicle shopping",
+      "tags": {
+        "name": "Rechicle",
+        "shop": "clothes"
+      }
+    },
+    {
+      "id": 2514101440,
+      "name": "Spagnoletto",
+      "lat": 41.9072582,
+      "lon": 12.4577,
+      "category": "shopping",
+      "description": "Spagnoletto shopping",
+      "tags": {
+        "name": "Spagnoletto",
+        "opening_hours": "Mo-Su 09:00-20:00",
+        "shop": "clothes",
+        "wheelchair": "limited"
+      }
+    },
+    {
+      "id": 2923536881,
+      "name": "WP Outlet",
+      "lat": 41.8972037,
+      "lon": 12.4700872,
+      "category": "shopping",
+      "description": "WP Outlet shopping",
+      "tags": {
+        "addr:city": "Roma",
+        "addr:country": "IT",
+        "addr:housenumber": "46",
+        "addr:postcode": "00186",
+        "addr:street": "Via Sora",
+        "email": "wp2@windsurfparadise.com",
+        "fax": "+39 06 68806564",
+        "name": "WP Outlet",
+        "operator": "GO SRL",
+        "phone": "+39 06 68806564",
+        "shop": "clothes",
+        "website": "www.windsurfparadise.com"
+      }
+    },
+    {
+      "id": 3656600942,
+      "name": "Pewex city",
+      "lat": 41.8795714,
+      "lon": 12.4764467,
+      "category": "shopping",
+      "description": "Pewex city shopping",
+      "tags": {
+        "addr:city": "Roma",
+        "addr:housenumber": "21",
+        "addr:postcode": "00153",
+        "addr:street": "Piazza Testaccio",
+        "name": "Pewex city",
+        "opening_hours": "Mo-Su 08:00-21:00",
+        "shop": "supermarket",
+        "website": "https://www.pewex-supermercati.it/punti-vendita/pewex-city/item/24-roma-piazza-testaccio-21.html"
+      }
+    },
+    {
+      "id": 3736263596,
+      "name": "Supermercato Tigre",
+      "lat": 41.8828679,
+      "lon": 12.4580439,
+      "category": "shopping",
+      "description": "Supermercato Tigre shopping",
+      "tags": {
+        "addr:city": "Roma",
+        "addr:housenumber": "19",
+        "addr:postcode": "00152",
+        "addr:street": "Via Andrea Busiri Vici",
+        "contact:facebook": "oasitigre",
+        "contact:instagram": "oasi_tigre",
+        "name": "Supermercato Tigre",
+        "opening_hours": "Mo-Sa 09:00-20:30; Su 08:30-13:30",
+        "operator": "Magazzini Gabrielli Spa",
+        "phone": "+39065816991",
+        "shop": "supermarket",
+        "website": "https://www.oasitigre.it/it/il-mio-negozio.946.html"
+      }
+    },
+    {
+      "id": 3760872668,
+      "name": "Eurospin",
+      "lat": 41.893983,
+      "lon": 12.450763,
+      "category": "shopping",
+      "description": "Eurospin shopping",
+      "tags": {
+        "addr:housenumber": "175a",
+        "addr:street": "Via della Cava Aurelia",
+        "name": "Eurospin",
+        "shop": "supermarket"
+      }
+    },
+    {
+      "id": 3958385764,
+      "name": "David Saddler",
+      "lat": 41.8981449,
+      "lon": 12.4890722,
+      "category": "shopping",
+      "description": "David Saddler shopping",
+      "tags": {
+        "addr:city": "Roma",
+        "addr:housenumber": "184",
+        "addr:postcode": "00184",
+        "addr:street": "Via Nazionale",
+        "name": "David Saddler",
+        "operator": "Napoliones Srl.",
+        "phone": "+39 06 40042313",
+        "ref:vatin": "IT13374881004",
+        "shop": "clothes",
+        "website": "http://shop.david-saddler.com"
+      }
+    },
+    {
+      "id": 4176683411,
+      "name": "Banchetti sport",
+      "lat": 41.9032426,
+      "lon": 12.4776541,
+      "category": "shopping",
+      "description": "Banchetti sport shopping",
+      "tags": {
+        "name": "Banchetti sport",
+        "shop": "clothes"
+      }
+    },
+    {
+      "id": 4227893577,
+      "name": "Ricordi di Roma",
+      "lat": 41.9039422,
+      "lon": 12.4590539,
+      "category": "shopping",
+      "description": "Ricordi di Roma shopping",
+      "tags": {
+        "addr:city": "Roma",
+        "addr:housenumber": "129",
+        "addr:street": "Borgo Pio",
+        "name": "Ricordi di Roma",
+        "shop": "gift"
+      }
+    },
+    {
+      "id": 4228358176,
+      "name": "Eredi Pisano",
+      "lat": 41.9071809,
+      "lon": 12.4625185,
+      "category": "shopping",
+      "description": "Eredi Pisano shopping",
+      "tags": {
+        "check_date": "2025-11-29",
+        "name": "Eredi Pisano",
+        "shop": "clothes",
+        "wheelchair": "limited"
+      }
+    },
+    {
+      "id": 4228358182,
+      "name": "Paul Bianco",
+      "lat": 41.9067221,
+      "lon": 12.460638,
+      "category": "shopping",
+      "description": "Paul Bianco shopping",
+      "tags": {
+        "check_date": "2025-11-29",
+        "name": "Paul Bianco",
+        "shop": "clothes",
+        "wheelchair": "limited"
+      }
+    },
+    {
+      "id": 4228411410,
+      "name": "Fellini",
+      "lat": 41.9068097,
+      "lon": 12.4598719,
+      "category": "shopping",
+      "description": "Fellini shopping",
+      "tags": {
+        "addr:city": "Roma",
+        "addr:country": "IT",
+        "addr:housenumber": "281",
+        "addr:street": "Via Cola di Rienzo",
+        "check_date": "2025-11-29",
+        "name": "Fellini",
+        "opening_hours": "Mo-Sa 10:30-19:45; Su 10:30-14:00,15:00-19:45",
+        "shop": "clothes",
+        "wheelchair": "limited"
+      }
+    },
+    {
+      "id": 4230144606,
+      "name": "Fellini Lady",
+      "lat": 41.9065729,
+      "lon": 12.4600697,
+      "category": "shopping",
+      "description": "Fellini Lady shopping",
+      "tags": {
+        "addr:city": "Roma",
+        "addr:country": "IT",
+        "addr:housenumber": "276",
+        "addr:postcode": "00192",
+        "addr:street": "Via Cola di Rienzo",
+        "name": "Fellini Lady",
+        "phone": "+39 06 880 4996",
+        "shop": "clothes",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "id": 4230222471,
+      "name": "Cliché",
+      "lat": 41.9081818,
+      "lon": 12.4671127,
+      "category": "shopping",
+      "description": "Cliché shopping",
+      "tags": {
+        "addr:city": "Roma",
+        "addr:country": "IT",
+        "addr:housenumber": "112/114",
+        "addr:postcode": "00192",
+        "addr:street": "Piazza Cola di Rienzo",
+        "check_date": "2025-11-29",
+        "name": "Cliché",
+        "shop": "clothes",
+        "wheelchair": "limited"
+      }
+    },
+    {
+      "id": 4230223695,
+      "name": "Punto",
+      "lat": 41.9082427,
+      "lon": 12.4673742,
+      "category": "shopping",
+      "description": "Punto shopping",
+      "tags": {
+        "name": "Punto",
+        "shop": "supermarket",
+        "toilets:wheelchair": "no",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": 4230223696,
+      "name": "Subdued",
+      "lat": 41.9081179,
+      "lon": 12.466357,
+      "category": "shopping",
+      "description": "Subdued shopping",
+      "tags": {
+        "addr:housenumber": "136",
+        "addr:street": "Via Cola di Rienzo",
+        "check_date": "2026-06-15",
+        "clothes": "women",
+        "name": "Subdued",
+        "opening_hours": "Mo-Sa 10:30-20:00; Su 11:00-20:00",
+        "payment:cash": "yes",
+        "payment:mastercard": "yes",
+        "payment:visa": "yes",
+        "shop": "clothes",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "id": 4230223701,
+      "name": "7 camicie",
+      "lat": 41.9074702,
+      "lon": 12.4636785,
+      "category": "shopping",
+      "description": "7 camicie shopping",
+      "tags": {
+        "name": "7 camicie",
+        "shop": "clothes",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": 4239352437,
+      "name": "Panella",
+      "lat": 41.8871995,
+      "lon": 12.4706076,
+      "category": "shopping",
+      "description": "Panella shopping",
+      "tags": {
+        "name": "Panella",
+        "shop": "supermarket"
+      }
+    },
+    {
+      "id": 4241980242,
+      "name": "Outlet Multibrand Donna",
+      "lat": 41.9073815,
+      "lon": 12.4607223,
+      "category": "shopping",
+      "description": "Outlet Multibrand Donna shopping",
+      "tags": {
+        "name": "Outlet Multibrand Donna",
+        "opening_hours": "Tu-Sa 10:00-19:30; Mo 15:30-19:30",
+        "shop": "clothes",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "id": 4251104389,
+      "name": "Drogheria Innocenzi",
+      "lat": 41.8872868,
+      "lon": 12.4700974,
+      "category": "shopping",
+      "description": "Drogheria Innocenzi shopping",
+      "tags": {
+        "addr:housenumber": "31",
+        "addr:street": "Via Natale Del Grande",
+        "name": "Drogheria Innocenzi",
+        "shop": "supermarket"
+      }
+    },
+    {
+      "id": 4258504291,
+      "name": "Bartolucci",
+      "lat": 41.8995156,
+      "lon": 12.4784235,
+      "category": "shopping",
+      "description": "Bartolucci shopping",
+      "tags": {
+        "addr:city": "Roma",
+        "addr:country": "IT",
+        "addr:housenumber": "98",
+        "addr:postcode": "00186",
+        "addr:street": "Via dei Pastini",
+        "name": "Bartolucci",
+        "phone": "+39 06 69190894",
+        "shop": "gift",
+        "website": "https://www.bartolucci.com/"
+      }
+    },
+    {
+      "id": 4349794699,
+      "name": "Supermercato Affare Fatto",
+      "lat": 41.8825106,
+      "lon": 12.4862664,
+      "category": "shopping",
+      "description": "Supermercato Affare Fatto shopping",
+      "tags": {
+        "addr:city": "Roma",
+        "addr:country": "IT",
+        "addr:housenumber": "88",
+        "addr:street": "Viale Aventino",
+        "fixme": "posizione; aggiunto con maps.me",
+        "name": "Supermercato Affare Fatto",
+        "opening_hours": "Mo-Sa 08:30-20:00; Su 09:00-13:30",
+        "shop": "supermarket"
+      }
+    },
+    {
+      "id": 4376086298,
+      "name": "Degli Effetti",
+      "lat": 41.8998318,
+      "lon": 12.4774983,
+      "category": "shopping",
+      "description": "Degli Effetti shopping",
+      "tags": {
+        "name": "Degli Effetti",
+        "shop": "clothes"
+      }
+    },
+    {
+      "id": 4376086303,
+      "name": "Moreal",
+      "lat": 41.9010406,
+      "lon": 12.4771139,
+      "category": "shopping",
+      "description": "Moreal shopping",
+      "tags": {
+        "addr:housenumber": "44",
+        "addr:street": "Via degli Uffici del Vicario",
+        "name": "Moreal",
+        "operator": "Moreal",
+        "shop": "clothes"
+      }
+    },
+    {
+      "id": 4376086306,
+      "name": "Maison Clair",
+      "lat": 41.9025504,
+      "lon": 12.4750172,
+      "category": "shopping",
+      "description": "Maison Clair shopping",
+      "tags": {
+        "name": "Maison Clair",
+        "shop": "clothes"
+      }
+    },
+    {
+      "id": 4420035691,
+      "name": "Santospirito46",
+      "lat": 41.9004343,
+      "lon": 12.4665114,
+      "category": "shopping",
+      "description": "Santospirito46 shopping",
+      "tags": {
+        "addr:city": "Roma",
+        "addr:housenumber": "46",
+        "addr:postcode": "00186",
+        "addr:street": "Via del Banco di Santo Spirito",
+        "name": "Santospirito46",
+        "shop": "clothes"
+      }
+    },
+    {
+      "id": 4438186591,
+      "name": "Magia",
+      "lat": 41.9073522,
+      "lon": 12.458002,
+      "category": "shopping",
+      "description": "Magia shopping",
+      "tags": {
+        "name": "Magia",
+        "name:en": "Magic shop",
+        "name:it": "Magia",
+        "shop": "gift",
+        "wheelchair": "limited"
+      }
+    },
+    {
+      "id": 4449333030,
+      "name": "Non Solo Souvenir",
+      "lat": 41.8996827,
+      "lon": 12.4774994,
+      "category": "shopping",
+      "description": "Non Solo Souvenir shopping",
+      "tags": {
+        "name": "Non Solo Souvenir",
+        "shop": "gift"
+      }
+    },
+    {
+      "id": 259576441,
+      "name": "Fontana dei Libri",
+      "lat": 41.8984045,
+      "lon": 12.4742016,
+      "category": "attraction",
+      "description": "Fontana dei Libri attraction Artistic fountain in the wall attraction fountain",
+      "tags": {
+        "amenity": "fountain",
+        "capacity": "3",
+        "description": "Artistic fountain in the wall",
+        "drinking_water": "yes",
+        "fountain": "decorative",
+        "name": "Fontana dei Libri",
+        "name:it": "Fontana dei Libri",
+        "name:ru": "фонтан Книг",
+        "tourism": "attraction",
+        "wheelchair": "limited",
+        "wikidata": "Q76941085",
+        "wikimedia_commons": "File:Fontana dei Libri in Via degli Staderari, Roma.jpeg"
+      }
+    },
+    {
+      "id": 259699754,
+      "name": "Cannone di Mezzogiorno",
+      "lat": 41.8914458,
+      "lon": 12.4615365,
+      "category": "attraction",
+      "description": "Cannone di Mezzogiorno attraction attraction",
+      "tags": {
+        "name": "Cannone di Mezzogiorno",
+        "tourism": "attraction",
+        "wheelchair": "limited",
+        "wikidata": "Q72686034",
+        "wikimedia_commons": "Category:Cannone del Gianicolo"
+      }
+    },
+    {
+      "id": 365475871,
+      "name": "Colle Palatino",
+      "lat": 41.8893064,
+      "lon": 12.4871093,
+      "category": "nature",
+      "description": "Colle Palatino nature attraction",
+      "tags": {
+        "name": "Colle Palatino",
+        "name:ar": "هضبة بالاتين",
+        "name:de": "Palatin Gründungshügel Rom",
+        "name:en": "Palatine Hill",
+        "name:fr": "Palatin",
+        "name:he": "גבעת הפאלאטיום",
+        "name:it": "Colle Palatino",
+        "name:ja": "パラティーノの丘",
+        "name:ko": "팔라티노언덕",
+        "name:lt": "Palatino kalva",
+        "name:nl": "Palatijn",
+        "name:pl": "Palatyn",
+        "name:ru": "Палатин",
+        "name:uk": "Палатин",
+        "name:zh": "帕拉提諾之丘",
+        "natural": "hill",
+        "opening_hours": "Jan 02-Feb 15,Oct 28-Dec 31 08:30-16:30; Jan 16-Mar 15 08:30-17:00; Mar 16-24 08:30-17:30; Mar 25-Aug 31 08:30-19:15; Sep 01-30 08:30-19:00",
+        "outdoor_seating": "no",
+        "place": "locality",
+        "tourism": "attraction",
+        "wheelchair": "yes",
+        "wikidata": "Q200642",
+        "wikimedia_commons": "Category:Palatine Hill",
+        "wikipedia": "it:Palatino"
+      }
+    },
+    {
+      "id": 2419664831,
+      "name": "Portone di Bronzo",
+      "lat": 41.9027071,
+      "lon": 12.4561851,
+      "category": "attraction",
+      "description": "Portone di Bronzo attraction attraction",
+      "tags": {
+        "access": "no",
+        "barrier": "gate",
+        "entrance": "yes",
+        "name": "Portone di Bronzo",
+        "name:de": "Bronzetor",
+        "name:fr": "Portail en bronze",
+        "name:it": "Portone di Bronzo",
+        "tourism": "attraction",
+        "wikidata": "Q16605485"
+      }
+    },
+    {
+      "id": 3512305861,
+      "name": "San Pietro dal Buco della serratura",
+      "lat": 41.882927,
+      "lon": 12.47841,
+      "category": "attraction",
+      "description": "San Pietro dal Buco della serratura attraction This is a famous keyhole through which you can see the cupola of St. Peter's Dome and lots of tourist a queuing every day to see it. attraction",
+      "tags": {
+        "barrier": "gate",
+        "description": "This is a famous keyhole through which you can see the cupola of St. Peter's Dome and lots of tourist a queuing every day to see it.",
+        "name": "San Pietro dal Buco della serratura",
+        "name:de": "Das Schlüsselloch von Rom",
+        "name:en": "The Hole of Rome",
+        "name:es": "El hueco en la puerta",
+        "name:it": "Il Buco di Roma",
+        "name:ru": "Замочная скважина Рима",
+        "name:zh": "眼看三国",
+        "source": "Bing, Local knowledge",
+        "tourism": "attraction",
+        "wheelchair": "yes",
+        "wikidata": "Q123752976",
+        "wikimedia_commons": "Category:Villa del Priorato dei Cavalieri di Malta (Rome) - vista su San Pietro"
+      }
+    },
+    {
+      "id": 4450594029,
+      "name": "Miracle Water",
+      "lat": 41.90157,
+      "lon": 12.4814682,
+      "category": "attraction",
+      "description": "Miracle Water attraction a small \"Lourdes\" in Rome attraction drinking water",
+      "tags": {
+        "amenity": "drinking_water",
+        "description": "a small \"Lourdes\" in Rome",
+        "indoor": "yes",
+        "name": "Miracle Water",
+        "tourism": "attraction",
+        "wikidata": "Q76972137"
+      }
+    },
+    {
+      "id": 4464465299,
+      "name": "Camere di Sant’Ignazio al Collegio del Gesù",
+      "lat": 41.8954968,
+      "lon": 12.4794988,
+      "category": "attraction",
+      "description": "Camere di Sant’Ignazio al Collegio del Gesù attraction attraction",
+      "tags": {
+        "addr:street": "Piazza del Gesù",
+        "name": "Camere di Sant’Ignazio al Collegio del Gesù",
+        "opening_hours": "Mo-Sa 16:00-18:00; Su 10:00-12:00",
+        "tourism": "attraction"
+      }
+    },
+    {
+      "id": 4754734734,
+      "name": "Cloaca Máxima",
+      "lat": 41.8888344,
+      "lon": 12.4802374,
+      "category": "attraction",
+      "description": "Cloaca Máxima attraction La Cloaca Massima dell'antica Roma è una delle più antiche condotte fognarie. Il nome, Cloaca Maxima in latino, significa letteralmente \"la fogna più grande\". Fu costruita alla fine del VI secolo a.C. al tempo degli ultimi re di Roma. attraction",
+      "tags": {
+        "alt_name": "Cloaca Massima",
+        "description": "La Cloaca Massima dell'antica Roma è una delle più antiche condotte fognarie. Il nome, Cloaca Maxima in latino, significa letteralmente \"la fogna più grande\". Fu costruita alla fine del VI secolo a.C. al tempo degli ultimi re di Roma.",
+        "name": "Cloaca Máxima",
+        "tourism": "attraction",
+        "wikidata": "Q746102",
+        "wikimedia_commons": "Category:Cloaca Maxima",
+        "wikipedia": "it:Cloaca Massima"
+      }
+    },
+    {
+      "id": 5041381727,
+      "name": "Game Over Escape Rooms",
+      "lat": 41.8815133,
+      "lon": 12.4691515,
+      "category": "attraction",
+      "description": "Game Over Escape Rooms attraction escape game",
+      "tags": {
+        "description:en": "rooms: Chocolate Factory, Tutankhamun's Tomb, Forbidden Temple of Montezuma, Saw.",
+        "description:it": "stanze: La Fabbrica di Cioccolato, La Tomba di Tutankhamun, Il Tempio Proibito di Montezuma, L'Enigmista.",
+        "leisure": "escape_game",
+        "name": "Game Over Escape Rooms",
+        "website": "https://www.escapegameover.it/welcome/"
+      }
+    },
+    {
+      "id": 5042823183,
+      "name": "Game Over Escape Rooms",
+      "lat": 41.8801581,
+      "lon": 12.468783,
+      "category": "attraction",
+      "description": "Game Over Escape Rooms attraction escape game",
+      "tags": {
+        "addr:city": "Roma",
+        "addr:housenumber": "44",
+        "addr:postcode": "00153",
+        "addr:street": "Via Angelo Bargoni",
+        "description:en": "rooms: Winter is Coming, Jack the Ripper, Mission Impossible.",
+        "description:it": "stanze: Winter is Coming, Jack lo Squartatore, Mission Impossible.",
+        "leisure": "escape_game",
+        "name": "Game Over Escape Rooms",
+        "ref:vatin": "IT14221141006",
+        "website": "https://www.escapegameover.it/roma-it/"
+      }
+    },
+    {
+      "id": 5107467923,
+      "name": "Domus Severiana",
+      "lat": 41.8866926,
+      "lon": 12.4872999,
+      "category": "attraction",
+      "description": "Domus Severiana attraction attraction",
+      "tags": {
+        "name": "Domus Severiana",
+        "name:es": "Domus Severiana",
+        "tourism": "attraction"
+      }
+    },
+    {
+      "id": 5860781285,
+      "name": "La testa di San Valentino",
+      "lat": 41.8880726,
+      "lon": 12.4816509,
+      "category": "history",
+      "description": "La testa di San Valentino history relic attraction",
+      "tags": {
+        "historic": "relic",
+        "name": "La testa di San Valentino",
+        "name:en": "The Skull of St Valentine",
+        "name:hu": "Szent Valentinus (Bálint) feje",
+        "subject:wikidata": "Q192151",
+        "tourism": "attraction"
+      }
+    },
+    {
+      "id": 6205592781,
+      "name": "Finestra dello studio del Papa",
+      "lat": 41.9034297,
+      "lon": 12.4565582,
+      "category": "attraction",
+      "description": "Finestra dello studio del Papa attraction attraction",
+      "tags": {
+        "level": "3",
+        "name": "Finestra dello studio del Papa",
+        "name:en": "Window of the Pope's study",
+        "name:it": "Finestra dello studio del Papa",
+        "tourism": "attraction"
+      }
+    },
+    {
+      "id": 6475574631,
+      "name": "Circo Maximo Experience",
+      "lat": 41.8843462,
+      "lon": 12.4885973,
+      "category": "attraction",
+      "description": "Circo Maximo Experience attraction attraction",
+      "tags": {
+        "addr:city": "Roma",
+        "addr:postcode": "00153",
+        "addr:street": "Viale Aventino",
+        "name": "Circo Maximo Experience",
+        "operator": "Sovraintendenza Roma",
+        "tourism": "attraction"
+      }
+    },
+    {
+      "id": 6484135186,
+      "name": "palazzo Capponi Antonelli",
+      "lat": 41.8962295,
+      "lon": 12.4690562,
+      "category": "attraction",
+      "description": "palazzo Capponi Antonelli attraction attraction",
+      "tags": {
+        "name": "palazzo Capponi Antonelli",
+        "tourism": "attraction"
+      }
+    },
+    {
+      "id": 8626139091,
+      "name": "Fontana della Botte",
+      "lat": 41.8886452,
+      "lon": 12.4710262,
+      "category": "attraction",
+      "description": "Fontana della Botte attraction Artistic fountain in the wall attraction fountain",
+      "tags": {
+        "amenity": "fountain",
+        "capacity": "3",
+        "description": "Artistic fountain in the wall",
+        "drinking_water": "yes",
+        "indoor": "no",
+        "name": "Fontana della Botte",
+        "name:it": "Fontana della Botte",
+        "tourism": "attraction",
+        "wikidata": "Q99726663",
+        "wikimedia_commons": "File:Fontana della Botte.jpg"
+      }
+    },
+    {
+      "id": 9051635779,
+      "name": "Antonio Gramsci",
+      "lat": 41.8753382,
+      "lon": 12.4777525,
+      "category": "history",
+      "description": "Antonio Gramsci history tomb attraction",
+      "tags": {
+        "buried:wikidata": "Q83003",
+        "historic": "tomb",
+        "name": "Antonio Gramsci",
+        "tomb": "yes",
+        "tourism": "attraction"
+      }
+    },
+    {
+      "id": 9362375703,
+      "name": "John Keats",
+      "lat": 41.877061,
+      "lon": 12.480411,
+      "category": "history",
+      "description": "John Keats history tomb attraction",
+      "tags": {
+        "buried:wikidata": "Q82083",
+        "historic": "tomb",
+        "inscription": "This Grave contains all that was Mortal, of a YOUNG ENGLISH POET, Who, on his Death Bed, in the Bitterness of his Heart, at the Malicious Power of his Enemies, Desired these Words to be engraven on his Tomb Stone Here lies One Whose Name was writ in Water",
+        "name": "John Keats",
+        "tomb": "yes",
+        "tourism": "attraction",
+        "wikidata": "Q126685444",
+        "wikimedia_commons": "Category:Grave of John Keats"
+      }
+    },
+    {
+      "id": 9676942017,
+      "name": "Arco dei Banchi",
+      "lat": 41.9004363,
+      "lon": 12.46618,
+      "category": "attraction",
+      "description": "Arco dei Banchi attraction attraction",
+      "tags": {
+        "addr:street": "Via dell'Arco De' Banchi",
+        "name": "Arco dei Banchi",
+        "tourism": "attraction"
+      }
+    },
+    {
+      "id": 10082765531,
+      "name": "Sala Del Carroccio",
+      "lat": 41.8932118,
+      "lon": 12.4836845,
+      "category": "attraction",
+      "description": "Sala Del Carroccio attraction attraction",
+      "tags": {
+        "name": "Sala Del Carroccio",
+        "tourism": "attraction",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": 11208757794,
+      "name": "Hans von Marées",
+      "lat": 41.8758121,
+      "lon": 12.4783324,
+      "category": "history",
+      "description": "Hans von Marées history tomb attraction",
+      "tags": {
+        "cemetery": "grave",
+        "historic": "tomb",
+        "name": "Hans von Marées",
+        "tourism": "attraction"
+      }
+    },
+    {
+      "id": 11359857923,
+      "name": "Ninfeo della Pioggia",
+      "lat": 41.8905969,
+      "lon": 12.4874046,
+      "category": "attraction",
+      "description": "Ninfeo della Pioggia attraction Il Ninfeo era uno spazio che, ispirandosi a esempi dell’antica Roma e del primo Rinascimento, veniva utilizzato dai Farnese, soprattutto nella stagione calda, come spazio per la festa e il diletto. attraction",
+      "tags": {
+        "description": "Il Ninfeo era uno spazio che, ispirandosi a esempi dell’antica Roma e del primo Rinascimento, veniva utilizzato dai Farnese, soprattutto nella stagione calda, come spazio per la festa e il diletto.",
+        "name": "Ninfeo della Pioggia",
+        "opening_hours": "Mo-Su 09:00-15:30",
+        "operator": "Parco Archeologico del Colosseo",
+        "source": "https://colosseo.it/evento/ninfeo-pioggia-festa-barocca/",
+        "start_date": "2023-10-29",
+        "tourism": "attraction"
+      }
+    },
+    {
+      "id": 12487097048,
+      "name": "Il Cuore di Nerone",
+      "lat": 41.9021161,
+      "lon": 12.4571029,
+      "category": "attraction",
+      "description": "Il Cuore di Nerone attraction attraction",
+      "tags": {
+        "description:en": "Heart-shaped stone in Saint Peter's Square",
+        "description:fr": "Pierre en forme de cœur sur la Place Saint-Pierre",
+        "description:it": "Sanpietrino a forma di Cuore in Piazza San Pietro",
+        "name": "Il Cuore di Nerone",
+        "name:fr": "Le Cœur de Néron",
+        "tourism": "attraction"
+      }
+    },
+    {
+      "id": 4247138,
+      "name": "Piazza Navona",
+      "lat": 41.8989256,
+      "lon": 12.4730991,
+      "category": "attraction",
+      "description": "Piazza Navona attraction attraction",
+      "tags": {
+        "heritage": "1",
+        "heritage:since": "1980",
+        "heritage:url": "https://whc.unesco.org/en/list/91",
+        "lit": "yes",
+        "name": "Piazza Navona",
+        "name:es": "Plaza Navona",
+        "name:it": "Piazza Navona",
+        "name:ko": "나보나 광장",
+        "name:ru": "Площадь Навона",
+        "name:zh": "纳沃纳广场",
+        "old_name": "Stadio di Domiziano",
+        "place": "square",
+        "ref:whc": "91",
+        "tourism": "attraction",
+        "wheelchair": "yes",
+        "wikidata": "Q463400",
+        "wikimedia_commons": "Category:Piazza Navona (Rome)",
+        "wikipedia": "it:Piazza Navona"
+      }
+    },
+    {
+      "id": 8035487,
+      "name": "Castel Sant’Angelo",
+      "lat": 41.9030762,
+      "lon": 12.4663312,
+      "category": "history",
+      "description": "Castel Sant’Angelo history castle attraction",
+      "tags": {
+        "alt_name": "Mausoleo di Adriano",
+        "alt_name:cs": "Hadriánovo mauzoleum",
+        "alt_name:de": "Mausoleum des Hadrian",
+        "alt_name:en": "Mausoleum of Hadrian",
+        "alt_name:es": "Mausoleo de Adriano",
+        "alt_name:it": "Mausoleo di Adriano",
+        "building": "yes",
+        "building:part": "no",
+        "castle_type": "fortress",
+        "charge": "16 EUR",
+        "fee": "yes",
+        "heritage": "1",
+        "heritage:since": "1980",
+        "heritage:url": "https://whc.unesco.org/en/list/91",
+        "historic": "castle",
+        "name": "Castel Sant’Angelo",
+        "name:ar": "قلعة سانت أنجلو",
+        "name:cs": "Andělský hrad",
+        "name:de": "Engelsburg",
+        "name:en": "Castle of the Holy Angel",
+        "name:es": "Castillo de Sant'Angelo",
+        "name:etymology:wikidata": "Q45581",
+        "name:fr": "Château Saint-Ange",
+        "name:hi": "पवित्र परी का महल",
+        "name:hu": "Angyalvár",
+        "name:it": "Castel Sant’Angelo",
+        "name:ja": "サンタンジェロ城",
+        "name:ko": "성천사성",
+        "name:nl": "Engelenburcht",
+        "name:pt": "Castelo de Santo Ângelo",
+        "name:ro": "Castelul Sant'Angelo",
+        "name:ru": "Замок Святого Ангела",
+        "name:sl": "Angelski grad",
+        "name:tr": "Sant'Angelo Kalesi",
+        "opening_hours": "Mo-Su 09:00-19:30",
+        "ref:whc": "91",
+        "source": "Bing Aerial",
+        "start_date": "139",
+        "tourism": "attraction",
+        "wheelchair": "yes",
+        "wikidata": "Q486382",
+        "wikimedia_commons": "Category:Castel Sant'Angelo (Rome)",
+        "wikipedia": "it:Castel Sant'Angelo"
+      }
+    },
+    {
+      "id": 23055100,
+      "name": "Piazza del Campidoglio",
+      "lat": 41.8932288,
+      "lon": 12.4829654,
+      "category": "attraction",
+      "description": "Piazza del Campidoglio attraction attraction",
+      "tags": {
+        "importance": "national",
+        "lit": "yes",
+        "name": "Piazza del Campidoglio",
+        "name:ar": "ساحة كابيتول",
+        "name:de": "Kapitolsplatz",
+        "name:en": "Capitol Square",
+        "name:es": "Plaza del Capitolio",
+        "name:fr": "Place du Capitole",
+        "name:it": "Piazza del Campidoglio",
+        "name:ko": "캄피돌리오 광장",
+        "name:ru": "Капитолий",
+        "name:zh": "坎皮多怡歐廣場",
+        "place": "square",
+        "tourism": "attraction",
+        "wheelchair": "yes",
+        "wikidata": "Q34921",
+        "wikimedia_commons": "Category:Piazza del Campidoglio (Rome)",
+        "wikipedia": "it:Piazza del Campidoglio"
+      }
+    },
+    {
+      "id": 23590989,
+      "name": "Arco di Costantino",
+      "lat": 41.8897623,
+      "lon": 12.4906668,
+      "category": "history",
+      "description": "Arco di Costantino history monument attraction",
+      "tags": {
+        "building": "triumphal_arch",
+        "height": "21",
+        "historic": "monument",
+        "image": "41.88977598623146, 12.490683019894265",
+        "inscription": "IMP·CAES·FL·CONSTANTINO·MAXIMO·P·F·AVGUSTO·S·P·Q·R·QVOD·INSTINCTV·DIVINITATIS·MENTIS·MAGNITVDINE·CVM·EXERCITV·SVO·TAM·DE·TYRANNO·QVAM·DE·OMNI·EIVS·FACTIONE·VNO·TEMPORE·IVSTIS·REM-PVBLICAM·VLTVS·EST·ARMIS·ARCVM·TRIVMPHIS·INSIGNEM·DICAVIT",
+        "name": "Arco di Costantino",
+        "name:ar": "قوس قسطنطين",
+        "name:cs": "Konstantinův oblouk",
+        "name:de": "Konstantinsbogen",
+        "name:el": "Αψίδα Μεγάλου Κωνσταντίνου",
+        "name:en": "Arch of Constantine",
+        "name:es": "Arco de Constantino",
+        "name:fr": "Arc de Constantin",
+        "name:it": "Arco di Costantino",
+        "name:ko": "콘스탄티누스 개선문",
+        "name:lt": "Konstantino arka",
+        "name:nl": "Boog van Constantijn",
+        "name:ru": "Триумфальная арка Константина",
+        "name:zh": "君士坦丁凯旋门",
+        "start_date": "315",
+        "tourism": "attraction",
+        "wheelchair": "limited",
+        "wikidata": "Q5786",
+        "wikimedia_commons": "Category:Arch of Constantine (Rome)",
+        "wikipedia": "en:Arch of Constantine"
+      }
+    },
+    {
+      "id": 23840659,
+      "name": "Sant'Ignazio di Loyola a Campo Marzio",
+      "lat": 41.8988027,
+      "lon": 12.4797833,
+      "category": "attraction",
+      "description": "Sant'Ignazio di Loyola a Campo Marzio attraction attraction place of worship",
+      "tags": {
+        "amenity": "place_of_worship",
+        "building": "church",
+        "check_date": "2023-08-28",
+        "contact:website": "https://santignazio.gesuiti.it/",
+        "denomination": "roman_catholic",
+        "name": "Sant'Ignazio di Loyola a Campo Marzio",
+        "name:en": "Church of St. Ignatius of Loyola at Campus Martius",
+        "name:es": "Iglesia de San Ignacio de Loyola",
+        "name:fr": "Église Saint-Ignace-de-Loyola",
+        "name:la": "Ecclesia Sancti Ignatii a Loyola in Campo Martio",
+        "opening_hours": "Mo-Sa 07:30-19:00; Su 11:30-18:00",
+        "religion": "christian",
+        "tourism": "attraction",
+        "wheelchair": "yes",
+        "wikidata": "Q1465674",
+        "wikimedia_commons": "Category:Sant'Ignazio (Rome)",
+        "wikipedia": "it:Chiesa di Sant'Ignazio di Loyola in Campo Marzio"
+      }
+    },
+    {
+      "id": 23913953,
+      "name": "Arco di Tito",
+      "lat": 41.8906722,
+      "lon": 12.4885842,
+      "category": "history",
+      "description": "Arco di Tito history monument attraction",
+      "tags": {
+        "building": "triumphal_arch",
+        "height": "15.4",
+        "historic": "monument",
+        "historic:civilization": "ancient_roman",
+        "historic:period": "roman",
+        "name": "Arco di Tito",
+        "name:ar": "قوس طيطوس",
+        "name:cs": "Titův oblouk",
+        "name:de": "Titusbogen",
+        "name:el": "Αψίδα του Τίτου",
+        "name:en": "Arch of Titus",
+        "name:es": "Arco de Tito",
+        "name:fr": "Arc de Titus",
+        "name:he": "שער טיטוס",
+        "name:it": "Arco di Tito",
+        "name:ja": "ティトの凱旋門",
+        "name:pt": "Arco de Tito",
+        "name:ru": "Триумфальная арка Тита",
+        "name:sv": "Titusbågen",
+        "name:uk": "Арка Тіта",
+        "name:zh": "提图斯凯旋门",
+        "start_date": "~82",
+        "tourism": "attraction",
+        "wheelchair": "yes",
+        "wikidata": "Q723887",
+        "wikimedia_commons": "Category:Arch of Titus (Rome)",
+        "wikipedia": "en:Arch of Titus"
+      }
+    },
+    {
+      "id": 23955329,
+      "name": "Largo di Torre Argentina",
+      "lat": 41.8953968,
+      "lon": 12.4768864,
+      "category": "history",
+      "description": "Largo di Torre Argentina history archaeological site attraction",
+      "tags": {
+        "access": "yes",
+        "alt_name": "Area Sacra di Largo Argentina",
+        "area": "yes",
+        "fee": "yes",
+        "historic": "archaeological_site",
+        "historic:civilization": "ancient_roman",
+        "name": "Largo di Torre Argentina",
+        "tourism": "attraction",
+        "wheelchair": "yes",
+        "wikidata": "Q1541068",
+        "wikimedia_commons": "Category:Largo di Torre Argentina",
+        "wikipedia": "it:Largo di Torre Argentina"
+      }
+    },
+    {
+      "id": 25400176,
+      "name": "Basilica di Santa Maria sopra Minerva",
+      "lat": 41.8979917,
+      "lon": 12.4783662,
+      "category": "attraction",
+      "description": "Basilica di Santa Maria sopra Minerva attraction attraction place of worship",
+      "tags": {
+        "amenity": "place_of_worship",
+        "basilica": "minor",
+        "building": "church",
+        "contact:website": "https://www.santamariasopraminerva.it",
+        "denomination": "roman_catholic",
+        "name": "Basilica di Santa Maria sopra Minerva",
+        "name:ru": "Базилика Санта Мария Сопра Минерва",
+        "opening_hours": "Mo-Fr 08:00-20:00; Sa,Su,PH 10:30-13:00,14:00-19:30",
+        "religion": "christian",
+        "tourism": "attraction",
+        "wikidata": "Q823685",
+        "wikimedia_commons": "Category:Santa Maria sopra Minerva (Rome)",
+        "wikipedia": "it:Basilica di Santa Maria sopra Minerva"
+      }
+    },
+    {
+      "id": 25625603,
+      "name": "Basilica di Sant'Andrea della Valle",
+      "lat": 41.8960034,
+      "lon": 12.4743329,
+      "category": "attraction",
+      "description": "Basilica di Sant'Andrea della Valle attraction attraction place of worship",
+      "tags": {
+        "addr:city": "Roma",
+        "addr:street": "Corso Vittorio Emanuele Secondo",
+        "amenity": "place_of_worship",
+        "basilica": "minor",
+        "building": "church",
+        "check_date": "2023-08-14",
+        "contact:website": "https://santandrea.teatinos.org/",
+        "denomination": "roman_catholic",
+        "name": "Basilica di Sant'Andrea della Valle",
+        "name:zh": "圣安德肋圣殿",
+        "opening_hours": "Mo-Fr 08:30-20:00; Sa 11:45-20:00; Su 08:45-20:00",
+        "religion": "christian",
+        "service_times": "Mo-Sa 09:00,19:00; Su 09:00,11:30,19:00",
+        "start_date": "1650",
+        "tourism": "attraction",
+        "wheelchair": "no",
+        "wikidata": "Q1631593",
+        "wikimedia_commons": "Category:Sant'Andrea della Valle (Rome)",
+        "wikipedia": "it:Basilica di Sant'Andrea della Valle"
+      }
+    },
+    {
+      "id": 29181216,
+      "name": "Chiesa Nuova",
+      "lat": 41.8984771,
+      "lon": 12.4691976,
+      "category": "attraction",
+      "description": "Chiesa Nuova attraction attraction place of worship",
+      "tags": {
+        "amenity": "place_of_worship",
+        "building": "church",
+        "contact:website": "https://www.vallicella.org/",
+        "denomination": "catholic",
+        "name": "Chiesa Nuova",
+        "name:de": "Neue Kirche",
+        "name:es": "Nueva Iglesia",
+        "official_name": "Santa Maria in Vallicella",
+        "opening_hours": "Mo-Sa 07:30-12:00, 17:00-19:45; Su 08:00-12:00, 17:00-20:00",
+        "religion": "christian",
+        "tourism": "attraction",
+        "wheelchair": "no",
+        "wikidata": "Q2031901",
+        "wikimedia_commons": "Category:Santa Maria in Vallicella (Rome)",
+        "wikipedia": "it:Chiesa Nuova (Roma)"
+      }
+    },
+    {
+      "id": 51368975,
+      "name": "Basilica di Santa Maria in Trastevere",
+      "lat": 41.8894264,
+      "lon": 12.4694941,
+      "category": "attraction",
+      "description": "Basilica di Santa Maria in Trastevere attraction attraction place of worship",
+      "tags": {
+        "addr:street": "Piazza di Santa Maria in Trastevere",
+        "amenity": "place_of_worship",
+        "basilica": "minor",
+        "building": "basilica",
+        "denomination": "catholic",
+        "name": "Basilica di Santa Maria in Trastevere",
+        "name:de": "Santa Maria in Trastevere",
+        "name:fr": "Basilique Sainte-Marie-du-Trastevere",
+        "name:ja": "サンタ・マリア・イン・トラステヴェレ聖堂",
+        "name:ko": "산타 마리아 인 트라스테베레 성당",
+        "name:ru": "базилика Санта Мария ин Трастевере",
+        "opening_hours": "Mo-Su 07:30-20:30",
+        "outdoor_seating": "no",
+        "religion": "christian",
+        "service_times": "Mo-Fr 09:00,17:30; Sa 09:00,17:30,20:00; Su 08:30,10:00,11:00,17:30,18:45",
+        "tourism": "attraction",
+        "website": "https://www.santamariaintrastevere.it/",
+        "wheelchair": "yes",
+        "wikidata": "Q1137391",
+        "wikimedia_commons": "Category:Santa Maria in Trastevere (Rome)",
+        "wikipedia": "it:Basilica di Santa Maria in Trastevere"
+      }
+    },
+    {
+      "id": 52332687,
+      "name": "Fontana dei Quattro Fiumi",
+      "lat": 41.8989536,
+      "lon": 12.4730849,
+      "category": "nature",
+      "description": "Fontana dei Quattro Fiumi nature attraction fountain",
+      "tags": {
+        "amenity": "fountain",
+        "architect": "Gian Lorenzo Bernini",
+        "artist_name": "Gian Lorenzo Bernini",
+        "drinking_water": "no",
+        "name": "Fontana dei Quattro Fiumi",
+        "name:de": "Vierströmebrunnen",
+        "name:en": "Fountain of the Four Rivers",
+        "name:es": "Fuente de los Cuatro Ríos",
+        "name:fr": "Fontaine des Quatre-Fleuves",
+        "name:it": "Fontana dei Quattro Fiumi",
+        "name:pl": "Fontanna czterech rzek",
+        "name:pt": "Fonte dos Quatro Rios",
+        "name:ru": "Фонтан Четырёх Рек",
+        "natural": "water",
+        "tourism": "attraction",
+        "wheelchair": "yes",
+        "wikidata": "Q655470",
+        "wikimedia_commons": "Category:Fontana dei fiumi (Rome)",
+        "wikipedia": "it:Fontana dei Quattro Fiumi"
+      }
+    },
+    {
+      "id": 52333460,
+      "name": "Chiesa di Sant'Agnese in Agone",
+      "lat": 41.898736,
+      "lon": 12.4725813,
+      "category": "attraction",
+      "description": "Chiesa di Sant'Agnese in Agone attraction attraction place of worship",
+      "tags": {
+        "amenity": "place_of_worship",
+        "architect": "Girolamo Rainaldi;Francesco Borromini",
+        "building": "church",
+        "contact:website": "https://www.santagneseinagone.org/",
+        "denomination": "catholic",
+        "name": "Chiesa di Sant'Agnese in Agone",
+        "name:it": "Chiesa di Sant'Agnese in Agone",
+        "name:ru": "Сант-Аньезе-ин-Агоне",
+        "opening_hours": "Tu-Fr 09:00-13:00, 15:00-19:00; Sa, Su 09:00-13:00, 15:00-20:00",
+        "religion": "christian",
+        "service_times": "Sa 19:00; Su 12:15; 19:00",
+        "tourism": "attraction",
+        "wikidata": "Q1192577",
+        "wikimedia_commons": "Category:Sant'Agnese in Agone (Rome)",
+        "wikipedia": "it:Chiesa di Sant'Agnese in Agone"
+      }
+    },
+    {
+      "id": 52924046,
+      "name": "Arco di Giano",
+      "lat": 41.889353,
+      "lon": 12.4827682,
+      "category": "history",
+      "description": "Arco di Giano history monument attraction",
+      "tags": {
+        "building": "quadrifrons",
+        "historic": "monument",
+        "historic:civilization": "western_roman",
+        "historic:period": "dominate",
+        "name": "Arco di Giano",
+        "name:de": "Janusbogen",
+        "name:en": "Arch of Janus",
+        "name:hu": "Janus-diadalív",
+        "name:ru": "Арка Януса",
+        "opening_hours": "Sa 10:00-14:00; 2022 Mar: Su[-1] 16:00-20:00",
+        "source": "https://www.soprintendenzaspecialeroma.it/echoweb/echofiles/allegati/Car_sta-Arco%20di%20Giano%20Nu%20ShuR-1.pdf",
+        "start_date": "C4",
+        "tourism": "attraction",
+        "wikidata": "Q580555",
+        "wikimedia_commons": "Category:Arch of Janus (Rome)",
+        "wikipedia": "it:Arco di Giano"
+      }
+    },
+    {
+      "id": 60616315,
+      "name": "Chiesa di Santa Maria in Via",
+      "lat": 41.9016728,
+      "lon": 12.4815959,
+      "category": "attraction",
+      "description": "Chiesa di Santa Maria in Via attraction attraction place of worship",
+      "tags": {
+        "alt_name": "Santuario della Madonna del Pozzo",
+        "amenity": "place_of_worship",
+        "building": "church",
+        "denomination": "catholic",
+        "name": "Chiesa di Santa Maria in Via",
+        "religion": "christian",
+        "tourism": "attraction",
+        "wikidata": "Q1785234",
+        "wikimedia_commons": "Category:Santa Maria in Via (Rome)",
+        "wikipedia": "it:Chiesa di Santa Maria in Via"
+      }
+    },
+    {
+      "id": 364860899,
+      "name": "Forum Romanum view",
+      "lat": 41.8924641,
+      "lon": 12.4836359,
+      "category": "attraction",
+      "description": "Forum Romanum view attraction viewpoint",
+      "tags": {
+        "name": "Forum Romanum view",
+        "name:ru": "Вид на Римский Форум",
+        "tourism": "viewpoint",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": 393180368,
+      "name": "Belvedere Romolo E Remo",
+      "lat": 41.8856975,
+      "lon": 12.484964,
+      "category": "attraction",
+      "description": "Belvedere Romolo E Remo attraction viewpoint",
+      "tags": {
+        "direction": "45",
+        "name": "Belvedere Romolo E Remo",
+        "name:fr": "Belvédère Romulus et Rémus",
+        "name:it": "Belvedere Romolo E Remo",
+        "tourism": "viewpoint",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": 653947448,
+      "name": "Giardino degli Aranci",
+      "lat": 41.8854258,
+      "lon": 12.4799081,
+      "category": "attraction",
+      "description": "Giardino degli Aranci attraction viewpoint",
+      "tags": {
+        "name": "Giardino degli Aranci",
+        "name:ru": "Апельсиновый сад",
+        "tourism": "viewpoint",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "id": 1001130475,
+      "name": "Terrazza del Gianicolo",
+      "lat": 41.8914773,
+      "lon": 12.4613885,
+      "category": "attraction",
+      "description": "Terrazza del Gianicolo attraction viewpoint",
+      "tags": {
+        "name": "Terrazza del Gianicolo",
+        "name:ko": "자니콜로 언덕",
+        "tourism": "viewpoint",
+        "wheelchair": "limited"
+      }
+    },
+    {
+      "id": 1272283718,
+      "name": "Punto panoramico di viale della Galea",
+      "lat": 41.9063444,
+      "lon": 12.4553901,
+      "category": "attraction",
+      "description": "Punto panoramico di viale della Galea attraction viewpoint",
+      "tags": {
+        "name": "Punto panoramico di viale della Galea",
+        "tourism": "viewpoint"
+      }
+    },
+    {
+      "id": 1880658326,
+      "name": "Belvedere Niccolò Scatoli",
+      "lat": 41.8889963,
+      "lon": 12.4645015,
+      "category": "attraction",
+      "description": "Belvedere Niccolò Scatoli attraction viewpoint",
+      "tags": {
+        "name": "Belvedere Niccolò Scatoli",
+        "tourism": "viewpoint",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": 1987788474,
+      "name": "Torre del Tabularium",
+      "lat": 41.8907204,
+      "lon": 12.4864967,
+      "category": "attraction",
+      "description": "Torre del Tabularium attraction viewpoint",
+      "tags": {
+        "name": "Torre del Tabularium",
+        "tourism": "viewpoint"
+      }
+    },
+    {
+      "id": 2858622033,
+      "name": "Illusione ottica del Cupolone",
+      "lat": 41.892249,
+      "lon": 12.4434168,
+      "category": "attraction",
+      "description": "Illusione ottica del Cupolone attraction viewpoint",
+      "tags": {
+        "name": "Illusione ottica del Cupolone",
+        "tourism": "viewpoint"
+      }
+    },
+    {
+      "id": 4798313727,
+      "name": "Isola Tiberina",
+      "lat": 41.8896365,
+      "lon": 12.4792342,
+      "category": "attraction",
+      "description": "Isola Tiberina attraction viewpoint",
+      "tags": {
+        "direction": "160",
+        "name": "Isola Tiberina",
+        "name:it": "Isola Tiberina",
+        "name:ru": "Остров Тиберина",
+        "tourism": "viewpoint"
+      }
+    },
+    {
+      "id": 4829505522,
+      "name": "Belvedere Dei Salvati",
+      "lat": 41.8966054,
+      "lon": 12.4616232,
+      "category": "attraction",
+      "description": "Belvedere Dei Salvati attraction viewpoint",
+      "tags": {
+        "name": "Belvedere Dei Salvati",
+        "name:it": "Belvedere Dei Salvati",
+        "tourism": "viewpoint",
+        "wheelchair": "limited"
+      }
+    },
+    {
+      "id": 4858500722,
+      "name": "Passeggiata del gianicolo",
+      "lat": 41.8966665,
+      "lon": 12.4616204,
+      "category": "attraction",
+      "description": "Passeggiata del gianicolo attraction viewpoint",
+      "tags": {
+        "fixme": "duplicate ?",
+        "name": "Passeggiata del gianicolo",
+        "name:it": "Passeggiata del gianicolo",
+        "tourism": "viewpoint",
+        "wheelchair": "limited"
+      }
+    },
+    {
+      "id": 4978038129,
+      "name": "Punto panoramico di Ponte Umberto I",
+      "lat": 41.9023537,
+      "lon": 12.4714087,
+      "category": "attraction",
+      "description": "Punto panoramico di Ponte Umberto I attraction viewpoint",
+      "tags": {
+        "name": "Punto panoramico di Ponte Umberto I",
+        "tourism": "viewpoint"
+      }
+    },
+    {
+      "id": 5108555139,
+      "name": "Cupola di San Pietro",
+      "lat": 41.9021657,
+      "lon": 12.453456,
+      "category": "history",
+      "description": "Cupola di San Pietro history yes viewpoint",
+      "tags": {
+        "architect": "Giacomo Della Porta",
+        "direction": "0-360",
+        "historic": "yes",
+        "level": "4",
+        "name": "Cupola di San Pietro",
+        "name:ar": "قبة القديس بطرس",
+        "name:de": "St. Petersdom",
+        "name:en": "Dome of Saint Peter",
+        "name:es": "Cupula de San Pedro",
+        "name:fr": "Dôme de Saint-Pierre",
+        "name:it": "Cupola di San Pietro",
+        "name:ja": "サン・ピエトロ大聖堂",
+        "name:ru": "Купол Святого Петра",
+        "opening_hours": "Mo-Su 07:30-17:00",
+        "tourism": "viewpoint",
+        "website": "https://www.vatican.va/various/basiliche/san_pietro/it/cupola/orari.htm",
+        "wheelchair": "yes",
+        "wikidata": "Q3699559",
+        "wikimedia_commons": "Category:Dome of Saint Peter's Basilica"
+      }
+    },
+    {
+      "id": 5446426922,
+      "name": "Piazza del Quirinale",
+      "lat": 41.8993818,
+      "lon": 12.4862714,
+      "category": "attraction",
+      "description": "Piazza del Quirinale attraction viewpoint",
+      "tags": {
+        "name": "Piazza del Quirinale",
+        "tourism": "viewpoint"
+      }
+    }
+  ]
 }

@@ -10,5 +10,3653 @@
   "transport": "walking",
   "start_lat": 35.6937632,
   "start_lon": 139.7036319,
-  "pois": []
+  "pool_categories": [
+    "food",
+    "nature",
+    "history",
+    "culture",
+    "nightlife",
+    "shopping",
+    "adventure",
+    "hidden_gems"
+  ],
+  "pois": [
+    {
+      "id": 810644324,
+      "name": "長崎ちゃんぽん",
+      "lat": 35.6888706,
+      "lon": 139.697899,
+      "category": "food",
+      "description": "長崎ちゃんぽん food japanese fast food",
+      "tags": {
+        "amenity": "fast_food",
+        "cuisine": "japanese",
+        "name": "長崎ちゃんぽん",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": 872094921,
+      "name": "すしざんまい",
+      "lat": 35.6984,
+      "lon": 139.7052079,
+      "category": "food",
+      "description": "すしざんまい food sushi restaurant",
+      "tags": {
+        "amenity": "restaurant",
+        "branch": "東新宿店",
+        "cuisine": "sushi",
+        "indoor_seating": "yes",
+        "name": "すしざんまい",
+        "name:en": "Sushi Zanmai",
+        "outdoor_seating": "no",
+        "source": "image,2014-03;Bing",
+        "toilets:wheelchair": "no",
+        "wheelchair": "limited"
+      }
+    },
+    {
+      "id": 1115407501,
+      "name": "Jay Ganesha Bar",
+      "lat": 35.7085764,
+      "lon": 139.7084184,
+      "category": "food",
+      "description": "Jay Ganesha Bar food indian restaurant",
+      "tags": {
+        "amenity": "restaurant",
+        "cuisine": "indian",
+        "cuisine:ja": "インドカレー",
+        "name": "Jay Ganesha Bar"
+      }
+    },
+    {
+      "id": 1115444552,
+      "name": "スパゲティ トマトマ",
+      "lat": 35.710236,
+      "lon": 139.7095047,
+      "category": "food",
+      "description": "スパゲティ トマトマ food restaurant",
+      "tags": {
+        "amenity": "restaurant",
+        "name": "スパゲティ トマトマ",
+        "name:en": "Spaghetti Tomatoma",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "id": 1116408986,
+      "name": "華屋",
+      "lat": 35.7104132,
+      "lon": 139.7095433,
+      "category": "food",
+      "description": "華屋 food restaurant",
+      "tags": {
+        "amenity": "restaurant",
+        "end_date": "2011-1-22",
+        "name": "華屋",
+        "name:en": "Hanaya"
+      }
+    },
+    {
+      "id": 1116408987,
+      "name": "友人",
+      "lat": 35.7105002,
+      "lon": 139.7095727,
+      "category": "food",
+      "description": "友人 food indian restaurant",
+      "tags": {
+        "amenity": "restaurant",
+        "cuisine": "indian",
+        "cuisine:ja": "ネパール料理; インド料理",
+        "name": "友人",
+        "name:en": "Yujin",
+        "wheelchair": "limited"
+      }
+    },
+    {
+      "id": 1116408988,
+      "name": "手打ちそば もり",
+      "lat": 35.7107354,
+      "lon": 139.7096612,
+      "category": "food",
+      "description": "手打ちそば もり food soba restaurant",
+      "tags": {
+        "amenity": "restaurant",
+        "cuisine": "soba",
+        "cuisine:ja": "そば",
+        "name": "手打ちそば もり",
+        "name:en": "Mori",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "id": 1116408990,
+      "name": "らーめん山小屋",
+      "lat": 35.7103608,
+      "lon": 139.7095378,
+      "category": "food",
+      "description": "らーめん山小屋 food ramen fast food",
+      "tags": {
+        "amenity": "fast_food",
+        "cuisine": "ramen",
+        "cuisine:ja": "ラーメン",
+        "name": "らーめん山小屋",
+        "wheelchair": "limited"
+      }
+    },
+    {
+      "id": 1139149606,
+      "name": "だるま寿司",
+      "lat": 35.6978082,
+      "lon": 139.6842748,
+      "category": "food",
+      "description": "だるま寿司 food sushi restaurant",
+      "tags": {
+        "amenity": "restaurant",
+        "cuisine": "sushi",
+        "name": "だるま寿司"
+      }
+    },
+    {
+      "id": 1140870601,
+      "name": "王将",
+      "lat": 35.7053279,
+      "lon": 139.7202859,
+      "category": "food",
+      "description": "王将 food chinese fast food",
+      "tags": {
+        "amenity": "fast_food",
+        "cuisine": "chinese",
+        "name": "王将",
+        "name:en": "OHSHO"
+      }
+    },
+    {
+      "id": 1142124325,
+      "name": "プングム",
+      "lat": 35.7011069,
+      "lon": 139.7044416,
+      "category": "food",
+      "description": "プングム food korean restaurant",
+      "tags": {
+        "amenity": "restaurant",
+        "cuisine": "korean",
+        "name": "プングム",
+        "name:ja": "プングム",
+        "name:ja-Hira": "プングム",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "id": 1142396414,
+      "name": "西新宿小町食堂",
+      "lat": 35.6951748,
+      "lon": 139.688072,
+      "category": "food",
+      "description": "西新宿小町食堂 food japanese fast food",
+      "tags": {
+        "amenity": "fast_food",
+        "cuisine": "japanese",
+        "name": "西新宿小町食堂",
+        "name:en": "Nishi-Shinjuku Komachi Shokudo"
+      }
+    },
+    {
+      "id": 1183010969,
+      "name": "Mistral",
+      "lat": 35.7068374,
+      "lon": 139.6935943,
+      "category": "food",
+      "description": "Mistral food restaurant",
+      "tags": {
+        "amenity": "restaurant",
+        "name": "Mistral"
+      }
+    },
+    {
+      "id": 1186818864,
+      "name": "なかよ食堂",
+      "lat": 35.7042971,
+      "lon": 139.7084131,
+      "category": "food",
+      "description": "なかよ食堂 food restaurant",
+      "tags": {
+        "amenity": "restaurant",
+        "name": "なかよ食堂"
+      }
+    },
+    {
+      "id": 1192542586,
+      "name": "長浜や",
+      "lat": 35.7011571,
+      "lon": 139.7011585,
+      "category": "food",
+      "description": "長浜や food ramen fast food",
+      "tags": {
+        "amenity": "fast_food",
+        "cuisine": "ramen",
+        "name": "長浜や",
+        "name:en": "Nagahamaya"
+      }
+    },
+    {
+      "id": 1192598954,
+      "name": "TAK CAFE",
+      "lat": 35.7011575,
+      "lon": 139.7026171,
+      "category": "food",
+      "description": "TAK CAFE food cafe",
+      "tags": {
+        "amenity": "cafe",
+        "level": "1",
+        "name": "TAK CAFE"
+      }
+    },
+    {
+      "id": 1192598968,
+      "name": "めとき",
+      "lat": 35.7032048,
+      "lon": 139.7032031,
+      "category": "food",
+      "description": "めとき food chinese restaurant",
+      "tags": {
+        "amenity": "restaurant",
+        "cuisine": "chinese",
+        "name": "めとき",
+        "name:en": "Metoki"
+      }
+    },
+    {
+      "id": 1237984874,
+      "name": "代々木の森",
+      "lat": 35.6812879,
+      "lon": 139.6980777,
+      "category": "food",
+      "description": "代々木の森 food food court",
+      "tags": {
+        "amenity": "food_court",
+        "name": "代々木の森",
+        "name:ja": "代々木の森",
+        "name:ja-Latn": "Yoyogi No Mori",
+        "opening_hours": "08:30-21:00",
+        "smoking": "no",
+        "website": "https://www.shutoko-sv.jp/parking/guide/map_05.html",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": 1502259477,
+      "name": "TRATTORIA",
+      "lat": 35.6876542,
+      "lon": 139.7004011,
+      "category": "food",
+      "description": "TRATTORIA food restaurant",
+      "tags": {
+        "amenity": "restaurant",
+        "name": "TRATTORIA",
+        "source": "Bing",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "id": 1504865572,
+      "name": "リトルデリリウム",
+      "lat": 35.6859364,
+      "lon": 139.700791,
+      "category": "nightlife",
+      "description": "リトルデリリウム nightlife bar",
+      "tags": {
+        "amenity": "bar",
+        "name": "リトルデリリウム",
+        "name:en": "Little Delirium",
+        "source": "survey"
+      }
+    },
+    {
+      "id": 1504865588,
+      "name": "海神",
+      "lat": 35.6898044,
+      "lon": 139.7022228,
+      "category": "food",
+      "description": "海神 food noodle;ramen fast food",
+      "tags": {
+        "amenity": "fast_food",
+        "cuisine": "noodle;ramen",
+        "name": "海神",
+        "source": "Bing"
+      }
+    },
+    {
+      "id": 1544570311,
+      "name": "山頭火 新宿南口店",
+      "lat": 35.6887701,
+      "lon": 139.6984016,
+      "category": "food",
+      "description": "山頭火 新宿南口店 food noodle;ramen fast food",
+      "tags": {
+        "amenity": "fast_food",
+        "contact:phone": "+81 3-3349-0338",
+        "cuisine": "noodle;ramen",
+        "name": "山頭火 新宿南口店"
+      }
+    },
+    {
+      "id": 1544570312,
+      "name": "番番",
+      "lat": 35.6888424,
+      "lon": 139.6977812,
+      "category": "food",
+      "description": "番番 food restaurant",
+      "tags": {
+        "amenity": "restaurant",
+        "level": "-1",
+        "name": "番番",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "id": 1668299663,
+      "name": "珍獣広場",
+      "lat": 35.6909832,
+      "lon": 139.7064284,
+      "category": "nightlife",
+      "description": "珍獣広場 nightlife bar",
+      "tags": {
+        "amenity": "bar",
+        "name": "珍獣広場"
+      }
+    },
+    {
+      "id": 1668521369,
+      "name": "Himalaya Curry",
+      "lat": 35.678221,
+      "lon": 139.6927043,
+      "category": "food",
+      "description": "Himalaya Curry food curry restaurant",
+      "tags": {
+        "addr:floor": "1",
+        "amenity": "restaurant",
+        "check_date": "2025-11-22",
+        "cuisine": "curry",
+        "level": "0",
+        "name": "Himalaya Curry",
+        "source": "survey; bing"
+      }
+    },
+    {
+      "id": 1676649137,
+      "name": "Le Cafe Retro",
+      "lat": 35.706538,
+      "lon": 139.7176026,
+      "category": "food",
+      "description": "Le Cafe Retro food cafe",
+      "tags": {
+        "amenity": "cafe",
+        "name": "Le Cafe Retro",
+        "name:ja": "ルカフェレトロ",
+        "opening_hours": "Mo-Sa 11:00-00:00;Su 12:00-21:00;PH 12:00-21:00"
+      }
+    },
+    {
+      "id": 1682783880,
+      "name": "栄寿司 西口店",
+      "lat": 35.6889683,
+      "lon": 139.6984379,
+      "category": "food",
+      "description": "栄寿司 西口店 food sushi restaurant",
+      "tags": {
+        "amenity": "restaurant",
+        "cuisine": "sushi",
+        "name": "栄寿司 西口店",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": 1721357540,
+      "name": "紀州屋",
+      "lat": 35.688826,
+      "lon": 139.698391,
+      "category": "nightlife",
+      "description": "紀州屋 nightlife bar",
+      "tags": {
+        "amenity": "bar",
+        "name": "紀州屋",
+        "source": "survey; Bing"
+      }
+    },
+    {
+      "id": 1721357554,
+      "name": "老辺餃子館",
+      "lat": 35.688924,
+      "lon": 139.6986364,
+      "category": "food",
+      "description": "老辺餃子館 food chinese restaurant",
+      "tags": {
+        "amenity": "restaurant",
+        "building:levels": "2",
+        "cuisine": "chinese",
+        "name": "老辺餃子館",
+        "source": "survey",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "id": 1730424902,
+      "name": "Anea Cafe",
+      "lat": 35.6784943,
+      "lon": 139.6924747,
+      "category": "food",
+      "description": "Anea Cafe food cafe",
+      "tags": {
+        "amenity": "cafe",
+        "name": "Anea Cafe",
+        "phone": "+81 3-5304-5580",
+        "smoking": "yes"
+      }
+    },
+    {
+      "id": 1792514302,
+      "name": "すずや",
+      "lat": 35.6939187,
+      "lon": 139.7009626,
+      "category": "food",
+      "description": "すずや food japanese restaurant",
+      "tags": {
+        "addr:postcode": "160-0021",
+        "amenity": "restaurant",
+        "cuisine": "japanese",
+        "name": "すずや",
+        "name:en": "Suzuya",
+        "name:ja": "すずや",
+        "name:ja-Hira": "すずや",
+        "name:ja_rm": "Suzuya",
+        "phone": "03-3209-4480",
+        "website": "https://www.toncya-suzuya.co.jp/"
+      }
+    },
+    {
+      "id": 1801259634,
+      "name": "Dart Bar ZERO-ONE",
+      "lat": 35.6950487,
+      "lon": 139.705273,
+      "category": "nightlife",
+      "description": "Dart Bar ZERO-ONE nightlife bar",
+      "tags": {
+        "addr:housename": "lions-plaza",
+        "addr:housenumber": "2F",
+        "addr:postcode": "160-0021",
+        "amenity": "bar",
+        "internet_access": "wlan",
+        "internet_access:fee": "no",
+        "name": "Dart Bar ZERO-ONE",
+        "website": "http://search.dartslive.jp/shop/10852536"
+      }
+    },
+    {
+      "id": 1894561332,
+      "name": "松のや",
+      "lat": 35.6972659,
+      "lon": 139.6819818,
+      "category": "food",
+      "description": "松のや food restaurant",
+      "tags": {
+        "addr:postcode": "164-0011",
+        "amenity": "restaurant",
+        "name": "松のや"
+      }
+    },
+    {
+      "id": 1905045603,
+      "name": "Ginza Lion",
+      "lat": 35.6911383,
+      "lon": 139.7025502,
+      "category": "food",
+      "description": "Ginza Lion food restaurant",
+      "tags": {
+        "amenity": "restaurant",
+        "name": "Ginza Lion",
+        "source": "knoledge",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "id": 1933284404,
+      "name": "ひじり屋",
+      "lat": 35.6916719,
+      "lon": 139.6873499,
+      "category": "food",
+      "description": "ひじり屋 food japanese restaurant",
+      "tags": {
+        "amenity": "restaurant",
+        "cuisine": "japanese",
+        "name": "ひじり屋",
+        "name:en": "Hijiriya",
+        "special": "ラーメン",
+        "wheelchair": "limited"
+      }
+    },
+    {
+      "id": 1933346658,
+      "name": "スパゲッティキッチン オットー",
+      "lat": 35.7102185,
+      "lon": 139.7124661,
+      "category": "food",
+      "description": "スパゲッティキッチン オットー food italian restaurant",
+      "tags": {
+        "amenity": "restaurant",
+        "cuisine": "italian",
+        "int_name": "Otto Pasta",
+        "name": "スパゲッティキッチン オットー",
+        "name:en": "Spaghetteria Otto"
+      }
+    },
+    {
+      "id": 1933353826,
+      "name": "マックス",
+      "lat": 35.692485,
+      "lon": 139.6868152,
+      "category": "food",
+      "description": "マックス food cafe",
+      "tags": {
+        "amenity": "cafe",
+        "name": "マックス"
+      }
+    },
+    {
+      "id": 1933360849,
+      "name": "孝林",
+      "lat": 35.6923582,
+      "lon": 139.686391,
+      "category": "food",
+      "description": "孝林 food japanese restaurant",
+      "tags": {
+        "amenity": "restaurant",
+        "cuisine": "japanese",
+        "name": "孝林",
+        "name:en": "Korin"
+      }
+    },
+    {
+      "id": 1724887147,
+      "name": "中野の森広場公園",
+      "lat": 35.6966065,
+      "lon": 139.6820456,
+      "category": "nature",
+      "description": "中野の森広場公園 nature park",
+      "tags": {
+        "leisure": "park",
+        "name": "中野の森広場公園",
+        "operator": "中野坂上サンブライトツインビル"
+      }
+    },
+    {
+      "id": 2384963817,
+      "name": "内藤町けやき公園",
+      "lat": 35.685325,
+      "lon": 139.715003,
+      "category": "nature",
+      "description": "内藤町けやき公園 nature park",
+      "tags": {
+        "leisure": "park",
+        "name": "内藤町けやき公園"
+      }
+    },
+    {
+      "id": 4535565126,
+      "name": "箱根山",
+      "lat": 35.7037012,
+      "lon": 139.7135103,
+      "category": "nature",
+      "description": "箱根山 nature",
+      "tags": {
+        "ele": "44.6",
+        "name": "箱根山",
+        "name:en": "Hakoneyama",
+        "name:ja-Hira": "はこねやま",
+        "name:ja-Latn": "Hakoneyama",
+        "natural": "peak",
+        "wikidata": "Q11284663",
+        "wikimedia_commons": "Category:Mount Hakone (Toyama park)",
+        "wikipedia": "ja:箱根山 (新宿区)"
+      }
+    },
+    {
+      "id": 5513479025,
+      "name": "二軒屋児童公園",
+      "lat": 35.6903791,
+      "lon": 139.6828807,
+      "category": "nature",
+      "description": "二軒屋児童公園 nature park",
+      "tags": {
+        "leisure": "park",
+        "name": "二軒屋児童公園"
+      }
+    },
+    {
+      "id": 10824084117,
+      "name": "新宿区立 新宿中央公園",
+      "lat": 35.6903818,
+      "lon": 139.6892671,
+      "category": "nature",
+      "description": "新宿区立 新宿中央公園 nature park",
+      "tags": {
+        "addr:block_number": "１１",
+        "addr:city": "新宿区",
+        "addr:neighbourhood": "新宿２丁目",
+        "addr:postcode": "160-0023",
+        "addr:province": "東京都",
+        "leisure": "park",
+        "name": "新宿区立 新宿中央公園",
+        "name:en": "Shinjuku Chuo Park",
+        "wikipedia": "ja:新宿中央公園"
+      }
+    },
+    {
+      "id": 15772074,
+      "name": "新宿御苑",
+      "lat": 35.6851027,
+      "lon": 139.7098924,
+      "category": "nature",
+      "description": "新宿御苑 nature park",
+      "tags": {
+        "addr:block_number": "11",
+        "addr:city": "新宿区",
+        "addr:postcode": "160-0014",
+        "addr:province": "東京都",
+        "addr:quarter": "内藤町",
+        "charge:adult": "500 JPY;250 JPY",
+        "charge:child": "250 JPY;0 JPY",
+        "contact:email": "info-shinjuku@fng.or.jp",
+        "contact:phone": "+81 3-3350-0151",
+        "contact:tripadvisor": "479258",
+        "contact:twitter": "SG_info_kyokai",
+        "contact:website": "http://www.env.go.jp/garden/shinjukugyoen/",
+        "emergency": "assembly_point",
+        "fee": "yes",
+        "leisure": "park",
+        "name": "新宿御苑",
+        "name:de": "Shinjuku Gyoen",
+        "name:en": "Shinjuku Gyoen National Garden",
+        "name:es": "Shinjuku Gyoen",
+        "name:fr": "Jardin impérial de Shinjuku",
+        "name:it": "Shinjuku Gyoen",
+        "name:ja-Hira": "しんじゅくぎょえん",
+        "name:ja-Latn": "Shinjuku-gyoen",
+        "name:ko": "신주쿠 교엔",
+        "name:ru": "Национальный парк Синдзюку-гёэн",
+        "name:zh": "新宿御苑",
+        "opening_hours": "Mo off; Oct 01-Mar 14 Tu-Su 09:00-16:30; Mar 15-Jun 30 Tu-Su 09:00-18:00; Jul 01-Aug 20 Tu-Su 09:00-19:00; Aug 21-Sep 30 Tu-Su 09:00-18:00; Dec 29-Jan 03 off",
+        "operator": "環境省",
+        "operator:wikidata": "Q1125558",
+        "payment:alipay": "yes",
+        "payment:american_express": "yes",
+        "payment:coins": "yes",
+        "payment:diners_club": "yes",
+        "payment:icoca": "yes",
+        "payment:id": "yes",
+        "payment:jcb": "yes",
+        "payment:jkopay": "yes",
+        "payment:mastercard": "yes",
+        "payment:nanaco": "yes",
+        "payment:notes": "yes",
+        "payment:paypay": "yes",
+        "payment:quicpay": "yes",
+        "payment:rakuten_edy": "yes",
+        "payment:suica": "yes",
+        "payment:unionpay": "yes",
+        "payment:visa": "yes",
+        "payment:waon": "yes",
+        "start_date": "1892",
+        "wikidata": "Q776863",
+        "wikimedia_commons": "Category:Shinjuku Gyo-en",
+        "wikipedia": "ja:新宿御苑"
+      }
+    },
+    {
+      "id": 45656898,
+      "name": "川添公園",
+      "lat": 35.70348,
+      "lon": 139.6861879,
+      "category": "nature",
+      "description": "川添公園 nature park",
+      "tags": {
+        "leisure": "park",
+        "name": "川添公園"
+      }
+    },
+    {
+      "id": 45657107,
+      "name": "新宿区 神田上水公園",
+      "lat": 35.7068943,
+      "lon": 139.6884316,
+      "category": "nature",
+      "description": "新宿区 神田上水公園 nature park",
+      "tags": {
+        "leisure": "park",
+        "name": "新宿区 神田上水公園",
+        "note": "estimated",
+        "operator": "新宿区",
+        "operator:type": "government",
+        "operator:wikidata": "Q179645"
+      }
+    },
+    {
+      "id": 72561172,
+      "name": "玉川上水旧水路緑道",
+      "lat": 35.681199,
+      "lon": 139.6875617,
+      "category": "nature",
+      "description": "玉川上水旧水路緑道 nature park",
+      "tags": {
+        "leisure": "park",
+        "name": "玉川上水旧水路緑道",
+        "name:ja_rm": "Tamagawajōsui kyū suiro endō",
+        "social_facility": "shelter",
+        "source": "survey;bing"
+      }
+    },
+    {
+      "id": 82624567,
+      "name": "二軒屋公園",
+      "lat": 35.6903632,
+      "lon": 139.6829695,
+      "category": "nature",
+      "description": "二軒屋公園 nature park",
+      "tags": {
+        "leisure": "park",
+        "name": "二軒屋公園",
+        "name:en": "Nikenya Playground",
+        "operator": "渋谷区",
+        "social_facility": "shelter"
+      }
+    },
+    {
+      "id": 94518684,
+      "name": "都立戸山公園",
+      "lat": 35.7064805,
+      "lon": 139.7060833,
+      "category": "nature",
+      "description": "都立戸山公園 nature park",
+      "tags": {
+        "leisure": "park",
+        "name": "都立戸山公園",
+        "name:en": "Toyama Park",
+        "name:ja": "都立戸山公園",
+        "name:ru": "Парк Тояма",
+        "wikidata": "Q10950260",
+        "wikimedia_commons": "Category:Toyama park",
+        "wikipedia": "ja:戸山公園"
+      }
+    },
+    {
+      "id": 98613106,
+      "name": "戸山東公園",
+      "lat": 35.703681,
+      "lon": 139.7182842,
+      "category": "nature",
+      "description": "戸山東公園 nature park",
+      "tags": {
+        "addr:block_number": "19",
+        "addr:city": "新宿区",
+        "addr:neighbourhood": "1丁目",
+        "addr:postcode": "162-0052",
+        "addr:province": "東京都",
+        "addr:quarter": "戸山",
+        "leisure": "park",
+        "name": "戸山東公園",
+        "operator": "新宿区",
+        "operator:type": "government",
+        "operator:wikidata": "Q179645",
+        "start_date": "1973-02-08",
+        "website": "http://www.city.shinjuku.lg.jp/seikatsu/midori01_002049.html"
+      }
+    },
+    {
+      "id": 103275150,
+      "name": "大久保北公園",
+      "lat": 35.7036458,
+      "lon": 139.704143,
+      "category": "nature",
+      "description": "大久保北公園 nature park",
+      "tags": {
+        "leisure": "park",
+        "name": "大久保北公園",
+        "source": "Bing"
+      }
+    },
+    {
+      "id": 103280980,
+      "name": "大久保公園",
+      "lat": 35.6974077,
+      "lon": 139.7013341,
+      "category": "nature",
+      "description": "大久保公園 nature park",
+      "tags": {
+        "alt_name": "交縁",
+        "leisure": "park",
+        "name": "大久保公園",
+        "name:en": "Okubo Park",
+        "name:es": "Parque Okubo",
+        "name:ja-Hira": "おおくぼこうえん",
+        "name:ja-Latn": "Ōkubo Kōen",
+        "name:ko": "오쿠보 공원",
+        "name:zh": "大久保公園",
+        "opening_hours": "Apr-Sep: Mo-Su 09:00-19:00; Oct-Mar: Mo-Su 09:00-18:00",
+        "phone": "+81-3-5273-3914",
+        "source": "Bing",
+        "website": "https://www.city.shinjuku.lg.jp/seikatsu/midori02_000105.html",
+        "wikidata": "Q126454791"
+      }
+    },
+    {
+      "id": 103280985,
+      "name": "西大久保公園",
+      "lat": 35.6993733,
+      "lon": 139.7024075,
+      "category": "nature",
+      "description": "西大久保公園 nature park",
+      "tags": {
+        "barrier": "fence",
+        "leisure": "park",
+        "name": "西大久保公園",
+        "name:en": "Nishi Okubo Park",
+        "source": "Bing"
+      }
+    },
+    {
+      "id": 157391347,
+      "name": "花園東公園",
+      "lat": 35.6903674,
+      "lon": 139.7138091,
+      "category": "nature",
+      "description": "花園東公園 nature park",
+      "tags": {
+        "leisure": "park",
+        "name": "花園東公園",
+        "name:en": "Hanazono Higashi Park",
+        "name:es": "Parque Hanazono Higashi",
+        "source": "Bing"
+      }
+    },
+    {
+      "id": 157400809,
+      "name": "三栄公園",
+      "lat": 35.6885851,
+      "lon": 139.7247876,
+      "category": "nature",
+      "description": "三栄公園 nature park",
+      "tags": {
+        "leisure": "park",
+        "name": "三栄公園",
+        "name:en": "Sanei Park",
+        "name:es": "Parque Sanei",
+        "name:ja": "三栄公園",
+        "name:ja_rm": "San-ei Kōen",
+        "source": "Bing"
+      }
+    },
+    {
+      "id": 157415926,
+      "name": "参宮橋公園",
+      "lat": 35.6790092,
+      "lon": 139.6927675,
+      "category": "nature",
+      "description": "参宮橋公園 nature park",
+      "tags": {
+        "leisure": "park",
+        "name": "参宮橋公園",
+        "social_facility": "shelter",
+        "source": "survey;local knowledge",
+        "wikidata": "Q42311956"
+      }
+    },
+    {
+      "id": 157416050,
+      "name": "大木戸公園",
+      "lat": 35.6881277,
+      "lon": 139.7160964,
+      "category": "nature",
+      "description": "大木戸公園 nature park",
+      "tags": {
+        "leisure": "park",
+        "name": "大木戸公園",
+        "source": "Bing"
+      }
+    },
+    {
+      "id": 158366781,
+      "name": "うまや道公園",
+      "lat": 35.6854695,
+      "lon": 139.7026085,
+      "category": "nature",
+      "description": "うまや道公園 nature park",
+      "tags": {
+        "leisure": "park",
+        "name": "うまや道公園",
+        "source": "Bing"
+      }
+    },
+    {
+      "id": 158466180,
+      "name": "柏木公園",
+      "lat": 35.6948272,
+      "lon": 139.6975796,
+      "category": "nature",
+      "description": "柏木公園 nature park",
+      "tags": {
+        "leisure": "park",
+        "name": "柏木公園",
+        "source": "Bing"
+      }
+    },
+    {
+      "id": 158475617,
+      "name": "蜀江坂公園",
+      "lat": 35.6985995,
+      "lon": 139.6908155,
+      "category": "nature",
+      "description": "蜀江坂公園 nature park",
+      "tags": {
+        "leisure": "park",
+        "name": "蜀江坂公園",
+        "name:ja-Hira": "しょっこうざかこうえん",
+        "operator": "新宿区 みどり土木部 みどり公園課",
+        "source": "Bing"
+      }
+    },
+    {
+      "id": 158519479,
+      "name": "ふれあい公園",
+      "lat": 35.7060182,
+      "lon": 139.6958037,
+      "category": "nature",
+      "description": "ふれあい公園 nature park",
+      "tags": {
+        "leisure": "park",
+        "name": "ふれあい公園",
+        "source": "Bing"
+      }
+    },
+    {
+      "id": 160441305,
+      "name": "中野の森広場公園",
+      "lat": 35.6965381,
+      "lon": 139.6820493,
+      "category": "nature",
+      "description": "中野の森広場公園 nature park",
+      "tags": {
+        "height": "120",
+        "leisure": "park",
+        "name": "中野の森広場公園"
+      }
+    },
+    {
+      "id": 171181306,
+      "name": "大東橋公園",
+      "lat": 35.7066747,
+      "lon": 139.6898331,
+      "category": "nature",
+      "description": "大東橋公園 nature park",
+      "tags": {
+        "leisure": "park",
+        "name": "大東橋公園",
+        "source": "Bing"
+      }
+    },
+    {
+      "id": 173415890,
+      "name": "富久さくら公園",
+      "lat": 35.69311,
+      "lon": 139.7137939,
+      "category": "nature",
+      "description": "富久さくら公園 nature park",
+      "tags": {
+        "leisure": "park",
+        "name": "富久さくら公園",
+        "source": "survey",
+        "wheelchair": "limited"
+      }
+    },
+    {
+      "id": 183119511,
+      "name": "角筈公園",
+      "lat": 35.6850178,
+      "lon": 139.6865708,
+      "category": "nature",
+      "description": "角筈公園 nature park",
+      "tags": {
+        "leisure": "park",
+        "name": "角筈公園",
+        "operator": "新宿区"
+      }
+    },
+    {
+      "id": 183119512,
+      "name": "新宿区こばと 児童遊園",
+      "lat": 35.686337,
+      "lon": 139.6862536,
+      "category": "nature",
+      "description": "新宿区こばと 児童遊園 nature park",
+      "tags": {
+        "leisure": "park",
+        "name": "新宿区こばと 児童遊園",
+        "operator": "新宿区",
+        "source": "Bing,2012-04; survey,2015-01"
+      }
+    },
+    {
+      "id": 209465552,
+      "name": "戸山公園",
+      "lat": 35.7039073,
+      "lon": 139.7125781,
+      "category": "nature",
+      "description": "戸山公園 nature park",
+      "tags": {
+        "leisure": "park",
+        "name": "戸山公園",
+        "name:en": "Toyama Park",
+        "name:ja-Latn": "Toyama Kōen"
+      }
+    },
+    {
+      "id": 209678410,
+      "name": "渋谷区立代々木二丁目あおい公園",
+      "lat": 35.6870155,
+      "lon": 139.6962185,
+      "category": "nature",
+      "description": "渋谷区立代々木二丁目あおい公園 nature park",
+      "tags": {
+        "addr:block_number": "13",
+        "addr:housenumber": "3",
+        "addr:neighbourhood": "2丁目",
+        "leisure": "park",
+        "name": "渋谷区立代々木二丁目あおい公園",
+        "operator": "渋谷区",
+        "operator:type": "government",
+        "operator:wikidata": "Q193638",
+        "social_facility": "shelter",
+        "source": "image,2013-03;Bing"
+      }
+    },
+    {
+      "id": 209695342,
+      "name": "代々木ポニー公園",
+      "lat": 35.6786378,
+      "lon": 139.6950366,
+      "category": "nature",
+      "description": "代々木ポニー公園 nature park",
+      "tags": {
+        "leisure": "park",
+        "name": "代々木ポニー公園",
+        "name:en": "Yoyogi Pony Park",
+        "name:es": "Parque Yoyogi Pony",
+        "name:ja": "代々木ポニー公園",
+        "wikidata": "Q42311965"
+      }
+    },
+    {
+      "id": 212507051,
+      "name": "西戸山公園",
+      "lat": 35.707747,
+      "lon": 139.6982663,
+      "category": "nature",
+      "description": "西戸山公園 nature park",
+      "tags": {
+        "leisure": "park",
+        "name": "西戸山公園"
+      }
+    },
+    {
+      "id": 2375692281,
+      "name": "温室の遺構",
+      "lat": 35.686965,
+      "lon": 139.712172,
+      "category": "history",
+      "description": "温室の遺構 history archaeological site",
+      "tags": {
+        "historic": "archaeological_site",
+        "name": "温室の遺構",
+        "name:en": "Remains of Conservatory",
+        "name:es": "Restos de conservatorio"
+      }
+    },
+    {
+      "id": 3387102831,
+      "name": "神社復興記念碑",
+      "lat": 35.6935186,
+      "lon": 139.7057308,
+      "category": "history",
+      "description": "神社復興記念碑 history memorial",
+      "tags": {
+        "historic": "memorial",
+        "name": "神社復興記念碑",
+        "name:ja": "神社復興記念碑",
+        "name:ja-Hira": "じんじゃふっこうきねんひ",
+        "name:ja-Latn": "Jinja Fukkō Kinenhi"
+      }
+    },
+    {
+      "id": 3387102840,
+      "name": "雷電稲荷神社",
+      "lat": 35.6936066,
+      "lon": 139.7055039,
+      "category": "history",
+      "description": "雷電稲荷神社 history memorial",
+      "tags": {
+        "historic": "memorial",
+        "material": "stone",
+        "memorial": "stele",
+        "name": "雷電稲荷神社",
+        "name:es": "Santuario Raiden Inari",
+        "name:ja": "雷電稲荷神社",
+        "name:ja-Hira": "らいでんいなりじんじゃ",
+        "name:ja-Latn": "Raiden Inari Jinja",
+        "religion": "shinto"
+      }
+    },
+    {
+      "id": 3419384153,
+      "name": "写真工業発祥地",
+      "lat": 35.6893254,
+      "lon": 139.6893948,
+      "category": "history",
+      "description": "写真工業発祥地 history memorial",
+      "tags": {
+        "historic": "memorial",
+        "name": "写真工業発祥地",
+        "name:en": "The Birthplace of Photography Industry"
+      }
+    },
+    {
+      "id": 3935659185,
+      "name": "く組",
+      "lat": 35.68528,
+      "lon": 139.7227407,
+      "category": "history",
+      "description": "く組 history memorial",
+      "tags": {
+        "historic": "memorial",
+        "name": "く組"
+      }
+    },
+    {
+      "id": 3935663780,
+      "name": "慰霊碑",
+      "lat": 35.685157,
+      "lon": 139.7225689,
+      "category": "history",
+      "description": "慰霊碑 history memorial",
+      "tags": {
+        "historic": "memorial",
+        "name": "慰霊碑",
+        "name:ja": "慰霊碑",
+        "name:ko": "위령비"
+      }
+    },
+    {
+      "id": 3935663785,
+      "name": "飯塚正兵衛翁",
+      "lat": 35.6851418,
+      "lon": 139.722633,
+      "category": "history",
+      "description": "飯塚正兵衛翁 history memorial",
+      "tags": {
+        "historic": "memorial",
+        "name": "飯塚正兵衛翁",
+        "name:ja": "飯塚正兵衛翁"
+      }
+    },
+    {
+      "id": 5001021962,
+      "name": "三遊亭円朝旧居跡",
+      "lat": 35.6888992,
+      "lon": 139.7131119,
+      "category": "history",
+      "description": "三遊亭円朝旧居跡 history memorial",
+      "tags": {
+        "addr:block_number": "21",
+        "addr:city": "新宿区",
+        "addr:neighbourhood": "1丁目",
+        "addr:postcode": "160-0022",
+        "addr:province": "東京都",
+        "addr:quarter": "新宿",
+        "historic": "memorial",
+        "inscription": "三遊亭圓朝舊居址",
+        "name": "三遊亭円朝旧居跡",
+        "note:ja": "新宿区　区指定史跡",
+        "source:addr": "http://www.city.shinjuku.lg.jp/kanko/file03_01_00003.html"
+      }
+    },
+    {
+      "id": 5921963185,
+      "name": "箱根山 陸軍戸山學校址",
+      "lat": 35.70376,
+      "lon": 139.7138777,
+      "category": "history",
+      "description": "箱根山 陸軍戸山學校址 history memorial",
+      "tags": {
+        "historic": "memorial",
+        "material": "stone",
+        "memorial": "stele",
+        "name": "箱根山 陸軍戸山學校址",
+        "source": "survey"
+      }
+    },
+    {
+      "id": 5921983139,
+      "name": "陸軍戸山学校軍楽隊野外演奏場跡",
+      "lat": 35.7040191,
+      "lon": 139.7140132,
+      "category": "history",
+      "description": "陸軍戸山学校軍楽隊野外演奏場跡 history memorial",
+      "tags": {
+        "historic": "memorial",
+        "memorial": "plaque",
+        "name": "陸軍戸山学校軍楽隊野外演奏場跡"
+      }
+    },
+    {
+      "id": 5921990786,
+      "name": "光松山 放生寺",
+      "lat": 35.7065289,
+      "lon": 139.7180911,
+      "category": "history",
+      "description": "光松山 放生寺 history memorial",
+      "tags": {
+        "historic": "memorial",
+        "name": "光松山 放生寺"
+      }
+    },
+    {
+      "id": 5921990787,
+      "name": "一陽来福の寺",
+      "lat": 35.7065488,
+      "lon": 139.7180827,
+      "category": "history",
+      "description": "一陽来福の寺 history memorial",
+      "tags": {
+        "historic": "memorial",
+        "memorial": "stele",
+        "name": "一陽来福の寺",
+        "source": "survey"
+      }
+    },
+    {
+      "id": 5921990789,
+      "name": "言の葉の碑",
+      "lat": 35.706544,
+      "lon": 139.7181384,
+      "category": "history",
+      "description": "言の葉の碑 history memorial",
+      "tags": {
+        "historic": "memorial",
+        "memorial": "plaque",
+        "name": "言の葉の碑",
+        "source": "survey"
+      }
+    },
+    {
+      "id": 6147302095,
+      "name": "西條八十記念碑",
+      "lat": 35.692116,
+      "lon": 139.7016018,
+      "category": "history",
+      "description": "西條八十記念碑 history memorial",
+      "tags": {
+        "historic": "memorial",
+        "inscription": "武蔵野なりしこの里の\n昔のすがた偲ばせて\n小畦の花のむれと咲く\nビルのネオンの赤き花\n西条　八十",
+        "level": "0",
+        "memorial": "sculpture",
+        "name": "西條八十記念碑",
+        "operator": "東京新宿ライオンズクラブ",
+        "start_date": "1966-06"
+      }
+    },
+    {
+      "id": 6266972523,
+      "name": "かえる石",
+      "lat": 35.6978373,
+      "lon": 139.705229,
+      "category": "history",
+      "description": "かえる石 history memorial",
+      "tags": {
+        "historic": "memorial",
+        "memorial": "stone",
+        "name": "かえる石"
+      }
+    },
+    {
+      "id": 6266972525,
+      "name": "恵比寿神",
+      "lat": 35.6978049,
+      "lon": 139.7052085,
+      "category": "history",
+      "description": "恵比寿神 history memorial",
+      "tags": {
+        "historic": "memorial",
+        "name": "恵比寿神",
+        "name:en": "Ebisu"
+      }
+    },
+    {
+      "id": 6266972541,
+      "name": "富士建設發企",
+      "lat": 35.6978409,
+      "lon": 139.70543,
+      "category": "history",
+      "description": "富士建設發企 history memorial",
+      "tags": {
+        "historic": "memorial",
+        "name": "富士建設發企"
+      }
+    },
+    {
+      "id": 6266972543,
+      "name": "富士建設記念",
+      "lat": 35.6978431,
+      "lon": 139.7054486,
+      "category": "history",
+      "description": "富士建設記念 history memorial",
+      "tags": {
+        "historic": "memorial",
+        "name": "富士建設記念"
+      }
+    },
+    {
+      "id": 6266973672,
+      "name": "島崎藤村旧居跡",
+      "lat": 35.697947,
+      "lon": 139.7067162,
+      "category": "history",
+      "description": "島崎藤村旧居跡 history memorial",
+      "tags": {
+        "historic": "memorial",
+        "memorial": "plaque",
+        "name": "島崎藤村旧居跡"
+      }
+    },
+    {
+      "id": 6364816727,
+      "name": "憲法擁護・非核都市の宣言",
+      "lat": 35.7035245,
+      "lon": 139.686142,
+      "category": "history",
+      "description": "憲法擁護・非核都市の宣言 history memorial",
+      "tags": {
+        "historic": "memorial",
+        "name": "憲法擁護・非核都市の宣言"
+      }
+    },
+    {
+      "id": 6369328394,
+      "name": "小滝橋にまつわる昔話",
+      "lat": 35.7094579,
+      "lon": 139.693782,
+      "category": "history",
+      "description": "小滝橋にまつわる昔話 history memorial",
+      "tags": {
+        "historic": "memorial",
+        "name": "小滝橋にまつわる昔話"
+      }
+    },
+    {
+      "id": 6438955840,
+      "name": "蜀江坂",
+      "lat": 35.6984251,
+      "lon": 139.691036,
+      "category": "history",
+      "description": "蜀江坂 history memorial",
+      "tags": {
+        "historic": "memorial",
+        "name": "蜀江坂"
+      }
+    },
+    {
+      "id": 6438955848,
+      "name": "日本の道百選　新宿副都心街路",
+      "lat": 35.6908478,
+      "lon": 139.6936874,
+      "category": "history",
+      "description": "日本の道百選　新宿副都心街路 history memorial",
+      "tags": {
+        "historic": "memorial",
+        "name": "日本の道百選　新宿副都心街路"
+      }
+    },
+    {
+      "id": 7125375239,
+      "name": "明治神宮水泳場跡",
+      "lat": 35.6796636,
+      "lon": 139.7160924,
+      "category": "history",
+      "description": "明治神宮水泳場跡 history memorial",
+      "tags": {
+        "historic": "memorial",
+        "memorial": "stele",
+        "name": "明治神宮水泳場跡"
+      }
+    },
+    {
+      "id": 8462979263,
+      "name": "水掛け地蔵と大震火災死亡群霊塔",
+      "lat": 35.706602,
+      "lon": 139.717573,
+      "category": "history",
+      "description": "水掛け地蔵と大震火災死亡群霊塔 history memorial",
+      "tags": {
+        "addr:block_number": "1",
+        "addr:city": "新宿区",
+        "addr:housenumber": "14",
+        "addr:neighbourhood": "西早稲田二丁目",
+        "addr:province": "東京都",
+        "description:url": "https://tankaru.github.io/Japan-GSI-Import/data.html#id13104-002",
+        "hazard:name": "関東大震災(1923年9月1日)",
+        "hazard:type": "earthquake",
+        "historic": "memorial",
+        "memorial": "hazard_memorial",
+        "name": "水掛け地蔵と大震火災死亡群霊塔",
+        "start_date": "1924"
+      }
+    },
+    {
+      "id": 8462979264,
+      "name": "大震災紀念碑",
+      "lat": 35.689688,
+      "lon": 139.709123,
+      "category": "history",
+      "description": "大震災紀念碑 history memorial",
+      "tags": {
+        "addr:block_number": "9",
+        "addr:city": "新宿区",
+        "addr:housenumber": "2",
+        "addr:neighbourhood": "新宿二丁目",
+        "addr:province": "東京都",
+        "description:url": "https://tankaru.github.io/Japan-GSI-Import/data.html#id13104-001",
+        "hazard:name": "関東大震災(1923年9月1日)",
+        "hazard:type": "earthquake",
+        "historic": "memorial",
+        "memorial": "hazard_memorial",
+        "name": "大震災紀念碑",
+        "start_date": "1929"
+      }
+    },
+    {
+      "id": 9081235663,
+      "name": "新宿元標",
+      "lat": 35.6907261,
+      "lon": 139.7049363,
+      "category": "history",
+      "description": "新宿元標 history memorial",
+      "tags": {
+        "historic": "memorial",
+        "inscription": "ここが追分",
+        "memorial": "stele",
+        "name": "新宿元標",
+        "source": "survey"
+      }
+    },
+    {
+      "id": 9081235664,
+      "name": "琴古流尺八顕彰碑",
+      "lat": 35.6869385,
+      "lon": 139.7178803,
+      "category": "history",
+      "description": "琴古流尺八顕彰碑 history memorial",
+      "tags": {
+        "historic": "memorial",
+        "memorial": "stele",
+        "name": "琴古流尺八顕彰碑"
+      }
+    },
+    {
+      "id": 9081235665,
+      "name": "江戸勧進角力旧址",
+      "lat": 35.6869663,
+      "lon": 139.7178803,
+      "category": "history",
+      "description": "江戸勧進角力旧址 history memorial",
+      "tags": {
+        "historic": "memorial",
+        "memorial": "stele",
+        "name": "江戸勧進角力旧址"
+      }
+    },
+    {
+      "id": 9081235667,
+      "name": "子供合埋碑",
+      "lat": 35.6914425,
+      "lon": 139.7093756,
+      "category": "history",
+      "description": "子供合埋碑 history memorial",
+      "tags": {
+        "heritage": "7",
+        "historic": "memorial",
+        "material": "stone",
+        "memorial": "stele",
+        "name": "子供合埋碑",
+        "source": "survey",
+        "start_date": "1860"
+      }
+    },
+    {
+      "id": 9081235676,
+      "name": "内藤新宿開設三百年記念碑",
+      "lat": 35.6873655,
+      "lon": 139.7140333,
+      "category": "history",
+      "description": "内藤新宿開設三百年記念碑 history memorial",
+      "tags": {
+        "historic": "memorial",
+        "memorial": "plaque",
+        "name": "内藤新宿開設三百年記念碑",
+        "start_date": "1998-11"
+      }
+    },
+    {
+      "id": 9081235677,
+      "name": "四谷大木戸跡碑",
+      "lat": 35.687567,
+      "lon": 139.7149828,
+      "category": "history",
+      "description": "四谷大木戸跡碑 history memorial",
+      "tags": {
+        "historic": "memorial",
+        "memorial": "stele",
+        "name": "四谷大木戸跡碑",
+        "start_date": "1959-11"
+      }
+    },
+    {
+      "id": 9081235678,
+      "name": "水道碑記",
+      "lat": 35.6875556,
+      "lon": 139.7150472,
+      "category": "history",
+      "description": "水道碑記 history memorial",
+      "tags": {
+        "artist_name": "徳川家達; 肝付兼武; 金井之恭; 井亀泉",
+        "height": "4.6",
+        "heritage": "4",
+        "heritage:website": "https://bunkazai.metro.tokyo.lg.jp/jp/search_detail.html?page=1&id=369",
+        "historic": "memorial",
+        "memorial": "stele",
+        "name": "水道碑記",
+        "start_date": "1895",
+        "width": "2.3"
+      }
+    },
+    {
+      "id": 9388262142,
+      "name": "三字橋",
+      "lat": 35.6823156,
+      "lon": 139.6889372,
+      "category": "history",
+      "description": "三字橋 history memorial",
+      "tags": {
+        "historic": "memorial",
+        "name": "三字橋"
+      }
+    },
+    {
+      "id": 9388262143,
+      "name": "天神橋跡",
+      "lat": 35.6851587,
+      "lon": 139.6931771,
+      "category": "history",
+      "description": "天神橋跡 history memorial",
+      "tags": {
+        "historic": "memorial",
+        "name": "天神橋跡"
+      }
+    },
+    {
+      "id": 9388262145,
+      "name": "勿来橋跡",
+      "lat": 35.6866504,
+      "lon": 139.6947586,
+      "category": "history",
+      "description": "勿来橋跡 history memorial",
+      "tags": {
+        "historic": "memorial",
+        "name": "勿来橋跡"
+      }
+    },
+    {
+      "id": 10613222796,
+      "name": "葵橋跡",
+      "lat": 35.6881922,
+      "lon": 139.6989954,
+      "category": "history",
+      "description": "葵橋跡 history memorial",
+      "tags": {
+        "historic": "memorial",
+        "memorial": "obelisk",
+        "name": "葵橋跡",
+        "name:ja": "葵橋跡",
+        "source": "survey;streetlevel imagery"
+      }
+    },
+    {
+      "id": 11126684421,
+      "name": "史跡中野長者遺跡",
+      "lat": 35.6937669,
+      "lon": 139.6816104,
+      "category": "history",
+      "description": "史跡中野長者遺跡 history memorial",
+      "tags": {
+        "historic": "memorial",
+        "name": "史跡中野長者遺跡",
+        "name:ja": "史跡中野長者遺跡"
+      }
+    },
+    {
+      "id": 1420766948,
+      "name": "佐藤美術館",
+      "lat": 35.681682,
+      "lon": 139.714976,
+      "category": "culture",
+      "description": "佐藤美術館 culture museum",
+      "tags": {
+        "addr:block_number": "31",
+        "addr:city": "新宿区",
+        "addr:housenumber": "10",
+        "addr:neighbourhood": "大京町",
+        "addr:province": "東京都",
+        "contact:facebook": "https://www.facebook.com/satomuseum",
+        "contact:instagram": "https://www.instagram.com/satomuseum",
+        "contact:twitter": "https://x.com/MuseumSato",
+        "museum": "art",
+        "name": "佐藤美術館",
+        "name:en": "Sato Museum of Art",
+        "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
+        "note:ja": "国土数値情報（公共施設データ）平成19年 国土交通省",
+        "opening_hours": "Tu-Th, Sa-Su 10:00-17:00; Fr 10:00-19:00",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
+        "tourism": "museum",
+        "website": "https://sato-museum.la.coocan.jp/",
+        "wikidata": "Q11384365",
+        "wikimedia_commons": "Category:Sato Museum of Art",
+        "wikipedia": "ja:佐藤美術館"
+      }
+    },
+    {
+      "id": 1420767888,
+      "name": "刀剣博物館",
+      "lat": 35.6814885,
+      "lon": 139.6906746,
+      "category": "culture",
+      "description": "刀剣博物館 culture museum",
+      "tags": {
+        "addr:block_number": "25",
+        "addr:city": "渋谷区",
+        "addr:housenumber": "10",
+        "addr:neighbourhood": "代々木四丁目",
+        "addr:province": "東京都",
+        "name": "刀剣博物館",
+        "name:en": "The Japanese Sword Museum",
+        "name:it": "Japanese Sword",
+        "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
+        "note:ja": "国土数値情報（公共施設データ）平成19年 国土交通省",
+        "opening_hours": "Tu-Su 10:00-16:30",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
+        "tourism": "museum",
+        "website": "https://www.touken.or.jp/"
+      }
+    },
+    {
+      "id": 1420779754,
+      "name": "平和祈念展示資料館",
+      "lat": 35.6912618,
+      "lon": 139.6925118,
+      "category": "culture",
+      "description": "平和祈念展示資料館 culture museum",
+      "tags": {
+        "name": "平和祈念展示資料館",
+        "name:en": "Memorial Museum for Soldiers, Detainees in Siberia, and Postwar Repatriates",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
+        "tourism": "museum",
+        "wikidata": "Q56025796",
+        "wikimedia_commons": "Category:Memorial Museum for Soldiers, Detainees in Siberia, and Postwar Repatriates",
+        "wikipedia": "ja:平和祈念展示資料館"
+      }
+    },
+    {
+      "id": 1420780738,
+      "name": "文化学園服飾博物館",
+      "lat": 35.686322,
+      "lon": 139.69501,
+      "category": "culture",
+      "description": "文化学園服飾博物館 culture museum",
+      "tags": {
+        "museum": "fashion",
+        "name": "文化学園服飾博物館",
+        "name:en": "Bunka Gakuen Costume Museum",
+        "opening_hours": "Tu-Su 10:00-16:30",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
+        "tourism": "museum",
+        "website": "https://museum.bunka.ac.jp/"
+      }
+    },
+    {
+      "id": 1420780833,
+      "name": "新宿美術館",
+      "lat": 35.6911,
+      "lon": 139.710742,
+      "category": "culture",
+      "description": "新宿美術館 culture museum",
+      "tags": {
+        "addr:block_number": "34",
+        "addr:city": "新宿区",
+        "addr:housenumber": "3",
+        "addr:neighbourhood": "新宿一丁目",
+        "addr:province": "東京都",
+        "name": "新宿美術館",
+        "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
+        "note:ja": "国土数値情報（公共施設データ）平成19年 国土交通省",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
+        "tourism": "museum"
+      }
+    },
+    {
+      "id": 1420782618,
+      "name": "東京オペラシティアートギャラリー",
+      "lat": 35.683003,
+      "lon": 139.686756,
+      "category": "culture",
+      "description": "東京オペラシティアートギャラリー culture museum",
+      "tags": {
+        "addr:block_number": "20",
+        "addr:city": "新宿区",
+        "addr:housenumber": "2",
+        "addr:neighbourhood": "西新宿三丁目",
+        "addr:province": "東京都",
+        "name": "東京オペラシティアートギャラリー",
+        "name:en": "Tokyo Opera City Art Gallery",
+        "opening_hours": "Su, Tu-Th 11:00-19:00; Fr-Sa 11:00-20:00",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
+        "tourism": "museum",
+        "wikidata": "Q11524090",
+        "wikipedia": "ja:東京オペラシティアートギャラリー"
+      }
+    },
+    {
+      "id": 1420783718,
+      "name": "東京女子医科大学史料室・吉岡彌生記念室",
+      "lat": 35.697188,
+      "lon": 139.72029,
+      "category": "culture",
+      "description": "東京女子医科大学史料室・吉岡彌生記念室 culture museum",
+      "tags": {
+        "addr:block_number": "8",
+        "addr:city": "新宿区",
+        "addr:housenumber": "1",
+        "addr:neighbourhood": "河田町",
+        "addr:province": "東京都",
+        "name": "東京女子医科大学史料室・吉岡彌生記念室",
+        "name:en": "Tokyo Women's Medical University Archives and Yayoi Yoshioka Memorial Room",
+        "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
+        "note:ja": "国土数値情報（公共施設データ）平成19年 国土交通省",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
+        "tourism": "museum",
+        "website": "https://museums.io/museums/74175",
+        "wheelchair": "yes",
+        "wikidata": "Q104698247"
+      }
+    },
+    {
+      "id": 1420784678,
+      "name": "東京消防庁消防防災資料センター消防博物館",
+      "lat": 35.6881372,
+      "lon": 139.7199391,
+      "category": "culture",
+      "description": "東京消防庁消防防災資料センター消防博物館 culture museum",
+      "tags": {
+        "addr:postcode": "160-0004",
+        "fax": "+81-3-33539925",
+        "name": "東京消防庁消防防災資料センター消防博物館",
+        "name:en": "Fire Museum",
+        "name:ja": "消防博物館",
+        "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
+        "note:ja": "国土数値情報（公共施設データ）平成19年 国土交通省",
+        "official_name:en": "Tokyo Fire Department Fire and Disaster Prevention Resource Center",
+        "opening_hours": "Tu-Su 09:30-17:00; Mo off",
+        "phone": "+81-3-33539119",
+        "source": "KSJ2; (URL)",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
+        "tourism": "museum",
+        "website": "https://www.tfd.metro.tokyo.lg.jp/taiken/hkkan/index.html",
+        "wikidata": "Q11559505",
+        "wikimedia_commons": "Category:Tokyo Fire Museum",
+        "wikipedia": "ja:消防博物館"
+      }
+    },
+    {
+      "id": 1420787066,
+      "name": "民音音楽博物館",
+      "lat": 35.6823264,
+      "lon": 139.7193832,
+      "category": "culture",
+      "description": "民音音楽博物館 culture museum",
+      "tags": {
+        "addr:city": "新宿区",
+        "addr:housenumber": "8",
+        "addr:postcode": "160-8588",
+        "addr:province": "東京都",
+        "addr:quarter": "信濃町",
+        "museum": "musical instruments",
+        "name": "民音音楽博物館",
+        "name:en": "Min-On Music Museum",
+        "name:ja": "民音音楽博物館",
+        "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
+        "note:ja": "国土数値情報（公共施設データ）平成19年 国土交通省",
+        "opening_hours": "Tu-Sa 11:00-16:00; Su 10:00-17:00",
+        "operator": "民主音楽協会",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
+        "tourism": "museum",
+        "website": "https://museum.min-on.or.jp/",
+        "wikidata": "Q65272034"
+      }
+    },
+    {
+      "id": 1420799298,
+      "name": "野口英世記念会館展示室",
+      "lat": 35.683753,
+      "lon": 139.716289,
+      "category": "culture",
+      "description": "野口英世記念会館展示室 culture museum",
+      "tags": {
+        "name": "野口英世記念会館展示室",
+        "name:en": "Hideyo Noguchi Memorial Hall Exhibition Room",
+        "name:es": "Salón conmemorativo Hideyo Noguchi",
+        "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
+        "note:ja": "国土数値情報（公共施設データ）平成19年　国土交通省",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
+        "tourism": "museum"
+      }
+    },
+    {
+      "id": 1420799355,
+      "name": "釣り文化資料館",
+      "lat": 35.690868,
+      "lon": 139.71952,
+      "category": "culture",
+      "description": "釣り文化資料館 culture museum",
+      "tags": {
+        "museum": "fishing",
+        "name": "釣り文化資料館",
+        "name:en": "Fishing Culture Museum",
+        "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
+        "note:ja": "国土数値情報（公共施設データ）平成19年 国土交通省",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
+        "tourism": "museum",
+        "website": "https://tsurinews.co.jp/shiryokan",
+        "wikidata": "Q104698254"
+      }
+    },
+    {
+      "id": 1420800487,
+      "name": "高麗博物館",
+      "lat": 35.6984501,
+      "lon": 139.7036417,
+      "category": "culture",
+      "description": "高麗博物館 culture museum",
+      "tags": {
+        "name": "高麗博物館",
+        "name:en": "Korea Museum",
+        "note": "National-Land Numerical Information (Public Facility) 2006, MLIT Japan",
+        "note:ja": "国土数値情報（公共施設データ）平成19年　国土交通省",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html",
+        "tourism": "museum",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "id": 2704049814,
+      "name": "SHOWBOX",
+      "lat": 35.6983544,
+      "lon": 139.7023609,
+      "category": "culture",
+      "description": "SHOWBOX culture theatre",
+      "tags": {
+        "amenity": "theatre",
+        "name": "SHOWBOX",
+        "source": "image,2014-03;Bing",
+        "wheelchair": "limited"
+      }
+    },
+    {
+      "id": 3209412918,
+      "name": "東横INN",
+      "lat": 35.697291,
+      "lon": 139.7043625,
+      "category": "culture",
+      "description": "東横INN culture hotel theatre",
+      "tags": {
+        "amenity": "theatre",
+        "branch": "新宿歌舞伎町",
+        "name": "東横INN",
+        "name:en": "Toyoko Inn Shinjuku Kabukicho",
+        "name:ja": "東横INN新宿歌舞伎町",
+        "name:zh": "歌舞伎町",
+        "short_name": "東橫Inn",
+        "tourism": "hotel",
+        "wheelchair": "yes",
+        "wikidata": "Q665216",
+        "wikipedia": "en:Kabukichō"
+      }
+    },
+    {
+      "id": 3243954081,
+      "name": "新宿眼科画廊",
+      "lat": 35.6947258,
+      "lon": 139.7063056,
+      "category": "culture",
+      "description": "新宿眼科画廊 culture gallery",
+      "tags": {
+        "name": "新宿眼科画廊",
+        "shop": "art",
+        "toilets:wheelchair": "no",
+        "tourism": "gallery",
+        "wheelchair": "no",
+        "wikidata": "Q11501861",
+        "wikipedia": "ja:新宿眼科画廊"
+      }
+    },
+    {
+      "id": 3243965676,
+      "name": "The Artcomplex Center of Tokyo",
+      "lat": 35.6843446,
+      "lon": 139.7178873,
+      "category": "culture",
+      "description": "The Artcomplex Center of Tokyo culture gallery",
+      "tags": {
+        "addr:block_number": "9",
+        "addr:city": "新宿区",
+        "addr:housenumber": "2F",
+        "addr:neighbourhood": "12",
+        "addr:province": "東京都",
+        "addr:quarter": "大京町",
+        "check_date": "2023-07-22",
+        "name": "The Artcomplex Center of Tokyo",
+        "name:ja": "アートコンプレックスセンター",
+        "shop": "art",
+        "tourism": "gallery",
+        "website": "https://www.gallerycomplex.com/"
+      }
+    },
+    {
+      "id": 3349166102,
+      "name": "四谷区民ホール",
+      "lat": 35.6875161,
+      "lon": 139.7143916,
+      "category": "culture",
+      "description": "四谷区民ホール culture theatre",
+      "tags": {
+        "amenity": "theatre",
+        "name": "四谷区民ホール"
+      }
+    },
+    {
+      "id": 4851144557,
+      "name": "紀ノ国屋ホール",
+      "lat": 35.6923918,
+      "lon": 139.703117,
+      "category": "culture",
+      "description": "紀ノ国屋ホール culture theatre",
+      "tags": {
+        "amenity": "theatre",
+        "name": "紀ノ国屋ホール",
+        "name:en": "Kinokuniya Hall",
+        "toilets:wheelchair": "no",
+        "wheelchair": "yes",
+        "wikidata": "Q11604957",
+        "wikipedia": "ja:紀伊國屋ホール"
+      }
+    },
+    {
+      "id": 4885731749,
+      "name": "新宿BLAZE",
+      "lat": 35.6954132,
+      "lon": 139.701059,
+      "category": "culture",
+      "description": "新宿BLAZE culture theatre",
+      "tags": {
+        "amenity": "theatre",
+        "name": "新宿BLAZE",
+        "name:en": "Shinjuku BLAZE",
+        "website": "https://shinjuku-blaze.com/",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "id": 5260661557,
+      "name": "全労災ホール/スペース・ゼロ",
+      "lat": 35.687017,
+      "lon": 139.6973312,
+      "category": "culture",
+      "description": "全労災ホール/スペース・ゼロ culture theatre",
+      "tags": {
+        "addr:postcode": "151-0053",
+        "amenity": "theatre",
+        "name": "全労災ホール/スペース・ゼロ",
+        "name:en": "Zenrosai Hall",
+        "name:ko": "젠로사이 홀",
+        "name:zh": "全劳济大厅",
+        "operator": "全国労働者共済生活協同組合連合会",
+        "source": "survey",
+        "theatre:genre": "variety",
+        "website": "https://www.spacezero.co.jp/",
+        "wheelchair": "yes",
+        "wikidata": "Q11313008"
+      }
+    },
+    {
+      "id": 5611856723,
+      "name": "国立能楽堂",
+      "lat": 35.680345,
+      "lon": 139.7081066,
+      "category": "culture",
+      "description": "国立能楽堂 culture theatre",
+      "tags": {
+        "addr:block_number": "18",
+        "addr:city": "渋谷区",
+        "addr:housenumber": "1",
+        "addr:neighbourhood": "千駄ヶ谷四丁目",
+        "addr:postcode": "151-0051",
+        "addr:province": "東京都",
+        "amenity": "theatre",
+        "name": "国立能楽堂",
+        "name:en": "National Noh Theatre",
+        "name:es": "Teatro Nacional de Noh",
+        "theatre:genre": "noh",
+        "website": "https://www.ntj.jac.go.jp/en/theatre/noh/",
+        "wikidata": "Q1138457",
+        "wikimedia_commons": "Category:National Nō Theatre",
+        "wikipedia": "ja:国立能楽堂"
+      }
+    },
+    {
+      "id": 5908094342,
+      "name": "レパートリーシアター KAZE",
+      "lat": 35.7016705,
+      "lon": 139.6863514,
+      "category": "culture",
+      "description": "レパートリーシアター KAZE culture theatre",
+      "tags": {
+        "amenity": "theatre",
+        "name": "レパートリーシアター KAZE",
+        "name:en": "Tokyo Theater Company KAZE",
+        "name:ja": "レパートリーシアター KAZE",
+        "phone": "03-3363-3261",
+        "theatre:genre": "drama",
+        "website": "https://www.kaze-net.org/"
+      }
+    },
+    {
+      "id": 5928954186,
+      "name": "新宿永谷ホール",
+      "lat": 35.6966883,
+      "lon": 139.7004449,
+      "category": "culture",
+      "description": "新宿永谷ホール culture theatre",
+      "tags": {
+        "amenity": "theatre",
+        "name": "新宿永谷ホール",
+        "name:en": "Shinjuku Nagaya Hall",
+        "name:es": "Salón Shinjuku Nagaya"
+      }
+    },
+    {
+      "id": 6018270785,
+      "name": "東京グローブ座",
+      "lat": 35.7047651,
+      "lon": 139.7003636,
+      "category": "culture",
+      "description": "東京グローブ座 culture theatre",
+      "tags": {
+        "alt_name:en": "Panasonic Globe Theatre",
+        "amenity": "theatre",
+        "name": "東京グローブ座",
+        "name:en": "Tokyo Globe Theater",
+        "theatre:genre": "drama",
+        "wikidata": "Q4474025",
+        "wikimedia_commons": "Category:The Globe Tokyo",
+        "wikipedia": "en:Panasonic Globe Theatre"
+      }
+    },
+    {
+      "id": 6490388463,
+      "name": "つまみかんざし博物館",
+      "lat": 35.7102725,
+      "lon": 139.7020407,
+      "category": "culture",
+      "description": "つまみかんざし博物館 culture museum",
+      "tags": {
+        "level": "3",
+        "name": "つまみかんざし博物館",
+        "name:en": "Tsumami Kanzashi Museum",
+        "name:ja-Latn": "Tsumami Kanzashi Hakubutsukan",
+        "note": "開館日:水土曜のみ;時間:10時～17時",
+        "tourism": "museum",
+        "website": "https://kanzashi.org"
+      }
+    },
+    {
+      "id": 6589553987,
+      "name": "サムライミュージアム",
+      "lat": 35.6955176,
+      "lon": 139.7035629,
+      "category": "culture",
+      "description": "サムライミュージアム culture museum",
+      "tags": {
+        "contact:facebook": "https://www.facebook.com/samuraimuseum.jp/",
+        "contact:instagram": "https://www.instagram.com/samuraimuseumtokyo/",
+        "contact:twitter": "https://x.com/MuseumSamurai",
+        "name": "サムライミュージアム",
+        "name:en": "Samurai Museum",
+        "name:ja-Hira": "サムライミュージアム",
+        "tourism": "museum",
+        "website": "https://samuraimuseum.jp",
+        "wikidata": "Q116917907",
+        "wikimedia_commons": "Category:Samurai Museum"
+      }
+    },
+    {
+      "id": 7944016543,
+      "name": "新宿区立角筈区民ホール",
+      "lat": 35.686263,
+      "lon": 139.6891303,
+      "category": "culture",
+      "description": "新宿区立角筈区民ホール culture theatre",
+      "tags": {
+        "amenity": "theatre",
+        "name": "新宿区立角筈区民ホール",
+        "name:en": "Tsunohazu Community Hall",
+        "note": "closed year 2026 and 2027"
+      }
+    },
+    {
+      "id": 10677308495,
+      "name": "Zirco",
+      "lat": 35.6937466,
+      "lon": 139.7038902,
+      "category": "culture",
+      "description": "Zirco culture theatre",
+      "tags": {
+        "addr:postcode": "160-0021",
+        "amenity": "theatre",
+        "name": "Zirco",
+        "website": "https://zirco-tokyo.jp/"
+      }
+    },
+    {
+      "id": 10933634354,
+      "name": "早稲田スポーツミュージアム",
+      "lat": 35.7061879,
+      "lon": 139.7169783,
+      "category": "culture",
+      "description": "早稲田スポーツミュージアム culture museum",
+      "tags": {
+        "level": "2",
+        "name": "早稲田スポーツミュージアム",
+        "name:en": "Waseda Sports Museum",
+        "opening_hours": "10:00-17:00",
+        "start_date": "2019-03-20",
+        "tourism": "museum",
+        "website": "https://www.waseda.jp/culture/spomu/"
+      }
+    },
+    {
+      "id": 11045809946,
+      "name": "Zepp Shinjuku (Tokyo)",
+      "lat": 35.695623,
+      "lon": 139.7007409,
+      "category": "culture",
+      "description": "Zepp Shinjuku (Tokyo) culture theatre",
+      "tags": {
+        "amenity": "theatre",
+        "name": "Zepp Shinjuku (Tokyo)"
+      }
+    },
+    {
+      "id": 11061280300,
+      "name": "シアターサンモール",
+      "lat": 35.6897684,
+      "lon": 139.7129075,
+      "category": "culture",
+      "description": "シアターサンモール culture theatre",
+      "tags": {
+        "amenity": "theatre",
+        "name": "シアターサンモール",
+        "name:en": "Theatre Sunmall",
+        "website": "http://theatersunmall.server-shared.com/",
+        "wikidata": "Q11306883",
+        "wikipedia": "ja:シアターサンモール"
+      }
+    },
+    {
+      "id": 11279563219,
+      "name": "THEATER MILANO-Za",
+      "lat": 35.6957894,
+      "lon": 139.7005646,
+      "category": "culture",
+      "description": "THEATER MILANO-Za culture theatre",
+      "tags": {
+        "amenity": "theatre",
+        "name": "THEATER MILANO-Za",
+        "source": "survey"
+      }
+    },
+    {
+      "id": 11330579425,
+      "name": "Hellogallerytokyo",
+      "lat": 35.6829541,
+      "lon": 139.6909055,
+      "category": "culture",
+      "description": "Hellogallerytokyo culture gallery",
+      "tags": {
+        "addr:block_number": "28-7",
+        "addr:city": "渋谷区",
+        "addr:full": "4 Chome-28-7 Yoyogi, Shibuya City, Tokyo",
+        "addr:housenumber": "28-7",
+        "addr:neighbourhood": "代々木4",
+        "addr:postcode": "151-0053",
+        "addr:province": "東京都",
+        "name": "Hellogallerytokyo",
+        "tourism": "gallery"
+      }
+    },
+    {
+      "id": 11558309337,
+      "name": "ギラギラガールズ",
+      "lat": 35.6943529,
+      "lon": 139.7028426,
+      "category": "culture",
+      "description": "ギラギラガールズ culture theatre",
+      "tags": {
+        "addr:postcode": "160-0021",
+        "amenity": "theatre",
+        "contact:instagram": "giragiragirls",
+        "contact:line": "https://line.me/R/ti/p/@083glrvy",
+        "contact:threads": "https://threads.net/@giragiragirls",
+        "contact:tiktok": "https://tiktok.com/@giragiragirls2022",
+        "contact:youtube": "https://youtube.com/channel/UCfd2iqJ_NbSRjVnriY--XqQ",
+        "name": "ギラギラガールズ",
+        "name:en": "Gira Gira Girls",
+        "name:ja": "ギラギラガールズ",
+        "theatre:genre": "cabaret",
+        "theatre:type": "stage",
+        "website": "https://giragiragirls.com"
+      }
+    },
+    {
+      "id": 11558309348,
+      "name": "歌舞伎町劇場",
+      "lat": 35.6939599,
+      "lon": 139.7029231,
+      "category": "culture",
+      "description": "歌舞伎町劇場 culture theatre",
+      "tags": {
+        "amenity": "theatre",
+        "name": "歌舞伎町劇場",
+        "name:en": "Kabukicho Theatre",
+        "website": "https://kabugeki.com/"
+      }
+    },
+    {
+      "id": 11978227598,
+      "name": "ATELIER Fanfare",
+      "lat": 35.7007616,
+      "lon": 139.7076878,
+      "category": "culture",
+      "description": "ATELIER Fanfare culture theatre",
+      "tags": {
+        "amenity": "theatre",
+        "level": "-1",
+        "name": "ATELIER Fanfare",
+        "name:ja": "アトリエファンファーレ"
+      }
+    },
+    {
+      "id": 12629679956,
+      "name": "Samurai Restaurant Time",
+      "lat": 35.6943383,
+      "lon": 139.7028368,
+      "category": "culture",
+      "description": "Samurai Restaurant Time culture 伝統的な日本文化とハイエネルギーのパフォーマンスを組み合わせた東京の活気あるディナーショーです。食事は二の次ですが、熱心なパフォーマーと賑やかな雰囲気が必見の体験を生み出します。 japanese theatre",
+      "tags": {
+        "amenity": "theatre",
+        "bar": "yes",
+        "contact:email": "samuraijin@samurai-restaurant.tokyo",
+        "contact:instagram": "samurairestaurant_official",
+        "cuisine": "japanese",
+        "description": "伝統的な日本文化とハイエネルギーのパフォーマンスを組み合わせた東京の活気あるディナーショーです。食事は二の次ですが、熱心なパフォーマーと賑やかな雰囲気が必見の体験を生み出します。",
+        "description:en": "A vibrant dinner show in Tokyo that combines traditional Japanese culture with high-energy performances. While the food is secondary, the enthusiastic performers and lively atmosphere make it a must-see experience.",
+        "description:es": "Un vibrante espectáculo de cena en Tokio que combina la cultura japonesa tradicional con actuaciones de alta energía. Aunque la comida es secundaria, los entusiastas artistas y la animada atmósfera lo convierten en una experiencia imperdible.",
+        "description:ja": "伝統的な日本文化とハイエネルギーのパフォーマンスを組み合わせた東京の活気あるディナーショーです。食事は二の次ですが、熱心なパフォーマーと賑やかな雰囲気が必見の体験を生み出します。",
+        "description:ko": "전통 일본 문화와 고에너지 공연을 결합한 도쿄의 활기찬 저녁 쇼입니다. 음식은 부차적이지만, 열정적인 공연자들과 생동감 넘치는 분위기가 꼭 봐야 할 경험을 만듭니다.",
+        "description:zh": "东京一场充满活力的晚餐秀，将传统日本文化与高能表演相结合。虽然食物不是重点，但热情的表演者和生动的氛围使其成为必看的体验。",
+        "food": "yes",
+        "name": "Samurai Restaurant Time",
+        "opening_hours": "Mo-Su 10:50-12:30,14:00-15:40,16:30-18:10",
+        "phone": "+81-362-056-100",
+        "reservation": "yes",
+        "website": "https://samurai-restaurant.tokyo/top",
+        "website:menu": "https://samurai-restaurant.tokyo/top/Food/Food.php",
+        "website:reservation": "https://samurai-restaurant.tokyo/reservation/index.php"
+      }
+    },
+    {
+      "id": 13569363447,
+      "name": "アクティブ・ミュージアム「女たちの戦争と平和資料館」（wam）",
+      "lat": 35.7079151,
+      "lon": 139.7162499,
+      "category": "culture",
+      "description": "アクティブ・ミュージアム「女たちの戦争と平和資料館」（wam） culture museum",
+      "tags": {
+        "addr:block_number": "3",
+        "addr:city": "新宿区",
+        "addr:housenumber": "18 AVACOビル2F",
+        "addr:neighbourhood": "2丁目",
+        "addr:postcode": "169-0051",
+        "addr:province": "東京都",
+        "addr:quarter": "西早稲田",
+        "museum": "history",
+        "name": "アクティブ・ミュージアム「女たちの戦争と平和資料館」（wam）",
+        "name:en": "Women's Active Museum on War and Peace",
+        "short_name:en": "WAM",
+        "tourism": "museum",
+        "wikidata": "Q11446206"
+      }
+    },
+    {
+      "id": 13760977682,
+      "name": "新宿歌舞伎町能舞台",
+      "lat": 35.6952312,
+      "lon": 139.705524,
+      "category": "culture",
+      "description": "新宿歌舞伎町能舞台 culture theatre",
+      "tags": {
+        "amenity": "theatre",
+        "description:en": "shows exhibitions as well",
+        "name": "新宿歌舞伎町能舞台",
+        "name:en": "Shinjuku Noh Stage",
+        "official_name:en": "Nakajima Shinjuku Noh Stage",
+        "theatre:genre": "noh",
+        "website": "https://nohstage.com/"
+      }
+    },
+    {
+      "id": 1116408989,
+      "name": "焼とん高田屋",
+      "lat": 35.7105481,
+      "lon": 139.7095968,
+      "category": "nightlife",
+      "description": "焼とん高田屋 nightlife yakitori pub",
+      "tags": {
+        "amenity": "pub",
+        "cuisine": "yakitori",
+        "cuisine:ja": "焼鳥",
+        "name": "焼とん高田屋",
+        "wheelchair": "limited"
+      }
+    },
+    {
+      "id": 1116408992,
+      "name": "居酒屋わっしょい",
+      "lat": 35.7103042,
+      "lon": 139.7095244,
+      "category": "nightlife",
+      "description": "居酒屋わっしょい nightlife pub",
+      "tags": {
+        "amenity": "pub",
+        "name": "居酒屋わっしょい",
+        "wheelchair": "limited"
+      }
+    },
+    {
+      "id": 1721357553,
+      "name": "紀州屋",
+      "lat": 35.6888901,
+      "lon": 139.6986399,
+      "category": "nightlife",
+      "description": "紀州屋 nightlife japanese pub",
+      "tags": {
+        "amenity": "pub",
+        "building:levels": "1",
+        "cuisine": "japanese",
+        "name": "紀州屋",
+        "name:en": "Kishuya",
+        "source": "survey",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "id": 1721357555,
+      "name": "高田屋",
+      "lat": 35.6886653,
+      "lon": 139.6985626,
+      "category": "nightlife",
+      "description": "高田屋 nightlife pub",
+      "tags": {
+        "amenity": "pub",
+        "name": "高田屋",
+        "source": "survey; Bing"
+      }
+    },
+    {
+      "id": 1905045601,
+      "name": "Asahi Super Dry beer hall",
+      "lat": 35.6906529,
+      "lon": 139.7020089,
+      "category": "nightlife",
+      "description": "Asahi Super Dry beer hall nightlife pub",
+      "tags": {
+        "amenity": "pub",
+        "name": "Asahi Super Dry beer hall",
+        "source": "knoledge",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": 1905045602,
+      "name": "Dubliners",
+      "lat": 35.6911441,
+      "lon": 139.7024693,
+      "category": "nightlife",
+      "description": "Dubliners nightlife pub",
+      "tags": {
+        "amenity": "pub",
+        "building:levels": "1",
+        "name": "Dubliners",
+        "source": "knoledge",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "id": 1934478440,
+      "name": "Bar Crow",
+      "lat": 35.7085328,
+      "lon": 139.7093052,
+      "category": "nightlife",
+      "description": "Bar Crow nightlife pub",
+      "tags": {
+        "amenity": "pub",
+        "name": "Bar Crow"
+      }
+    },
+    {
+      "id": 1952348368,
+      "name": "BRIAN BAR",
+      "lat": 35.6939354,
+      "lon": 139.7046423,
+      "category": "nightlife",
+      "description": "BRIAN BAR nightlife bar",
+      "tags": {
+        "amenity": "bar",
+        "name": "BRIAN BAR",
+        "name:en": "BRIAN BAR",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "id": 1952348371,
+      "name": "CHAMPION",
+      "lat": 35.6938268,
+      "lon": 139.7043072,
+      "category": "nightlife",
+      "description": "CHAMPION nightlife bar",
+      "tags": {
+        "addr:block_number": "1",
+        "addr:city": "新宿区",
+        "addr:housenumber": "10",
+        "addr:neighbourhood": "1丁目",
+        "addr:postcode": "160-0021",
+        "addr:province": "東京都",
+        "addr:quarter": "歌舞伎町",
+        "amenity": "bar",
+        "name": "CHAMPION",
+        "name:en": "Bar Champion",
+        "phone": "+81 3-5291-9333",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "id": 1952348374,
+      "name": "ゴールデンダスト",
+      "lat": 35.6939716,
+      "lon": 139.7047082,
+      "category": "nightlife",
+      "description": "ゴールデンダスト nightlife bar",
+      "tags": {
+        "addr:housenumber": "１丁目１一８",
+        "addr:postcode": "160-0022",
+        "addr:street": "あかるい花園三番街",
+        "amenity": "bar",
+        "contact:instagram": "goldendust_goldengai",
+        "name": "ゴールデンダスト",
+        "name:en": "Golden Dust",
+        "opening_hours": "24/7",
+        "website": "https://asia-tokyo-world.com/store/goldendust/",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "id": 1952348377,
+      "name": "ナナ",
+      "lat": 35.6940067,
+      "lon": 139.7044323,
+      "category": "nightlife",
+      "description": "ナナ nightlife bar",
+      "tags": {
+        "amenity": "bar",
+        "name": "ナナ",
+        "name:en": "Nana",
+        "name:ja": "ナナ",
+        "name:ja-Hira": "ナナ",
+        "name:ja_rm": "Nana",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "id": 1952348384,
+      "name": "Peg",
+      "lat": 35.6938023,
+      "lon": 139.7044067,
+      "category": "nightlife",
+      "description": "Peg nightlife bar",
+      "tags": {
+        "amenity": "bar",
+        "name": "Peg",
+        "name:en": "Peg",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "id": 1952348387,
+      "name": "ami",
+      "lat": 35.6938172,
+      "lon": 139.7043409,
+      "category": "nightlife",
+      "description": "ami nightlife bar",
+      "tags": {
+        "amenity": "bar",
+        "name": "ami",
+        "name:en": "ami",
+        "name:ja_rm": "ami",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "id": 1952348395,
+      "name": "psychobolic shadow",
+      "lat": 35.6938396,
+      "lon": 139.7049571,
+      "category": "nightlife",
+      "description": "psychobolic shadow nightlife bar",
+      "tags": {
+        "amenity": "bar",
+        "name": "psychobolic shadow",
+        "name:it": "Psychobolic Shadow",
+        "name:ja": "ロンリー",
+        "name:ja-Hira": "ロンリー",
+        "name:ja_rm": "Ronri",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "id": 1952348399,
+      "name": "洗濯船",
+      "lat": 35.69405,
+      "lon": 139.7044567,
+      "category": "nightlife",
+      "description": "洗濯船 nightlife bar",
+      "tags": {
+        "addr:block_number": "1",
+        "addr:city": "新宿区",
+        "addr:housenumber": "１丁目１一８",
+        "addr:neighbourhood": "歌舞伎町一丁目",
+        "addr:province": "東京都",
+        "addr:street": "あかるい花園一番街",
+        "amenity": "bar",
+        "contact:facebook": "新宿ゴールデン街-洗濯船-100057582573697",
+        "name": "洗濯船",
+        "name:en": "La Jetee bar",
+        "name:fr": "la jetée",
+        "name:ja": "洗濯船",
+        "opening_hours": "Tu-Sa 19:00-00:00",
+        "phone": "03-3208-9716",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "id": 1965109838,
+      "name": "アネックス (The Annex)",
+      "lat": 35.6908273,
+      "lon": 139.7088978,
+      "category": "nightlife",
+      "description": "アネックス (The Annex) nightlife nightclub",
+      "tags": {
+        "amenity": "nightclub",
+        "lgbtq": "primary",
+        "name": "アネックス (The Annex)",
+        "name:en": "The Annex",
+        "name:ja": "アネックス"
+      }
+    },
+    {
+      "id": 1965109867,
+      "name": "アーティ・ファーティ (ARTY FARTY)",
+      "lat": 35.6904548,
+      "lon": 139.7072455,
+      "category": "nightlife",
+      "description": "アーティ・ファーティ (ARTY FARTY) nightlife nightclub",
+      "tags": {
+        "amenity": "nightclub",
+        "name": "アーティ・ファーティ (ARTY FARTY)",
+        "name:en": "ARTY FARTY",
+        "name:it": "Arty Farty",
+        "name:ja": "アーティ・ファーティ",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "id": 1965109880,
+      "name": "ドラゴンメン",
+      "lat": 35.6902603,
+      "lon": 139.7072497,
+      "category": "nightlife",
+      "description": "ドラゴンメン nightlife bar",
+      "tags": {
+        "alt_name": "東京龍男酒場",
+        "amenity": "bar",
+        "contact:facebook": "https://www.facebook.com/Dragon-Men-%E3%83%89%E3%83%A9%E3%82%B4%E3%83%B3%E3%83%A1%E3%83%B3-625717210820272/",
+        "lgbtq": "primary",
+        "min_age": "18",
+        "name": "ドラゴンメン",
+        "name:en": "Dragon Men",
+        "name:ja": "ドラゴンメン",
+        "phone": "+81 3-3341-0606",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "id": 2067993325,
+      "name": "club axxcis SHINJUKU - Samurai Museum",
+      "lat": 35.6957067,
+      "lon": 139.703622,
+      "category": "nightlife",
+      "description": "club axxcis SHINJUKU - Samurai Museum nightlife nightclub",
+      "tags": {
+        "addr:block_number": "24",
+        "addr:city": "新宿区",
+        "addr:country": "JP",
+        "addr:floor": "B1F",
+        "addr:housename": "新宿興和ビル",
+        "addr:housenumber": "3",
+        "addr:neighbourhood": "歌舞伎町二丁目",
+        "addr:postcode": "160-0021",
+        "addr:province": "東京都",
+        "amenity": "nightclub",
+        "email": "shinjuku@axxcis.net",
+        "level": "-1",
+        "name": "club axxcis SHINJUKU - Samurai Museum",
+        "name:en": "Club Axxcis SHINJUKU",
+        "name:ja": "新宿クラブアクシス",
+        "name:ja-Hira": "しんじゅくクラブアクシス",
+        "name:ja_rm": "Shinjuku Kurabu Akushisu",
+        "phone": "+81 03-3200-9966",
+        "website": "https://www.axxcis.net/shinjuku/index.html",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "id": 2137166597,
+      "name": "Velco",
+      "lat": 35.686886,
+      "lon": 139.696724,
+      "category": "nightlife",
+      "description": "Velco nightlife bar",
+      "tags": {
+        "amenity": "bar",
+        "name": "Velco",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "id": 2146032826,
+      "name": "だいぶつ",
+      "lat": 35.6822455,
+      "lon": 139.6890345,
+      "category": "nightlife",
+      "description": "だいぶつ nightlife pub",
+      "tags": {
+        "amenity": "pub",
+        "name": "だいぶつ"
+      }
+    },
+    {
+      "id": 2147606821,
+      "name": "庄屋",
+      "lat": 35.67835,
+      "lon": 139.692947,
+      "category": "nightlife",
+      "description": "庄屋 nightlife bar",
+      "tags": {
+        "amenity": "bar",
+        "name": "庄屋"
+      }
+    },
+    {
+      "id": 2161036474,
+      "name": "炭火焼鳥 庄助",
+      "lat": 35.688611,
+      "lon": 139.698245,
+      "category": "nightlife",
+      "description": "炭火焼鳥 庄助 nightlife pub",
+      "tags": {
+        "amenity": "pub",
+        "name": "炭火焼鳥 庄助"
+      }
+    },
+    {
+      "id": 2197384269,
+      "name": "お魚総本家",
+      "lat": 35.692508,
+      "lon": 139.6997074,
+      "category": "nightlife",
+      "description": "お魚総本家 nightlife pub",
+      "tags": {
+        "amenity": "pub",
+        "check_date": "2025-11-06",
+        "level": "7",
+        "name": "お魚総本家",
+        "source": "image,2013-03;Bing",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": 2197564176,
+      "name": "升屋",
+      "lat": 35.68804,
+      "lon": 139.698393,
+      "category": "nightlife",
+      "description": "升屋 nightlife pub",
+      "tags": {
+        "amenity": "pub",
+        "name": "升屋"
+      }
+    },
+    {
+      "id": 2197568101,
+      "name": "創作DINING彩",
+      "lat": 35.688284,
+      "lon": 139.698819,
+      "category": "nightlife",
+      "description": "創作DINING彩 nightlife pub",
+      "tags": {
+        "amenity": "pub",
+        "name": "創作DINING彩",
+        "name:en": "Aya"
+      }
+    },
+    {
+      "id": 2198521626,
+      "name": "Ale",
+      "lat": 35.6883031,
+      "lon": 139.696729,
+      "category": "nightlife",
+      "description": "Ale nightlife bar",
+      "tags": {
+        "amenity": "bar",
+        "level": "8",
+        "name": "Ale",
+        "source": "image,2013-03;Bing"
+      }
+    },
+    {
+      "id": 1933369878,
+      "name": "Maruetsu petit",
+      "lat": 35.6918019,
+      "lon": 139.6883903,
+      "category": "shopping",
+      "description": "Maruetsu petit shopping",
+      "tags": {
+        "name": "Maruetsu petit",
+        "shop": "supermarket"
+      }
+    },
+    {
+      "id": 1933369881,
+      "name": "もとまちUNION",
+      "lat": 35.6963802,
+      "lon": 139.6894141,
+      "category": "shopping",
+      "description": "もとまちUNION shopping",
+      "tags": {
+        "name": "もとまちUNION",
+        "shop": "supermarket",
+        "toilets:wheelchair": "yes",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": 1934904091,
+      "name": "マルエツオレンジコート店",
+      "lat": 35.7085147,
+      "lon": 139.7050401,
+      "category": "shopping",
+      "description": "マルエツオレンジコート店 shopping",
+      "tags": {
+        "int_name": "Maruetsu Orange Court",
+        "name": "マルエツオレンジコート店",
+        "shop": "supermarket"
+      }
+    },
+    {
+      "id": 1936149206,
+      "name": "コープみらい",
+      "lat": 35.7012118,
+      "lon": 139.7090739,
+      "category": "shopping",
+      "description": "コープみらい shopping",
+      "tags": {
+        "addr:floor": "1",
+        "addr:postcode": "169-0072",
+        "air_conditioning": "yes",
+        "branch": "戸山店",
+        "building:levels": "1",
+        "check_date": "2026-08-30",
+        "currency:JPY": "yes",
+        "level": "0",
+        "name": "コープみらい",
+        "name:en": "Co-op Mirai",
+        "opening_hours": "10:00-23:00; Jan 01-03 off",
+        "operator": "コープみらい",
+        "payment:cash": "yes",
+        "payment:credit_cards": "yes",
+        "payment:debit_cards": "yes",
+        "payment:rakuten_pay": "yes",
+        "phone": "+81 332030021",
+        "second_hand": "no",
+        "shop": "supermarket",
+        "stroller": "limited",
+        "website": "https://map.coopdeli.coop/mirai/tokyo/shop/toyama.html",
+        "wheelchair": "limited"
+      }
+    },
+    {
+      "id": 2161033209,
+      "name": "THE SUIT COMPANY",
+      "lat": 35.687773,
+      "lon": 139.696206,
+      "category": "shopping",
+      "description": "THE SUIT COMPANY shopping",
+      "tags": {
+        "name": "THE SUIT COMPANY",
+        "shop": "clothes",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "id": 2197384209,
+      "name": "MINAMI",
+      "lat": 35.6927095,
+      "lon": 139.699506,
+      "category": "shopping",
+      "description": "MINAMI shopping",
+      "tags": {
+        "check_date": "2025-11-06",
+        "name": "MINAMI",
+        "shop": "clothes",
+        "source": "image,2013-03;Bing",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "id": 2197454693,
+      "name": "シャニット",
+      "lat": 35.6928487,
+      "lon": 139.6994096,
+      "category": "shopping",
+      "description": "シャニット shopping",
+      "tags": {
+        "name": "シャニット",
+        "name:en": "Shanit",
+        "shop": "clothes",
+        "source": "image,2013-03;Bing"
+      }
+    },
+    {
+      "id": 2197624232,
+      "name": "TAKAQ",
+      "lat": 35.6921338,
+      "lon": 139.7023923,
+      "category": "shopping",
+      "description": "TAKAQ shopping",
+      "tags": {
+        "name": "TAKAQ",
+        "shop": "clothes",
+        "source": "image,2013-03;Bing",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "id": 2389061724,
+      "name": "Lumine 2",
+      "lat": 35.689736,
+      "lon": 139.700582,
+      "category": "shopping",
+      "description": "Lumine 2 shopping",
+      "tags": {
+        "name": "Lumine 2",
+        "shop": "mall"
+      }
+    },
+    {
+      "id": 2389061732,
+      "name": "ricori",
+      "lat": 35.69133,
+      "lon": 139.701079,
+      "category": "shopping",
+      "description": "ricori shopping",
+      "tags": {
+        "name": "ricori",
+        "shop": "clothes",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": 2430693491,
+      "name": "HIROYA",
+      "lat": 35.6867894,
+      "lon": 139.720062,
+      "category": "shopping",
+      "description": "HIROYA shopping",
+      "tags": {
+        "name": "HIROYA",
+        "shop": "clothes",
+        "source": "image,2013-08;Bing"
+      }
+    },
+    {
+      "id": 2704703878,
+      "name": "免税店",
+      "lat": 35.6983708,
+      "lon": 139.7054802,
+      "category": "shopping",
+      "description": "免税店 shopping",
+      "tags": {
+        "level": "0",
+        "name": "免税店",
+        "name:en": "Akafudado",
+        "name:ja": "赤札堂",
+        "opening_hours": "10:00-17:00",
+        "shop": "supermarket",
+        "source": "image,2014-03;Bing",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "id": 2749509143,
+      "name": "萬年屋",
+      "lat": 35.6858155,
+      "lon": 139.6893227,
+      "category": "shopping",
+      "description": "萬年屋 shopping",
+      "tags": {
+        "name": "萬年屋",
+        "name:en": "Mannenya",
+        "name:ja-Latn": "Mannenya",
+        "shop": "clothes",
+        "website": "https://www.mannen-ya.co.jp"
+      }
+    },
+    {
+      "id": 2838965909,
+      "name": "Asia Superstore",
+      "lat": 35.6984164,
+      "lon": 139.7054598,
+      "category": "shopping",
+      "description": "Asia Superstore shopping",
+      "tags": {
+        "level": "1",
+        "name": "Asia Superstore",
+        "opening_hours": "10:00-23:00",
+        "payment:credit_cards": "yes",
+        "payment:debit_cards": "yes",
+        "shop": "supermarket",
+        "toilets:wheelchair": "no",
+        "website": "https://www.asia-superstore.com/",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "id": 3894695606,
+      "name": "YORK FOODS",
+      "lat": 35.6923411,
+      "lon": 139.7132361,
+      "category": "shopping",
+      "description": "YORK FOODS shopping",
+      "tags": {
+        "name": "YORK FOODS",
+        "shop": "supermarket",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": 4104461590,
+      "name": "マルマンストア",
+      "lat": 35.6825192,
+      "lon": 139.7001568,
+      "category": "shopping",
+      "description": "マルマンストア shopping",
+      "tags": {
+        "name": "マルマンストア",
+        "phone": "+81-3-5350-0555",
+        "shop": "supermarket",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "id": 4382942136,
+      "name": "丸正食品本店",
+      "lat": 35.6876554,
+      "lon": 139.7195919,
+      "category": "shopping",
+      "description": "丸正食品本店 shopping",
+      "tags": {
+        "name": "丸正食品本店",
+        "shop": "supermarket"
+      }
+    },
+    {
+      "id": 4682626999,
+      "name": "100 yen shop",
+      "lat": 35.6900187,
+      "lon": 139.7057909,
+      "category": "shopping",
+      "description": "100 yen shop shopping",
+      "tags": {
+        "addr:block_number": "1",
+        "addr:city": "新宿区",
+        "addr:country": "JP",
+        "addr:housenumber": "26",
+        "addr:neighbourhood": "3",
+        "addr:postcode": "160-0022",
+        "addr:province": "東京都",
+        "addr:quarter": "新宿",
+        "name": "100 yen shop",
+        "name:en": "100 yen Seria Marui Shinjuku Annex shop",
+        "shop": "gift",
+        "toilets:wheelchair": "yes",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": 4810709223,
+      "name": "Can Do PePe 8/F",
+      "lat": 35.6943809,
+      "lon": 139.7002003,
+      "category": "shopping",
+      "description": "Can Do PePe 8/F shopping",
+      "tags": {
+        "name": "Can Do PePe 8/F",
+        "name:ja": "Can Do PePe 8/F",
+        "shop": "gift"
+      }
+    },
+    {
+      "id": 4919935621,
+      "name": "TOMIZ",
+      "lat": 35.6906742,
+      "lon": 139.6989927,
+      "category": "shopping",
+      "description": "TOMIZ shopping",
+      "tags": {
+        "addr:floor": "8F",
+        "addr:housename": "京王百貨店",
+        "check_date:opening_hours": "2025-05-06",
+        "level": "7",
+        "name": "TOMIZ",
+        "name:en": "TOMIZ",
+        "opening_hours": "Mo-Su 10:00-20:00",
+        "shop": "supermarket",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": 4919950721,
+      "name": "西武新宿ペペ & Brick St.",
+      "lat": 35.6944502,
+      "lon": 139.7002658,
+      "category": "shopping",
+      "description": "西武新宿ペペ & Brick St. shopping",
+      "tags": {
+        "name": "西武新宿ペペ & Brick St.",
+        "name:en": "Seibu Shinjuku PePe",
+        "name:it": "Can do PePe",
+        "opening_hours": "Mo-Su 11:00-22:00",
+        "shop": "department_store",
+        "toilets:wheelchair": "yes",
+        "website": "https://www.seibu-shop.jp/shinjuku/",
+        "wheelchair": "yes",
+        "wheelchair:description": "五階にお手洗いあります。",
+        "wikidata": "Q108813897"
+      }
+    },
+    {
+      "id": 4962976056,
+      "name": "WORLD TAILORS 1919",
+      "lat": 35.7019024,
+      "lon": 139.6919471,
+      "category": "shopping",
+      "description": "WORLD TAILORS 1919 shopping",
+      "tags": {
+        "name": "WORLD TAILORS 1919",
+        "shop": "clothes"
+      }
+    },
+    {
+      "id": 4962976118,
+      "name": "LEMON",
+      "lat": 35.7017686,
+      "lon": 139.6922532,
+      "category": "shopping",
+      "description": "LEMON shopping",
+      "tags": {
+        "name": "LEMON",
+        "shop": "clothes"
+      }
+    },
+    {
+      "id": 4965525570,
+      "name": "AZOL",
+      "lat": 35.6961064,
+      "lon": 139.7150899,
+      "category": "shopping",
+      "description": "AZOL shopping",
+      "tags": {
+        "name": "AZOL",
+        "shop": "clothes",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": 5025501681,
+      "name": "ル・デポ",
+      "lat": 35.6875701,
+      "lon": 139.7185265,
+      "category": "shopping",
+      "description": "ル・デポ shopping",
+      "tags": {
+        "name": "ル・デポ",
+        "name:en": "LE DEPOT",
+        "second_hand": "only",
+        "shop": "clothes"
+      }
+    },
+    {
+      "id": 5334157228,
+      "name": "Tomorrowland",
+      "lat": 35.688953,
+      "lon": 139.6991638,
+      "category": "shopping",
+      "description": "Tomorrowland shopping",
+      "tags": {
+        "name": "Tomorrowland",
+        "shop": "clothes"
+      }
+    },
+    {
+      "id": 5648840053,
+      "name": "チョンガーネ",
+      "lat": 35.7014665,
+      "lon": 139.7020344,
+      "category": "shopping",
+      "description": "チョンガーネ shopping",
+      "tags": {
+        "name": "チョンガーネ",
+        "name:ko": "총각네",
+        "shop": "supermarket",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": 5899162767,
+      "name": "Santoku",
+      "lat": 35.6962245,
+      "lon": 139.7217735,
+      "category": "shopping",
+      "description": "Santoku shopping",
+      "tags": {
+        "name": "Santoku",
+        "shop": "supermarket",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": 5949690285,
+      "name": "三越",
+      "lat": 35.6913536,
+      "lon": 139.7054814,
+      "category": "shopping",
+      "description": "三越 shopping",
+      "tags": {
+        "name": "三越",
+        "name:en": "Mitsukoshi",
+        "shop": "department_store",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": 6361879377,
+      "name": "BIG VISION",
+      "lat": 35.6951991,
+      "lon": 139.6984114,
+      "category": "shopping",
+      "description": "BIG VISION shopping",
+      "tags": {
+        "name": "BIG VISION",
+        "shop": "clothes"
+      }
+    },
+    {
+      "id": 6944198785,
+      "name": "ディスクユニオン　新宿セカンドハンズ店",
+      "lat": 35.6919413,
+      "lon": 139.7028162,
+      "category": "shopping",
+      "description": "ディスクユニオン　新宿セカンドハンズ店 shopping",
+      "tags": {
+        "name": "ディスクユニオン　新宿セカンドハンズ店",
+        "shop": "department_store"
+      }
+    },
+    {
+      "id": 4154282189,
+      "name": "思い出横丁",
+      "lat": 35.6930689,
+      "lon": 139.6995016,
+      "category": "attraction",
+      "description": "思い出横丁 attraction attraction",
+      "tags": {
+        "addr:block_number": "2",
+        "addr:city": "新宿区",
+        "addr:housename": "ナガセ西新宿ビル 13",
+        "addr:neighbourhood": "1丁目",
+        "addr:postcode": "160-0023",
+        "addr:province": "東京都",
+        "alt_name": "新宿西口商店街;思い出横丁;新宿思い出横丁;新宿西口思い出横丁;やきとり横丁;ションベン横丁;しょんべん横丁;Omoide Yokocho;Shinjuku Omoide Yokocho;Shinjuku Nishiguchi Omoide Yokocho;Yakitori Yokocho;Shonben Yokocho;Shinjuku West Exit Shopping Street;Memory Lane",
+        "loc_name:ja": "小便横丁",
+        "name": "思い出横丁",
+        "name:en": "Omoide-yokochō",
+        "name:es": "Omoide-yokochō",
+        "name:fr": "Omoide-yokochō",
+        "name:ja-Hira": "おもいで よこちょう",
+        "name:ja-Latn": "Omoide-yokochō",
+        "name:ko": "오모이데 골목",
+        "name:zh": "思出横丁",
+        "place": "locality",
+        "tourism": "attraction",
+        "wheelchair": "yes",
+        "wikidata": "Q11501868",
+        "wikimedia_commons": "Category:Omoide-Yokochō, Shinjuku",
+        "wikipedia": "ja:新宿西口商店街"
+      }
+    },
+    {
+      "id": 4303422825,
+      "name": "Taito Station Shinjuku South Exit",
+      "lat": 35.689805,
+      "lon": 139.7022802,
+      "category": "attraction",
+      "description": "Taito Station Shinjuku South Exit attraction attraction",
+      "tags": {
+        "name": "Taito Station Shinjuku South Exit",
+        "name:ja": "タイトー ゲームセンター",
+        "name:ko": "타이토 스테이션 게임 아케이드",
+        "tourism": "attraction",
+        "wheelchair": "limited"
+      }
+    },
+    {
+      "id": 4348162791,
+      "name": "天神湯 ( てんじんゆ )",
+      "lat": 35.6991187,
+      "lon": 139.6896393,
+      "category": "attraction",
+      "description": "天神湯 ( てんじんゆ ) attraction attraction",
+      "tags": {
+        "name": "天神湯 ( てんじんゆ )",
+        "tourism": "attraction"
+      }
+    },
+    {
+      "id": 4881027723,
+      "name": "歌舞伎町",
+      "lat": 35.6952491,
+      "lon": 139.7031183,
+      "category": "attraction",
+      "description": "歌舞伎町 attraction attraction",
+      "tags": {
+        "name": "歌舞伎町",
+        "name:en": "Kabukicho",
+        "tourism": "attraction",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "id": 4957686538,
+      "name": "GiGO",
+      "lat": 35.6951529,
+      "lon": 139.7013644,
+      "category": "attraction",
+      "description": "GiGO attraction amusement arcade",
+      "tags": {
+        "leisure": "amusement_arcade",
+        "name": "GiGO",
+        "opening_hours": "Mo-Su,PH 10:00-24:00"
+      }
+    },
+    {
+      "id": 10313536329,
+      "name": "Shinjuku Sports Land",
+      "lat": 35.6932391,
+      "lon": 139.7019059,
+      "category": "attraction",
+      "description": "Shinjuku Sports Land attraction amusement arcade",
+      "tags": {
+        "leisure": "amusement_arcade",
+        "name": "Shinjuku Sports Land"
+      }
+    },
+    {
+      "id": 10768189905,
+      "name": "須賀神社 女坂",
+      "lat": 35.6853632,
+      "lon": 139.7229993,
+      "category": "attraction",
+      "description": "須賀神社 女坂 attraction The stairs with red hand rails made famous in the movie Your Name. attraction",
+      "tags": {
+        "description": "The stairs with red hand rails made famous in the movie Your Name.",
+        "name": "須賀神社 女坂",
+        "name:en": "Suga Shrine Onnazaka",
+        "name:ja": "須賀神社 女坂",
+        "tourism": "attraction"
+      }
+    },
+    {
+      "id": 10849593505,
+      "name": "クロス新宿ビジョン",
+      "lat": 35.6926184,
+      "lon": 139.7007975,
+      "category": "attraction",
+      "description": "クロス新宿ビジョン attraction 新宿東口の猫 attraction",
+      "tags": {
+        "advertising": "screen",
+        "alt_name": "新宿の猫",
+        "alt_name:es": "Gato de Shinjuku",
+        "alt_name:ja": "新宿の猫",
+        "alt_name:ja-Hira": "しんじゅくのねこ",
+        "alt_name:ja-Latn": "Shinjuku no Neko",
+        "animated": "screen",
+        "description": "新宿東口の猫",
+        "message": "commercial",
+        "name": "クロス新宿ビジョン",
+        "name:en": "3D billboard (Shinjuku Cat)",
+        "name:es": "Pantalla del Cruce de Shinjuku",
+        "name:fr": "Chat 3D géant de Shinjuku",
+        "name:ja": "クロス新宿ビジョン",
+        "name:ja-Hira": "くろすしんじゅくびじょん",
+        "name:ja-Latn": "Kurosu Shinjuku Bijon",
+        "opening_hours": "Mo-Su 07:00-25:00",
+        "operator": "Cross Space",
+        "sides": "1",
+        "start_date": "2020-07",
+        "support": "wall_mounted",
+        "tourism": "attraction",
+        "website": "https://shinjuku.xspace.tokyo",
+        "wikidata": "Q109702546",
+        "wikimedia_commons": "Category:Cross Shinjuku Vision",
+        "wikipedia": "ja:クロス新宿ビジョン"
+      }
+    },
+    {
+      "id": 11155615563,
+      "name": "GIGO",
+      "lat": 35.7016531,
+      "lon": 139.699631,
+      "category": "attraction",
+      "description": "GIGO attraction amusement arcade",
+      "tags": {
+        "check_date": "2023-08-30",
+        "leisure": "amusement_arcade",
+        "level": "0",
+        "name": "GIGO"
+      }
+    },
+    {
+      "id": 11558309329,
+      "name": "ゲームプラザGAO",
+      "lat": 35.6940404,
+      "lon": 139.7027181,
+      "category": "attraction",
+      "description": "ゲームプラザGAO attraction amusement arcade",
+      "tags": {
+        "leisure": "amusement_arcade",
+        "name": "ゲームプラザGAO"
+      }
+    },
+    {
+      "id": 12850486293,
+      "name": "Samurai Museum Tokyo Ticket Centre",
+      "lat": 35.6854903,
+      "lon": 139.690713,
+      "category": "attraction",
+      "description": "Samurai Museum Tokyo Ticket Centre attraction attraction",
+      "tags": {
+        "addr:block_number": "7",
+        "addr:city": "新宿区",
+        "addr:housenumber": "1",
+        "addr:neighbourhood": "西新宿三丁目",
+        "addr:postcode": "160-0023",
+        "addr:province": "東京都",
+        "name": "Samurai Museum Tokyo Ticket Centre",
+        "tourism": "attraction"
+      }
+    },
+    {
+      "id": 13321018132,
+      "name": "GiGO",
+      "lat": 35.6895191,
+      "lon": 139.6974173,
+      "category": "attraction",
+      "description": "GiGO attraction amusement arcade",
+      "tags": {
+        "check_date": "2026-08-29",
+        "leisure": "amusement_arcade",
+        "name": "GiGO"
+      }
+    },
+    {
+      "id": 14135355552,
+      "name": "代々木駅 駅スタンプ",
+      "lat": 35.6829556,
+      "lon": 139.7020151,
+      "category": "attraction",
+      "description": "代々木駅 駅スタンプ attraction attraction",
+      "tags": {
+        "indoor": "yes",
+        "name": "代々木駅 駅スタンプ",
+        "name:en": "Yoyogi Eki Stamp",
+        "name:es": "Sello de la Estación de Yoyogi",
+        "name:ja": "代々木駅 駅スタンプ",
+        "name:ja-Hira": "よよぎえき えきすたんぷ",
+        "name:ja-Latn": "Yoyogi-eki Eki Sutanpu",
+        "ref": "Eki Stamp",
+        "tourism": "attraction"
+      }
+    },
+    {
+      "id": 14135592554,
+      "name": "中野坂上駅 駅スタンプ",
+      "lat": 35.6978784,
+      "lon": 139.7074847,
+      "category": "attraction",
+      "description": "中野坂上駅 駅スタンプ attraction attraction",
+      "tags": {
+        "indoor": "yes",
+        "level": "-1",
+        "name": "中野坂上駅 駅スタンプ",
+        "name:en": "Nakano-Sakaue Eki Stamp",
+        "name:es": "Sello de la Estación de Nakano-Sakaue",
+        "name:ja": "中野坂上駅 駅スタンプ",
+        "name:ja-Hira": "なかのさかうええき えきすたんぷ",
+        "name:ja-Latn": "Nakano-Sakaue-eki Eki Sutanpu",
+        "ref": "Eki Stamp",
+        "tourism": "attraction"
+      }
+    },
+    {
+      "id": 14135592556,
+      "name": "東京観光情報センター スタンプ",
+      "lat": 35.6881462,
+      "lon": 139.7005732,
+      "category": "attraction",
+      "description": "東京観光情報センター スタンプ attraction attraction",
+      "tags": {
+        "indoor": "yes",
+        "name": "東京観光情報センター スタンプ",
+        "name:en": "Tokyo Tourist Information Center Stamp",
+        "name:es": "Sello del Centro de Información Turística de Tokio",
+        "name:ja": "東京観光情報センター スタンプ",
+        "name:ja-Hira": "とうきょうかんこうじょうほうせんたー すたんぷ",
+        "name:ja-Latn": "Tōkyō Kankō Jōhō Sentā Sutanpu",
+        "tourism": "attraction"
+      }
+    },
+    {
+      "id": 137626375,
+      "name": "Paupau Aqua Garden",
+      "lat": 35.6931787,
+      "lon": 139.7058933,
+      "category": "attraction",
+      "description": "Paupau Aqua Garden attraction aquarium",
+      "tags": {
+        "addr:block_number": "17",
+        "addr:city": "新宿区",
+        "addr:housenumber": "5",
+        "addr:neighbourhood": "新宿五丁目",
+        "addr:postcode": "160-0022",
+        "addr:province": "東京都",
+        "building": "yes",
+        "fee": "yes",
+        "name": "Paupau Aqua Garden",
+        "opening_hours": "Mo-Fr 13:00-21:00; Sa-Su 11:00-20:00",
+        "source": "Bing",
+        "tourism": "aquarium",
+        "website": "http://www.paupau.co.jp/html/english.html"
+      }
+    },
+    {
+      "id": 155235354,
+      "name": "歌舞伎町一番街通り",
+      "lat": 35.6943326,
+      "lon": 139.7011998,
+      "category": "attraction",
+      "description": "歌舞伎町一番街通り attraction attraction",
+      "tags": {
+        "cycleway:left": "no",
+        "highway": "unclassified",
+        "lane_markings": "no",
+        "motor_vehicle:conditional": "no @ (月～土：16:00～翌 5:00; 日・祝：12:00～翌 5:00)",
+        "name": "歌舞伎町一番街通り",
+        "name:en": "Kabukicho Ichibangai-dori Street",
+        "name:es": "Calle Kabukicho Ichibangai",
+        "name:ko": "가부키쵸1번가",
+        "name:zh": "歌舞伎町一番街",
+        "oneway": "yes",
+        "surface": "paving_stones",
+        "tourism": "attraction"
+      }
+    },
+    {
+      "id": 1376695886,
+      "name": "桜園地",
+      "lat": 35.6822804,
+      "lon": 139.7102065,
+      "category": "attraction",
+      "description": "桜園地 attraction attraction",
+      "tags": {
+        "landuse": "forest",
+        "name": "桜園地",
+        "name:en": "Cherry Tree Area",
+        "tourism": "attraction"
+      }
+    },
+    {
+      "id": 2388566136,
+      "name": "東京都庁展望室 北",
+      "lat": 35.6899139,
+      "lon": 139.6916135,
+      "category": "attraction",
+      "description": "東京都庁展望室 北 attraction viewpoint",
+      "tags": {
+        "alt_name:en": "Tocho Observatory",
+        "fee": "no",
+        "level": "45",
+        "name": "東京都庁展望室 北",
+        "name:en": "Tokyo Metropolitan Government Office - North Observatory Deck",
+        "name:es": "Mirador Tocho",
+        "name:ja": "東京都庁展望室 北",
+        "name:ja_rm": "Tochou tenbousitu kita",
+        "name:ko": "도쿄 도청 전망실 (북)",
+        "tourism": "viewpoint"
+      }
+    },
+    {
+      "id": 2388566137,
+      "name": "東京都庁展望室 南",
+      "lat": 35.689088,
+      "lon": 139.6917631,
+      "category": "attraction",
+      "description": "東京都庁展望室 南 attraction viewpoint",
+      "tags": {
+        "fee": "no",
+        "level": "45",
+        "name": "東京都庁展望室 南",
+        "name:en": "Tokyo Metropolitan Government Office - South Observatory Deck",
+        "name:ja": "東京都庁展望室 南",
+        "name:ja_rm": "Tochou tenbousitu Minami",
+        "name:ko": "도쿄 도청 전망실 (남)",
+        "opening_hours": "Mo-Su 09:30-22:00",
+        "tourism": "viewpoint",
+        "website": "https://www.yokoso.metro.tokyo.lg.jp/en/tenbou/index.html"
+      }
+    },
+    {
+      "id": 5580334182,
+      "name": "富士見台",
+      "lat": 35.6888875,
+      "lon": 139.6902041,
+      "category": "attraction",
+      "description": "富士見台 attraction viewpoint",
+      "tags": {
+        "name": "富士見台",
+        "tourism": "viewpoint"
+      }
+    }
+  ]
 }
