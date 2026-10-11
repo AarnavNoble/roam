@@ -145,10 +145,13 @@ export function useToast() {
 // ── List components ───────────────────────────────────────────────────────────
 
 const FEATURE_LABELS: Record<string, string> = {
-  semantic_score: 'Relevance', category_match: 'Goal match',
-  name_length_norm: 'Specificity', has_description: 'Well known',
+  semantic_score: 'Relevance', semantic_rank: 'Relevance rank', category_match: 'Goal match',
   cuisine_match: 'Food match', nature_match: 'Nature match',
-  history_match: 'Culture match', nightlife_match: 'Nightlife match',
+  history_match: 'History match', culture_match: 'Culture match',
+  nightlife_match: 'Nightlife match', shopping_match: 'Shopping match',
+  adventure_match: 'Adventure match', is_notable: 'Well known',
+  tag_count_norm: 'Well documented', has_details: 'Has hours or website',
+  is_tourism: 'Tourist spot',
 };
 
 function ContributionBar({ name, value, max }: { name: string; value: number; max: number }) {
