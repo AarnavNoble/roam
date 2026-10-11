@@ -17,30 +17,28 @@ from pathlib import Path
 import numpy as np
 
 from backend.bench.fixtures import SCENARIOS
-from backend.core.telemetry import collect_timings
 
 RESULTS_DIR = Path(__file__).resolve().parent / "results"
 PAUSE_S = 20  # stay under the LLM provider's tokens-per-minute limit
 
 
 def run_once(scenario: tuple) -> dict:
-    from backend.api.routes import TripRequest, _run_pipeline
+    from backend.pipeline import TripRequest, run_pipeline
 
     name, city, start, goals, hours, transport = scenario
     req = TripRequest(city=city, start_location=start, duration_hours=hours,
                       goals=goals, transport=transport)
     t0 = time.perf_counter()
-    with collect_timings() as timings:
-        try:
-            result = _run_pipeline(req)
-            error = None
-            stops = sum(len(d.get("stops", [])) for d in result.get("days", []))
-        except Exception as e:  # a failed request is a data point, not a crash
-            error = f"{type(e).__name__}: {str(e)[:120]}"
-            stops = 0
+    stages, degraded, stops, error = {}, [], 0, None
+    try:
+        output = run_pipeline(req)
+        stages, degraded = output.timings_ms, output.degraded
+        stops = sum(len(d.get("stops", [])) for d in output.result.get("days", []))
+    except Exception as e:  # a failed request is a data point, not a crash
+        error = f"{type(e).__name__}: {str(e)[:120]}"
     total_ms = (time.perf_counter() - t0) * 1000
-    return {"scenario": name, "total_ms": round(total_ms, 1), "stages": dict(timings),
-            "stops": stops, "error": error}
+    return {"scenario": name, "total_ms": round(total_ms, 1), "stages": stages,
+            "stops": stops, "degraded": degraded, "error": error}
 
 
 def summarise(runs: list[dict]) -> dict:
@@ -79,6 +77,11 @@ def main():
             time.sleep(PAUSE_S)
 
     summary = summarise(runs)
+    # The POI cache makes a repeat of the same trip much cheaper, so report the
+    # first pass over the scenarios (nothing cached) separately from repeats.
+    summary["cold"] = summarise([r for r in runs if r["trial"] == 0])
+    if args.trials > 1:
+        summary["warm"] = summarise([r for r in runs if r["trial"] > 0])
     print("\n" + json.dumps(summary, indent=2))
     RESULTS_DIR.mkdir(exist_ok=True)
     path = RESULTS_DIR / f"latency_{args.label}.json"

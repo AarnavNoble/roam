@@ -1,23 +1,10 @@
 """
-Groq LLM client for itinerary synthesis.
-Takes structured itinerary data + RAG context and generates natural language output.
+The original itinerary prompt, kept only as the comparison arm of
+contract_eval.py. It hands the model the whole route as indented JSON and has
+it echo every stop back as a JSON object. Nothing on the request path uses it.
 """
 
-import os
 import json
-from groq import Groq
-from dotenv import load_dotenv
-
-load_dotenv()
-from backend import config
-MODEL = config.GROQ_MODELS[0]
-
-
-def get_client() -> Groq:
-    api_key = os.environ.get("GROQ_API_KEY", "").strip()
-    if not api_key:
-        raise RuntimeError("GROQ_API_KEY not set in environment")
-    return Groq(api_key=api_key)
 
 
 def build_prompt(trip: dict, itinerary: list[dict], rag_context: str) -> str:
@@ -104,21 +91,3 @@ INSTRUCTIONS:
   ],
   "overview": "2-3 sentences written like a friend describing a great day out"
 }}"""
-
-
-def generate_itinerary(trip: dict, itinerary: list[dict], rag_context: str) -> dict:
-    """
-    Call Groq to synthesize a natural language itinerary from structured data.
-    Returns parsed JSON itinerary.
-    """
-    prompt = build_prompt(trip, itinerary, rag_context)
-
-    response = get_client().chat.completions.create(
-        model=MODEL,
-        messages=[{"role": "user", "content": prompt}],
-        temperature=0.4,
-        response_format={"type": "json_object"},
-    )
-
-    content = response.choices[0].message.content
-    return json.loads(content)
