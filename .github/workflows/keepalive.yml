@@ -1,0 +1,24 @@
+name: keepalive
+
+# The demo runs on a free Hugging Face Space, which goes to sleep after a
+# period with no traffic and then takes about a minute to wake. This pings it
+# on a schedule so a visitor never lands on the "waking up" screen.
+#
+# GitHub pauses scheduled workflows after 60 days with no commits to the repo.
+# If that happens, re-enable it from the Actions tab.
+
+on:
+  schedule:
+    - cron: "*/30 * * * *"
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping the Space
+        run: |
+          # A sleeping Space answers slowly while it wakes, so allow retries.
+          curl --fail --silent --show-error --max-time 60 \
+               --retry 5 --retry-delay 30 --retry-all-errors \
+               https://aarnavnoble-roam.hf.space/api/health
