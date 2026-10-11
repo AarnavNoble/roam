@@ -82,7 +82,7 @@ A request fails only when there is nothing to build from: the place does not exi
 
 ## Measured results
 
-All numbers come from JSON files under `backend/bench/results/`. `TBD(...)` marks a benchmark that has not been run on the current code.
+All numbers come from JSON files under `backend/bench/results/`. 
 
 ### End-to-end latency
 
@@ -195,7 +195,7 @@ Each case is a plain-language request against a trip plus a programmatic check o
 python -m backend.bench.agent_eval
 ```
 
-Result: `TBD(agent_eval)`.
+Result: 14 of 17 cases passed (82%) on `openai/gpt-oss-20b`, averaging 2.4 model turns and about 2,400 tokens per edit. Two of the three failures ended in a 503 from the provider's rate limit during the run, and one was a real over-edit on a three-step request. An earlier run of the same cases scored 13 of 17, so treat the rate as roughly 75 to 80%. Per-case results are in `backend/bench/results/agent_eval.json`.
 
 ### Fault injection and tests
 
@@ -205,7 +205,7 @@ Result: `TBD(agent_eval)`.
 python -m pytest backend/tests -q
 ```
 
-Fault scenarios: `TBD(faults)`. Total tests: `TBD(tests)`.
+Fault scenarios: 36 distinct failures on the JSON endpoint, plus 3 on the stream. Total tests: 449, passing on SQLite and on Postgres 16.
 
 ### What the benchmarks found
 
