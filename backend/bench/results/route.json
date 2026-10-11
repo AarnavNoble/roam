@@ -10,24 +10,91 @@
     "greedy_nn": {
       "travel_min": 4090.8,
       "window_violation_min": 64694.9,
-      "ms_per_day": 0.01
+      "ms_per_day": 0.02
     },
     "time_aware": {
       "travel_min": 4753.2,
       "window_violation_min": 32033.6,
-      "ms_per_day": 0.01
+      "ms_per_day": 0.02
     },
     "ortools": {
       "travel_min": 4605.3,
       "window_violation_min": 29690.0,
-      "ms_per_day": 251.03
+      "ms_per_day": 251.41
     },
     "ortools_free": {
       "travel_min": 3783.2,
       "window_violation_min": 63432.4,
-      "ms_per_day": 250.73
+      "ms_per_day": 252.09
     }
   },
-  "sweep": [],
-  "weight_sweep": []
+  "sweep": [
+    {
+      "time_limit_s": 0.02,
+      "objective_min": 34297.7,
+      "ms_per_day": 26.2
+    },
+    {
+      "time_limit_s": 0.05,
+      "objective_min": 34271.3,
+      "ms_per_day": 52.0
+    },
+    {
+      "time_limit_s": 0.1,
+      "objective_min": 34295.3,
+      "ms_per_day": 101.2
+    },
+    {
+      "time_limit_s": 0.25,
+      "objective_min": 34295.3,
+      "ms_per_day": 251.2
+    },
+    {
+      "time_limit_s": 0.5,
+      "objective_min": 34295.3,
+      "ms_per_day": 502.1
+    },
+    {
+      "time_limit_s": 1.0,
+      "objective_min": 34295.3,
+      "ms_per_day": 1001.2
+    },
+    {
+      "time_limit_s": 2.0,
+      "objective_min": 34295.3,
+      "ms_per_day": 2002.4
+    }
+  ],
+  "weight_sweep": [
+    {
+      "travel_weight": 1,
+      "travel_min": 5878.8,
+      "window_violation_min": 26263.0
+    },
+    {
+      "travel_weight": 2,
+      "travel_min": 5367.0,
+      "window_violation_min": 27083.2
+    },
+    {
+      "travel_weight": 4,
+      "travel_min": 4829.0,
+      "window_violation_min": 28547.2
+    },
+    {
+      "travel_weight": 6,
+      "travel_min": 4605.3,
+      "window_violation_min": 29690.0
+    },
+    {
+      "travel_weight": 8,
+      "travel_min": 4518.6,
+      "window_violation_min": 30311.7
+    },
+    {
+      "travel_weight": 16,
+      "travel_min": 4317.1,
+      "window_violation_min": 32893.2
+    }
+  ]
 }

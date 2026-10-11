@@ -95,7 +95,10 @@ python -m backend.bench.latency_bench --label baseline --trials 2
 | | Requests | Median | p95 |
 |---|---|---|---|
 | Before the rework (`latency_baseline.json`) | 16 (15 completed) | 40.7 s | 59.6 s |
-| After | `TBD(latency_after)` | `TBD(latency_after)` | `TBD(latency_after)` |
+| After, first request for an area (`latency_after.json`, trial 0) | 8 (5 completed) | 17.7 s | 24.6 s |
+| After, repeat request, POIs cached (trial 1) | 8 (7 completed) | 2.0 s | 18.9 s |
+
+The after run was taken during a partial Overpass outage: the main server refused connections and two mirrors returned 500, so 4 of 16 requests had no POI source and no stored copy to fall back on. The medians are over completed requests. One of the "repeat" requests was really a first request, because its first trial had failed, which is where the 18.9 s p95 comes from. Rerun when Overpass is healthy for a cleaner sample.
 
 Where the time went before the rework:
 
@@ -135,7 +138,7 @@ The keyed format uses 74% fewer tokens. Neither format broke the contract in thi
 
 ### Ranker
 
-Leave-one-city-out cross validation over 8 cities, against two baselines (random order, and cosine similarity alone). Labels are 0 to 4 relevance grades from an LLM judge.
+Leave-one-city-out cross validation over 4 cities (20 queries, 4,785 labelled pairs), against two baselines (random order, and cosine similarity alone). Labels are 0 to 4 relevance grades from an LLM judge.
 
 ```bash
 python -m backend.bench.ranker_bench
@@ -144,9 +147,16 @@ python -m backend.bench.ranker_bench --check   # CI gate: model must beat cosine
 
 | Model | NDCG@10, full pool | NDCG@10, goal pool |
 |---|---|---|
-| random | `TBD(ranker)` | `TBD(ranker)` |
-| cosine_only | `TBD(ranker)` | `TBD(ranker)` |
-| lambdarank | `TBD(ranker)` | `TBD(ranker)` |
+| random | 0.174 | 0.530 |
+| cosine_only | 0.613 | 0.636 |
+| lambdarank (14 features) | 0.756 | 0.725 |
+| Lift over cosine_only | +23.4% | +14.0% |
+
+The model wins all 4 held-out cities in both views, and 17 of 20 queries on the full pool. The full pool is every category around the start point. The goal pool is only the categories a request asks for, which is what the app actually ranks, so +14.0% is the figure that describes production.
+
+How far to trust it: n is 4 cities. The labels are an LLM judge's grades, so this measures agreement with the judge, not with travellers. A second judge model graded one identical group of 229 places and agreed exactly on 82.1%, within one grade on 94.3%, Spearman 0.86. The judge saw each place's category and `category_match` is the model's strongest feature (53% of split gain), so part of the full-pool lift is the model relearning the judge's rule.
+
+The model this replaced was trained on 35 hand-written rows with LightGBM defaults that cannot split 35 rows. On the same style of held-out test it scored NDCG@3 0.619, against 0.988 for cosine similarity alone and 0.615 for random.
 
 ### Route ordering
 
@@ -158,11 +168,24 @@ python -m backend.bench.route_bench --sweep
 
 | Strategy | Travel (min) | Off-window (min) |
 |---|---|---|
-| rank_order | `TBD(route)` | `TBD(route)` |
-| greedy_nn | `TBD(route)` | `TBD(route)` |
-| time_aware (shipped before) | `TBD(route)` | `TBD(route)` |
-| ortools (ships now) | `TBD(route)` | `TBD(route)` |
-| ortools_free (no windows, lower bound on travel) | `TBD(route)` | `TBD(route)` |
+| rank_order | 6,633 | 43,741 |
+| greedy_nn | 4,091 | 64,695 |
+| time_aware (shipped before) | 4,753 | 32,034 |
+| ortools (ships now) | 4,605 | 29,690 |
+| ortools_free (no windows, lower bound on travel) | 3,783 | 63,432 |
+
+Totals over 60 days sampled with a fixed seed from 4 cities. The solver beats the old heuristic on both axes: 3.1% less travel and 7.3% less time off-window. It did not at first. With travel and timing weighted 1:1 it walked 24% further than the heuristic to fix timing. The sweep below moved the weight to 6:1.
+
+| Travel weight | Travel (min) | Off-window (min) |
+|---|---|---|
+| 1 | 5,879 | 26,263 |
+| 2 | 5,367 | 27,083 |
+| 4 | 4,829 | 28,547 |
+| 6 (shipped) | 4,605 | 29,690 |
+| 8 | 4,519 | 30,312 |
+| 16 | 4,317 | 32,893 |
+
+The weight was picked on these same 4 cities, so the comparison is not held out. The solver's time limit is 0.25 s per day; the same sweep shows the objective is flat from 0.05 s upward at these sizes.
 
 ### Trip-editing agent
 
@@ -214,10 +237,10 @@ The primitives are in `backend/core/resilience.py` and are shared by every upstr
 
 - **Model.** LightGBM with a `lambdarank` objective, 150 trees, 15 leaves, `min_child_samples=20`. Parameters were fixed before the benchmark was run and are not tuned on its folds.
 - **Features (14).** Cosine similarity between the goals and the POI description (`all-MiniLM-L6-v2`), that score's percentile within the request, a category match flag plus one flag per goal and category pair, and four signals of an established place: a Wikipedia or Wikidata tag, tag count, a website or opening hours, a `tourism=*` tag.
-- **Training data.** OpenStreetMap candidate pools for 8 city neighbourhoods (`backend/bench/fixtures/`), each judged against 3 goal sets on a 0 to 4 scale by an LLM judge (`backend/bench/label_pois.py`). The trainer reads the labels from `backend/bench/labels/`. Two cities are held out and never trained on.
+- **Training data.** OpenStreetMap candidate pools for 4 city neighbourhoods (`backend/bench/fixtures/`), 226 to 266 places each, judged against 5 goal sets per city on a 0 to 4 scale by an LLM judge (`backend/bench/label_pois.py`). The trainer reads the labels from `backend/bench/labels/`. Four more scenarios are defined but not fetched yet (Overpass was down); running the fixture and label scripts adds them. The shipped model trains on 3 cities and London is held out for the promotion gate.
 - **Selection.** After scoring, each goal is guaranteed its best-ranked stop, and the remaining slots are filled by score with a per-category cap.
 - **Explanations.** Each response carries per-stop feature values and SHAP contributions (`ranking_explanations`) and global feature importance.
-- **Feedback loop.** `POST /api/feedback` stores a thumbs up or down. Every 10 new signals a candidate is trained on the base set plus all feedback, then scored against the serving model on the two held-out cities. It is promoted only if its NDCG@10 is within 0.01 of the incumbent or better. Every run, promoted or rejected, is written to `model_versions`. The model file is replaced atomically.
+- **Feedback loop.** `POST /api/feedback` stores a thumbs up or down. Every 10 new signals a candidate is trained on the base set plus all feedback, then scored against the serving model on the held-out city set, which neither trained on. It is promoted only if its NDCG@10 is within 0.01 of the incumbent or better. Every run, promoted or rejected, is written to `model_versions`. The model file is replaced atomically.
 - **Fallback.** With no loadable model, stops are ordered by the cosine feature alone and the response is flagged `ranker:semantic`.
 
 ## Routing
@@ -229,7 +252,7 @@ The primitives are in `backend/core/resilience.py` and are shared by every upstr
 3. **Ordering.** `vrp.solve_day` models each day as an open path from the traveller's start location (a dummy end node turns OR-Tools' closed tour into a path). The objective is travel time plus a penalty for each second a stop is reached outside its preferred window: nature in the morning, museums in the afternoon, nightlife in the evening, food stops spread across meal times. The solver runs guided local search for 0.25 s per day.
 4. **Trim.** If a day runs past the time the traveller has, the lowest-ranked stop is dropped and the day is solved again.
 
-**Why soft windows.** The first version used hard time windows. A packed day had no feasible solution, so the windows were dropped and a greedy heuristic shipped in its place. With soft windows a stop outside its window is allowed and costs one travel-second per second, so there is always a feasible answer and the solver trades walking against timing. The greedy heuristic remains as the fallback (`route:greedy`).
+**Why soft windows.** The first version used hard time windows. A packed day had no feasible solution, so the windows were dropped and a greedy heuristic shipped in its place. With soft windows a stop outside its window is allowed and costs a penalty per second (travel is weighted 6:1 against it, from the benchmark sweep), so there is always a feasible answer and the solver trades walking against timing. The greedy heuristic remains as the fallback (`route:greedy`).
 
 ## Writer contract
 
