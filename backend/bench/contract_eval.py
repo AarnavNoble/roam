@@ -78,6 +78,9 @@ def record() -> None:
     from backend.bench.legacy_prompt import build_prompt as legacy_prompt
     from backend.services import llm, writer
 
+    from backend.db.session import run_migrations
+    run_migrations()  # the POI cache table must exist
+
     done = json.loads(RECORDINGS.read_text()) if RECORDINGS.exists() else []
     have = {r["case"] for r in done}
     for case in build_cases():

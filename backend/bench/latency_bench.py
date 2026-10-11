@@ -65,6 +65,9 @@ def main():
     parser.add_argument("--trials", type=int, default=2)
     args = parser.parse_args()
 
+    from backend.db.session import run_migrations
+    run_migrations()  # the POI cache table must exist
+
     runs = []
     for trial in range(args.trials):
         for scenario in SCENARIOS:

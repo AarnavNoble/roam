@@ -1,21 +1,25 @@
 """
 Route ordering benchmark.
 
-Compares the travel cost of four strategies for ordering a day's stops:
+Five ways of ordering one day's stops, on days sampled from real POI pools:
 
-  rank_order   POIs in relevance order, no spatial reasoning at all.
-               This is the honest "no optimizer" baseline.
-  greedy_nn    Global greedy nearest-neighbour from the start location.
-  time_aware   What the app actually ships (scheduler._time_aware_order):
-               bucket by time of day, greedy nearest-neighbour inside each bucket.
-  ortools      Unconstrained OR-Tools TSP (vrp.solve_tsp). Effectively a lower
-               bound on travel time, since it optimises travel and nothing else.
+  rank_order      stops in relevance order, no spatial reasoning. The floor.
+  greedy_nn       nearest neighbour from the start location, ignoring time of day
+  time_aware      the heuristic that used to ship: bucket by time of day, then
+                  nearest neighbour inside each bucket
+  ortools         what ships now (vrp.solve_day): shortest path subject to soft
+                  time-of-day windows
+  ortools_free    the same solver with the windows switched off. A lower bound
+                  on travel, since it optimises travel and nothing else.
 
-The gap between time_aware and ortools is the price paid for scheduling
-nature in the morning and nightlife at night. The gap between rank_order and
-time_aware is what the scheduling layer earns over shipping nothing.
+Each is scored on two things, because either alone is easy to win: minutes of
+travel (start location to first stop, then stop to stop) and minutes by which
+arrivals fall outside their preferred windows (vrp.preferred_windows).
 
-Run: python -m backend.bench.route_bench
+Days are sampled with a fixed seed from each fixture's pool, restricted to the
+scenario's goal categories, so the benchmark does not depend on the ranker.
+
+Run: python -m backend.bench.route_bench [--sweep]
 """
 
 import argparse
@@ -26,197 +30,166 @@ from pathlib import Path
 import numpy as np
 
 from backend.bench.fixtures import load_all
-from backend.ml.optimizer.distance import build_time_matrix
-from backend.ml.optimizer.scheduler import assign_days, _greedy_nn, _time_aware_order
-from backend.ml.optimizer.vrp import solve_tsp
+from backend.ml.optimizer.distance import haversine_matrix
+from backend.ml.optimizer.scheduler import _greedy_nn, _time_aware_order
+from backend.ml.optimizer.vrp import DAY_START_SEC, solve_day, window_violation_s
 
-RESULTS_PATH = Path(__file__).resolve().parent / "results_route.json"
-SOLVER_SWEEP_S = [0.1, 0.25, 0.5, 1.0, 2.0, 5.0, 10.0]
+RESULTS_PATH = Path(__file__).resolve().parent / "results" / "route.json"
+DAY_SIZES = [4, 6, 9]          # stops per day at relaxed / moderate / packed pace
+DAYS_PER_SIZE = 5              # sampled days per scenario per size
+SWEEP_S = [0.02, 0.05, 0.1, 0.25, 0.5, 1.0, 2.0]
+WEIGHT_SWEEP = [1, 2, 4, 6, 8, 16]
+SEED = 0
 
-
-def _n_days(duration_hours: int) -> int:
-    import math
-    return max(1, math.ceil(duration_hours / 10))
-
-
-def tour_cost(order: list[int], matrix: np.ndarray) -> int:
-    """Total travel seconds for a visit order."""
-    return int(sum(matrix[a][b] for a, b in zip(order, order[1:])))
+GOAL_TO_CAT = {"adventure": "attraction", "hidden_gems": "attraction"}
 
 
-def strategy_rank_order(pois, matrix, start_node):
-    return list(range(len(pois)))
-
-
-def strategy_greedy_nn(pois, matrix, start_node):
-    return _greedy_nn(list(range(len(pois))), matrix, start_node)
-
-
-def strategy_time_aware(pois, matrix, start_node):
-    return _time_aware_order(pois, matrix, start_node=start_node)
-
-
-def strategy_ortools(pois, matrix, start_node, time_limit_s=10.0):
-    return solve_tsp(pois, matrix, start_node=start_node, time_limit_s=time_limit_s)
-
-
-STRATEGIES = {
-    "rank_order": strategy_rank_order,
-    "greedy_nn": strategy_greedy_nn,
-    "time_aware": strategy_time_aware,
-    "ortools": strategy_ortools,
-}
-
-
-def build_days(scenario: dict) -> list[tuple[list[dict], np.ndarray, int]]:
-    """
-    Reproduce the scheduler's day assignment, returning per-day
-    (pois, day_matrix, start_node) tuples ready for any ordering strategy.
-    """
-    pois = scenario["pois"]
-    if not pois:
-        return []
-
-    depot = {"lat": scenario["start_lat"], "lon": scenario["start_lon"],
-             "category": "_depot", "name": "_start"}
-    full_matrix = build_time_matrix([depot] + pois, scenario["transport"])
-    time_matrix = full_matrix[1:, 1:]
-    depot_to_poi = full_matrix[0, 1:]
-
-    n_days = _n_days(scenario["duration_hours"])
-    day_assignments = assign_days(pois, n_days, time_matrix)
-
+def sample_days(scenarios: list[dict]) -> list[dict]:
+    """[{scenario, pois, matrix, depot_times}] with a fixed seed."""
+    rng = np.random.default_rng(SEED)
     days = []
-    for day_num, indices in enumerate(day_assignments):
-        if not indices:
-            continue
-        day_pois = [pois[i] for i in indices]
-        day_matrix = time_matrix[np.ix_(indices, indices)]
-        if day_num == 0:
-            start_node = int(np.argmin(depot_to_poi[indices]))
-        else:
-            start_node = 0
-        days.append((day_pois, day_matrix, start_node))
+    for sc in scenarios:
+        cats = {GOAL_TO_CAT.get(g, g) for g in sc["goals"]}
+        pool = [p for p in sc["pois"] if p.get("category") in cats]
+        depot = {"lat": sc["start_lat"], "lon": sc["start_lon"]}
+        for size in DAY_SIZES:
+            if len(pool) < size:
+                continue
+            for _ in range(DAYS_PER_SIZE):
+                pois = [pool[i] for i in rng.choice(len(pool), size=size, replace=False)]
+                full = haversine_matrix([depot] + pois, sc["transport"])
+                days.append({"scenario": sc["name"], "pois": pois,
+                             "matrix": full[1:, 1:], "depot_times": full[0, 1:]})
     return days
 
 
-def run_comparison(scenarios: list[dict], solver_time_s: float) -> dict:
-    """Run every strategy over every scenario day. Returns per-strategy totals."""
-    per_strategy = {name: {"travel_s": [], "wall_s": []} for name in STRATEGIES}
-    per_scenario = []
-
-    for scenario in scenarios:
-        days = build_days(scenario)
-        if not days:
-            print(f"  {scenario['name']}: no POIs, skipped")
-            continue
-
-        row = {"name": scenario["name"], "n_pois": len(scenario["pois"]),
-               "n_days": len(days), "strategies": {}}
-
-        for name, fn in STRATEGIES.items():
-            total_travel = 0
-            total_wall = 0.0
-            for day_pois, day_matrix, start_node in days:
-                t0 = time.perf_counter()
-                if name == "ortools":
-                    order = fn(day_pois, day_matrix, start_node, time_limit_s=solver_time_s)
-                else:
-                    order = fn(day_pois, day_matrix, start_node)
-                total_wall += time.perf_counter() - t0
-                total_travel += tour_cost(order, day_matrix)
-
-            per_strategy[name]["travel_s"].append(total_travel)
-            per_strategy[name]["wall_s"].append(total_wall)
-            row["strategies"][name] = {"travel_s": total_travel, "wall_s": round(total_wall, 4)}
-
-        stops = sum(len(d[0]) for d in days)
-        print(f"  {scenario['name']:<18} {len(scenario['pois']):>3} POIs, "
-              f"{stops:>2} stops, {len(days)} day(s)")
-        per_scenario.append(row)
-
-    return {"per_strategy": per_strategy, "per_scenario": per_scenario}
+def order_rank(day):
+    return list(range(len(day["pois"])))
 
 
-def solver_sweep(scenarios: list[dict]) -> list[dict]:
-    """
-    Sweep the OR-Tools time limit to find where tour quality plateaus.
-    Answers whether the hard-coded 10s budget buys anything.
-    """
-    all_days = []
-    for scenario in scenarios:
-        all_days.extend(build_days(scenario))
-    if not all_days:
-        return []
+def order_greedy(day):
+    first = int(np.argmin(day["depot_times"]))
+    rest = [i for i in range(len(day["pois"])) if i != first]
+    return [first] + _greedy_nn(rest, day["matrix"], first)
 
+
+def order_time_aware(day):
+    return _time_aware_order(day["pois"], day["matrix"], start_node=int(np.argmin(day["depot_times"])))
+
+
+def order_ortools(day, time_limit_s=None, window_penalty=None):
+    kwargs = {}
+    if time_limit_s is not None:
+        kwargs["time_limit_s"] = time_limit_s
+    if window_penalty is not None:
+        kwargs["window_penalty"] = window_penalty
+    order = solve_day(day["pois"], day["matrix"], day["depot_times"], DAY_START_SEC, **kwargs)
+    return order if order is not None else order_time_aware(day)
+
+
+STRATEGIES = {
+    "rank_order": order_rank,
+    "greedy_nn": order_greedy,
+    "time_aware": order_time_aware,
+    "ortools": order_ortools,
+    "ortools_free": lambda day: order_ortools(day, window_penalty=0),
+}
+
+
+def travel_s(day: dict, order: list[int]) -> int:
+    legs = sum(int(day["matrix"][a][b]) for a, b in zip(order, order[1:]))
+    return int(day["depot_times"][order[0]]) + legs
+
+
+def violation_s(day: dict, order: list[int]) -> int:
+    return window_violation_s(day["pois"], order, day["matrix"], day["depot_times"], DAY_START_SEC)
+
+
+def compare(days: list[dict]) -> dict:
+    out = {}
+    for name, fn in STRATEGIES.items():
+        travel = viol = 0
+        t0 = time.perf_counter()
+        for day in days:
+            order = fn(day)
+            assert sorted(order) == list(range(len(day["pois"]))), f"{name} dropped a stop"
+            travel += travel_s(day, order)
+            viol += violation_s(day, order)
+        out[name] = {"travel_min": round(travel / 60, 1), "window_violation_min": round(viol / 60, 1),
+                     "ms_per_day": round((time.perf_counter() - t0) * 1000 / len(days), 2)}
+    return out
+
+
+def sweep(days: list[dict]) -> list[dict]:
+    """Does a longer solver budget buy a better route? Objective = travel + violation."""
     rows = []
-    for limit in SOLVER_SWEEP_S:
-        total_travel = 0
-        total_wall = 0.0
-        for day_pois, day_matrix, start_node in all_days:
-            t0 = time.perf_counter()
-            order = solve_tsp(day_pois, day_matrix, start_node=start_node, time_limit_s=limit)
-            total_wall += time.perf_counter() - t0
-            total_travel += tour_cost(order, day_matrix)
-        rows.append({
-            "time_limit_s": limit,
-            "total_travel_s": total_travel,
-            "total_wall_s": round(total_wall, 3),
-            "wall_per_call_s": round(total_wall / len(all_days), 3),
-        })
-        print(f"  limit={limit:>5}s  travel={total_travel // 60:>4} min  "
-              f"wall={total_wall:>6.2f}s  ({total_wall / len(all_days):.3f}s/call)")
+    for limit in SWEEP_S:
+        cost = 0
+        t0 = time.perf_counter()
+        for day in days:
+            order = order_ortools(day, time_limit_s=limit)
+            cost += travel_s(day, order) + violation_s(day, order)
+        rows.append({"time_limit_s": limit, "objective_min": round(cost / 60, 1),
+                     "ms_per_day": round((time.perf_counter() - t0) * 1000 / len(days), 1)})
+        print(f"  limit={limit:>5}s  objective={rows[-1]['objective_min']:>8} min  "
+              f"{rows[-1]['ms_per_day']:>7} ms/day")
     return rows
 
 
-def report(comparison: dict) -> None:
-    per_strategy = comparison["per_strategy"]
-    baseline = sum(per_strategy["rank_order"]["travel_s"])
+def weight_sweep(days: list[dict]) -> list[dict]:
+    """The travel / timing trade-off as TRAVEL_WEIGHT moves. Each row is one point on the curve."""
+    rows = []
+    for weight in WEIGHT_SWEEP:
+        travel = viol = 0
+        for day in days:
+            order = solve_day(day["pois"], day["matrix"], day["depot_times"], DAY_START_SEC,
+                              travel_weight=weight) or order_time_aware(day)
+            travel += travel_s(day, order)
+            viol += violation_s(day, order)
+        rows.append({"travel_weight": weight, "travel_min": round(travel / 60, 1),
+                     "window_violation_min": round(viol / 60, 1)})
+        print(f"  weight={weight:>3}  travel={rows[-1]['travel_min']:>8} min  "
+              f"off-window={rows[-1]['window_violation_min']:>9} min")
+    return rows
 
-    print("\n" + "=" * 68)
-    print("ROUTE ORDERING — total travel time across all scenarios")
-    print("=" * 68)
-    print(f"{'strategy':<14}{'travel (min)':>14}{'vs rank_order':>16}{'wall (s)':>12}")
-    print("-" * 68)
-    for name in STRATEGIES:
-        travel = sum(per_strategy[name]["travel_s"])
-        wall = sum(per_strategy[name]["wall_s"])
-        delta = (travel - baseline) / baseline * 100 if baseline else 0.0
-        marker = "" if name == "rank_order" else f"{delta:+.1f}%"
-        print(f"{name:<14}{travel / 60:>14.1f}{marker:>16}{wall:>12.2f}")
 
-    ta = sum(per_strategy["time_aware"]["travel_s"])
-    ot = sum(per_strategy["ortools"]["travel_s"])
-    if ot:
-        print("-" * 68)
-        print(f"time_aware costs {(ta - ot) / ot * 100:+.1f}% travel vs unconstrained TSP")
-        print(f"  (the price of time-of-day scheduling)")
+def report(results: dict, n_days: int) -> None:
+    base = results["time_aware"]
+    print("\n" + "=" * 78)
+    print(f"ROUTE ORDERING over {n_days} sampled days")
+    print("=" * 78)
+    print(f"{'strategy':<14}{'travel (min)':>14}{'vs time_aware':>15}{'off-window (min)':>18}{'ms/day':>10}")
+    print("-" * 78)
+    for name, r in results.items():
+        delta = (r["travel_min"] - base["travel_min"]) / base["travel_min"] * 100
+        print(f"{name:<14}{r['travel_min']:>14.1f}{delta:>+14.1f}%{r['window_violation_min']:>18.1f}"
+              f"{r['ms_per_day']:>10.2f}")
 
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--solver-time", type=float, default=10.0,
-                        help="OR-Tools time limit for the main comparison")
     parser.add_argument("--sweep", action="store_true",
-                        help="Also sweep solver time limits")
+                        help="also sweep the solver time limit and the travel weight")
     args = parser.parse_args()
 
-    scenarios = load_all()
-    print(f"Loaded {len(scenarios)} scenarios\n")
+    scenarios = [s for s in load_all() if s["pois"]]
+    days = sample_days(scenarios)
+    print(f"{len(scenarios)} scenarios, {len(days)} sampled days")
+    results = compare(days)
+    report(results, len(days))
 
-    comparison = run_comparison(scenarios, args.solver_time)
-    report(comparison)
-
-    sweep = []
+    sweep_rows, weight_rows = [], []
     if args.sweep:
-        print("\n" + "=" * 68)
-        print("SOLVER TIME LIMIT SWEEP")
-        print("=" * 68)
-        sweep = solver_sweep(scenarios)
+        print("\nSOLVER TIME LIMIT SWEEP")
+        sweep_rows = sweep(days)
+        print("\nTRAVEL WEIGHT SWEEP")
+        weight_rows = weight_sweep(days)
 
+    RESULTS_PATH.parent.mkdir(exist_ok=True)
     RESULTS_PATH.write_text(json.dumps(
-        {"comparison": comparison["per_scenario"], "sweep": sweep}, indent=2))
-    print(f"\nResults written to {RESULTS_PATH}")
+        {"days": len(days), "scenarios": len(scenarios), "strategies": results, "sweep": sweep_rows,
+         "weight_sweep": weight_rows}, indent=2))
+    print(f"\nWritten to {RESULTS_PATH}")
 
 
 if __name__ == "__main__":

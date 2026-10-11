@@ -1,0 +1,2901 @@
+[
+ {
+  "case": "paris_marais-0",
+  "trip": {
+   "city": "Paris",
+   "start_location": "Le Marais",
+   "duration_hours": 8,
+   "goals": [
+    "food",
+    "history"
+   ],
+   "transport": "walking",
+   "pace": "moderate",
+   "budget": "mid",
+   "style": "solo",
+   "dietary": "none",
+   "mobility": "moderate",
+   "familiarity": "first_time",
+   "start_time": "morning",
+   "notes": "",
+   "trip_date": "",
+   "start_lat": 48.8603823,
+   "start_lon": 2.360742
+  },
+  "route": [
+   {
+    "day": 1,
+    "pois": [
+     {
+      "id": 247696094,
+      "name": "Les Enfants Rouges",
+      "lat": 48.8630297,
+      "lon": 2.3612527,
+      "category": "food",
+      "description": "Les Enfants Rouges food restaurant",
+      "tags": {
+       "amenity": "restaurant",
+       "contact:tripadvisor": "https://www.tripadvisor.com/Restaurant_Review-g187147-d1175069-Reviews-Les_Enfants_Rouges-Paris_Ile_de_France.html",
+       "contact:yelp": "https://www.yelp.co.uk/biz/les-enfants-rouges-paris-3",
+       "diet:vegetarian": "no",
+       "name": "Les Enfants Rouges",
+       "phone": "+33 1 48 87 80 61"
+      },
+      "relevance_score": 0.4402771592140198,
+      "arrival_time": "09:03",
+      "visit_duration_min": 60
+     },
+     {
+      "id": 4051544986,
+      "name": "Charlotte Delbo",
+      "lat": 48.8439358,
+      "lon": 2.3514071,
+      "category": "history",
+      "description": "Charlotte Delbo history memorial information",
+      "tags": {
+       "board_type": "history",
+       "check_date": "2025-02-18",
+       "historic": "memorial",
+       "information": "board",
+       "memorial": "plaque",
+       "name": "Charlotte Delbo",
+       "subject:wikidata": "Q452272",
+       "subject:wikipedia": "fr:Charlotte Delbo",
+       "tourism": "information"
+      },
+      "relevance_score": 0.24917656183242798,
+      "arrival_time": "10:30",
+      "visit_duration_min": 90
+     },
+     {
+      "id": 251670428,
+      "name": "Bistro des Po\u00e8mes",
+      "lat": 48.8493501,
+      "lon": 2.3391528,
+      "category": "food",
+      "description": "Bistro des Po\u00e8mes food french restaurant",
+      "tags": {
+       "addr:city": "Paris",
+       "addr:housenumber": "7",
+       "addr:postcode": "75006",
+       "addr:street": "Rue Corneille",
+       "amenity": "restaurant",
+       "contact:phone": "+33 1 71 32 32 63",
+       "cuisine": "french",
+       "name": "Bistro des Po\u00e8mes",
+       "opening_hours": "Mo-Su 11:45-22:30",
+       "source:opening_hours": "website",
+       "website": "https://bistrodeslettres.com/bistro-des-poemes"
+      },
+      "relevance_score": 0.43211567401885986,
+      "arrival_time": "12:13",
+      "visit_duration_min": 60
+     },
+     {
+      "id": 702915148,
+      "name": "Jacob Kaplan",
+      "lat": 48.8569879,
+      "lon": 2.3587014,
+      "category": "history",
+      "description": "Jacob Kaplan history memorial",
+      "tags": {
+       "historic": "memorial",
+       "memorial": "plaque",
+       "name": "Jacob Kaplan"
+      },
+      "relevance_score": 0.2424459159374237,
+      "arrival_time": "13:33",
+      "visit_duration_min": 90
+     },
+     {
+      "id": 1440131521,
+      "name": "Thermes de Cluny",
+      "lat": 48.8506016,
+      "lon": 2.3432743,
+      "category": "history",
+      "description": "Thermes de Cluny history archaeological site",
+      "tags": {
+       "archaeological_site": "baths",
+       "historic": "archaeological_site",
+       "historic:civilization": "gallo-roman",
+       "name": "Thermes de Cluny",
+       "name:es": "Termas de Cluny",
+       "website": "https://archeologie.culture.gouv.fr/paris/fr/les-thermes-de-cluny",
+       "wikidata": "Q2669368",
+       "wikipedia": "fr:Thermes de Cluny"
+      },
+      "relevance_score": 0.3670017719268799,
+      "arrival_time": "15:19",
+      "visit_duration_min": 90
+     },
+     {
+      "id": 247455924,
+      "name": "La Robe et le Palais",
+      "lat": 48.8586437,
+      "lon": 2.3458501,
+      "category": "food",
+      "description": "La Robe et le Palais food bistro;french restaurant",
+      "tags": {
+       "amenity": "restaurant",
+       "cuisine": "bistro;french",
+       "indoor_seating": "yes",
+       "name": "La Robe et le Palais",
+       "outdoor_seating": "yes",
+       "phone": "+33 1 45 08 07 41",
+       "ref:FR:SIRET": "80982629000029",
+       "website": "https://www.robe-et-palais.com/",
+       "wheelchair": "limited"
+      },
+      "relevance_score": 0.42472949624061584,
+      "arrival_time": "17:00",
+      "visit_duration_min": 60
+     }
+    ],
+    "travel_times_sec": [
+     1614,
+     777,
+     1197,
+     960,
+     657
+    ],
+    "total_travel_min": 86
+   }
+  ],
+  "answers": {
+   "keyed": {
+    "raw": {
+     "overview": "Start your Paris adventure in the vibrant Marais, savoring tasty bites and diving into poignant history, all at a relaxed walking pace.",
+     "days": [
+      {
+       "day": 1,
+       "theme": "Flavors & Memory Walk",
+       "summary": "A balanced day of delicious food stops and moving historical sites."
+      }
+     ],
+     "stops": [
+      {
+       "id": 1,
+       "description": "Grab a quick, tasty lunch at Les Enfants Rouges, the city\u2019s oldest covered market, where you can sample fresh, affordable bites from diverse stalls\u2014perfect for a solo foodie on a budget.",
+       "tip": "Arrive early to avoid the lunch rush and try the falafel or a fresh tartine."
+      },
+      {
+       "id": 2,
+       "description": "Visit Charlotte Delbo, a solemn memorial honoring the French Resistance heroine, offering a reflective glimpse into WWII history that resonates with solo travelers seeking depth.",
+       "tip": "Allow extra time for the audio guide; it enriches the experience."
+      },
+      {
+       "id": 3,
+       "description": "Enjoy a relaxed French bistro lunch at Bistro des Po\u00e8mes, where classic dishes are served in a literary\u2011themed setting, giving you a taste of Parisian culture and cuisine.",
+       "tip": "Ask for the daily special\u2014it\u2019s often the best value and changes frequently."
+      },
+      {
+       "id": 4,
+       "description": "Explore Jacob Kaplan, a moving memorial that tells the story of a lesser\u2011known resistance figure, blending personal narratives with broader historical context.",
+       "tip": "Bring a notebook to jot down names and dates; the plaques are dense with information."
+      },
+      {
+       "id": 5,
+       "description": "Wander through Thermes de Cluny, the archaeological site of ancient Roman baths, where you can imagine daily life in antiquity while enjoying the open\u2011air stone arches.",
+       "tip": "Wear comfortable shoes; the stone floors can be uneven."
+      },
+      {
+       "id": 6,
+       "description": "End the day at La Robe et le Palais, a cozy bistro offering classic French fare in a relaxed atmosphere, ideal for a solo dinner after a day of walking and learning.",
+       "tip": "Reserve a table for the evening to guarantee a seat, especially on weekends."
+      }
+     ],
+     "excluded": []
+    },
+    "model": "openai/gpt-oss-120b",
+    "prompt_tokens": 1050,
+    "completion_tokens": 478,
+    "seconds": 1.51
+   },
+   "legacy": {
+    "raw": {
+     "days": [
+      {
+       "day": 1,
+       "theme": "Flavors & Footsteps of History",
+       "stops": [
+        {
+         "name": "Les Enfants Rouges",
+         "arrival_time": "09:03",
+         "duration_min": 60,
+         "description": "Start your day with a relaxed breakfast\u2011lunch at Paris\u2019 oldest covered market. Grab a fresh croissant, a savory tartine or a tasty falafel from one of the stalls \u2013 perfect fuel for a day of walking and a great way to taste the multicultural bite of the Marais.",
+         "tip": "Arrive early to beat the crowd and ask for the \u201cmenu du jour\u201d \u2013 it\u2019s usually the best value.",
+         "lat": 48.8630297,
+         "lon": 2.3612527,
+         "category": "food"
+        },
+        {
+         "name": "Charlotte Delbo",
+         "arrival_time": "10:30",
+         "duration_min": 90,
+         "description": "A short walk brings you to the Charlotte\u202fDelbo memorial plaque, honoring the French Resistance heroine. Take a moment to read the text and reflect on the city\u2019s wartime bravery \u2013 a poignant slice of history for a first\u2011time visitor.",
+         "tip": "Bring a notebook; the plaque is small but the story is big, and you\u2019ll want to remember it.",
+         "lat": 48.8439358,
+         "lon": 2.3514071,
+         "category": "history"
+        },
+        {
+         "name": "Bistro des Po\u00e8mes",
+         "arrival_time": "12:13",
+         "duration_min": 60,
+         "description": "Nestled in the literary\u2011rich 6th arrondissement, this cozy bistro serves classic French dishes at reasonable prices. Enjoy a leisurely lunch of quiche Lorraine or a seasonal salad while soaking up the neighborhood\u2019s historic charm.",
+         "tip": "Ask for the \u201cplat du jour\u201d and a glass of house wine \u2013 it\u2019s the best way to stay on budget without sacrificing taste.",
+         "lat": 48.8493501,
+         "lon": 2.3391528,
+         "category": "food"
+        },
+        {
+         "name": "Jacob Kaplan",
+         "arrival_time": "13:33",
+         "duration_min": 90,
+         "description": "Continue your historical thread with the Jacob Kaplan memorial plaque, a quiet reminder of the Jewish community\u2019s legacy in Paris. The site sits on a pleasant pedestrian street, perfect for a reflective stroll.",
+         "tip": "Combine this stop with a quick coffee at a nearby caf\u00e9; the area has several charming spots with outdoor seating.",
+         "lat": 48.8569879,
+         "lon": 2.3587014,
+         "category": "history"
+        },
+        {
+         "name": "Thermes de Cluny",
+         "arrival_time": "15:19",
+         "duration_min": 90,
+         "description": "Dive into ancient Roman\u2011by\u2011medieval layers at the Thermes de Cluny, an archaeological site beneath the Mus\u00e9e de Cluny. Explore the well\u2011preserved baths and imagine daily life in Gallo\u2011Roman Paris \u2013 a perfect blend of history and intrigue for a solo explorer.",
+         "tip": "Wear comfortable shoes; the underground passages can be a bit uneven, and the site closes early in winter.",
+         "lat": 48.8506016,
+         "lon": 2.3432743,
+         "category": "history"
+        },
+        {
+         "name": "La Robe et le Palais",
+         "arrival_time": "17:00",
+         "duration_min": 60,
+         "description": "End the day with a relaxed dinner at this elegant bistro, offering a refined yet affordable French menu. The ambience, with both indoor and outdoor seating, lets you unwind after a day of walking while still staying within a mixed budget.",
+         "tip": "Reserve a table for the terrace if the weather is nice \u2013 it\u2019s a lovely spot to watch Parisians wind down.",
+         "lat": 48.8586437,
+         "lon": 2.3458501,
+         "category": "food"
+        }
+       ],
+       "summary": "From market bites to hidden memorials and ancient baths, the day weaves food and history into a balanced Parisian adventure."
+      }
+     ],
+     "overview": "You\u2019ll wander from the bustling Les Enfants Rouges market through quiet historic plaques, savor a classic bistro lunch, explore Roman\u2011era baths, and finish with a delightful dinner\u2014all on foot, at a comfortable pace, and with a mix of free and reasonably priced experiences."
+    },
+    "model": "openai/gpt-oss-120b",
+    "prompt_tokens": 5153,
+    "completion_tokens": 1064,
+    "seconds": 2.9
+   }
+  }
+ },
+ {
+  "case": "paris_marais-1",
+  "trip": {
+   "city": "Paris",
+   "start_location": "Le Marais",
+   "duration_hours": 8,
+   "goals": [
+    "food",
+    "history"
+   ],
+   "transport": "walking",
+   "pace": "moderate",
+   "budget": "mid",
+   "style": "solo",
+   "dietary": "none",
+   "mobility": "moderate",
+   "familiarity": "first_time",
+   "start_time": "morning",
+   "notes": "I love street food and want great photo spots.",
+   "trip_date": "",
+   "start_lat": 48.8603823,
+   "start_lon": 2.360742
+  },
+  "route": [
+   {
+    "day": 1,
+    "pois": [
+     {
+      "id": 247696094,
+      "name": "Les Enfants Rouges",
+      "lat": 48.8630297,
+      "lon": 2.3612527,
+      "category": "food",
+      "description": "Les Enfants Rouges food restaurant",
+      "tags": {
+       "amenity": "restaurant",
+       "contact:tripadvisor": "https://www.tripadvisor.com/Restaurant_Review-g187147-d1175069-Reviews-Les_Enfants_Rouges-Paris_Ile_de_France.html",
+       "contact:yelp": "https://www.yelp.co.uk/biz/les-enfants-rouges-paris-3",
+       "diet:vegetarian": "no",
+       "name": "Les Enfants Rouges",
+       "phone": "+33 1 48 87 80 61"
+      },
+      "relevance_score": 0.4402771592140198,
+      "arrival_time": "09:03",
+      "visit_duration_min": 60
+     },
+     {
+      "id": 4051544986,
+      "name": "Charlotte Delbo",
+      "lat": 48.8439358,
+      "lon": 2.3514071,
+      "category": "history",
+      "description": "Charlotte Delbo history memorial information",
+      "tags": {
+       "board_type": "history",
+       "check_date": "2025-02-18",
+       "historic": "memorial",
+       "information": "board",
+       "memorial": "plaque",
+       "name": "Charlotte Delbo",
+       "subject:wikidata": "Q452272",
+       "subject:wikipedia": "fr:Charlotte Delbo",
+       "tourism": "information"
+      },
+      "relevance_score": 0.24917656183242798,
+      "arrival_time": "10:30",
+      "visit_duration_min": 90
+     },
+     {
+      "id": 251670428,
+      "name": "Bistro des Po\u00e8mes",
+      "lat": 48.8493501,
+      "lon": 2.3391528,
+      "category": "food",
+      "description": "Bistro des Po\u00e8mes food french restaurant",
+      "tags": {
+       "addr:city": "Paris",
+       "addr:housenumber": "7",
+       "addr:postcode": "75006",
+       "addr:street": "Rue Corneille",
+       "amenity": "restaurant",
+       "contact:phone": "+33 1 71 32 32 63",
+       "cuisine": "french",
+       "name": "Bistro des Po\u00e8mes",
+       "opening_hours": "Mo-Su 11:45-22:30",
+       "source:opening_hours": "website",
+       "website": "https://bistrodeslettres.com/bistro-des-poemes"
+      },
+      "relevance_score": 0.43211567401885986,
+      "arrival_time": "12:13",
+      "visit_duration_min": 60
+     },
+     {
+      "id": 702915148,
+      "name": "Jacob Kaplan",
+      "lat": 48.8569879,
+      "lon": 2.3587014,
+      "category": "history",
+      "description": "Jacob Kaplan history memorial",
+      "tags": {
+       "historic": "memorial",
+       "memorial": "plaque",
+       "name": "Jacob Kaplan"
+      },
+      "relevance_score": 0.2424459159374237,
+      "arrival_time": "13:33",
+      "visit_duration_min": 90
+     },
+     {
+      "id": 1440131521,
+      "name": "Thermes de Cluny",
+      "lat": 48.8506016,
+      "lon": 2.3432743,
+      "category": "history",
+      "description": "Thermes de Cluny history archaeological site",
+      "tags": {
+       "archaeological_site": "baths",
+       "historic": "archaeological_site",
+       "historic:civilization": "gallo-roman",
+       "name": "Thermes de Cluny",
+       "name:es": "Termas de Cluny",
+       "website": "https://archeologie.culture.gouv.fr/paris/fr/les-thermes-de-cluny",
+       "wikidata": "Q2669368",
+       "wikipedia": "fr:Thermes de Cluny"
+      },
+      "relevance_score": 0.3670017719268799,
+      "arrival_time": "15:19",
+      "visit_duration_min": 90
+     },
+     {
+      "id": 247455924,
+      "name": "La Robe et le Palais",
+      "lat": 48.8586437,
+      "lon": 2.3458501,
+      "category": "food",
+      "description": "La Robe et le Palais food bistro;french restaurant",
+      "tags": {
+       "amenity": "restaurant",
+       "cuisine": "bistro;french",
+       "indoor_seating": "yes",
+       "name": "La Robe et le Palais",
+       "outdoor_seating": "yes",
+       "phone": "+33 1 45 08 07 41",
+       "ref:FR:SIRET": "80982629000029",
+       "website": "https://www.robe-et-palais.com/",
+       "wheelchair": "limited"
+      },
+      "relevance_score": 0.42472949624061584,
+      "arrival_time": "17:00",
+      "visit_duration_min": 60
+     }
+    ],
+    "travel_times_sec": [
+     1614,
+     777,
+     1197,
+     960,
+     657
+    ],
+    "total_travel_min": 86
+   }
+  ],
+  "answers": {
+   "keyed": {
+    "raw": {
+     "overview": "Start your day in Le\u202fMarais with a tasty street\u2011food bite, wander through poignant historic sites, enjoy a classic French bistro lunch, and finish with a relaxed dinner\u2014all at a comfortable walking pace.",
+     "days": [
+      {
+       "day": 1,
+       "theme": "History & Flavors",
+       "summary": "A balanced stroll through food markets, memorials, and a historic bath site, ending with a cozy bistro."
+      }
+     ],
+     "stops": [
+      {
+       "id": 1,
+       "description": "Grab a quick, flavorful bite at Les Enfants Rouges, the city\u2019s oldest covered market, perfect for street\u2011food lovers and photo\u2011ops among colorful stalls.",
+       "tip": "Arrive early to beat the lunch rush and try the falafel sandwich."
+      },
+      {
+       "id": 2,
+       "description": "Visit Charlotte\u202fDelbo, a moving memorial honoring the resistance fighter, offering a deep dive into WWII history that resonates with solo travelers seeking reflection.",
+       "tip": "Allow extra time for the audio guide; it enriches the experience."
+      },
+      {
+       "id": 3,
+       "description": "Enjoy a relaxed lunch at Bistro des Po\u00e8mes, where classic French dishes are served in a literary\u2011themed setting, ideal for a solo foodie pause.",
+       "tip": "Ask for the daily special \u2013 it\u2019s often the best value."
+      },
+      {
+       "id": 4,
+       "description": "Explore Jacob\u202fKaplan, another poignant memorial that tells the story of a lesser\u2011known hero, providing a quiet spot for contemplation and great photos of its modest fa\u00e7ade.",
+       "tip": "Respect the solemn atmosphere; keep voices low."
+      },
+      {
+       "id": 5,
+       "description": "Step into Thermes de Cluny, the archaeological remains of ancient Roman baths, offering a fascinating glimpse into Paris\u2019s deep past and atmospheric stone arches perfect for photos.",
+       "tip": "Wear comfortable shoes; the stone floors can be uneven."
+      },
+      {
+       "id": 6,
+       "description": "End the day at La\u202fRobe et le Palais, a charming bistro serving French comfort food in a relaxed setting, great for winding down after a day of walking.",
+       "tip": "Reserve a table for the evening to ensure a seat without waiting."
+      }
+     ],
+     "excluded": []
+    },
+    "model": "openai/gpt-oss-120b",
+    "prompt_tokens": 1118,
+    "completion_tokens": 483,
+    "seconds": 1.37
+   },
+   "legacy": {
+    "raw": {
+     "days": [
+      {
+       "day": 1,
+       "theme": "Savory stroll & hidden history",
+       "stops": [
+        {
+         "name": "Les Enfants Rouges",
+         "arrival_time": "09:03",
+         "duration_min": 60,
+         "description": "Start your day with a bite at Paris' oldest covered market. Grab a fresh crepe or falafel from a street\u2011food stall \u2013 perfect for a solo traveler who loves street food and wants a photogenic, bustling market backdrop.",
+         "tip": "Arrive early; the market fills up fast and the best stalls are near the entrance.",
+         "lat": 48.8630297,
+         "lon": 2.3612527,
+         "category": "food"
+        },
+        {
+         "name": "Charlotte Delbo",
+         "arrival_time": "10:30",
+         "duration_min": 90,
+         "description": "A short walk brings you to the Charlotte Delbo memorial, a poignant plaque honoring the French Resistance heroine. History buffs will appreciate the concise narrative, and the quiet spot makes a nice contrast to the lively market.",
+         "tip": "Take a moment to read the inscription in French; a quick translation app will help you catch the details.",
+         "lat": 48.8439358,
+         "lon": 2.3514071,
+         "category": "history"
+        },
+        {
+         "name": "Bistro des Po\u00e8mes",
+         "arrival_time": "12:13",
+         "duration_min": 60,
+         "description": "Lunch at this literary\u2011themed bistro offers classic French dishes in a cozy setting \u2013 ideal for a balanced pace and a chance to refuel before more walking. The d\u00e9cor provides great photo opportunities for your Instagram feed.",
+         "tip": "Ask for the daily prix\u2011fixe menu; it\u2019s the best value and often includes a glass of house wine.",
+         "lat": 48.8493501,
+         "lon": 2.3391528,
+         "category": "food"
+        },
+        {
+         "name": "Jacob Kaplan",
+         "arrival_time": "13:33",
+         "duration_min": 90,
+         "description": "After lunch, wander to the Jacob Kaplan memorial. This modest plaque tells the story of a lesser\u2011known figure of the Holocaust, adding depth to your historical tour and giving you a quiet moment to reflect.",
+         "tip": "Combine the visit with a stroll through the nearby Rue des Rosiers for a quick snack of famous falafel.",
+         "lat": 48.8569879,
+         "lon": 2.3587014,
+         "category": "history"
+        },
+        {
+         "name": "Thermes de Cluny",
+         "arrival_time": "15:19",
+         "duration_min": 90,
+         "description": "Explore the ancient Roman baths beneath the Mus\u00e9e de Cluny. The underground arches and mosaics are a photographer\u2019s dream and satisfy your love of history with an atmospheric, off\u2011the\u2011beaten\u2011track experience.",
+         "tip": "Buy a combined ticket for the baths and the museum upstairs to save time and money.",
+         "lat": 48.8506016,
+         "lon": 2.3432743,
+         "category": "history"
+        },
+        {
+         "name": "La Robe et le Palais",
+         "arrival_time": "17:00",
+         "duration_min": 60,
+         "description": "End the day with a relaxed dinner at this stylish bistro. The outdoor seating lets you soak up the Parisian evening air while enjoying a well\u2011priced French menu \u2013 perfect for a solo traveler looking for a pleasant, low\u2011key finish.",
+         "tip": "Reserve a table for the terrace; it fills up quickly at sunset.",
+         "lat": 48.8586437,
+         "lon": 2.3458501,
+         "category": "food"
+        }
+       ],
+       "summary": "A tasty, history\u2011rich walk from market stalls to ancient baths, ending with a sunset dinner."
+      }
+     ],
+     "overview": "You\u2019ll wander from the lively Les Enfants Rouges market, dip into poignant memorials, savor a literary bistro lunch, discover Roman baths, and wrap up with a charming dinner on a terrace \u2013 all at a comfortable pace and full of photo\u2011worthy moments."
+    },
+    "model": "openai/gpt-oss-120b",
+    "prompt_tokens": 5285,
+    "completion_tokens": 991,
+    "seconds": 2.57
+   }
+  }
+ },
+ {
+  "case": "tokyo_shinjuku-0",
+  "trip": {
+   "city": "Tokyo",
+   "start_location": "Shinjuku",
+   "duration_hours": 8,
+   "goals": [
+    "food",
+    "nightlife"
+   ],
+   "transport": "walking",
+   "pace": "moderate",
+   "budget": "mid",
+   "style": "solo",
+   "dietary": "none",
+   "mobility": "moderate",
+   "familiarity": "first_time",
+   "start_time": "morning",
+   "notes": "",
+   "trip_date": "",
+   "start_lat": 35.6937632,
+   "start_lon": 139.7036319
+  },
+  "route": [
+   {
+    "day": 1,
+    "pois": [
+     {
+      "id": 1116408986,
+      "name": "\u83ef\u5c4b",
+      "lat": 35.7104132,
+      "lon": 139.7095433,
+      "category": "food",
+      "description": "\u83ef\u5c4b food restaurant",
+      "tags": {
+       "amenity": "restaurant",
+       "end_date": "2011-1-22",
+       "name": "\u83ef\u5c4b",
+       "name:en": "Hanaya"
+      },
+      "relevance_score": 0.4773065447807312,
+      "arrival_time": "09:23",
+      "visit_duration_min": 60
+     },
+     {
+      "id": 1544570312,
+      "name": "\u756a\u756a",
+      "lat": 35.6888424,
+      "lon": 139.6977812,
+      "category": "food",
+      "description": "\u756a\u756a food restaurant",
+      "tags": {
+       "amenity": "restaurant",
+       "level": "-1",
+       "name": "\u756a\u756a",
+       "wheelchair": "no"
+      },
+      "relevance_score": 0.4770839512348175,
+      "arrival_time": "10:54",
+      "visit_duration_min": 60
+     },
+     {
+      "id": 1952348371,
+      "name": "CHAMPION",
+      "lat": 35.6938268,
+      "lon": 139.7043072,
+      "category": "nightlife",
+      "description": "CHAMPION nightlife bar",
+      "tags": {
+       "addr:block_number": "1",
+       "addr:city": "\u65b0\u5bbf\u533a",
+       "addr:housenumber": "10",
+       "addr:neighbourhood": "1\u4e01\u76ee",
+       "addr:postcode": "160-0021",
+       "addr:province": "\u6771\u4eac\u90fd",
+       "addr:quarter": "\u6b4c\u821e\u4f0e\u753a",
+       "amenity": "bar",
+       "name": "CHAMPION",
+       "name:en": "Bar Champion",
+       "phone": "+81 3-5291-9333",
+       "wheelchair": "no"
+      },
+      "relevance_score": 0.596502959728241,
+      "arrival_time": "12:04",
+      "visit_duration_min": 120
+     },
+     {
+      "id": 2198521626,
+      "name": "Ale",
+      "lat": 35.6883031,
+      "lon": 139.696729,
+      "category": "nightlife",
+      "description": "Ale nightlife bar",
+      "tags": {
+       "amenity": "bar",
+       "level": "8",
+       "name": "Ale",
+       "source": "image,2013-03;Bing"
+      },
+      "relevance_score": 0.5925313234329224,
+      "arrival_time": "14:15",
+      "visit_duration_min": 120
+     },
+     {
+      "id": 2197568101,
+      "name": "\u5275\u4f5cDINING\u5f69",
+      "lat": 35.688284,
+      "lon": 139.698819,
+      "category": "nightlife",
+      "description": "\u5275\u4f5cDINING\u5f69 nightlife pub",
+      "tags": {
+       "amenity": "pub",
+       "name": "\u5275\u4f5cDINING\u5f69",
+       "name:en": "Aya"
+      },
+      "relevance_score": 0.5777568817138672,
+      "arrival_time": "16:17",
+      "visit_duration_min": 120
+     },
+     {
+      "id": 1116408987,
+      "name": "\u53cb\u4eba",
+      "lat": 35.7105002,
+      "lon": 139.7095727,
+      "category": "food",
+      "description": "\u53cb\u4eba food indian restaurant",
+      "tags": {
+       "amenity": "restaurant",
+       "cuisine": "indian",
+       "cuisine:ja": "\u30cd\u30d1\u30fc\u30eb\u6599\u7406; \u30a4\u30f3\u30c9\u6599\u7406",
+       "name": "\u53cb\u4eba",
+       "name:en": "Yujin",
+       "wheelchair": "limited"
+      },
+      "relevance_score": 0.4384530186653137,
+      "arrival_time": "18:49",
+      "visit_duration_min": 60
+     }
+    ],
+    "travel_times_sec": [
+     1888,
+     582,
+     662,
+     135,
+     1911
+    ],
+    "total_travel_min": 86
+   }
+  ],
+  "answers": {
+   "keyed": {
+    "raw": {
+     "overview": "Start your Tokyo adventure in Shinjuku and wander through a curated mix of tasty eats and lively bars, all at a relaxed pace perfect for a solo first\u2011timer.",
+     "days": [
+      {
+       "day": 1,
+       "theme": "Flavorful streets & night vibes",
+       "summary": "From a hearty lunch to buzzing bars, experience Tokyo\u2019s food and nightlife on foot."
+      }
+     ],
+     "stops": [
+      {
+       "id": 1,
+       "description": "Enjoy a quick, satisfying meal at \u83ef\u5c4b, where you can sample classic Japanese comfort food perfect for fueling your day.",
+       "tip": "Bring cash; many small eateries don\u2019t take cards."
+      },
+      {
+       "id": 2,
+       "description": "Stop at \u756a\u756a for another tasty bite, offering a cozy atmosphere ideal for a solo traveler to relax before the evening.",
+       "tip": "Check the menu board outside for prices and specials."
+      },
+      {
+       "id": 3,
+       "description": "Head to CHAMPION, a lively bar where you can sip cocktails and soak up the energetic nightlife scene.",
+       "tip": "Arrive early to snag a good spot; the bar gets crowded after 8\u202fPM."
+      },
+      {
+       "id": 4,
+       "description": "Ale offers a relaxed pub vibe with a good selection of drinks, perfect for winding down after CHAMPION while still staying in the action.",
+       "tip": "Try the house draft; it\u2019s often a local favorite."
+      },
+      {
+       "id": 5,
+       "description": "\u5275\u4f5cDINING\u5f69 blends creative drinks with a modern setting, giving you a taste of Tokyo\u2019s innovative bar culture.",
+       "tip": "Ask the staff for the seasonal recommendation\u2014they love showcasing new flavors."
+      },
+      {
+       "id": 6,
+       "description": "End the day at \u53cb\u4eba, an Indian restaurant where you can enjoy aromatic dishes and a comforting finish to your Tokyo tour.",
+       "tip": "Many Indian spots serve lunch sets; ask for the vegetarian option if you prefer."
+      }
+     ],
+     "excluded": []
+    },
+    "model": "openai/gpt-oss-120b",
+    "prompt_tokens": 1106,
+    "completion_tokens": 427,
+    "seconds": 1.27
+   },
+   "legacy": {
+    "raw": {
+     "days": [
+      {
+       "day": 1,
+       "theme": "Taste\u2011and\u2011Twilight Walk",
+       "stops": [
+        {
+         "name": "\u83ef\u5c4b",
+         "arrival_time": "09:23",
+         "duration_min": 60,
+         "description": "Start your day with a hearty Japanese breakfast at \u83ef\u5c4b, a local eatery near Shinjuku. The menu offers classic set meals that give you a solid energy boost for the walk ahead, perfect for a solo first\u2011timer who loves food.",
+         "tip": "Pay cash and ask for a take\u2011away box if you want to enjoy the meal on a park bench later.",
+         "lat": 35.7104132,
+         "lon": 139.7095433,
+         "category": "food"
+        },
+        {
+         "name": "\u756a\u756a",
+         "arrival_time": "10:54",
+         "duration_min": 60,
+         "description": "Walk to \u756a\u756a, a tucked\u2011away noodle shop where you can choose between soba or udon from a vending\u2011machine ticket. It\u2019s cheap, quick, and gives you a taste of everyday Tokyo street food \u2013 exactly what a budget\u2011conscious solo traveler craves.",
+         "tip": "Look for the picture menu on the machine; you can point to the dish even if you don\u2019t read Japanese.",
+         "lat": 35.6888424,
+         "lon": 139.6977812,
+         "category": "food"
+        },
+        {
+         "name": "CHAMPION",
+         "arrival_time": "12:04",
+         "duration_min": 120,
+         "description": "Mid\u2011day, head to CHAMPION, a lively bar in Shinjuku that doubles as a casual lunch spot. The upbeat vibe and easy\u2011going crowd make it a great place to mingle or simply enjoy a drink while people\u2011watching, fitting your nightlife curiosity.",
+         "tip": "Try the house\u2011made cocktail and ask for a nomih\u014ddai (all\u2011you\u2011can\u2011drink) option if you\u2019re feeling adventurous.",
+         "lat": 35.6938268,
+         "lon": 139.7043072,
+         "category": "nightlife"
+        },
+        {
+         "name": "Ale",
+         "arrival_time": "14:15",
+         "duration_min": 120,
+         "description": "After a short walk, stop at Ale, a rooftop\u2011style bar with a relaxed atmosphere. It\u2019s perfect for a balanced\u2011pace traveler who wants a sip of craft beer without the rush of a crowded izakaya.",
+         "tip": "Check the happy\u2011hour board; many places offer discounted drafts before 6\u202fPM.",
+         "lat": 35.6883031,
+         "lon": 139.696729,
+         "category": "nightlife"
+        },
+        {
+         "name": "\u5275\u4f5cDINING\u5f69",
+         "arrival_time": "16:17",
+         "duration_min": 120,
+         "description": "Continue the evening at \u5275\u4f5cDINING\u5f69, a stylish pub that blends creative small plates with a vibrant bar scene. It satisfies your love of food and nightlife in one stop, letting you sample inventive Japanese\u2011fusion bites.",
+         "tip": "Reserve a seat at the bar counter so you can watch the chefs plate the dishes \u2013 it\u2019s a fun visual treat.",
+         "lat": 35.688284,
+         "lon": 139.698819,
+         "category": "nightlife"
+        },
+        {
+         "name": "\u53cb\u4eba",
+         "arrival_time": "18:49",
+         "duration_min": 60,
+         "description": "Wrap up the day with dinner at \u53cb\u4eba, an Indian\u2011style restaurant offering aromatic curries and naan. It\u2019s a comforting end to a food\u2011focused day and gives you a chance to unwind after a full evening of exploring Tokyo\u2019s bar scene.",
+         "tip": "Ask for the mild \u201cbutter chicken\u201d if you\u2019re not used to spicy food; most places will adjust the heat level.",
+         "lat": 35.7105002,
+         "lon": 139.7095727,
+         "category": "food"
+        }
+       ],
+       "summary": "From a morning Japanese set meal to evening Indian flavors, the day blends tasty stops with relaxed bar hops, all on foot."
+      }
+     ],
+     "overview": "I\u2019ve mapped a tasty, balanced walk from Shinjuku that lets you sample local breakfasts, quick noodle bites, and three distinct nightlife spots before ending with a comforting Indian dinner \u2013 perfect for a solo first\u2011timer who loves food and a lively evening."
+    },
+    "model": "openai/gpt-oss-120b",
+    "prompt_tokens": 5278,
+    "completion_tokens": 1037,
+    "seconds": 2.7
+   }
+  }
+ },
+ {
+  "case": "tokyo_shinjuku-1",
+  "trip": {
+   "city": "Tokyo",
+   "start_location": "Shinjuku",
+   "duration_hours": 8,
+   "goals": [
+    "food",
+    "nightlife"
+   ],
+   "transport": "walking",
+   "pace": "moderate",
+   "budget": "mid",
+   "style": "solo",
+   "dietary": "none",
+   "mobility": "moderate",
+   "familiarity": "first_time",
+   "start_time": "morning",
+   "notes": "No bars or pubs please, I don't drink.",
+   "trip_date": "",
+   "start_lat": 35.6937632,
+   "start_lon": 139.7036319
+  },
+  "route": [
+   {
+    "day": 1,
+    "pois": [
+     {
+      "id": 1116408986,
+      "name": "\u83ef\u5c4b",
+      "lat": 35.7104132,
+      "lon": 139.7095433,
+      "category": "food",
+      "description": "\u83ef\u5c4b food restaurant",
+      "tags": {
+       "amenity": "restaurant",
+       "end_date": "2011-1-22",
+       "name": "\u83ef\u5c4b",
+       "name:en": "Hanaya"
+      },
+      "relevance_score": 0.4773065447807312,
+      "arrival_time": "09:23",
+      "visit_duration_min": 60
+     },
+     {
+      "id": 1544570312,
+      "name": "\u756a\u756a",
+      "lat": 35.6888424,
+      "lon": 139.6977812,
+      "category": "food",
+      "description": "\u756a\u756a food restaurant",
+      "tags": {
+       "amenity": "restaurant",
+       "level": "-1",
+       "name": "\u756a\u756a",
+       "wheelchair": "no"
+      },
+      "relevance_score": 0.4770839512348175,
+      "arrival_time": "10:54",
+      "visit_duration_min": 60
+     },
+     {
+      "id": 1952348371,
+      "name": "CHAMPION",
+      "lat": 35.6938268,
+      "lon": 139.7043072,
+      "category": "nightlife",
+      "description": "CHAMPION nightlife bar",
+      "tags": {
+       "addr:block_number": "1",
+       "addr:city": "\u65b0\u5bbf\u533a",
+       "addr:housenumber": "10",
+       "addr:neighbourhood": "1\u4e01\u76ee",
+       "addr:postcode": "160-0021",
+       "addr:province": "\u6771\u4eac\u90fd",
+       "addr:quarter": "\u6b4c\u821e\u4f0e\u753a",
+       "amenity": "bar",
+       "name": "CHAMPION",
+       "name:en": "Bar Champion",
+       "phone": "+81 3-5291-9333",
+       "wheelchair": "no"
+      },
+      "relevance_score": 0.596502959728241,
+      "arrival_time": "12:04",
+      "visit_duration_min": 120
+     },
+     {
+      "id": 2198521626,
+      "name": "Ale",
+      "lat": 35.6883031,
+      "lon": 139.696729,
+      "category": "nightlife",
+      "description": "Ale nightlife bar",
+      "tags": {
+       "amenity": "bar",
+       "level": "8",
+       "name": "Ale",
+       "source": "image,2013-03;Bing"
+      },
+      "relevance_score": 0.5925313234329224,
+      "arrival_time": "14:15",
+      "visit_duration_min": 120
+     },
+     {
+      "id": 2197568101,
+      "name": "\u5275\u4f5cDINING\u5f69",
+      "lat": 35.688284,
+      "lon": 139.698819,
+      "category": "nightlife",
+      "description": "\u5275\u4f5cDINING\u5f69 nightlife pub",
+      "tags": {
+       "amenity": "pub",
+       "name": "\u5275\u4f5cDINING\u5f69",
+       "name:en": "Aya"
+      },
+      "relevance_score": 0.5777568817138672,
+      "arrival_time": "16:17",
+      "visit_duration_min": 120
+     },
+     {
+      "id": 1116408987,
+      "name": "\u53cb\u4eba",
+      "lat": 35.7105002,
+      "lon": 139.7095727,
+      "category": "food",
+      "description": "\u53cb\u4eba food indian restaurant",
+      "tags": {
+       "amenity": "restaurant",
+       "cuisine": "indian",
+       "cuisine:ja": "\u30cd\u30d1\u30fc\u30eb\u6599\u7406; \u30a4\u30f3\u30c9\u6599\u7406",
+       "name": "\u53cb\u4eba",
+       "name:en": "Yujin",
+       "wheelchair": "limited"
+      },
+      "relevance_score": 0.4384530186653137,
+      "arrival_time": "18:49",
+      "visit_duration_min": 60
+     }
+    ],
+    "travel_times_sec": [
+     1888,
+     582,
+     662,
+     135,
+     1911
+    ],
+    "total_travel_min": 86
+   }
+  ],
+  "answers": {
+   "keyed": {
+    "raw": {
+     "overview": "Start your Tokyo adventure in Shinjuku with a tasty breakfast, wander through a bustling street food haven, and finish with a comforting Indian dinner. The day balances delicious eats with a relaxed pace, letting you soak up the city\u2019s energy without any drinking venues.",
+     "days": [
+      {
+       "day": 1,
+       "theme": "Flavorful Footsteps",
+       "summary": "A culinary walk from sunrise to sunset, perfect for a solo first\u2011timer."
+      }
+     ],
+     "stops": [
+      {
+       "id": 1,
+       "description": "Kick off with a hearty Japanese breakfast at \u83ef\u5c4b, where you can try classic dishes like tamagoyaki and miso soup \u2013 a warm welcome for a solo traveler.",
+       "tip": "Arrive a few minutes early to pick a seat; the place fills up quickly during morning rush."
+      },
+      {
+       "id": 2,
+       "description": "Next, head to \u756a\u756a for a quick lunch of sushi or tempura; the menu is displayed outside, making it easy to choose and pay with cash.",
+       "tip": "Bring \u00a5500\u2013\u00a5800 in cash; many small eateries don\u2019t accept cards."
+      },
+      {
+       "id": 3,
+       "description": "CHAMPION is listed as a nightlife spot, but since you prefer no bars, you might simply admire the lively atmosphere from the street and skip entering.",
+       "tip": "If you change your mind, check the opening hours; some venues have early\u2011evening food service."
+      },
+      {
+       "id": 4,
+       "description": "Ale is another bar\u2011type stop; you can use the brief walk to explore nearby side streets and maybe pop into a convenience store for a snack.",
+       "tip": "Look for a Lawson 100 nearby for affordable onigiri and drinks."
+      },
+      {
+       "id": 5,
+       "description": "\u5275\u4f5cDINING\u5f69 is a pub\u2011style venue; consider passing by to enjoy the exterior lights and then continue toward your dinner destination.",
+       "tip": "Take a quick photo of the neon signage for a souvenir."
+      },
+      {
+       "id": 6,
+       "description": "End the day at \u53cb\u4eba, an Indian restaurant where you can savor flavorful curries and naan \u2013 a satisfying, non\u2011alcoholic dinner after a full day of walking.",
+       "tip": "Reserve a seat if possible; evenings can get busy, especially on weekends."
+      }
+     ],
+     "excluded": [
+      3,
+      4,
+      5
+     ]
+    },
+    "model": "openai/gpt-oss-120b",
+    "prompt_tokens": 1174,
+    "completion_tokens": 749,
+    "seconds": 1.93
+   },
+   "legacy": {
+    "raw": {
+     "days": [
+      {
+       "day": 1,
+       "theme": "Taste of Tokyo on foot",
+       "stops": [
+        {
+         "name": "\u83ef\u5c4b",
+         "arrival_time": "09:23",
+         "duration_min": 60,
+         "description": "Start your day with a hearty Japanese breakfast at \u83ef\u5c4b. This local eatery serves classic dishes like tamagoyaki and grilled fish \u2013 perfect fuel for a day of walking and food\u2011loving adventures.",
+         "tip": "Arrive early; the place fills up quickly at breakfast time.",
+         "lat": 35.7104132,
+         "lon": 139.7095433,
+         "category": "food"
+        },
+        {
+         "name": "\u756a\u756a",
+         "arrival_time": "10:54",
+         "duration_min": 60,
+         "description": "Next, head to \u756a\u756a for a quick lunch of udon or soba from the vending\u2011machine ticket system. The casual counter setting lets you watch the chefs work, a fun glimpse into everyday Tokyo dining.",
+         "tip": "Grab a seat at the counter for the fastest service and a chance to ask the staff for recommendations in English.",
+         "lat": 35.6888424,
+         "lon": 139.6977812,
+         "category": "food"
+        },
+        {
+         "name": "\u53cb\u4eba",
+         "arrival_time": "18:49",
+         "duration_min": 60,
+         "description": "Wrap up with dinner at \u53cb\u4eba, an Indian\u2011style restaurant offering flavorful curries and naan. It\u2019s a nice change of pace after a day of Japanese fare and fits your love of diverse food without any alcohol focus.",
+         "tip": "Ask for a mild curry if you\u2019re new to Indian spice; the staff are happy to adjust the heat level.",
+         "lat": 35.7105002,
+         "lon": 139.7095727,
+         "category": "food"
+        }
+       ],
+       "summary": "A relaxed food\u2011focused stroll through Shinjuku\u2019s neighborhoods, sampling both Japanese classics and international flavors."
+      }
+     ],
+     "overview": "You\u2019ll wander from a traditional breakfast spot to a bustling noodle shop, then end the evening with a tasty Indian dinner \u2013 all on foot, with plenty of time to soak up the local vibe and keep your budget friendly."
+    },
+    "model": "openai/gpt-oss-120b",
+    "prompt_tokens": 5410,
+    "completion_tokens": 867,
+    "seconds": 2.4
+   }
+  }
+ },
+ {
+  "case": "rome_trastevere-0",
+  "trip": {
+   "city": "Rome",
+   "start_location": "Trastevere",
+   "duration_hours": 10,
+   "goals": [
+    "history",
+    "culture"
+   ],
+   "transport": "walking",
+   "pace": "moderate",
+   "budget": "mid",
+   "style": "solo",
+   "dietary": "none",
+   "mobility": "moderate",
+   "familiarity": "first_time",
+   "start_time": "morning",
+   "notes": "",
+   "trip_date": "",
+   "start_lat": 41.8911586,
+   "start_lon": 12.4668459
+  },
+  "route": [
+   {
+    "day": 1,
+    "pois": [
+     {
+      "id": 2514765554,
+      "name": "Gregorio Nazianzeno",
+      "lat": 41.9014081,
+      "lon": 12.456892,
+      "category": "history",
+      "description": "Gregorio Nazianzeno history memorial artwork",
+      "tags": {
+       "artist_name": "Giovanni Maria de Rossi",
+       "artwork_type": "statue",
+       "direction": "22",
+       "height": "22",
+       "historic": "memorial",
+       "memorial": "statue",
+       "min_height": "17",
+       "name": "Gregorio Nazianzeno",
+       "name:de": "Gregor von Nazianz",
+       "subject:wikidata": "Q44011",
+       "tourism": "artwork",
+       "wheelchair": "yes"
+      },
+      "relevance_score": 0.34453821182250977,
+      "arrival_time": "09:16",
+      "visit_duration_min": 90
+     },
+     {
+      "id": 4292016589,
+      "name": "Real Academia de Espa\u00f1a",
+      "lat": 41.8889045,
+      "lon": 12.4666124,
+      "category": "culture",
+      "description": "Real Academia de Espa\u00f1a culture museum",
+      "tags": {
+       "addr:housenumber": "3",
+       "addr:postcode": "00153",
+       "addr:street": "Piazza di San Pietro in Montorio",
+       "fee": "no",
+       "name": "Real Academia de Espa\u00f1a",
+       "tourism": "museum",
+       "wikidata": "Q531779",
+       "wikimedia_commons": "Category:Real Academia de Espa\u00f1a en Roma",
+       "wikipedia": "it:Accademia di Spagna"
+      },
+      "relevance_score": 0.4499545693397522,
+      "arrival_time": "11:06",
+      "visit_duration_min": 90
+     },
+     {
+      "id": 656829698,
+      "name": "Museo di Roma",
+      "lat": 41.8972775,
+      "lon": 12.4727772,
+      "category": "culture",
+      "description": "Museo di Roma culture museum",
+      "tags": {
+       "addr:city": "Roma",
+       "addr:housenumber": "10",
+       "addr:postcode": "00186",
+       "addr:street": "Piazza di San Pantaleo",
+       "email": "museodiroma@comune.roma.it",
+       "fee": "yes",
+       "fee:icom_member": "no",
+       "museum": "art",
+       "name": "Museo di Roma",
+       "name:it": "Museo di Roma",
+       "name:zh": "\u7f57\u9a6c\u535a\u7269\u9986",
+       "opening_hours": "Tu-Su 10:00-19:00; Jan 01 11:00-19:30; Dec 24,31 10:00-14:00; Jan 01 off; Mo off; May 01 off; Dec 25 off",
+       "phone": "+39 06 0608",
+       "tourism": "museum",
+       "website": "https://www.museodiroma.it/",
+       "wheelchair": "yes",
+       "wikidata": "Q3868175",
+       "wikimedia_commons": "Category:Museo di Roma a Palazzo Braschi",
+       "wikipedia": "it:Museo di Roma a palazzo Braschi"
+      },
+      "relevance_score": 0.39855068922042847,
+      "arrival_time": "12:48",
+      "visit_duration_min": 90
+     },
+     {
+      "id": 1662303156,
+      "name": "Museo Universale",
+      "lat": 41.8987436,
+      "lon": 12.4865874,
+      "category": "culture",
+      "description": "Museo Universale culture museum",
+      "tags": {
+       "fee": "yes",
+       "name": "Museo Universale",
+       "tourism": "museum",
+       "wheelchair": "yes"
+      },
+      "relevance_score": 0.42691171169281006,
+      "arrival_time": "14:32",
+      "visit_duration_min": 90
+     },
+     {
+      "id": 1379492229,
+      "name": "Testa di Costantino",
+      "lat": 41.8928946,
+      "lon": 12.4824892,
+      "category": "history",
+      "description": "Testa di Costantino history memorial",
+      "tags": {
+       "historic": "memorial",
+       "memorial": "statue",
+       "name": "Testa di Costantino",
+       "name:hu": "Nagy Konstantin feje",
+       "subject:wikidata": "Q8413",
+       "wikidata": "Q1289781",
+       "wikimedia_commons": "Category:Colossus of Constantine",
+       "wikipedia": "en:Colossus of Constantine"
+      },
+      "relevance_score": 0.3872359097003937,
+      "arrival_time": "16:11",
+      "visit_duration_min": 90
+     },
+     {
+      "id": 2263021094,
+      "name": "Domus Augustana - Peristilio",
+      "lat": 41.8878622,
+      "lon": 12.4865652,
+      "category": "history",
+      "description": "Domus Augustana - Peristilio history archaeological site",
+      "tags": {
+       "historic": "archaeological_site",
+       "name": "Domus Augustana - Peristilio",
+       "name:ru": "\u0434\u0432\u043e\u0440\u0435\u0446 \u0410\u0432\u0433\u0443\u0441\u0442\u0430",
+       "wikidata": "Q908472",
+       "wikimedia_commons": "Category:Domus Augustana",
+       "wikipedia": "en:Domus Augustana"
+      },
+      "relevance_score": 0.34523725509643555,
+      "arrival_time": "17:49",
+      "visit_duration_min": 90
+     }
+    ],
+    "travel_times_sec": [
+     1156,
+     764,
+     831,
+     528,
+     470
+    ],
+    "total_travel_min": 62
+   }
+  ],
+  "answers": {
+   "keyed": {
+    "raw": {
+     "overview": "Start your Roman adventure in Trastevere and wander through a curated mix of historic memorials and museums, balancing indoor depth with brief outdoor moments, all at a relaxed pace for a solo first\u2011timer.",
+     "days": [
+      {
+       "day": 1,
+       "theme": "Echoes of Empire and Art",
+       "summary": "A day of statues, museums, and ancient ruins that brings Rome\u2019s layered history to life."
+      }
+     ],
+     "stops": [
+      {
+       "id": 1,
+       "description": "Admire the striking statue at Gregorio Nazianzeno, a perfect snapshot of Rome\u2019s historic artistry that sets the tone for your day.",
+       "tip": "Arrive a few minutes early to avoid the brief crowd that gathers for photos."
+      },
+      {
+       "id": 2,
+       "description": "Explore the Real Academia de Espa\u00f1a, where cultural exhibitions showcase Spain\u2019s influence on Italian art, offering a quiet indoor retreat.",
+       "tip": "Check the exhibition guide at the entrance to focus on pieces that match your interests."
+      },
+      {
+       "id": 3,
+       "description": "Dive into the Museo di Roma\u2019s collections, a vivid narrative of the city\u2019s evolution from ancient times to modern life.",
+       "tip": "Grab the free audio guide; it\u2019s concise and fits the 90\u2011minute slot."
+      },
+      {
+       "id": 4,
+       "description": "Visit the Museo Universale for a curated look at universal art themes, complementing your earlier historic stops with broader cultural context.",
+       "tip": "Wear comfortable shoes; the museum\u2019s layout involves several short staircases."
+      },
+      {
+       "id": 5,
+       "description": "Stand before the Testa di Costantino, a striking marble bust that connects you directly to the emperor\u2019s legacy in the heart of the city.",
+       "tip": "Take a moment to read the nearby plaque; it offers quick historical insight without needing a guide."
+      },
+      {
+       "id": 6,
+       "description": "End your day at the Domus Augustana \u2013 Peristilio, wandering the ancient Roman palace ruins and feeling the grandeur of imperial life.",
+       "tip": "Bring a small bottle of water and a light jacket; the open courtyard can be cool even in mild weather."
+      }
+     ],
+     "excluded": []
+    },
+    "model": "openai/gpt-oss-120b",
+    "prompt_tokens": 1093,
+    "completion_tokens": 452,
+    "seconds": 1.47
+   },
+   "legacy": {
+    "raw": {
+     "days": [
+      {
+       "day": 1,
+       "theme": "Ancient echoes & hidden gems",
+       "stops": [
+        {
+         "name": "Gregorio Nazianzeno",
+         "arrival_time": "09:16",
+         "duration_min": 90,
+         "description": "Start your morning with a quiet pause at this modest memorial statue. The artwork, set in a leafy square, lets you feel Rome\u2019s layered history without the crowds \u2013 perfect for a solo traveler who loves history at a relaxed pace.",
+         "tip": "Arrive early to avoid the occasional street market; the stone bench nearby is great for a quick coffee.",
+         "lat": 41.9014081,
+         "lon": 12.456892,
+         "category": "history"
+        },
+        {
+         "name": "Real Academia de Espa\u00f1a",
+         "arrival_time": "11:06",
+         "duration_min": 90,
+         "description": "Cross the Tiber to the tranquil Piazza di San Pietro in Montorio and explore this little\u2011known museum of Spanish art and cultural ties. It satisfies your cultural curiosity while staying free of the tourist throngs.",
+         "tip": "Check the free\u2011entry hours on the plaque; the museum often offers a short guided talk in English on weekends.",
+         "lat": 41.8889045,
+         "lon": 12.4666124,
+         "category": "culture"
+        },
+        {
+         "name": "Museo di Roma",
+         "arrival_time": "12:48",
+         "duration_min": 90,
+         "description": "Wander through Palazzo Braschi\u2019s rooms to see Rome\u2019s evolution from medieval streets to modern boulevards. The mix of artifacts and vivid frescoes matches your love for both history and culture.",
+         "tip": "Buy a combined ticket for the museum and the nearby Villa Doria Pamphili garden to stretch your lunch break.",
+         "lat": 41.8972775,
+         "lon": 12.4727772,
+         "category": "culture"
+        },
+        {
+         "name": "Museo Universale",
+         "arrival_time": "14:32",
+         "duration_min": 90,
+         "description": "A short walk brings you to this eclectic museum where science, art and archaeology intersect. It offers a balanced, hands\u2011on experience that keeps the day lively without rushing.",
+         "tip": "Bring a reusable water bottle; there\u2019s a refill station near the entrance.",
+         "lat": 41.8987436,
+         "lon": 12.4865874,
+         "category": "culture"
+        },
+        {
+         "name": "Testa di Costantino",
+         "arrival_time": "16:11",
+         "duration_min": 90,
+         "description": "Pause beside the colossal head of Constantine, a striking reminder of imperial power. The open square lets you soak up the late\u2011afternoon light and reflect on Rome\u2019s imperial past.",
+         "tip": "Watch for street musicians \u2013 they often play near the monument and add a lively soundtrack to your visit.",
+         "lat": 41.8928946,
+         "lon": 12.4824892,
+         "category": "history"
+        },
+        {
+         "name": "Domus Augustana - Peristilio",
+         "arrival_time": "17:49",
+         "duration_min": 90,
+         "description": "End the day exploring the ruins of Augustus\u2019 grand palace. The peristyle\u2019s columns and quiet courtyards feel like stepping back into ancient Rome, fitting your balanced pace and love of history.",
+         "tip": "Stay until closing to experience the golden hour light filtering through the arches \u2013 it\u2019s magical for photos.",
+         "lat": 41.8878622,
+         "lon": 12.4865652,
+         "category": "history"
+        }
+       ],
+       "summary": "A day of quiet monuments, hidden museums, and ancient ruins that lets you breathe Rome\u2019s history at a comfortable walk.",
+       "travel_times_sec": [
+        1156,
+        764,
+        831,
+        528,
+        470
+       ]
+      }
+     ],
+     "overview": "From Trastevere you\u2019ll stroll through lesser\u2011known squares, pop into a handful of intimate museums, and finish among the ruins of Augustus\u2019 palace \u2013 a perfect mix of free and paid sights for a solo history lover."
+    },
+    "model": "openai/gpt-oss-120b",
+    "prompt_tokens": 5230,
+    "completion_tokens": 996,
+    "seconds": 2.51
+   }
+  }
+ },
+ {
+  "case": "rome_trastevere-1",
+  "trip": {
+   "city": "Rome",
+   "start_location": "Trastevere",
+   "duration_hours": 10,
+   "goals": [
+    "history",
+    "culture"
+   ],
+   "transport": "walking",
+   "pace": "moderate",
+   "budget": "mid",
+   "style": "solo",
+   "dietary": "none",
+   "mobility": "moderate",
+   "familiarity": "first_time",
+   "start_time": "morning",
+   "notes": "I've already seen the main museum, skip museums.",
+   "trip_date": "",
+   "start_lat": 41.8911586,
+   "start_lon": 12.4668459
+  },
+  "route": [
+   {
+    "day": 1,
+    "pois": [
+     {
+      "id": 2514765554,
+      "name": "Gregorio Nazianzeno",
+      "lat": 41.9014081,
+      "lon": 12.456892,
+      "category": "history",
+      "description": "Gregorio Nazianzeno history memorial artwork",
+      "tags": {
+       "artist_name": "Giovanni Maria de Rossi",
+       "artwork_type": "statue",
+       "direction": "22",
+       "height": "22",
+       "historic": "memorial",
+       "memorial": "statue",
+       "min_height": "17",
+       "name": "Gregorio Nazianzeno",
+       "name:de": "Gregor von Nazianz",
+       "subject:wikidata": "Q44011",
+       "tourism": "artwork",
+       "wheelchair": "yes"
+      },
+      "relevance_score": 0.34453821182250977,
+      "arrival_time": "09:16",
+      "visit_duration_min": 90
+     },
+     {
+      "id": 4292016589,
+      "name": "Real Academia de Espa\u00f1a",
+      "lat": 41.8889045,
+      "lon": 12.4666124,
+      "category": "culture",
+      "description": "Real Academia de Espa\u00f1a culture museum",
+      "tags": {
+       "addr:housenumber": "3",
+       "addr:postcode": "00153",
+       "addr:street": "Piazza di San Pietro in Montorio",
+       "fee": "no",
+       "name": "Real Academia de Espa\u00f1a",
+       "tourism": "museum",
+       "wikidata": "Q531779",
+       "wikimedia_commons": "Category:Real Academia de Espa\u00f1a en Roma",
+       "wikipedia": "it:Accademia di Spagna"
+      },
+      "relevance_score": 0.4499545693397522,
+      "arrival_time": "11:06",
+      "visit_duration_min": 90
+     },
+     {
+      "id": 656829698,
+      "name": "Museo di Roma",
+      "lat": 41.8972775,
+      "lon": 12.4727772,
+      "category": "culture",
+      "description": "Museo di Roma culture museum",
+      "tags": {
+       "addr:city": "Roma",
+       "addr:housenumber": "10",
+       "addr:postcode": "00186",
+       "addr:street": "Piazza di San Pantaleo",
+       "email": "museodiroma@comune.roma.it",
+       "fee": "yes",
+       "fee:icom_member": "no",
+       "museum": "art",
+       "name": "Museo di Roma",
+       "name:it": "Museo di Roma",
+       "name:zh": "\u7f57\u9a6c\u535a\u7269\u9986",
+       "opening_hours": "Tu-Su 10:00-19:00; Jan 01 11:00-19:30; Dec 24,31 10:00-14:00; Jan 01 off; Mo off; May 01 off; Dec 25 off",
+       "phone": "+39 06 0608",
+       "tourism": "museum",
+       "website": "https://www.museodiroma.it/",
+       "wheelchair": "yes",
+       "wikidata": "Q3868175",
+       "wikimedia_commons": "Category:Museo di Roma a Palazzo Braschi",
+       "wikipedia": "it:Museo di Roma a palazzo Braschi"
+      },
+      "relevance_score": 0.39855068922042847,
+      "arrival_time": "12:48",
+      "visit_duration_min": 90
+     },
+     {
+      "id": 1662303156,
+      "name": "Museo Universale",
+      "lat": 41.8987436,
+      "lon": 12.4865874,
+      "category": "culture",
+      "description": "Museo Universale culture museum",
+      "tags": {
+       "fee": "yes",
+       "name": "Museo Universale",
+       "tourism": "museum",
+       "wheelchair": "yes"
+      },
+      "relevance_score": 0.42691171169281006,
+      "arrival_time": "14:32",
+      "visit_duration_min": 90
+     },
+     {
+      "id": 1379492229,
+      "name": "Testa di Costantino",
+      "lat": 41.8928946,
+      "lon": 12.4824892,
+      "category": "history",
+      "description": "Testa di Costantino history memorial",
+      "tags": {
+       "historic": "memorial",
+       "memorial": "statue",
+       "name": "Testa di Costantino",
+       "name:hu": "Nagy Konstantin feje",
+       "subject:wikidata": "Q8413",
+       "wikidata": "Q1289781",
+       "wikimedia_commons": "Category:Colossus of Constantine",
+       "wikipedia": "en:Colossus of Constantine"
+      },
+      "relevance_score": 0.3872359097003937,
+      "arrival_time": "16:11",
+      "visit_duration_min": 90
+     },
+     {
+      "id": 2263021094,
+      "name": "Domus Augustana - Peristilio",
+      "lat": 41.8878622,
+      "lon": 12.4865652,
+      "category": "history",
+      "description": "Domus Augustana - Peristilio history archaeological site",
+      "tags": {
+       "historic": "archaeological_site",
+       "name": "Domus Augustana - Peristilio",
+       "name:ru": "\u0434\u0432\u043e\u0440\u0435\u0446 \u0410\u0432\u0433\u0443\u0441\u0442\u0430",
+       "wikidata": "Q908472",
+       "wikimedia_commons": "Category:Domus Augustana",
+       "wikipedia": "en:Domus Augustana"
+      },
+      "relevance_score": 0.34523725509643555,
+      "arrival_time": "17:49",
+      "visit_duration_min": 90
+     }
+    ],
+    "travel_times_sec": [
+     1156,
+     764,
+     831,
+     528,
+     470
+    ],
+    "total_travel_min": 62
+   }
+  ],
+  "answers": {
+   "keyed": {
+    "raw": {
+     "overview": "Start your Roman adventure in Trastevere and wander through centuries of history and culture, mixing iconic monuments with hidden gems. With a balanced pace you\u2019ll soak up stories from ancient emperors to modern artistry, all within a comfortable 10\u2011hour walk.",
+     "days": [
+      {
+       "day": 1,
+       "theme": "Echoes of Empire",
+       "summary": "A day tracing Rome\u2019s imperial legacy from statues to ancient ruins."
+      }
+     ],
+     "stops": [
+      {
+       "id": 1,
+       "description": "Admire the striking statue of Gregorio Nazianzeno, a quiet spot that lets you reflect on early Christian history while enjoying a short walk along the Tiber\u2019s banks.",
+       "tip": "Arrive a few minutes early to find a good spot for photos with the river as backdrop."
+      },
+      {
+       "id": 2,
+       "description": "Explore the Real Academia de Espa\u00f1a, where cultural exhibitions showcase Spain\u2019s artistic ties to Rome, offering a pleasant indoor interlude.",
+       "tip": "Check the entry desk for any seasonal closures before you go."
+      },
+      {
+       "id": 3,
+       "description": "Visit the Museo di Roma to see curated displays of the city\u2019s evolution, perfect for a quick deep\u2011dive into local heritage.",
+       "tip": "Buy a timed ticket online to skip any queue."
+      },
+      {
+       "id": 4,
+       "description": "Wander through the Museo Universale, a compact venue that blends contemporary installations with historic references, giving you a fresh perspective on Rome\u2019s artistic dialogue.",
+       "tip": "Look for the free audio guide on your phone for concise explanations."
+      },
+      {
+       "id": 5,
+       "description": "Stand before the Testa di Costantino, the preserved marble head of the emperor, and imagine the grandeur of the ancient capital.",
+       "tip": "Bring a water bottle; the area can be sunny in the afternoon."
+      },
+      {
+       "id": 6,
+       "description": "End the day at the Domus Augustana \u2013 Peristilio, strolling among the ruins of Augustus\u2019 imperial residence and feeling the pulse of ancient Roman life.",
+       "tip": "Wear comfortable shoes; the archaeological site has uneven stone surfaces."
+      }
+     ],
+     "excluded": [
+      2,
+      3,
+      4
+     ]
+    },
+    "model": "openai/gpt-oss-120b",
+    "prompt_tokens": 1161,
+    "completion_tokens": 678,
+    "seconds": 1.75
+   },
+   "legacy": {
+    "raw": {
+     "days": [
+      {
+       "day": 1,
+       "theme": "Historic walk from Trastevere to the heart of ancient Rome",
+       "stops": [
+        {
+         "name": "Gregorio Nazianzeno",
+         "arrival_time": "09:16",
+         "duration_min": 90,
+         "description": "Start your day with a quiet moment at this historic memorial statue. The artwork by Giovanni Maria de\u202fRossi offers a glimpse into Rome\u2019s layered past, perfect for a history\u2011lover who enjoys off\u2011the\u2011beaten\u2011path gems.",
+         "tip": "Arrive early to avoid the late\u2011morning crowd and snap photos with the soft morning light.",
+         "lat": 41.9014081,
+         "lon": 12.456892,
+         "category": "history"
+        },
+        {
+         "name": "Real Academia de Espa\u00f1a",
+         "arrival_time": "11:06",
+         "duration_min": 90,
+         "description": "Cross the Tiber and wander into Piazza di San Pietro in Montorio to see the elegant fa\u00e7ade of the Spanish Academy. Though listed as a museum, entry is free, letting you soak up cultural ambience without spending a euro.",
+         "tip": "Check the door for any temporary closures; the building is often open to the public for brief tours.",
+         "lat": 41.8889045,
+         "lon": 12.4666124,
+         "category": "culture"
+        },
+        {
+         "name": "Museo di Roma",
+         "arrival_time": "12:48",
+         "duration_min": 90,
+         "description": "A short walk brings you to this museum housed in Palazzo Braschi. It tells the story of Rome from its medieval streets to modern life\u2014great for a first\u2011time visitor craving context without another big museum experience.",
+         "tip": "Buy a combined ticket for the museum and the nearby Capitoline Museums if you decide to extend your cultural dive later.",
+         "lat": 41.8972775,
+         "lon": 12.4727772,
+         "category": "culture"
+        },
+        {
+         "name": "Museo Universale",
+         "arrival_time": "14:32",
+         "duration_min": 90,
+         "description": "Continue east to this quirky venue that showcases universal themes\u2014art, science, and history\u2014in a compact space. It balances free\u2011entry curiosity with a modest fee, fitting your mixed\u2011budget vibe.",
+         "tip": "Bring a small amount of cash; the ticket office sometimes prefers it over cards.",
+         "lat": 41.8987436,
+         "lon": 12.4865874,
+         "category": "culture"
+        },
+        {
+         "name": "Testa di Costantino",
+         "arrival_time": "16:11",
+         "duration_min": 90,
+         "description": "Walk to the iconic Colossus of Constantine\u2019s head, a striking reminder of imperial power. The open\u2011air setting lets you enjoy the Roman light while contemplating ancient history.",
+         "tip": "Look up to see the remaining fragments of the statue\u2019s crown for a dramatic photo.",
+         "lat": 41.8928946,
+         "lon": 12.4824892,
+         "category": "history"
+        },
+        {
+         "name": "Domus Augustana - Peristilio",
+         "arrival_time": "17:49",
+         "duration_min": 90,
+         "description": "End your day amid the ruins of the Emperor\u2019s palace. The peristyle courtyard offers a serene, slightly secluded spot to reflect on the day\u2019s discoveries, ideal for a balanced\u2011pace solo explorer.",
+         "tip": "Wear comfortable shoes; the ancient stone can be uneven, especially in the late afternoon light.",
+         "lat": 41.8878622,
+         "lon": 12.4865652,
+         "category": "history"
+        }
+       ],
+       "summary": "A leisurely trek through Rome\u2019s hidden historic corners, blending free sights and modestly priced culture."
+      }
+     ],
+     "overview": "From Trastevere you\u2019ll wander eastward, stopping at statues, quiet academies, and ancient ruins, all at a relaxed pace that lets you soak in Rome\u2019s layered past without museum fatigue."
+    },
+    "model": "openai/gpt-oss-120b",
+    "prompt_tokens": 5363,
+    "completion_tokens": 964,
+    "seconds": 2.57
+   }
+  }
+ },
+ {
+  "case": "london_soho-0",
+  "trip": {
+   "city": "London",
+   "start_location": "Soho",
+   "duration_hours": 6,
+   "goals": [
+    "nightlife",
+    "food"
+   ],
+   "transport": "walking",
+   "pace": "moderate",
+   "budget": "mid",
+   "style": "solo",
+   "dietary": "none",
+   "mobility": "moderate",
+   "familiarity": "first_time",
+   "start_time": "morning",
+   "notes": "",
+   "trip_date": "",
+   "start_lat": 51.5140654,
+   "start_lon": -0.1350494
+  },
+  "route": [
+   {
+    "day": 1,
+    "pois": [
+     {
+      "id": 338505169,
+      "name": "The Chancery",
+      "lat": 51.5165567,
+      "lon": -0.1110982,
+      "category": "food",
+      "description": "The Chancery food restaurant",
+      "tags": {
+       "amenity": "restaurant",
+       "name": "The Chancery"
+      },
+      "relevance_score": 0.4607887864112854,
+      "arrival_time": "09:20",
+      "visit_duration_min": 60
+     },
+     {
+      "id": 273217489,
+      "name": "City Brunch",
+      "lat": 51.496539,
+      "lon": -0.1354705,
+      "category": "food",
+      "description": "City Brunch food cafe",
+      "tags": {
+       "amenity": "cafe",
+       "name": "City Brunch",
+       "old_name": "XLNT",
+       "outdoor_seating": "yes",
+       "start_date": "2020-01",
+       "wheelchair": "limited"
+      },
+      "relevance_score": 0.4578918218612671,
+      "arrival_time": "10:53",
+      "visit_duration_min": 60
+     },
+     {
+      "id": 300500863,
+      "name": "The Victory",
+      "lat": 51.5292754,
+      "lon": -0.1439959,
+      "category": "nightlife",
+      "description": "The Victory nightlife pub",
+      "tags": {
+       "amenity": "pub",
+       "name": "The Victory",
+       "source": "TMJ-Mobile_0.6.2",
+       "wheelchair": "limited"
+      },
+      "relevance_score": 0.5560505390167236,
+      "arrival_time": "12:37",
+      "visit_duration_min": 120
+     },
+     {
+      "id": 295905009,
+      "name": "Bbar",
+      "lat": 51.4981242,
+      "lon": -0.1434293,
+      "category": "nightlife",
+      "description": "Bbar nightlife pub",
+      "tags": {
+       "addr:city": "London",
+       "addr:housenumber": "43",
+       "addr:postcode": "SW1W 0PP",
+       "addr:street": "Buckingham Palace Road",
+       "amenity": "pub",
+       "check_date": "2026-02-21",
+       "fhrs:confidence_management": "20",
+       "fhrs:hygiene": "10",
+       "fhrs:id": "412685",
+       "fhrs:local_authority_id": "00915/0023/0/000",
+       "fhrs:rating": "1",
+       "fhrs:structural": "5",
+       "name": "Bbar",
+       "outdoor_seating": "yes",
+       "source": "TMJ-Mobile_0.6.2",
+       "website": "https://www.bbarlondon.com/"
+      },
+      "relevance_score": 0.5652474164962769,
+      "arrival_time": "15:19",
+      "visit_duration_min": 120
+     },
+     {
+      "id": 311877303,
+      "name": "The Shell",
+      "lat": 51.520757,
+      "lon": -0.1230014,
+      "category": "food",
+      "description": "The Shell food restaurant",
+      "tags": {
+       "amenity": "restaurant",
+       "check_date": "2026-09-17",
+       "name": "The Shell",
+       "opening_hours": "Mo-Sa 12:00-23:00; Su 12:00-22:00"
+      },
+      "relevance_score": 0.4578682482242584,
+      "arrival_time": "17:54",
+      "visit_duration_min": 60
+     },
+     {
+      "id": 344084670,
+      "name": "Craft Beer Co.",
+      "lat": 51.515637,
+      "lon": -0.125979,
+      "category": "nightlife",
+      "description": "Craft Beer Co. nightlife pub",
+      "tags": {
+       "addr:city": "London",
+       "addr:housenumber": "168",
+       "addr:postcode": "WC1V 7AA",
+       "addr:street": "High Holborn",
+       "amenity": "pub",
+       "check_date": "2026-07-01",
+       "craft_keg": "yes",
+       "fhrs:id": "993196",
+       "food": "yes",
+       "level": "-1;0",
+       "name": "Craft Beer Co.",
+       "opening_hours": "Su-We 12:00-00:00;Th-Sa 12:00-01:00",
+       "payment:cash": "yes",
+       "payment:credit_cards": "yes",
+       "payment:debit_cards": "yes",
+       "real_ale": "yes",
+       "website": "http://thecraftbeerco.com/pubs/coventgarden/"
+      },
+      "relevance_score": 0.5722253322601318,
+      "arrival_time": "19:01",
+      "visit_duration_min": 120
+     }
+    ],
+    "travel_times_sec": [
+     2010,
+     2655,
+     2494,
+     2078,
+     435
+    ],
+    "total_travel_min": 161
+   }
+  ],
+  "answers": {
+   "keyed": {
+    "raw": {
+     "overview": "Start your London adventure in vibrant Soho, then wander through tasty brunch spots, lively pubs and a relaxed dinner, all at a comfortable pace for a solo first\u2011timer who loves food and nightlife.",
+     "days": [
+      {
+       "day": 1,
+       "theme": "Foodie Nightlife Walk",
+       "summary": "A balanced six\u2011hour stroll mixing delicious bites with buzzing pubs, ending with craft beer on the South Bank."
+      }
+     ],
+     "stops": [
+      {
+       "id": 1,
+       "description": "Grab a hearty breakfast at The Chancery, a cosy spot perfect for fueling up before a day of walking and tasting London flavours.",
+       "tip": "Arrive early to avoid the morning rush and ask for the house toast with jam."
+      },
+      {
+       "id": 2,
+       "description": "Enjoy a relaxed brunch at City Brunch, where the caf\u00e9 vibe and solid coffee give you a gentle transition to the city\u2019s buzz.",
+       "tip": "Try the avocado toast and ask for a refill on the coffee \u2013 it\u2019s free."
+      },
+      {
+       "id": 3,
+       "description": "Head to The Victory for an early afternoon pint; this pub\u2019s lively atmosphere and classic British ales match your nightlife interest while still being daytime friendly.",
+       "tip": "Sit at the bar for faster service and chat with the bartender about local brews."
+      },
+      {
+       "id": 4,
+       "description": "Continue the pub crawl at Bbar, a stylish venue where you can sip cocktails or craft beers in a relaxed setting before dinner.",
+       "tip": "Check the cocktail menu for a house special and ask for a low\u2011alcohol version if you plan to keep going."
+      },
+      {
+       "id": 5,
+       "description": "Dine at The Shell, a restaurant open late with a menu that blends British comfort food and modern twists, ideal for a solo dinner after a day of exploring.",
+       "tip": "Reserve a small table online to guarantee a seat, and ask for the chef\u2019s tasting sampler."
+      },
+      {
+       "id": 6,
+       "description": "End the night at Craft Beer Co., a bustling pub with an extensive tap list, perfect for winding down and meeting locals after a full day of food and fun.",
+       "tip": "Ask the staff for the \u2018flight of the day\u2019 to sample several brews without over\u2011indulging."
+      }
+     ],
+     "excluded": []
+    },
+    "model": "openai/gpt-oss-120b",
+    "prompt_tokens": 1098,
+    "completion_tokens": 497,
+    "seconds": 1.3
+   },
+   "legacy": {
+    "raw": {
+     "days": [
+      {
+       "day": 1,
+       "theme": "Taste of London, day to night",
+       "stops": [
+        {
+         "name": "The Chancery",
+         "arrival_time": "09:20",
+         "duration_min": 60,
+         "description": "Start your London adventure with a hearty English breakfast or brunch at The Chancery. The venue\u2019s classic British vibe gives a solo traveler a relaxed setting to fuel up before a day of exploring, and the menu balances affordable comfort food with a few upscale options \u2013 perfect for a mixed budget.",
+         "tip": "Arrive early to snag a window seat and ask for the \"liquor\" gravy if you want to try authentic pie\u2011and\u2011mash style gravy.",
+         "lat": 51.5165567,
+         "lon": -0.1110982,
+         "category": "food"
+        },
+        {
+         "name": "City Brunch",
+         "arrival_time": "10:53",
+         "duration_min": 60,
+         "description": "Walk east to City Brunch for a lighter mid\u2011morning bite. This caf\u00e9\u2019s outdoor seating lets you soak up the street buzz while enjoying fresh pastries or a savory sandwich \u2013 ideal for a solo traveler who likes to keep the pace balanced and stay energized.",
+         "tip": "Check the chalkboard for any seasonal specials; they often feature locally sourced ingredients at a great price.",
+         "lat": 51.496539,
+         "lon": -0.1354705,
+         "category": "food"
+        },
+        {
+         "name": "The Victory",
+         "arrival_time": "12:37",
+         "duration_min": 120,
+         "description": "After lunch, head north to The Victory, a historic pub with a lively atmosphere. It offers a solid selection of ales and a relaxed vibe that\u2019s popular with locals, giving you a genuine nightlife taste without the tourist\u2011trap prices.",
+         "tip": "Try the house pint and ask the bartender for a recommendation on a local craft brew; they\u2019ll often have a hidden gem on tap.",
+         "lat": 51.5292754,
+         "lon": -0.1439959,
+         "category": "nightlife"
+        },
+        {
+         "name": "Bbar",
+         "arrival_time": "15:19",
+         "duration_min": 120,
+         "description": "Mid\u2011afternoon, wander to Bbar near Buckingham Palace Road. This sleek venue blends a cocktail bar feel with a small plates menu, perfect for a solo traveler looking to sip something inventive while people\u2011watch in a stylish setting.",
+         "tip": "Order the signature gin\u2011infused cocktail and ask for a small tasting platter to keep costs balanced.",
+         "lat": 51.4981242,
+         "lon": -0.1434293,
+         "category": "nightlife"
+        },
+        {
+         "name": "The Shell",
+         "arrival_time": "17:54",
+         "duration_min": 60,
+         "description": "As evening approaches, stroll to The Shell for a relaxed dinner. The restaurant\u2019s late\u2011opening hours and varied menu let you enjoy a sit\u2011down meal after a few drinks, rounding off the day with comfort food that still feels a step up from fast\u2011food fare.",
+         "tip": "Reserve a table for one via their website to avoid the rush and request a seat near the window for a view of the bustling street.",
+         "lat": 51.520757,
+         "lon": -0.1230014,
+         "category": "food"
+        },
+        {
+         "name": "Craft Beer Co.",
+         "arrival_time": "19:01",
+         "duration_min": 120,
+         "description": "End the night in Covent Garden\u2019s Craft Beer Co., a lively spot with real ales, craft kegs, and a buzzing crowd. It\u2019s the perfect finale for a nightlife\u2011loving solo traveler, offering a mix of affordable pints and a vibrant social scene.",
+         "tip": "Bring a reusable bottle for the tap\u2011water refill station and ask the staff which seasonal brew is on tap tonight.",
+         "lat": 51.515637,
+         "lon": -0.125979,
+         "category": "nightlife"
+        }
+       ],
+       "summary": "From a hearty brunch to craft beers, the day blends tasty food stops with lively pubs, giving a first\u2011time solo visitor a genuine London vibe."
+      }
+     ],
+     "overview": "You\u2019ll wander from Soho\u2019s cozy breakfast spots through historic pubs and end up in a buzzing craft\u2011beer bar, all on foot, tasting the city\u2019s best food and nightlife without breaking the bank."
+    },
+    "model": "openai/gpt-oss-120b",
+    "prompt_tokens": 5173,
+    "completion_tokens": 1036,
+    "seconds": 2.89
+   }
+  }
+ },
+ {
+  "case": "london_soho-1",
+  "trip": {
+   "city": "London",
+   "start_location": "Soho",
+   "duration_hours": 6,
+   "goals": [
+    "nightlife",
+    "food"
+   ],
+   "transport": "walking",
+   "pace": "moderate",
+   "budget": "mid",
+   "style": "solo",
+   "dietary": "none",
+   "mobility": "moderate",
+   "familiarity": "first_time",
+   "start_time": "morning",
+   "notes": "I love street food and want great photo spots.",
+   "trip_date": "",
+   "start_lat": 51.5140654,
+   "start_lon": -0.1350494
+  },
+  "route": [
+   {
+    "day": 1,
+    "pois": [
+     {
+      "id": 338505169,
+      "name": "The Chancery",
+      "lat": 51.5165567,
+      "lon": -0.1110982,
+      "category": "food",
+      "description": "The Chancery food restaurant",
+      "tags": {
+       "amenity": "restaurant",
+       "name": "The Chancery"
+      },
+      "relevance_score": 0.4607887864112854,
+      "arrival_time": "09:20",
+      "visit_duration_min": 60
+     },
+     {
+      "id": 273217489,
+      "name": "City Brunch",
+      "lat": 51.496539,
+      "lon": -0.1354705,
+      "category": "food",
+      "description": "City Brunch food cafe",
+      "tags": {
+       "amenity": "cafe",
+       "name": "City Brunch",
+       "old_name": "XLNT",
+       "outdoor_seating": "yes",
+       "start_date": "2020-01",
+       "wheelchair": "limited"
+      },
+      "relevance_score": 0.4578918218612671,
+      "arrival_time": "10:53",
+      "visit_duration_min": 60
+     },
+     {
+      "id": 300500863,
+      "name": "The Victory",
+      "lat": 51.5292754,
+      "lon": -0.1439959,
+      "category": "nightlife",
+      "description": "The Victory nightlife pub",
+      "tags": {
+       "amenity": "pub",
+       "name": "The Victory",
+       "source": "TMJ-Mobile_0.6.2",
+       "wheelchair": "limited"
+      },
+      "relevance_score": 0.5560505390167236,
+      "arrival_time": "12:37",
+      "visit_duration_min": 120
+     },
+     {
+      "id": 295905009,
+      "name": "Bbar",
+      "lat": 51.4981242,
+      "lon": -0.1434293,
+      "category": "nightlife",
+      "description": "Bbar nightlife pub",
+      "tags": {
+       "addr:city": "London",
+       "addr:housenumber": "43",
+       "addr:postcode": "SW1W 0PP",
+       "addr:street": "Buckingham Palace Road",
+       "amenity": "pub",
+       "check_date": "2026-02-21",
+       "fhrs:confidence_management": "20",
+       "fhrs:hygiene": "10",
+       "fhrs:id": "412685",
+       "fhrs:local_authority_id": "00915/0023/0/000",
+       "fhrs:rating": "1",
+       "fhrs:structural": "5",
+       "name": "Bbar",
+       "outdoor_seating": "yes",
+       "source": "TMJ-Mobile_0.6.2",
+       "website": "https://www.bbarlondon.com/"
+      },
+      "relevance_score": 0.5652474164962769,
+      "arrival_time": "15:19",
+      "visit_duration_min": 120
+     },
+     {
+      "id": 311877303,
+      "name": "The Shell",
+      "lat": 51.520757,
+      "lon": -0.1230014,
+      "category": "food",
+      "description": "The Shell food restaurant",
+      "tags": {
+       "amenity": "restaurant",
+       "check_date": "2026-09-17",
+       "name": "The Shell",
+       "opening_hours": "Mo-Sa 12:00-23:00; Su 12:00-22:00"
+      },
+      "relevance_score": 0.4578682482242584,
+      "arrival_time": "17:54",
+      "visit_duration_min": 60
+     },
+     {
+      "id": 344084670,
+      "name": "Craft Beer Co.",
+      "lat": 51.515637,
+      "lon": -0.125979,
+      "category": "nightlife",
+      "description": "Craft Beer Co. nightlife pub",
+      "tags": {
+       "addr:city": "London",
+       "addr:housenumber": "168",
+       "addr:postcode": "WC1V 7AA",
+       "addr:street": "High Holborn",
+       "amenity": "pub",
+       "check_date": "2026-07-01",
+       "craft_keg": "yes",
+       "fhrs:id": "993196",
+       "food": "yes",
+       "level": "-1;0",
+       "name": "Craft Beer Co.",
+       "opening_hours": "Su-We 12:00-00:00;Th-Sa 12:00-01:00",
+       "payment:cash": "yes",
+       "payment:credit_cards": "yes",
+       "payment:debit_cards": "yes",
+       "real_ale": "yes",
+       "website": "http://thecraftbeerco.com/pubs/coventgarden/"
+      },
+      "relevance_score": 0.5722253322601318,
+      "arrival_time": "19:01",
+      "visit_duration_min": 120
+     }
+    ],
+    "travel_times_sec": [
+     2010,
+     2655,
+     2494,
+     2078,
+     435
+    ],
+    "total_travel_min": 161
+   }
+  ],
+  "answers": {
+   "keyed": {
+    "raw": {
+     "overview": "Start your Soho adventure with a tasty bite, wander through vibrant spots, and end the evening with craft brews \u2013 a perfect blend of food, photo\u2011ops and nightlife for a solo first\u2011timer.",
+     "days": [
+      {
+       "day": 1,
+       "theme": "Street flavors & night lights",
+       "summary": "From brunch to craft beer, each stop feeds your palate and your Instagram feed."
+      }
+     ],
+     "stops": [
+      {
+       "id": 1,
+       "description": "Grab a hearty bite at The Chancery \u2013 a bustling spot ideal for a quick, satisfying meal before you set off on your walk.",
+       "tip": "Arrive a few minutes early to beat the lunch rush and snag a seat by the window for street\u2011view photos."
+      },
+      {
+       "id": 2,
+       "description": "Enjoy a relaxed coffee and snack at City Brunch, perfect for refueling and snapping some cozy caf\u00e9 shots.",
+       "tip": "Order the house specialty latte and ask for a to\u2011go cup to capture the city vibe on the move."
+      },
+      {
+       "id": 3,
+       "description": "Dive into The Victory\u2019s lively pub atmosphere; its neon signs and bustling crowd make great night\u2011life photos.",
+       "tip": "Try the local ale on tap and keep an eye on the live music schedule for a memorable vibe."
+      },
+      {
+       "id": 4,
+       "description": "Bbar offers a sleek, modern setting with inventive cocktails \u2013 a great spot for evening drinks and stylish selfies.",
+       "tip": "Ask the bartender for a signature cocktail and request a garnish that looks photogenic."
+      },
+      {
+       "id": 5,
+       "description": "Dine at The Shell, a relaxed restaurant serving solid British fare \u2013 a chance to taste local flavors before the night deepens.",
+       "tip": "Check the menu for the grilled cheese from Kappacasein if you\u2019re craving a market favorite."
+      },
+      {
+       "id": 6,
+       "description": "Wrap up at Craft Beer Co., a spacious pub with an extensive craft selection, perfect for winding down and capturing the night\u2019s glow.",
+       "tip": "Pick a flight of local brews and sit near the window for a final cityscape snap."
+      }
+     ],
+     "excluded": []
+    },
+    "model": "openai/gpt-oss-120b",
+    "prompt_tokens": 1166,
+    "completion_tokens": 460,
+    "seconds": 1.37
+   },
+   "legacy": {
+    "raw": {
+     "days": [
+      {
+       "day": 1,
+       "theme": "Street bites & night vibes",
+       "stops": [
+        {
+         "name": "The Chancery",
+         "arrival_time": "09:20",
+         "duration_min": 60,
+         "description": "Start your day with a hearty brunch in this stylish restaurant. The menu blends classic British fare with modern twists \u2013 perfect for a solo foodie who loves street\u2011food energy without the tourist\u2011trap crowds.",
+         "tip": "Arrive early; the outdoor seating fills up fast on weekends.",
+         "lat": 51.5165567,
+         "lon": -0.1110982,
+         "category": "food"
+        },
+        {
+         "name": "City Brunch",
+         "arrival_time": "10:53",
+         "duration_min": 60,
+         "description": "A cozy caf\u00e9 with outdoor tables, ideal for snapping photos of your coffee art and the bustling streets of the City. Their menu offers quick bites that keep you fueled for the day ahead.",
+         "tip": "Ask for the house\u2011made granola \u2013 it\u2019s a local favorite and great for Instagram.",
+         "lat": 51.496539,
+         "lon": -0.1354705,
+         "category": "food"
+        },
+        {
+         "name": "The Victory",
+         "arrival_time": "12:37",
+         "duration_min": 120,
+         "description": "Mid\u2011day you can unwind at this historic pub, which doubles as a lively spot for street\u2011food style snacks and craft ales. The vibe is relaxed yet buzzing \u2013 perfect for a solo traveler who enjoys a balanced pace.",
+         "tip": "Try the fish\u2011cake bites; they\u2019re a nod to classic British pub food with a modern twist.",
+         "lat": 51.5292754,
+         "lon": -0.1439959,
+         "category": "nightlife"
+        },
+        {
+         "name": "Bbar",
+         "arrival_time": "15:19",
+         "duration_min": 120,
+         "description": "This sleek bar near Buckingham Palace Road offers a chic backdrop for late\u2011afternoon drinks and photogenic cocktails. Its stylish interior and outdoor terrace give you great photo ops while you sip.",
+         "tip": "Book a table on the terrace for the best natural light for your photos.",
+         "lat": 51.4981242,
+         "lon": -0.1434293,
+         "category": "nightlife"
+        },
+        {
+         "name": "The Shell",
+         "arrival_time": "17:54",
+         "duration_min": 60,
+         "description": "As evening falls, head to The Shell for a dinner of inventive small plates. The restaurant\u2019s modern d\u00e9cor and open\u2011kitchen concept make it a visual treat for food lovers who love street\u2011food vibes in a sit\u2011down setting.",
+         "tip": "Order the shared tasting platter \u2013 it lets you sample several dishes without breaking the budget.",
+         "lat": 51.520757,
+         "lon": -0.1230014,
+         "category": "food"
+        },
+        {
+         "name": "Craft Beer Co.",
+         "arrival_time": "19:01",
+         "duration_min": 120,
+         "description": "End the night in Covent Garden\u2019s Craft Beer Co., where you can explore a rotating selection of real ales and craft brews. The lively atmosphere and photo\u2011friendly bar shelves match your love of nightlife and great snaps.",
+         "tip": "Ask the bartender for the \u201cflight of the day\u201d to sample several brews without overspending.",
+         "lat": 51.515637,
+         "lon": -0.125979,
+         "category": "nightlife"
+        }
+       ],
+       "summary": "From brunch to craft beer, a balanced walk through London\u2019s tastiest spots and vibrant night\u2011life."
+      }
+     ],
+     "overview": "You\u2019ll wander from Soho\u2019s buzzing caf\u00e9s to hidden pubs and end up in a craft\u2011beer haven, all on foot, with plenty of street\u2011food flavor and photo\u2011ready moments along the way."
+    },
+    "model": "openai/gpt-oss-120b",
+    "prompt_tokens": 5305,
+    "completion_tokens": 925,
+    "seconds": 2.48
+   }
+  }
+ },
+ {
+  "case": "barcelona_gothic-0",
+  "trip": {
+   "city": "Barcelona",
+   "start_location": "Gothic Quarter",
+   "duration_hours": 8,
+   "goals": [
+    "culture",
+    "food"
+   ],
+   "transport": "walking",
+   "pace": "moderate",
+   "budget": "mid",
+   "style": "solo",
+   "dietary": "none",
+   "mobility": "moderate",
+   "familiarity": "first_time",
+   "start_time": "morning",
+   "notes": "",
+   "trip_date": "",
+   "start_lat": 41.38384,
+   "start_lon": 2.1745119
+  },
+  "route": [
+   {
+    "day": 1,
+    "pois": [
+     {
+      "id": 672771142,
+      "name": "Organic",
+      "lat": 41.3832659,
+      "lon": 2.1701667,
+      "category": "food",
+      "description": "Organic food restaurant",
+      "tags": {
+       "amenity": "restaurant",
+       "name": "Organic"
+      },
+      "relevance_score": 0.44067123532295227,
+      "arrival_time": "09:04",
+      "visit_duration_min": 60
+     },
+     {
+      "id": 4725707889,
+      "name": "Condal",
+      "lat": 41.3747886,
+      "lon": 2.1647518,
+      "category": "culture",
+      "description": "Condal culture theatre",
+      "tags": {
+       "amenity": "theatre",
+       "name": "Condal",
+       "name:ca": "Condal",
+       "name:es": "Condal",
+       "wikidata": "Q965351",
+       "wikimedia_commons": "Category:Teatre Condal",
+       "wikipedia": "ca:Teatre Condal"
+      },
+      "relevance_score": 0.4562162756919861,
+      "arrival_time": "10:16",
+      "visit_duration_min": 90
+     },
+     {
+      "id": 4507233219,
+      "name": "Caf\u00e8-Teatre el Llantiol",
+      "lat": 41.3788618,
+      "lon": 2.1674882,
+      "category": "culture",
+      "description": "Caf\u00e8-Teatre el Llantiol culture theatre",
+      "tags": {
+       "addr:city": "Barcelona",
+       "addr:housenumber": "7",
+       "addr:postcode": "08001",
+       "addr:street": "Carrer de la Riereta",
+       "alt_name": "El Llantiol",
+       "amenity": "theatre",
+       "contact:email": "info@llantiol.com",
+       "contact:facebook": "https://www.facebook.com/pages/Caf%C3%A8-Teatre-Llantiol/105743666179621",
+       "contact:phone": "+34 933 299 009",
+       "contact:twitter": "Llantiol",
+       "name": "Caf\u00e8-Teatre el Llantiol",
+       "name:ca": "Caf\u00e8-Teatre el Llantiol",
+       "theatre:genre": "stand_up_comedy",
+       "website": "http://llantiol.com/",
+       "wikidata": "Q17600633",
+       "wikipedia": "ca:El Llantiol"
+      },
+      "relevance_score": 0.4562374949455261,
+      "arrival_time": "11:53",
+      "visit_duration_min": 90
+     },
+     {
+      "id": 640465494,
+      "name": "Italo",
+      "lat": 41.3814704,
+      "lon": 2.1757171,
+      "category": "food",
+      "description": "Italo food pizza fast food",
+      "tags": {
+       "amenity": "fast_food",
+       "cuisine": "pizza",
+       "name": "Italo",
+       "survey:date": "2022-12-07"
+      },
+      "relevance_score": 0.4320349395275116,
+      "arrival_time": "13:31",
+      "visit_duration_min": 60
+     },
+     {
+      "id": 441597033,
+      "name": "Teatre Romea",
+      "lat": 41.3805321,
+      "lon": 2.1710813,
+      "category": "culture",
+      "description": "Teatre Romea culture theatre",
+      "tags": {
+       "addr:housenumber": "51",
+       "addr:street": "Carrer de l'Hospital",
+       "amenity": "theatre",
+       "contact:email": "info@teatreromea.com",
+       "contact:website": "http://www.teatreromea.com/",
+       "name": "Teatre Romea",
+       "name:ca": "Teatre Romea",
+       "wikidata": "Q4569267",
+       "wikimedia_commons": "Category:Teatre Romea",
+       "wikipedia": "ca:Teatre Romea (Barcelona)"
+      },
+      "relevance_score": 0.44056713581085205,
+      "arrival_time": "14:36",
+      "visit_duration_min": 90
+     },
+     {
+      "id": 672771936,
+      "name": "Sagarra",
+      "lat": 41.3831077,
+      "lon": 2.1703808,
+      "category": "food",
+      "description": "Sagarra food restaurant",
+      "tags": {
+       "amenity": "restaurant",
+       "name": "Sagarra"
+      },
+      "relevance_score": 0.43007057905197144,
+      "arrival_time": "16:10",
+      "visit_duration_min": 60
+     }
+    ],
+    "travel_times_sec": [
+     752,
+     365,
+     536,
+     288,
+     210
+    ],
+    "total_travel_min": 35
+   }
+  ],
+  "answers": {
+   "keyed": {
+    "raw": {
+     "overview": "Start your Barcelona adventure in the Gothic Quarter and wander through a mix of tasty bites and cultural gems, all at a relaxed pace that lets you soak up the city\u2019s vibe.",
+     "days": [
+      {
+       "day": 1,
+       "theme": "Culture & Catalan Flavors Walk",
+       "summary": "A balanced day of food, theatre and local atmosphere, all within easy walking distance."
+      }
+     ],
+     "stops": [
+      {
+       "id": 1,
+       "description": "Grab a fresh, organic breakfast at a nearby caf\u00e9, perfect for fueling your day with healthy local flavors.",
+       "tip": "Arrive a few minutes early to choose a seat on the patio and enjoy the morning light."
+      },
+      {
+       "id": 2,
+       "description": "Catch a short performance or tour at the historic Condal theatre, immersing you in Barcelona\u2019s rich performing\u2011arts heritage.",
+       "tip": "Check the programme online and book a free or low\u2011cost matinee if available."
+      },
+      {
+       "id": 3,
+       "description": "Visit the intimate Caf\u00e8\u2011Teatre el Llantiol for a blend of live music and cultural events, offering a genuine local experience.",
+       "tip": "Bring a small cash tip for the performers; many venues rely on audience generosity."
+      },
+      {
+       "id": 4,
+       "description": "Enjoy a quick, tasty pizza lunch at Italo, a casual spot that lets you refuel without slowing down your itinerary.",
+       "tip": "Order the house special and ask for a take\u2011away box if you want to snack while strolling."
+      },
+      {
+       "id": 5,
+       "description": "Step into the elegant Teatre Romea for another dose of Barcelona\u2019s theatrical tradition, ideal for a solo traveler who loves culture.",
+       "tip": "Dress smart\u2011casual; the venue has a modest dress code for evening shows."
+      },
+      {
+       "id": 6,
+       "description": "End the day with a relaxed dinner at Sagarra, a restaurant serving classic Catalan dishes in a welcoming setting.",
+       "tip": "Reserve a table for one to avoid the wait, and try the daily \u201cmen\u00fa del d\u00eda\u201d for good value."
+      }
+     ],
+     "excluded": []
+    },
+    "model": "openai/gpt-oss-120b",
+    "prompt_tokens": 1093,
+    "completion_tokens": 456,
+    "seconds": 1.31
+   },
+   "legacy": {
+    "raw": {
+     "days": [
+      {
+       "day": 1,
+       "theme": "Catalan flavors and cultural gems",
+       "stops": [
+        {
+         "name": "Organic",
+         "arrival_time": "09:04",
+         "duration_min": 60,
+         "description": "Start your day with a relaxed breakfast at Organic, a cozy spot serving fresh, locally\u2011sourced dishes. The menu leans toward healthy Catalan fare, perfect for a solo traveler who wants to fuel up before a day of walking and culture.",
+         "tip": "Arrive early; the place fills up quickly and they offer a complimentary coffee if you order a pastry before 10\u202fam.",
+         "lat": 41.3832659,
+         "lon": 2.1701667,
+         "category": "food"
+        },
+        {
+         "name": "Condal",
+         "arrival_time": "10:16",
+         "duration_min": 90,
+         "description": "Walk to the historic Teatre Condal, an elegant early\u201120th\u2011century theatre that still hosts plays and concerts. Its beautiful fa\u00e7ade and interior give you a taste of Barcelona\u2019s cultural heritage without the crowds of larger venues.",
+         "tip": "Check the schedule at the ticket desk; many shows have a reduced \u201ccultura\u201d price for locals and solo visitors.",
+         "lat": 41.3747886,
+         "lon": 2.1647518,
+         "category": "culture"
+        },
+        {
+         "name": "Caf\u00e8-Teatre el Llantiol",
+         "arrival_time": "11:53",
+         "duration_min": 90,
+         "description": "Stroll to this intimate caf\u00e9\u2011theatre on Carrer de la Riereta. Enjoy a quick coffee while catching a short stand\u2011up comedy or a local music set\u2014great for soaking up the creative vibe of the Gothic Quarter\u2019s side streets.",
+         "tip": "Ask for the \u201cmen\u00fa del d\u00eda\u201d at the bar; it includes a small tapa and a drink for under \u20ac10.",
+         "lat": 41.3788618,
+         "lon": 2.1674882,
+         "category": "culture"
+        },
+        {
+         "name": "Italo",
+         "arrival_time": "13:31",
+         "duration_min": 60,
+         "description": "For lunch, head to Italo, a fast\u2011food pizza joint loved by locals for its thin\u2011crust slices and quick service. It\u2019s a budget\u2011friendly way to keep the momentum going while still tasting a bit of Mediterranean flair.",
+         "tip": "Order the \u201cpizza de la casa\u201d and pair it with a small glass of house wine for a true Catalan twist.",
+         "lat": 41.3814704,
+         "lon": 2.1757171,
+         "category": "food"
+        },
+        {
+         "name": "Teatre Romea",
+         "arrival_time": "14:36",
+         "duration_min": 90,
+         "description": "After lunch, wander to Teatre Romea, a classic venue on Carrer de l'Hospital. Its ornate interior and regular schedule of theatre, dance, and jazz makes it a cultural highlight that matches your love of arts and balanced pacing.",
+         "tip": "Buy a standing\u2011room ticket at the box office for the best price; the acoustics are excellent even from the back.",
+         "lat": 41.3805321,
+         "lon": 2.1710813,
+         "category": "culture"
+        },
+        {
+         "name": "Sagarra",
+         "arrival_time": "16:10",
+         "duration_min": 60,
+         "description": "End the afternoon with a light dinner at Sagarra, a modest restaurant offering traditional Catalan dishes like pa amb tom\u00e0quet and grilled fish. It\u2019s a relaxed spot where you can reflect on the day\u2019s discoveries.",
+         "tip": "Ask for the \u201cmenu del d\u00eda\u201d \u2013 it includes a starter, main, dessert, and a glass of house wine for a very reasonable price.",
+         "lat": 41.3831077,
+         "lon": 2.1703808,
+         "category": "food"
+        }
+       ],
+       "summary": "A day of tasty bites and intimate cultural venues, all within easy walking distance from the Gothic Quarter."
+      }
+     ],
+     "overview": "You\u2019ll wander from a fresh\u2011food breakfast through historic theatres and a quick pizza lunch, finishing with a classic Catalan dinner\u2014perfect for a solo traveler who loves culture and food without rushing."
+    },
+    "model": "openai/gpt-oss-120b",
+    "prompt_tokens": 5033,
+    "completion_tokens": 1024,
+    "seconds": 2.86
+   }
+  }
+ },
+ {
+  "case": "barcelona_gothic-1",
+  "trip": {
+   "city": "Barcelona",
+   "start_location": "Gothic Quarter",
+   "duration_hours": 8,
+   "goals": [
+    "culture",
+    "food"
+   ],
+   "transport": "walking",
+   "pace": "moderate",
+   "budget": "mid",
+   "style": "solo",
+   "dietary": "none",
+   "mobility": "moderate",
+   "familiarity": "first_time",
+   "start_time": "morning",
+   "notes": "No bars or pubs please, I don't drink.",
+   "trip_date": "",
+   "start_lat": 41.38384,
+   "start_lon": 2.1745119
+  },
+  "route": [
+   {
+    "day": 1,
+    "pois": [
+     {
+      "id": 672771142,
+      "name": "Organic",
+      "lat": 41.3832659,
+      "lon": 2.1701667,
+      "category": "food",
+      "description": "Organic food restaurant",
+      "tags": {
+       "amenity": "restaurant",
+       "name": "Organic"
+      },
+      "relevance_score": 0.44067123532295227,
+      "arrival_time": "09:04",
+      "visit_duration_min": 60
+     },
+     {
+      "id": 4725707889,
+      "name": "Condal",
+      "lat": 41.3747886,
+      "lon": 2.1647518,
+      "category": "culture",
+      "description": "Condal culture theatre",
+      "tags": {
+       "amenity": "theatre",
+       "name": "Condal",
+       "name:ca": "Condal",
+       "name:es": "Condal",
+       "wikidata": "Q965351",
+       "wikimedia_commons": "Category:Teatre Condal",
+       "wikipedia": "ca:Teatre Condal"
+      },
+      "relevance_score": 0.4562162756919861,
+      "arrival_time": "10:16",
+      "visit_duration_min": 90
+     },
+     {
+      "id": 4507233219,
+      "name": "Caf\u00e8-Teatre el Llantiol",
+      "lat": 41.3788618,
+      "lon": 2.1674882,
+      "category": "culture",
+      "description": "Caf\u00e8-Teatre el Llantiol culture theatre",
+      "tags": {
+       "addr:city": "Barcelona",
+       "addr:housenumber": "7",
+       "addr:postcode": "08001",
+       "addr:street": "Carrer de la Riereta",
+       "alt_name": "El Llantiol",
+       "amenity": "theatre",
+       "contact:email": "info@llantiol.com",
+       "contact:facebook": "https://www.facebook.com/pages/Caf%C3%A8-Teatre-Llantiol/105743666179621",
+       "contact:phone": "+34 933 299 009",
+       "contact:twitter": "Llantiol",
+       "name": "Caf\u00e8-Teatre el Llantiol",
+       "name:ca": "Caf\u00e8-Teatre el Llantiol",
+       "theatre:genre": "stand_up_comedy",
+       "website": "http://llantiol.com/",
+       "wikidata": "Q17600633",
+       "wikipedia": "ca:El Llantiol"
+      },
+      "relevance_score": 0.4562374949455261,
+      "arrival_time": "11:53",
+      "visit_duration_min": 90
+     },
+     {
+      "id": 640465494,
+      "name": "Italo",
+      "lat": 41.3814704,
+      "lon": 2.1757171,
+      "category": "food",
+      "description": "Italo food pizza fast food",
+      "tags": {
+       "amenity": "fast_food",
+       "cuisine": "pizza",
+       "name": "Italo",
+       "survey:date": "2022-12-07"
+      },
+      "relevance_score": 0.4320349395275116,
+      "arrival_time": "13:31",
+      "visit_duration_min": 60
+     },
+     {
+      "id": 441597033,
+      "name": "Teatre Romea",
+      "lat": 41.3805321,
+      "lon": 2.1710813,
+      "category": "culture",
+      "description": "Teatre Romea culture theatre",
+      "tags": {
+       "addr:housenumber": "51",
+       "addr:street": "Carrer de l'Hospital",
+       "amenity": "theatre",
+       "contact:email": "info@teatreromea.com",
+       "contact:website": "http://www.teatreromea.com/",
+       "name": "Teatre Romea",
+       "name:ca": "Teatre Romea",
+       "wikidata": "Q4569267",
+       "wikimedia_commons": "Category:Teatre Romea",
+       "wikipedia": "ca:Teatre Romea (Barcelona)"
+      },
+      "relevance_score": 0.44056713581085205,
+      "arrival_time": "14:36",
+      "visit_duration_min": 90
+     },
+     {
+      "id": 672771936,
+      "name": "Sagarra",
+      "lat": 41.3831077,
+      "lon": 2.1703808,
+      "category": "food",
+      "description": "Sagarra food restaurant",
+      "tags": {
+       "amenity": "restaurant",
+       "name": "Sagarra"
+      },
+      "relevance_score": 0.43007057905197144,
+      "arrival_time": "16:10",
+      "visit_duration_min": 60
+     }
+    ],
+    "travel_times_sec": [
+     752,
+     365,
+     536,
+     288,
+     210
+    ],
+    "total_travel_min": 35
+   }
+  ],
+  "answers": {
+   "keyed": {
+    "raw": {
+     "overview": "Start your day wandering the historic Gothic Quarter and enjoy a balanced mix of tasty bites and cultural gems, all within easy walking distance.",
+     "days": [
+      {
+       "day": 1,
+       "theme": "Cultural flavors on foot",
+       "summary": "A relaxed 8\u2011hour stroll blending food and theatre highlights the best of Barcelona\u2019s heritage and cuisine."
+      }
+     ],
+     "stops": [
+      {
+       "id": 1,
+       "description": "Grab a fresh, organic breakfast at a local spot, perfect for a solo traveler who loves wholesome food and wants a gentle start.",
+       "tip": "Arrive a few minutes early to choose a seat by the window for natural light."
+      },
+      {
+       "id": 2,
+       "description": "Catch a short performance or guided talk at the historic theatre, offering a taste of Barcelona\u2019s vibrant cultural scene.",
+       "tip": "Check the programme online beforehand to pick a show that matches your interests."
+      },
+      {
+       "id": 3,
+       "description": "Visit this intimate theatre for another cultural immersion, where you can enjoy local productions in a cozy setting.",
+       "tip": "Buy tickets at the box office to avoid online fees and support the venue directly."
+      },
+      {
+       "id": 4,
+       "description": "Enjoy a quick, tasty pizza lunch at a fast\u2011food spot, giving you energy for the afternoon without breaking the budget.",
+       "tip": "Try the daily special \u2013 it\u2019s often a local twist on classic pizza."
+      },
+      {
+       "id": 5,
+       "description": "Experience a classic Barcelona theatre performance, adding depth to your cultural itinerary with quality acting and historic ambience.",
+       "tip": "Dress smart\u2011casual; theatres appreciate a neat appearance."
+      },
+      {
+       "id": 6,
+       "description": "End the day with a relaxed dinner at a restaurant serving Catalan dishes, ideal for savoring the region\u2019s flavors after a full day of exploring.",
+       "tip": "Ask the staff for a recommendation of a small\u2011plate sampler to try several local tastes."
+      }
+     ],
+     "excluded": []
+    },
+    "model": "openai/gpt-oss-120b",
+    "prompt_tokens": 1161,
+    "completion_tokens": 422,
+    "seconds": 1.26
+   },
+   "legacy": {
+    "raw": {
+     "days": [
+      {
+       "day": 1,
+       "theme": "Taste & Theatre Walk",
+       "stops": [
+        {
+         "name": "Organic",
+         "arrival_time": "09:04",
+         "duration_min": 60,
+         "description": "Start your day with a wholesome Catalan breakfast at Organic, a cozy spot that serves fresh, locally\u2011sourced dishes. Perfect for a solo traveler who loves food and wants a balanced pace without the buzz of a bar.",
+         "tip": "Ask for the \"men\u00fa del migdia\" even in the morning \u2013 they often serve a small tasting plate that\u2019s great value.",
+         "lat": 41.3832659,
+         "lon": 2.1701667,
+         "category": "food"
+        },
+        {
+         "name": "Condal",
+         "arrival_time": "10:16",
+         "duration_min": 90,
+         "description": "A short 12\u2011minute walk brings you to Teatre Condal, a historic theatre that hosts a mix of classic plays and contemporary performances. Culture\u2011hungry solo travelers will enjoy the intimate atmosphere and the chance to soak up local artistic vibes.",
+         "tip": "Check the schedule online and grab a discounted afternoon ticket at the box office.",
+         "lat": 41.3747886,
+         "lon": 2.1647518,
+         "category": "culture"
+        },
+        {
+         "name": "Caf\u00e8-Teatre el Llantiol",
+         "arrival_time": "11:53",
+         "duration_min": 90,
+         "description": "Stroll 6 minutes to this charming caf\u00e9\u2011theatre where you can sip a caf\u00e9 con hielo while watching a short stand\u2011up or improv show. It blends food and culture, matching your love of both without any bar scene.",
+         "tip": "Arrive a few minutes early to choose a good seat; the back corner offers the best view of the stage.",
+         "lat": 41.3788618,
+         "lon": 2.1674882,
+         "category": "culture"
+        },
+        {
+         "name": "Italo",
+         "arrival_time": "13:31",
+         "duration_min": 60,
+         "description": "After a lively morning, walk 5 minutes to Italo for a quick pizza lunch. The fast\u2011food vibe keeps the pace balanced, and you\u2019ll get a tasty, affordable bite to refuel for the afternoon.",
+         "tip": "Order the \u201cpizza del d\u00eda\u201d \u2013 a daily special that\u2019s cheaper and often features local toppings.",
+         "lat": 41.3814704,
+         "lon": 2.1757171,
+         "category": "food"
+        },
+        {
+         "name": "Teatre Romea",
+         "arrival_time": "14:36",
+         "duration_min": 90,
+         "description": "A 4\u2011minute walk lands you at Teatre Romea, another cultural gem with a beautiful 19th\u2011century fa\u00e7ade. Enjoy a matinee or a guided backstage tour, perfect for a first\u2011time visitor craving authentic Barcelona culture.",
+         "tip": "Bring a small notebook; the theatre\u2019s history is full of fascinating anecdotes you\u2019ll want to remember.",
+         "lat": 41.3805321,
+         "lon": 2.1710813,
+         "category": "culture"
+        },
+        {
+         "name": "Sagarra",
+         "arrival_time": "16:10",
+         "duration_min": 60,
+         "description": "End the day with a relaxed dinner at Sagarra, a family\u2011run restaurant known for its Catalan dishes and warm hospitality. It\u2019s a great spot to unwind after a culture\u2011filled day, and the menu offers both budget\u2011friendly and slightly upscale options.",
+         "tip": "Try the \u201cpaella de marisc\u201d \u2013 the seafood paella here is praised by locals and isn\u2019t a tourist trap.",
+         "lat": 41.3831077,
+         "lon": 2.1703808,
+         "category": "food"
+        }
+       ],
+       "summary": "A balanced walk through Barcelona\u2019s culinary and theatrical highlights, perfect for a solo culture lover."
+      }
+     ],
+     "overview": "You\u2019ll wander from a fresh breakfast in the Gothic Quarter to lively theatres and tasty bites, all on foot, mixing free cultural gems with delicious, reasonably\u2011priced food. It feels like a friend guiding you through Barcelona\u2019s heart without any bar\u2011scene stops."
+    },
+    "model": "openai/gpt-oss-120b",
+    "prompt_tokens": 5165,
+    "completion_tokens": 998,
+    "seconds": 2.48
+   }
+  }
+ }
+]

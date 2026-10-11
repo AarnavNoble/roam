@@ -1,0 +1,33 @@
+{
+  "days": 60,
+  "scenarios": 4,
+  "strategies": {
+    "rank_order": {
+      "travel_min": 6633.3,
+      "window_violation_min": 43741.4,
+      "ms_per_day": 0.01
+    },
+    "greedy_nn": {
+      "travel_min": 4090.8,
+      "window_violation_min": 64694.9,
+      "ms_per_day": 0.01
+    },
+    "time_aware": {
+      "travel_min": 4753.2,
+      "window_violation_min": 32033.6,
+      "ms_per_day": 0.01
+    },
+    "ortools": {
+      "travel_min": 4605.3,
+      "window_violation_min": 29690.0,
+      "ms_per_day": 251.03
+    },
+    "ortools_free": {
+      "travel_min": 3783.2,
+      "window_violation_min": 63432.4,
+      "ms_per_day": 250.73
+    }
+  },
+  "sweep": [],
+  "weight_sweep": []
+}
