@@ -26,6 +26,11 @@ const START_TIME_OPTIONS = ['morning', 'afternoon', 'evening'] as const;
 const DURATION_OPTIONS = [2, 3, 4, 6, 8, 10] as const;
 const TRANSPORT_OPTIONS = ['walking', 'transit'] as const;
 
+// Length limits the server enforces; longer values are rejected with a 422
+const MAX_CITY = 120;
+const MAX_START = 160;
+const MAX_NOTES = 500;
+
 const MOBILITY_LABELS = { easy: 'Easy (short walks)', moderate: 'Moderate', active: 'Active (lots of walking)' };
 const FAMILIARITY_LABELS = { first_time: 'First time here', returning: 'I\'ve been before' };
 const DURATION_LABELS: Record<number, string> = { 2: '2h', 3: '3h', 4: '4h', 6: '6h', 8: '8h', 10: 'Full day' };
@@ -49,6 +54,13 @@ const ALL_CHIP_KEYS = [
   ...TRANSPORT_OPTIONS, ...PACE_OPTIONS, ...BUDGET_OPTIONS, ...STYLE_OPTIONS,
   ...DIETARY_OPTIONS, ...MOBILITY_OPTIONS, ...FAMILIARITY_OPTIONS,
 ];
+
+// The chosen calendar day as YYYY-MM-DD. toISOString() converts to UTC first,
+// which lands on the day before for anyone east of Greenwich.
+function toISODate(d: Date): string {
+  const pad = (n: number) => n.toString().padStart(2, '0');
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+}
 
 // ── Nominatim autocomplete ────────────────────────────────────────────────────
 
@@ -265,7 +277,7 @@ export default function HomeScreen() {
     if (goals.length === 0) { setError('Pick at least one interest'); return; }
     setLoading(true); setCurrentStep(null); setCompletedSteps([]); setError(null);
     try {
-      const isoDate = tripDate.toISOString().split('T')[0];
+      const isoDate = toISODate(tripDate);
       const itinerary = await generateItineraryStreaming(
         { city: city.trim(), start_location: startLocation.trim(), duration_hours: durationHours, goals, transport, pace, budget, style, dietary, mobility, familiarity, start_time: startTime, notes: notes.trim(), trip_date: isoDate },
         (progress: PipelineProgress) => {
@@ -279,7 +291,10 @@ export default function HomeScreen() {
       router.push({ pathname: '/itinerary', params: { goals: JSON.stringify(goals), city: city.trim(), tripDate: tripDate.toISOString() } });
     } catch (e: any) {
       const msg = e?.message || '';
-      setError(msg.includes('504') || msg.includes('Gateway') || msg.includes('mirrors failed')
+      // Rate limit, outage, bad input, expired session and no connection already come with a readable message
+      setError([0, 401, 422, 429, 503].includes(e?.status)
+        ? msg
+        : msg.includes('504') || msg.includes('Gateway') || msg.includes('mirrors failed')
         ? 'Location service timed out. Try a different area or fewer interests.'
         : msg.includes('No POIs') || msg.includes('No places')
         ? 'No places found there. Try a different starting point or broader interests.'
@@ -367,6 +382,7 @@ export default function HomeScreen() {
           placeholder="Paris, Tokyo, New York..."
           placeholderTextColor="rgba(255,255,255,0.25)"
           value={city}
+          maxLength={MAX_CITY}
           onChangeText={v => {
             setCity(v);
             cityAC.query(v);
@@ -378,7 +394,7 @@ export default function HomeScreen() {
       </Animated.View>
       <SuggestionsList
         suggestions={cityAC.suggestions}
-        onSelect={s => { setCity(s); cityAC.clear(); }}
+        onSelect={s => { setCity(s.slice(0, MAX_CITY)); cityAC.clear(); }}
       />
 
       {cityError && <Text style={styles.fieldError}>{cityError}</Text>}
@@ -390,6 +406,7 @@ export default function HomeScreen() {
           placeholder="Montmartre, Shibuya station, Times Square..."
           placeholderTextColor="rgba(255,255,255,0.25)"
           value={startLocation}
+          maxLength={MAX_START}
           onChangeText={v => {
             setStartLocation(v);
             locationAC.query(v);
@@ -401,7 +418,7 @@ export default function HomeScreen() {
       </Animated.View>
       <SuggestionsList
         suggestions={locationAC.suggestions}
-        onSelect={s => { setStartLocation(s); locationAC.clear(); }}
+        onSelect={s => { setStartLocation(s.slice(0, MAX_START)); locationAC.clear(); }}
       />
 
       {locationError && <Text style={styles.fieldError}>{locationError}</Text>}
@@ -505,7 +522,7 @@ export default function HomeScreen() {
           style={[styles.inputInner, styles.inputMultiline]}
           placeholder="I love street food, hate tourist traps..."
           placeholderTextColor="rgba(255,255,255,0.25)"
-          value={notes} onChangeText={setNotes}
+          value={notes} onChangeText={setNotes} maxLength={MAX_NOTES}
           onFocus={() => focusInput(notesBorderAnim)} onBlur={() => blurInput(notesBorderAnim)}
           multiline numberOfLines={3}
         />

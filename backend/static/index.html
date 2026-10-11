@@ -86,6 +86,9 @@
   .results-back { color: var(--text-muted); font-size: 13px; cursor: pointer; padding: 6px 12px; border-radius: 8px; background: rgba(255,255,255,0.06); border: 1px solid var(--border); transition: border-color 0.15s; }
   .results-back:hover { border-color: var(--border-hover); }
   .overview { color: var(--text-muted); font-size: 14px; line-height: 1.6; margin-bottom: 32px; }
+  .results-actions { display: flex; gap: 8px; }
+  .share-link { display: none; font-size: 13px; margin-bottom: 12px; overflow-wrap: anywhere; color: var(--text-muted); }
+  .share-link.visible { display: block; }
 
   /* ── Map ────────────────────────────────────── */
   .map-container { width: 100%; height: 320px; border-radius: 16px; overflow: hidden; margin-bottom: 32px; border: 1px solid var(--border); }
@@ -247,8 +250,12 @@
   <div class="results" id="results">
     <div class="results-header">
       <div class="results-title" id="results-title"></div>
-      <button class="results-back" onclick="resetForm()">New trip</button>
+      <div class="results-actions">
+        <button class="results-back" id="share-btn" onclick="shareTrip()">Share</button>
+        <button class="results-back" onclick="resetForm()">New trip</button>
+      </div>
     </div>
+    <div class="share-link" id="share-link"></div>
     <div class="overview" id="results-overview"></div>
     <div class="map-container" id="map"></div>
     <div id="results-days"></div>
@@ -285,6 +292,7 @@ let selectedTr = 'walking';
 let selectedPace = 'moderate';
 let selectedBud = 'mid';
 let map = null;
+let tripId = null;
 
 // ── Chip selection ───────────────────────────────
 document.querySelectorAll('.goal-chip').forEach(chip => {
@@ -363,7 +371,16 @@ function generate() {
     headers: { 'Content-Type': 'application/json', 'Accept': 'text/event-stream' },
     body: JSON.stringify(body),
   }).then(async response => {
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    if (!response.ok) {
+      // 429 is the per-client rate limit, 422 a rejected field; both carry a JSON body
+      if (response.status === 429) {
+        const secs = Math.ceil(Number(response.headers.get('Retry-After')));
+        throw new Error(secs > 0 ? `Too many requests. Try again in ${secs} seconds.` : 'Too many requests. Try again in a moment.');
+      }
+      const detail = await response.json().then(d => d.detail).catch(() => null);
+      if (Array.isArray(detail) && detail[0] && detail[0].msg) throw new Error(`Invalid request: ${detail[0].msg}`);
+      throw new Error(typeof detail === 'string' ? detail : `HTTP ${response.status}`);
+    }
     const reader = response.body.getReader();
     const decoder = new TextDecoder();
     let buffer = '';
@@ -458,11 +475,11 @@ function renderResults(city, data) {
           ${!isLast ? `<div class="timeline-line" style="background:${color}"></div>` : ''}
         </div>
         <div class="stop-card">
-          ${stop.photo_url ? `<img class="stop-photo" src="${esc(stop.photo_url)}" alt="${esc(stop.name)}" loading="lazy" onerror="this.remove()">` : ''}
+          ${stop.photo_url && stop.photo_url.startsWith('https://') ? `<img class="stop-photo" src="${esc(stop.photo_url)}" alt="${esc(stop.name)}" loading="lazy" onerror="this.remove()">` : ''}
           <div class="stop-content">
             <div class="stop-meta">
               <span class="stop-time">${esc(stop.arrival_time)}</span>
-              <span class="stop-duration">${stop.duration_min} min</span>
+              <span class="stop-duration">${Number(stop.duration_min)} min</span>
             </div>
             <div class="stop-name">${esc(stop.name)}</div>
             <span class="stop-badge" style="background:${catColor}15;color:${catColor};border:1px solid ${catColor}30">${esc(stop.category)}</span>
@@ -478,11 +495,15 @@ function renderResults(city, data) {
     daysEl.appendChild(section);
   });
 
-  // Render map
-  renderMap(allStops);
+  // The server stores every itinerary; trip_id is null only if storing failed
+  tripId = data.trip_id || null;
+  document.getElementById('share-btn').style.display = tripId ? '' : 'none';
+  document.getElementById('share-link').classList.remove('visible');
 
   document.getElementById('results').classList.add('active');
   document.getElementById('footer').style.display = '';
+  // Render map. Leaflet needs a visible container to size itself, so this comes after the results are shown.
+  renderMap(allStops);
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -513,7 +534,7 @@ function renderMap(stops) {
         className: '', iconSize: [26, 26], iconAnchor: [13, 13],
       });
       L.marker([stop.lat, stop.lon], { icon }).bindPopup(
-        `<div style="font-family:system-ui;min-width:140px"><b style="font-size:13px">${esc(stop.name)}</b><br><span style="color:#666;font-size:12px">${stop.arrival_time} &middot; ${stop.duration_min} min</span></div>`,
+        `<div style="font-family:system-ui;min-width:140px"><b style="font-size:13px">${esc(stop.name)}</b><br><span style="color:#666;font-size:12px">${esc(stop.arrival_time)} &middot; ${Number(stop.duration_min)} min</span></div>`,
         { closeButton: false }
       ).addTo(map);
     });
@@ -521,6 +542,26 @@ function renderMap(stops) {
 
   const bounds = L.latLngBounds(valid.map(s => [s.lat, s.lon]));
   map.fitBounds(bounds, { padding: [30, 30] });
+}
+
+// ── Share link ───────────────────────────────────
+function shareTrip() {
+  if (!tripId) return;
+  const box = document.getElementById('share-link');
+  fetch(`/api/trips/${encodeURIComponent(tripId)}/share`, { method: 'POST' })
+    .then(res => { if (!res.ok) throw new Error(`HTTP ${res.status}`); return res.json(); })
+    .then(data => {
+      const url = `${location.origin}/t/${encodeURIComponent(data.share_slug)}`;
+      const link = document.createElement('a');
+      link.href = url; link.target = '_blank'; link.textContent = url;
+      box.textContent = 'Anyone with this link can view the trip: ';
+      box.appendChild(link);
+      box.classList.add('visible');
+    })
+    .catch(() => {
+      box.textContent = 'Could not create a share link. Please try again.';
+      box.classList.add('visible');
+    });
 }
 
 function resetForm() {
@@ -533,7 +574,8 @@ function resetForm() {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-function esc(str) { if (!str) return ''; const d = document.createElement('div'); d.textContent = str; return d.innerHTML; }
+// Also escapes quotes, because the result is used inside attributes (src, alt) as well as text
+function esc(str) { if (!str) return ''; const d = document.createElement('div'); d.textContent = str; return d.innerHTML.replace(/"/g, '&quot;').replace(/'/g, '&#39;'); }
 </script>
 </body>
 </html>

@@ -1,7 +1,7 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet, SafeAreaView, Animated, RefreshControl } from 'react-native';
 import { useRouter, useFocusEffect } from 'expo-router';
-import { SavedTrip, getSavedTrips, deleteTrip, storeItinerary } from '../services/api';
+import { Itinerary, getSavedTrips, deleteTrip, storeItinerary, getCurrentUser, getServerTrips, getServerTrip, deleteServerTrip } from '../services/api';
 
 const DAY_COLORS = ['#3B82F6', '#10B981', '#F59E0B', '#EC4899', '#8B5CF6', '#EF4444'];
 
@@ -17,9 +17,55 @@ function timeAgo(ts: number): string {
   return new Date(ts).toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
 }
 
+// One row in the list. Signed in, rows come from the server and the itinerary is
+// fetched when the trip is opened. Signed out, rows come from this device and carry it.
+interface TripRow {
+  id: string;
+  city: string;
+  goals: string[];
+  savedAt: number;
+  tripDate?: string;
+  days?: number; // the server's list does not include the number of days
+  stops: number;
+  itinerary?: Itinerary;
+}
+
+// The server's timestamps are UTC but can arrive without a zone suffix, and
+// without one JavaScript would read them as local time.
+function parseServerTime(iso: string): number {
+  return new Date(/(Z|[+-]\d\d:\d\d)$/.test(iso) ? iso : iso + 'Z').getTime();
+}
+
+async function loadTrips(): Promise<{ trips: TripRow[]; signedIn: boolean }> {
+  if (await getCurrentUser()) {
+    const trips = await getServerTrips();
+    return {
+      signedIn: true,
+      trips: trips.map(t => ({
+        id: t.id, city: t.city, goals: t.goals, stops: t.stops,
+        savedAt: parseServerTime(t.created_at),
+        tripDate: t.trip_date || undefined,
+      })),
+    };
+  }
+  const trips = await getSavedTrips();
+  return {
+    signedIn: false,
+    trips: trips.map(t => ({
+      id: t.id, city: t.city, goals: t.goals, savedAt: t.savedAt, tripDate: t.tripDate,
+      days: t.itinerary.days.length,
+      stops: t.itinerary.days.reduce((s, d) => s + d.stops.length, 0),
+      itinerary: t.itinerary,
+    })),
+  };
+}
+
 export default function HistoryScreen() {
   const router = useRouter();
-  const [trips, setTrips] = useState<SavedTrip[]>([]);
+  const [trips, setTrips] = useState<TripRow[]>([]);
+  const [signedIn, setSignedIn] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [openingId, setOpeningId] = useState<string | null>(null);
   const [refreshing, setRefreshing] = useState(false);
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const slideAnim = useRef(new Animated.Value(16)).current;
@@ -31,25 +77,51 @@ export default function HistoryScreen() {
     ]).start();
   }, []);
 
+  const reload = async () => {
+    try {
+      const loaded = await loadTrips();
+      setTrips(loaded.trips);
+      setSignedIn(loaded.signedIn);
+      setError(null);
+    } catch (e: any) {
+      if (e?.status === 401) { reload(); return; } // session expired and was cleared: show this device's trips
+      setError(e?.message || 'Could not load your trips.');
+    }
+  };
+
   useFocusEffect(useCallback(() => {
-    getSavedTrips().then(setTrips);
+    reload();
   }, []));
 
-  const handleOpen = (trip: SavedTrip) => {
-    storeItinerary(trip.itinerary);
+  const handleOpen = async (trip: TripRow) => {
+    let itinerary = trip.itinerary;
+    if (!itinerary) {
+      setOpeningId(trip.id); setError(null);
+      try {
+        itinerary = (await getServerTrip(trip.id)).itinerary;
+      } catch (e: any) {
+        setError(e?.message || 'Could not open this trip.');
+        return;
+      } finally { setOpeningId(null); }
+    }
+    storeItinerary(itinerary);
     router.push({ pathname: '/itinerary', params: { goals: JSON.stringify(trip.goals), city: trip.city, ...(trip.tripDate ? { tripDate: trip.tripDate } : {}) } });
   };
 
   const handleRefresh = async () => {
     setRefreshing(true);
-    const updated = await getSavedTrips();
-    setTrips(updated);
+    await reload();
     setRefreshing(false);
   };
 
   const handleDelete = async (id: string) => {
-    await deleteTrip(id);
-    setTrips(prev => prev.filter(t => t.id !== id));
+    try {
+      if (signedIn) await deleteServerTrip(id);
+      else await deleteTrip(id);
+      setTrips(prev => prev.filter(t => t.id !== id));
+    } catch (e: any) {
+      setError(e?.message || 'Could not delete this trip.');
+    }
   };
 
   return (
@@ -64,6 +136,7 @@ export default function HistoryScreen() {
       </View>
 
       <Animated.View style={{ flex: 1, opacity: fadeAnim, transform: [{ translateY: slideAnim }] }}>
+      {error && <Text style={styles.errorText}>{error}</Text>}
       {trips.length === 0 ? (
         <View style={styles.empty}>
           {/* Geometric illustration — three stacked route dots */}
@@ -89,7 +162,6 @@ export default function HistoryScreen() {
         >
           {trips.map((trip, i) => {
             const color = DAY_COLORS[i % DAY_COLORS.length];
-            const stopCount = trip.itinerary.days.reduce((s, d) => s + d.stops.length, 0);
             return (
               <TouchableOpacity key={trip.id} style={styles.card} onPress={() => handleOpen(trip)} activeOpacity={0.7}>
                 {/* Color accent bar */}
@@ -99,7 +171,7 @@ export default function HistoryScreen() {
                   <View style={styles.cardMain}>
                     <Text style={styles.cardCity}>{trip.city}</Text>
                     <Text style={styles.cardMeta}>
-                      {trip.itinerary.days.length} {trip.itinerary.days.length === 1 ? 'day' : 'days'}  ·  {stopCount} stops  ·  {timeAgo(trip.savedAt)}
+                      {trip.days ? `${trip.days} ${trip.days === 1 ? 'day' : 'days'}  ·  ` : ''}{trip.stops} stops  ·  {openingId === trip.id ? 'opening...' : timeAgo(trip.savedAt)}
                     </Text>
                     {trip.tripDate ? (
                       <Text style={styles.cardDate}>
@@ -156,6 +228,8 @@ const styles = StyleSheet.create({
   emptyDot:     { width: 14, height: 14, borderRadius: 7, backgroundColor: '#3B82F6' },
   emptyTitle:    { color: '#fff', fontSize: 18, fontWeight: '600' },
   emptySubtitle: { color: 'rgba(255,255,255,0.4)', fontSize: 14 },
+
+  errorText: { color: '#EF4444', fontSize: 13, textAlign: 'center', opacity: 0.85, paddingHorizontal: 20, paddingTop: 12 },
 
   list: { padding: 20, gap: 12 },
 

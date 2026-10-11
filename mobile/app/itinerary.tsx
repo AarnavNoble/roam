@@ -4,11 +4,11 @@ import { useState, useRef, useEffect, useCallback } from 'react';
 import {
   View, Text, ScrollView, TouchableOpacity,
   StyleSheet, SafeAreaView, Dimensions, Platform, Animated, Image,
-  LayoutAnimation, UIManager, Share, Linking,
+  LayoutAnimation, UIManager, Share, Linking, TextInput, ActivityIndicator,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as Haptics from 'expo-haptics';
-import { Itinerary, Day, Stop, FeatureExplanation, WeatherDay, submitFeedback, getStoredItinerary, loadLastItinerary, formatItineraryAsText, fetchWeather, generateICS, storeSelectedStop } from '../services/api';
+import { Itinerary, Day, Stop, FeatureExplanation, WeatherDay, submitFeedback, getStoredItinerary, loadLastItinerary, formatItineraryAsText, fetchWeather, generateICS, storeSelectedStop, storeItinerary, saveTrip, shareTrip, editTrip } from '../services/api';
 import * as FileSystem from 'expo-file-system';
 import * as Sharing from 'expo-sharing';
 
@@ -69,6 +69,19 @@ function openInMaps(lat: number, lon: number, name: string) {
   Linking.canOpenURL(url).then(can => {
     Linking.openURL(can ? url : `https://www.google.com/maps/dir/?api=1&destination=${lat},${lon}`);
   });
+}
+
+// The server lists every fallback it used. Only these change how much a traveller
+// should trust what is on screen; the rest (ranking, retrieval, which geocoder) do not.
+const DEGRADED_NOTES: Record<string, string> = {
+  'llm:fallback':     'Descriptions are basic because the writing model was unavailable.',
+  'pois:stale':       'Place data may be out of date.',
+  'matrix:haversine': 'Travel times are rough estimates.',
+  'route:greedy':     'The stop order may not be the shortest route.',
+};
+
+function degradedNotice(degraded?: string[]): string {
+  return (degraded ?? []).map(d => DEGRADED_NOTES[d]).filter(Boolean).join(' ');
 }
 
 // ── Error boundary ───────────────────────────────────────────────────────────
@@ -185,7 +198,8 @@ function StopCard({ stop, goals, explanation, onRetrained, index, isLast, dayCol
     if (feedback) return;
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
     setFeedback(relevant ? 'up' : 'down');
-    try { const r = await submitFeedback(stop.id || 0, relevant, stop.name, stop.category, goals); if (r.retrained) onRetrained?.(); } catch {}
+    if (stop.id == null) return; // saved by an older version without ids: nothing to attach the feedback to
+    try { const r = await submitFeedback(stop.id, relevant, stop.name, stop.category, goals); if (r.retrained) onRetrained?.(); } catch {}
   };
 
   return (
@@ -300,7 +314,7 @@ function DaySection({ day, goals, explanations, onRetrained, weather }: {
 
       {day.stops.map((stop, i) => (
         <StopCard
-          key={i} index={i} stop={stop} goals={goals}
+          key={`${stop.id}-${i}`} index={i} stop={stop} goals={goals}
           explanation={explanations?.[stop.name]}
           onRetrained={onRetrained}
           isLast={i === day.stops.length - 1}
@@ -450,6 +464,44 @@ function ItineraryScreen() {
   const [weather, setWeather] = useState<WeatherDay[]>([]);
   const { show: showToast, Toast } = useToast();
 
+  const [editText, setEditText] = useState('');
+  const [editing, setEditing] = useState(false);
+  const [editError, setEditError] = useState<string | null>(null);
+  const [changes, setChanges] = useState<string[]>([]);
+
+  // Share a link to the public page when the server has this trip, otherwise the plain text
+  const shareItinerary = async () => {
+    if (!itinerary) return;
+    let message = formatItineraryAsText(city, itinerary);
+    if (itinerary.trip_id) {
+      try {
+        message = `${city} on Roam: ${await shareTrip(itinerary.trip_id)}`;
+      } catch {} // offline, or the trip is no longer on the server: share the text instead
+    }
+    try { await Share.share({ message }); } catch {}
+  };
+
+  const submitEdit = async () => {
+    const message = editText.trim();
+    if (!message || editing || !itinerary?.trip_id) return;
+    setEditing(true); setEditError(null);
+    try {
+      const { changes: made, ...edited } = await editTrip(itinerary.trip_id, message);
+      // The server keeps the original and returns a new trip, so save it as a new one here too
+      setItinerary(edited);
+      storeItinerary(edited);
+      saveTrip(city, goals, edited, tripDateParam?.split('T')[0]);
+      setChanges(made ?? []);
+      setEditText('');
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+    } catch (e: any) {
+      setEditError(
+        e?.status === 503 ? 'Trip editing is unavailable right now. Try again later.'
+        : e?.status === 404 ? 'This trip can no longer be edited.'
+        : e?.message || 'Could not update the trip. Please try again.');
+    } finally { setEditing(false); }
+  };
+
   const toggleSlide = useRef(new Animated.Value(0)).current;
   const SEGMENT_WIDTH = 56;
   const setViewAnimated = (v: 'list' | 'map') => {
@@ -521,6 +573,8 @@ function ItineraryScreen() {
     );
   }
 
+  const notice = degradedNotice(itinerary.degraded);
+
   return (
     <SafeAreaView style={styles.container}>
       <Animated.View style={[styles.topBar, {
@@ -533,7 +587,7 @@ function ItineraryScreen() {
         </TouchableOpacity>
         <Text style={styles.screenTitle}>{city}</Text>
         <View style={styles.topBarActions}>
-          <TouchableOpacity style={styles.shareBtn} onPress={() => Share.share({ message: formatItineraryAsText(city, itinerary) })}>
+          <TouchableOpacity style={styles.shareBtn} onPress={shareItinerary}>
             <Text style={styles.shareBtnText}>Share</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.shareBtn} onPress={exportToCalendar}>
@@ -554,8 +608,8 @@ function ItineraryScreen() {
       </Animated.View>
 
       {view === 'list' ? (
-        <ScrollView contentContainerStyle={styles.scroll}>
-          <Animated.View style={[styles.overviewAccent, {
+        <ScrollView contentContainerStyle={styles.scroll} keyboardShouldPersistTaps="handled">
+          <Animated.View style={[styles.overviewAccent, !!itinerary.trip_id && styles.overviewAccentTight, {
             opacity: overviewAnim,
             transform: [{ translateY: overviewAnim.interpolate({ inputRange: [0, 1], outputRange: [10, 0] }) }],
           }]}>
@@ -563,15 +617,55 @@ function ItineraryScreen() {
               {tripDate.toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' })}
             </Text>
             <Text style={styles.overview}>{itinerary.overview}</Text>
+            {notice ? <Text style={styles.degradedNote}>{notice}</Text> : null}
           </Animated.View>
-          {itinerary.days.map((day, i) => (
-            <Animated.View key={day.day} style={{
-              opacity: sectionAnims[i],
-              transform: [{ translateY: sectionAnims[i].interpolate({ inputRange: [0, 1], outputRange: [20, 0] }) }],
-            }}>
-              <DaySection day={day} goals={goals} explanations={itinerary.ranking_explanations} onRetrained={() => showToast('Model improved from your feedback')} weather={weather[dayOffset + i]} />
+
+          {/* Ask for a change. Only trips the server knows about can be edited. */}
+          {itinerary.trip_id ? (
+            <Animated.View style={[styles.editBox, { opacity: overviewAnim }]}>
+              <View style={styles.editRow}>
+                <TextInput
+                  style={styles.editInput}
+                  placeholder="Ask for a change, e.g. swap the museum for a park"
+                  placeholderTextColor="rgba(255,255,255,0.25)"
+                  value={editText} onChangeText={setEditText}
+                  editable={!editing} maxLength={500}
+                  returnKeyType="send" onSubmitEditing={submitEdit}
+                />
+                <TouchableOpacity style={styles.editBtn} onPress={submitEdit} disabled={editing || !editText.trim()}>
+                  {editing
+                    ? <ActivityIndicator size="small" color="rgba(255,255,255,0.5)" />
+                    : <Text style={[styles.editBtnText, !editText.trim() && styles.editBtnTextDisabled]}>Send</Text>}
+                </TouchableOpacity>
+              </View>
+              {editing && <Text style={styles.editStatus}>Updating your trip. This can take up to a minute.</Text>}
+              {editError && <Text style={styles.editErrorText}>{editError}</Text>}
+              {!editing && changes.length > 0 && (
+                <View style={styles.changesBox}>
+                  <Text style={styles.tipLabel}>What changed</Text>
+                  {changes.map((c, i) => <Text key={i} style={styles.tipText}>{c}</Text>)}
+                </View>
+              )}
             </Animated.View>
-          ))}
+          ) : null}
+
+          {itinerary.days.map((day, i) => {
+            const section = (
+              <DaySection day={day} goals={goals} explanations={itinerary.ranking_explanations} onRetrained={() => showToast('Model improved from your feedback')} weather={weather[dayOffset + i]} />
+            );
+            // The entrance animations were created for the days present on first render.
+            // An edit can add a day; that one is shown without an animation.
+            const anim = sectionAnims[i];
+            if (!anim) return <View key={day.day}>{section}</View>;
+            return (
+              <Animated.View key={day.day} style={{
+                opacity: anim,
+                transform: [{ translateY: anim.interpolate({ inputRange: [0, 1], outputRange: [20, 0] }) }],
+              }}>
+                {section}
+              </Animated.View>
+            );
+          })}
         </ScrollView>
       ) : (
         <MapScreen itinerary={itinerary} />
@@ -631,6 +725,26 @@ const styles = StyleSheet.create({
   overviewAccent:  { borderLeftWidth: 2, borderLeftColor: 'rgba(255,255,255,0.08)', paddingLeft: 14, marginBottom: 36 },
   tripDateLabel:   { color: 'rgba(255,255,255,0.25)', fontSize: 12, fontWeight: '500', letterSpacing: 0.3, marginBottom: 8, textTransform: 'uppercase' },
   overview:        { color: 'rgba(255,255,255,0.55)', fontSize: 15, lineHeight: 24 },
+  overviewAccentTight: { marginBottom: 20 },
+  degradedNote:    { color: 'rgba(255,255,255,0.28)', fontSize: 12, lineHeight: 18, marginTop: 10 },
+
+  // Ask for a change
+  editBox: { marginBottom: 36 },
+  editRow: {
+    flexDirection: 'row', alignItems: 'center',
+    backgroundColor: 'rgba(255,255,255,0.04)', borderRadius: 12,
+    borderWidth: 1, borderColor: 'rgba(255,255,255,0.08)',
+  },
+  editInput:           { flex: 1, color: '#fff', fontSize: 14, paddingHorizontal: 14, paddingVertical: 12 },
+  editBtn:             { paddingHorizontal: 14, paddingVertical: 12, minWidth: 58, alignItems: 'center' },
+  editBtnText:         { color: '#3B82F6', fontSize: 13, fontWeight: '600' },
+  editBtnTextDisabled: { color: 'rgba(255,255,255,0.2)' },
+  editStatus:          { color: 'rgba(255,255,255,0.3)', fontSize: 12, marginTop: 8, marginLeft: 2 },
+  editErrorText:       { color: '#EF4444', fontSize: 12, marginTop: 8, marginLeft: 2, opacity: 0.85 },
+  changesBox: {
+    marginTop: 10, gap: 4, backgroundColor: 'rgba(255,255,255,0.03)', borderRadius: 10, padding: 12,
+    borderWidth: 1, borderColor: 'rgba(255,255,255,0.06)',
+  },
 
   // Day section
   daySection: { marginBottom: 48 },
