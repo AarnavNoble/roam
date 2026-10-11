@@ -1,0 +1,14 @@
+{
+  "name": "rome_trastevere",
+  "city": "Rome",
+  "start_location": "Trastevere",
+  "goals": [
+    "history",
+    "culture"
+  ],
+  "duration_hours": 10,
+  "transport": "walking",
+  "start_lat": 41.8911586,
+  "start_lon": 12.4668459,
+  "pois": []
+}

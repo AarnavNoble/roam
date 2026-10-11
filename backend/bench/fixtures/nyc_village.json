@@ -1,0 +1,14 @@
+{
+  "name": "nyc_village",
+  "city": "New York City",
+  "start_location": "Greenwich Village",
+  "goals": [
+    "food",
+    "shopping"
+  ],
+  "duration_hours": 6,
+  "transport": "walking",
+  "start_lat": 40.7319802,
+  "start_lon": -73.9965658,
+  "pois": []
+}

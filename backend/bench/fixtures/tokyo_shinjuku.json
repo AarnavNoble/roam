@@ -1,0 +1,14 @@
+{
+  "name": "tokyo_shinjuku",
+  "city": "Tokyo",
+  "start_location": "Shinjuku",
+  "goals": [
+    "food",
+    "nightlife"
+  ],
+  "duration_hours": 8,
+  "transport": "walking",
+  "start_lat": 35.6937632,
+  "start_lon": 139.7036319,
+  "pois": []
+}

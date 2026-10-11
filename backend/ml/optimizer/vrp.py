@@ -24,11 +24,18 @@ DAY_START_SEC = 9 * 3600   # 9:00 AM
 DAY_END_SEC   = 23 * 3600  # 11:00 PM (generous upper bound)
 
 
-def solve_tsp(pois: list[dict], time_matrix: np.ndarray, start_node: int = 0) -> list[int]:
+def solve_tsp(
+    pois: list[dict],
+    time_matrix: np.ndarray,
+    start_node: int = 0,
+    time_limit_s: float = 10.0,
+) -> list[int]:
     """
     Solve TSP for a single day's POIs using OR-Tools.
     Minimizes total travel time (pure distance objective, no time windows).
     start_node: index of the POI closest to the user's start location.
+    time_limit_s: solver budget. Guided local search does not stop on
+        convergence, so this is spent in full on every call.
     Returns ordered list of indices into pois.
     """
     n = len(pois)
@@ -52,7 +59,7 @@ def solve_tsp(pois: list[dict], time_matrix: np.ndarray, start_node: int = 0) ->
     search_params.local_search_metaheuristic = (
         routing_enums_pb2.LocalSearchMetaheuristic.GUIDED_LOCAL_SEARCH
     )
-    search_params.time_limit.seconds = 10
+    search_params.time_limit.FromMilliseconds(int(time_limit_s * 1000))
 
     solution = routing.SolveWithParameters(search_params)
 

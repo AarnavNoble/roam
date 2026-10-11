@@ -1,0 +1,14 @@
+{
+  "name": "london_soho",
+  "city": "London",
+  "start_location": "Soho",
+  "goals": [
+    "nightlife",
+    "food"
+  ],
+  "duration_hours": 6,
+  "transport": "walking",
+  "start_lat": 51.5140654,
+  "start_lon": -0.1350494,
+  "pois": []
+}

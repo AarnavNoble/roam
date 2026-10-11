@@ -1,0 +1,14 @@
+{
+  "name": "paris_marais",
+  "city": "Paris",
+  "start_location": "Le Marais",
+  "goals": [
+    "food",
+    "history"
+  ],
+  "duration_hours": 8,
+  "transport": "walking",
+  "start_lat": 48.8603823,
+  "start_lon": 2.360742,
+  "pois": []
+}

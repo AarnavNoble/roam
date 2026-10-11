@@ -1,0 +1,14 @@
+{
+  "name": "sydney_bondi",
+  "city": "Sydney",
+  "start_location": "Bondi Beach",
+  "goals": [
+    "nature",
+    "food"
+  ],
+  "duration_hours": 8,
+  "transport": "walking",
+  "start_lat": -33.8906977,
+  "start_lon": 151.2724119,
+  "pois": []
+}
