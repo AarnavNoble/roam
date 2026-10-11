@@ -92,6 +92,8 @@ def _is_open_during(oh_str: str, weekday: int, trip_start: float, trip_end: floa
 
 from backend import config
 OVERPASS_MIRRORS = config.OVERPASS_MIRRORS
+# overpass-api.de answers 406 to requests without an identifying User-Agent
+HEADERS = {"User-Agent": "roam-app/1.0 (github.com/AarnavNoble/roam)"}
 
 # OSM tags that map to travel interest categories
 # Global chain brands to filter out — we want local places
@@ -178,7 +180,7 @@ def _query_overpass(query: str) -> list:
     last_error = None
     for mirror in OVERPASS_MIRRORS:
         try:
-            resp = httpx.post(mirror, data={"data": query}, timeout=30)
+            resp = httpx.post(mirror, data={"data": query}, timeout=30, headers=HEADERS)
             resp.raise_for_status()
             return resp.json().get("elements", [])
         except Exception as e:
