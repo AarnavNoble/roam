@@ -9,7 +9,8 @@ from groq import Groq
 from dotenv import load_dotenv
 
 load_dotenv()
-MODEL = "llama-3.3-70b-versatile"
+from backend import config
+MODEL = config.GROQ_MODELS[0]
 
 
 def get_client() -> Groq:

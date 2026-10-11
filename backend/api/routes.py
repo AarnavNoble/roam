@@ -18,6 +18,7 @@ from backend.services.wiki_photos import fetch_photos_for_itinerary
 from backend.ml.rag.retriever import retrieve, format_context
 from backend.ml.ranker.scorer import rank_pois, get_ranker
 from backend.ml.optimizer.scheduler import build_itinerary
+from backend.core.telemetry import stage, collect_timings, aggregator
 
 router = APIRouter()
 
@@ -107,17 +108,19 @@ def _build_trip_dict(req: TripRequest, start_lat: float, start_lon: float) -> di
 def _run_pipeline(req: TripRequest, explain: bool = False) -> dict:
     """Run the full itinerary pipeline synchronously. Returns result dict."""
     # 1. Geocode start location within city context
-    start_lat, start_lon = geocode(f"{req.start_location}, {req.city}")
+    with stage("geocode"):
+        start_lat, start_lon = geocode(f"{req.start_location}, {req.city}")
 
     # 2. Fetch POIs around where the user actually is
     effective_goals = _effective_goals(req.goals, req.familiarity)
     radius_m = MOBILITY_RADIUS.get(req.mobility, 2500)
     start_h = _start_hour(req.start_time)
-    pois = fetch_pois(
-        start_lat, start_lon, categories=effective_goals, radius_m=radius_m,
-        dietary=req.dietary, visit_start_h=start_h, visit_end_h=min(start_h + req.duration_hours, 23),
-        weekday=_trip_weekday(req.trip_date),
-    )
+    with stage("fetch_pois"):
+        pois = fetch_pois(
+            start_lat, start_lon, categories=effective_goals, radius_m=radius_m,
+            dietary=req.dietary, visit_start_h=start_h, visit_end_h=min(start_h + req.duration_hours, 23),
+            weekday=_trip_weekday(req.trip_date),
+        )
     if not pois:
         raise HTTPException(status_code=404, detail=f"No POIs found near {req.start_location}")
 
@@ -125,21 +128,24 @@ def _run_pipeline(req: TripRequest, explain: bool = False) -> dict:
 
     # 3. Rank POIs
     n_days = _n_days(req.duration_hours)
-    ranked_pois = rank_pois(
-        user_goals=req.goals, pois=poi_dicts,
-        top_k=_top_k(req.duration_hours, req.pace, len(req.goals)), explain=explain,
-    )
+    with stage("rank"):
+        ranked_pois = rank_pois(
+            user_goals=req.goals, pois=poi_dicts,
+            top_k=_top_k(req.duration_hours, req.pace, len(req.goals)), explain=explain,
+        )
 
     # 4. Optimize route starting from user's location
-    itinerary = build_itinerary(
-        pois=ranked_pois, n_days=n_days, transport=req.transport,
-        start_lat=start_lat, start_lon=start_lon,
-        start_hour=_start_hour(req.start_time),
-    )
+    with stage("route"):
+        itinerary = build_itinerary(
+            pois=ranked_pois, n_days=n_days, transport=req.transport,
+            start_lat=start_lat, start_lon=start_lon,
+            start_hour=_start_hour(req.start_time),
+        )
 
     # 5. RAG retrieval + photo fetch (run photo fetch in background while RAG+LLM run)
     query = f"{req.city} {' '.join(req.goals)}"
-    chunks = retrieve(query=query, destination=req.city, top_k=5)
+    with stage("retrieve"):
+        chunks = retrieve(query=query, destination=req.city, top_k=5)
     rag_context = format_context(chunks)
 
     photo_map: dict[str, str] = {}
@@ -151,10 +157,12 @@ def _run_pipeline(req: TripRequest, explain: bool = False) -> dict:
 
     # 6. Groq synthesis
     trip = _build_trip_dict(req, start_lat, start_lon)
-    result = generate_itinerary(trip=trip, itinerary=itinerary, rag_context=rag_context)
+    with stage("llm"):
+        result = generate_itinerary(trip=trip, itinerary=itinerary, rag_context=rag_context)
 
     # Attach photos (thread should be done by now — LLM takes ~5s, photos ~3s)
-    photo_thread.join(timeout=10)
+    with stage("photos_join"):
+        photo_thread.join(timeout=10)
     oh_map: dict[str, str] = {
         p["name"]: p.get("tags", {}).get("opening_hours", "")
         for p in ranked_pois if p.get("name")

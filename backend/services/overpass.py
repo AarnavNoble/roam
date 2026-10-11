@@ -90,10 +90,8 @@ def _is_open_during(oh_str: str, weekday: int, trip_start: float, trip_end: floa
     # If we found no parseable rules → can't tell, assume open
     return not found_parseable
 
-OVERPASS_MIRRORS = [
-    "https://overpass-api.de/api/interpreter",
-    "https://overpass.kumi.systems/api/interpreter",
-]
+from backend import config
+OVERPASS_MIRRORS = config.OVERPASS_MIRRORS
 
 # OSM tags that map to travel interest categories
 # Global chain brands to filter out — we want local places
