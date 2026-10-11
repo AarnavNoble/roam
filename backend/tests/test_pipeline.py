@@ -131,7 +131,7 @@ def test_explanations_are_in_the_response_but_not_in_the_stored_route(upstreams)
 def test_stops_carry_photos_and_opening_hours_from_tags(upstreams):
     out = run_pipeline(TripRequest(**trip_request()))
     stops = {s["name"]: s for d in out.result["days"] for s in d["stops"]}
-    assert stops["Espace Dali"]["photo_url"] == "https://upload.test/thumb/500px-photo.jpg"  # resized to 500px
+    assert stops["Espace Dali"]["photo_url"] == "https://upload.wikimedia.org/thumb/500px-photo.jpg"  # resized to 500px
     assert stops["Theatre de l'Atelier"]["photo_url"].startswith("https://commons.wikimedia.org/wiki/Special:FilePath/")
     assert stops["Le Petit Moulin"]["opening_hours"] == "Mo-Su 08:00-23:00"
     assert "photo_url" not in stops["Le Petit Moulin"]  # no wikipedia or wikidata tag
@@ -218,3 +218,124 @@ def test_short_trip_ends_within_its_duration(client, upstreams, hours):
     with session_scope() as db:
         route = db.get(Trip, body["trip_id"]).route
     assert [p["id"] for d in route for p in d["pois"]] == [s["id"] for s in stops]
+
+
+# ── Day budgets ──────────────────────────────────────────────────────────────
+
+def test_last_day_gets_only_the_hours_that_remain():
+    hour = 3600
+    assert pipeline.day_budgets_sec(3) == [3 * hour]
+    assert pipeline.day_budgets_sec(10) == [10 * hour]
+    assert pipeline.day_budgets_sec(11) == [10 * hour, 1 * hour]  # was two full 10-hour days
+    assert pipeline.day_budgets_sec(25) == [10 * hour, 10 * hour, 5 * hour]
+    for hours in range(1, 73):
+        budgets = pipeline.day_budgets_sec(hours)
+        assert sum(budgets) == hours * hour and len(budgets) == n_days(hours)
+
+
+def test_eleven_hour_trip_has_a_full_first_day_and_a_one_hour_second_day():
+    # Twelve one-hour food stops, more than fit. Day 2 of an 11-hour trip used to be scheduled
+    # as another 10-hour day; now it holds what fits in the one remaining hour.
+    from backend.ml.optimizer.scheduler import build_itinerary_with_meta
+    pois = [{"id": i, "name": f"Cafe {i}", "lat": 48.88 + i * 0.0005, "lon": 2.34, "category": "food"}
+            for i in range(12)]
+
+    def schedule(budget):
+        route, _ = build_itinerary_with_meta(pois, n_days=2, transport="walking", start_lat=48.88,
+                                             start_lon=2.34, day_budget_sec=budget)
+        return [len(day["pois"]) for day in route]
+    assert schedule(pipeline.day_budgets_sec(11)) == [9, 1]
+    before = schedule(pipeline.day_budget_sec(11))  # the old call: 10 hours for every day
+    assert before[1] > 1
+
+
+# ── Returning visitors ───────────────────────────────────────────────────────
+
+def test_hidden_gems_goal_is_used_for_ranking_and_sizing_not_only_fetching(upstreams, monkeypatch):
+    # The extra category was fetched from Overpass but the ranker and the stop count were given
+    # the original goals, so the places fetched for it were ranked against goals that excluded it.
+    seen = {}
+    real_rank = pipeline.rank_pois
+
+    def rank_pois(user_goals, pois, top_k, **kwargs):
+        seen.update(goals=list(user_goals), top_k=top_k)
+        return real_rank(user_goals=user_goals, pois=pois, top_k=top_k, **kwargs)
+    monkeypatch.setattr(pipeline, "rank_pois", rank_pois)
+    run_pipeline(TripRequest(**trip_request(goals=["food"], familiarity="returning", duration_hours=3,
+                                            pace="relaxed")))
+    assert seen["goals"] == ["food", "hidden_gems"]
+    assert seen["top_k"] == top_k(3, "relaxed", 2)  # sized for two goals
+
+
+# ── Photo lookups are driven by OSM tags, which anyone can edit ──────────────
+
+def test_wikipedia_tag_cannot_choose_the_host_we_call(http):
+    from backend.services import wiki_photos
+    for tag in ("evil.example/x?:Title", "169.254.169.254/latest/meta-data/?:x", "en.evil.example#:T",
+                "EN@internal:T", ":Title", "toolonglang:Title"):
+        assert wiki_photos.fetch_photo_url({"wikipedia": tag}) is None
+    assert http.calls == []  # nothing was requested at all
+    # real language codes still work, including ones with a suffix
+    for tag in ("fr:Musée de Montmartre", "zh-yue:香港", "Eiffel Tower"):
+        assert wiki_photos.fetch_photo_url({"wikipedia": tag}) is not None
+    assert http.calls == ["wikipedia"] * 3
+
+
+def test_wikipedia_title_cannot_escape_the_path_and_redirects_are_not_followed(http):
+    from backend.services import wiki_photos
+    seen = []
+
+    def record(url, kwargs):
+        seen.append((url, kwargs))
+        return http.json({})(url, kwargs)
+    http.handlers["wikipedia"] = record
+    wiki_photos.fetch_photo_url({"wikipedia": "en:../../w/api.php?action=x#"})
+    url, kwargs = seen[0]
+    assert url == "https://en.wikipedia.org/api/rest_v1/page/summary/..%2F..%2Fw%2Fapi.php%3Faction%3Dx%23"
+    assert not kwargs.get("follow_redirects")
+
+
+def test_wikidata_id_must_look_like_one(http):
+    from backend.services import wiki_photos
+    for qid in ("Q1&action=delete", "../Q1", "P18", "", "Q"):
+        assert wiki_photos.fetch_photo_url({"wikidata": qid}) is None
+    assert http.calls == []
+    assert wiki_photos.fetch_photo_url({"wikidata": "Q3527158"}).startswith("https://commons.wikimedia.org/")
+
+
+@pytest.mark.parametrize("source", ["https://evil.example/320px-x.jpg", "http://upload.wikimedia.org/320px-x.jpg",
+                                    "javascript:alert(1)", "https://upload.wikimedia.org.evil.example/x.jpg",
+                                    "//upload.wikimedia.org/x.jpg", 42])
+def test_thumbnail_url_is_only_passed_on_from_wikimedia_image_hosts(http, source):
+    # The URL ends up in the client's <img src>. A response naming any other host or scheme is dropped.
+    from backend.services import wiki_photos
+    http.handlers["wikipedia"] = http.json({"thumbnail": {"source": source}})
+    assert wiki_photos.fetch_photo_url({"wikipedia": "en:Somewhere"}) is None
+
+
+# ── Bounds on request bodies ─────────────────────────────────────────────────
+
+@pytest.mark.parametrize("body", [
+    {"poi_id": 2 ** 63, "relevant": True},                              # one past a signed 64-bit integer
+    {"poi_id": -2 ** 63 - 1, "relevant": True},
+    {"poi_id": 1, "relevant": True, "goals": ["x" * 41]},               # goal strings are capped
+    {"poi_id": 1, "relevant": True, "goals": ["food"] * 9},
+    {"poi_id": 1, "relevant": True, "poi_name": "Cafe\x00"},            # NUL cannot be stored
+    {"poi_id": 1, "relevant": True, "goals": ["fo\x00od"]},
+])
+def test_feedback_out_of_bounds_is_422(client, body):
+    # Each of these used to reach the database and fail there as a 500.
+    assert client.post("/api/feedback", json=body).status_code == 422
+
+
+def test_feedback_accepts_the_negative_ids_used_for_ways(client):
+    r = client.post("/api/feedback", json={"poi_id": -104, "relevant": True, "poi_name": "Halle",
+                                           "category": "food", "goals": ["food"]})
+    assert r.status_code == 200
+
+
+@pytest.mark.parametrize("field", ["city", "start_location", "notes"])
+def test_nul_byte_in_a_trip_request_is_422(client, upstreams, field):
+    r = client.post("/api/itinerary", json=trip_request(**{field: "Par\x00is"}))
+    assert r.status_code == 422
+    assert upstreams.calls == []

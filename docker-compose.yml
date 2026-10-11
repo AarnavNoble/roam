@@ -25,7 +25,11 @@ services:
       DATABASE_URL: postgresql+psycopg://roam:roam@db:5432/roam
       GROQ_API_KEY: ${GROQ_API_KEY:-}
       ORS_API_KEY: ${ORS_API_KEY:-}
-      JWT_SECRET: ${JWT_SECRET:-dev-only-secret-change-me}
+      # Local stack: without a JWT_SECRET of your own, ROAM_DEV=1 lets the API
+      # start with the public development secret. Do not deploy it like this.
+      JWT_SECRET: ${JWT_SECRET:-}
+      ROAM_DEV: ${ROAM_DEV:-1}
+      TRUSTED_PROXIES: "0"  # reached directly on localhost, no proxy in front
     ports:
       - "7860:7860"
 

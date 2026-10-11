@@ -5,6 +5,12 @@ Every generated itinerary is stored. A signed-in user's trips are private to
 them. An anonymous trip belongs to nobody and can be read by anyone holding
 its id, which is 128 random bits. Sharing mints a separate short slug, so a
 link can be revoked without deleting the trip and never exposes the trip id.
+Revoking needs an owner: an anonymous trip's share link stays live until a
+signed-in user claims the trip (by sharing or editing it) and unshares it.
+
+Handlers that write commit before they return. The session dependency also
+commits, but only after the response has been sent, which is too late for a
+client that acts on the response straight away.
 """
 
 import secrets
@@ -87,6 +93,7 @@ def delete_trip(trip_id: str, user: User = Depends(current_user), db: Session = 
     if trip.user_id != user.id:
         raise HTTPException(status_code=404, detail="Trip not found")
     db.delete(trip)
+    db.commit()
 
 
 @router.post("/trips/{trip_id}/share")
@@ -95,6 +102,7 @@ def share_trip(trip_id: str, user: User | None = Depends(optional_user), db: Ses
     trip = load_trip(db, trip_id, user, write=True)
     if trip.share_slug is None:
         trip.share_slug = secrets.token_urlsafe(8)[:11]
+    db.commit()  # the link must work by the time the client has it
     return {"share_slug": trip.share_slug, "path": f"/t/{trip.share_slug}"}
 
 
@@ -104,6 +112,7 @@ def unshare_trip(trip_id: str, user: User = Depends(current_user), db: Session =
     if trip.user_id != user.id:
         raise HTTPException(status_code=404, detail="Trip not found")
     trip.share_slug = None
+    db.commit()
 
 
 @router.get("/shared/{slug}")

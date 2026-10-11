@@ -110,7 +110,8 @@ def _estimate_day_duration(pois: list[dict], time_matrix: np.ndarray, indices: l
     return total
 
 
-def assign_days(pois: list[dict], n_days: int, time_matrix: np.ndarray) -> list[list[int]]:
+def assign_days(pois: list[dict], n_days: int, time_matrix: np.ndarray,
+                budgets: list[int] | None = None) -> list[list[int]]:
     """
     Greedily assign POIs to days.
     POIs are pre-sorted by relevance score (highest first).
@@ -126,7 +127,7 @@ def assign_days(pois: list[dict], n_days: int, time_matrix: np.ndarray) -> list[
         best_day = None
         best_remaining = -1
         for d in range(n_days):
-            remaining = DAILY_BUDGET_SEC - day_times[d]
+            remaining = (budgets[d] if budgets else DAILY_BUDGET_SEC) - day_times[d]
             if remaining >= visit_time and remaining > best_remaining:
                 best_day = d
                 best_remaining = remaining
@@ -146,13 +147,15 @@ def build_itinerary_with_meta(
     start_lon: float = None,
     start_hour: int = 9,
     deadline: Deadline | None = None,
-    day_budget_sec: int | None = None,
+    day_budget_sec: int | list[int] | None = None,
 ) -> tuple[list[dict], dict]:
     """
     Full scheduling pipeline. Returns (itinerary, meta) where meta records
     which travel-time source and which ordering method were actually used.
     day_budget_sec caps travel plus visits per day (a 3-hour trip must end
     within 3 hours); stops that do not fit are dropped, lowest-ranked first.
+    It is one number for every day, or a list with one entry per day when the
+    days differ (the last day of an 11-hour trip has one hour).
     """
     meta = {"matrix": "none", "ordering": "ortools"}
     if not pois:
@@ -168,7 +171,8 @@ def build_itinerary_with_meta(
         time_matrix, meta["matrix"] = build_time_matrix_with_source(pois, transport, deadline)
         depot_to_poi = None
 
-    day_assignments = assign_days(pois, n_days, time_matrix)
+    budgets = day_budget_sec if isinstance(day_budget_sec, list) else None
+    day_assignments = assign_days(pois, n_days, time_matrix, budgets)
 
     itinerary = []
     for day_num, poi_indices in enumerate(day_assignments):
@@ -200,7 +204,8 @@ def build_itinerary_with_meta(
             elapsed = _estimate_day_duration(day_pois, day_matrix, order)
             if depot_times is not None:
                 elapsed += int(depot_times[order[0]])
-            if day_budget_sec is None or elapsed <= day_budget_sec or len(poi_indices) == 1:
+            budget = budgets[day_num] if budgets else day_budget_sec
+            if budget is None or elapsed <= budget or len(poi_indices) == 1:
                 break
             poi_indices = poi_indices[:-1]
             meta["trimmed"] = meta.get("trimmed", 0) + 1

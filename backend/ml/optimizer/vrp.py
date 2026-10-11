@@ -168,7 +168,7 @@ def solve_day(
     Model: node 0 is the start location, nodes 1..n the stops, node n+1 a
     dummy end that costs nothing to reach, which turns the closed tour OR-Tools
     wants into the open path a traveller actually walks.
-      objective  = travel time + WINDOW_PENALTY * seconds outside each window
+      objective  = TRAVEL_WEIGHT * travel time + WINDOW_PENALTY * seconds outside each window
       Time dim   = travel + visit duration, no waiting, starts at day_start_sec
     """
     n = len(pois)

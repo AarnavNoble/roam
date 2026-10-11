@@ -21,7 +21,7 @@ from sqlalchemy.orm import Session
 from backend import config
 from backend.core.ratelimit import TokenBucket, limiter
 from backend.db.models import User
-from backend.db.session import get_db
+from backend.db.session import get_db, session_scope
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 _bearer = HTTPBearer(auto_error=False)
@@ -43,7 +43,7 @@ class Credentials(BaseModel):
     @classmethod
     def _valid_email(cls, v: str) -> str:
         v = v.strip().lower()
-        if not _EMAIL.match(v) or len(v) > 320:
+        if not _EMAIL.match(v) or len(v) > 320 or "\x00" in v:  # Postgres rejects NUL in text
             raise ValueError("invalid email address")
         return v
 
@@ -53,6 +53,8 @@ class Credentials(BaseModel):
         # bcrypt only reads the first 72 bytes; refuse longer rather than truncate silently
         if not 8 <= len(v.encode()) <= 72:
             raise ValueError("password must be 8 to 72 bytes")
+        if "\x00" in v:  # bcrypt refuses NUL bytes
+            raise ValueError("password must not contain NUL bytes")
         return v
 
 
@@ -62,20 +64,25 @@ def issue_token(user_id: str) -> str:
     return jwt.encode(payload, config.JWT_SECRET, algorithm="HS256")
 
 
-def _user_from_token(token: str, db: Session) -> User | None:
+def _user_from_token(token: str) -> User | None:
     try:
         payload = jwt.decode(token, config.JWT_SECRET, algorithms=["HS256"])
     except jwt.PyJWTError:
         return None
-    return db.get(User, payload.get("sub", ""))
+    # A session of its own, closed before this returns. The request-scoped
+    # session would keep a pooled connection (idle in transaction on Postgres)
+    # for as long as the handler runs, which for an itinerary is the whole
+    # pipeline. The User comes back detached: its columns are loaded and
+    # readable, and nothing else is needed from it.
+    with session_scope() as db:
+        return db.get(User, str(payload.get("sub", "")))
 
 
-def optional_user(creds: HTTPAuthorizationCredentials | None = Depends(_bearer),
-                  db: Session = Depends(get_db)) -> User | None:
+def optional_user(creds: HTTPAuthorizationCredentials | None = Depends(_bearer)) -> User | None:
     """The signed-in user, or None for anonymous requests. A bad token is a 401."""
     if creds is None:
         return None
-    user = _user_from_token(creds.credentials, db)
+    user = _user_from_token(creds.credentials)
     if user is None:
         raise HTTPException(status_code=401, detail="Invalid or expired token")
     return user
@@ -93,7 +100,10 @@ def register(creds: Credentials, db: Session = Depends(get_db)):
                 password_hash=bcrypt.hashpw(creds.password.encode(), bcrypt.gensalt()).decode())
     db.add(user)
     try:
-        db.flush()
+        # Committed here, not in get_db's teardown: teardown runs after the
+        # response has been sent, so the client could use its new token before
+        # the account existed, and a failed commit would still have answered 201.
+        db.commit()
     except IntegrityError:
         db.rollback()
         raise HTTPException(status_code=409, detail="An account with this email already exists")

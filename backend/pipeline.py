@@ -72,6 +72,13 @@ class TripRequest(BaseModel):
     def _unique_goals(cls, v: list[str]) -> list[str]:
         return list(dict.fromkeys(v))
 
+    @field_validator("city", "start_location", "notes")
+    @classmethod
+    def _no_nul(cls, v: str) -> str:
+        if "\x00" in v:  # Postgres cannot store NUL in text or JSON, so the trip could never be saved
+            raise ValueError("must not contain NUL bytes")
+        return v
+
     @field_validator("trip_date")
     @classmethod
     def _iso_date(cls, v: str) -> str:
@@ -100,6 +107,18 @@ def n_days(duration_hours: int) -> int:
 def day_budget_sec(duration_hours: int) -> int:
     """Time available per day: the whole trip if it fits in one day, else 10 hours."""
     return min(duration_hours, 10) * 3600
+
+
+def day_budgets_sec(duration_hours: int) -> list[int]:
+    """
+    Seconds available on each day. Full days are 10 hours and the last day gets
+    what is left, so an 11-hour trip is 10 hours and then 1, not 10 and 10.
+
+    Known limitation: opening hours are checked against the first day's weekday
+    and time window only, for every day of the trip.
+    """
+    full_days = n_days(duration_hours) - 1
+    return [10 * 3600] * full_days + [(duration_hours - 10 * full_days) * 3600]
 
 
 def top_k(duration_hours: int, pace: str, n_goals: int) -> int:
@@ -192,9 +211,13 @@ def run_pipeline(req: TripRequest, explain: bool = True,
 
         progress("fetching_pois", "Discovering places near you...", 25)
         start_h = START_HOUR.get(req.start_time, 9)
+        # Fetching, ranking and sizing all use the same goal list. A returning
+        # visitor's hidden_gems used to be fetched and then ranked against the
+        # goals without it, so those places rarely made the cut.
+        goals = effective_goals(req.goals, req.familiarity)
         with stage("fetch_pois"):
             pois, poi_source = fetch_pois_with_source(
-                start_lat, start_lon, categories=effective_goals(req.goals, req.familiarity),
+                start_lat, start_lon, categories=goals,
                 radius_m=MOBILITY_RADIUS.get(req.mobility, 2000), dietary=req.dietary,
                 visit_start_h=start_h, visit_end_h=min(start_h + req.duration_hours, 23),
                 weekday=trip_weekday(req.trip_date), deadline=deadline,
@@ -207,8 +230,8 @@ def run_pipeline(req: TripRequest, explain: bool = True,
         progress("ranking", "Ranking with ML model...", 45)
         with stage("rank", candidates=len(pois)):
             ranked, rank_source = rank_pois(
-                user_goals=list(req.goals), pois=[p.to_dict() for p in pois],
-                top_k=top_k(req.duration_hours, req.pace, len(req.goals)), explain=explain,
+                user_goals=goals, pois=[p.to_dict() for p in pois],
+                top_k=top_k(req.duration_hours, req.pace, len(goals)), explain=explain,
                 with_source=True,
             )
         if rank_source != "model":
@@ -219,7 +242,7 @@ def run_pipeline(req: TripRequest, explain: bool = True,
             route, route_meta = build_itinerary_with_meta(
                 pois=ranked, n_days=n_days(req.duration_hours), transport=req.transport,
                 start_lat=start_lat, start_lon=start_lon, start_hour=start_h, deadline=deadline,
-                day_budget_sec=day_budget_sec(req.duration_hours),
+                day_budget_sec=day_budgets_sec(req.duration_hours),
             )
         if route_meta["matrix"] == "haversine_fallback":
             degraded.append("matrix:haversine")

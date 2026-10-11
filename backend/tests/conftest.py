@@ -13,6 +13,7 @@ import tempfile
 if "DATABASE_URL" not in os.environ:
     os.environ["DATABASE_URL"] = f"sqlite:///{tempfile.mkdtemp(prefix='roam-test-')}/test.db"
 os.environ.setdefault("JWT_SECRET", "test-secret-not-used-anywhere-else")
+os.environ.setdefault("ROAM_DEV", "1")
 # backend/.env on a developer machine holds real keys. Blank them before
 # backend.config is imported so no test can spend LLM or routing quota.
 os.environ["GROQ_API_KEY"] = ""
@@ -164,9 +165,57 @@ def llm_error(status: int | None):
     def fail(prompt):
         if status is None:
             raise groq.APITimeoutError(request=request)
-        cls = {404: groq.NotFoundError, 429: groq.RateLimitError}.get(status, groq.InternalServerError)
+        cls = {400: groq.BadRequestError, 404: groq.NotFoundError,
+               429: groq.RateLimitError}.get(status, groq.InternalServerError)
         raise cls(f"HTTP {status}", response=httpx.Response(status, request=request), body=None)
     return fail
+
+
+def raw_asgi(method: str, path: str, body: dict | None = None, headers: dict | None = None,
+             on_body=None, disconnect_on: bytes | None = None) -> tuple[int, bytes]:
+    """
+    Call the app as an ASGI server would, without TestClient, for the two things
+    TestClient hides: `on_body` runs at the moment the first response body
+    chunk is handed to the server (so a test can look at the database as the
+    client would see it then), and `disconnect_on` makes the client hang up
+    once a chunk containing those bytes has been sent. Returns (status, body).
+    """
+    import asyncio
+    from backend.main import app
+
+    raw = json.dumps(body).encode() if body is not None else b""
+    head = {"content-type": "application/json", "content-length": str(len(raw)), **(headers or {})}
+    scope = {"type": "http", "asgi": {"version": "3.0"}, "http_version": "1.1", "method": method,
+             "path": path, "raw_path": path.encode(), "query_string": b"", "root_path": "", "scheme": "http",
+             "headers": [(k.lower().encode(), v.encode()) for k, v in head.items()],
+             "client": ("192.0.2.1", 1234), "server": ("test", 80)}
+    state = {"status": 0, "body": b"", "request_sent": False, "called": False}
+
+    async def run():
+        hang_up = asyncio.Event()
+
+        async def receive():
+            if not state["request_sent"]:
+                state["request_sent"] = True
+                return {"type": "http.request", "body": raw, "more_body": False}
+            await hang_up.wait()
+            return {"type": "http.disconnect"}
+
+        async def send(message):
+            if message["type"] == "http.response.start":
+                state["status"] = message["status"]
+            elif message["type"] == "http.response.body":
+                if on_body and not state["called"]:
+                    state["called"] = True
+                    on_body()
+                state["body"] += message.get("body", b"")
+                if disconnect_on and disconnect_on in message.get("body", b""):
+                    hang_up.set()
+
+        await app(scope, receive, send)
+
+    asyncio.run(run())
+    return state["status"], state["body"]
 
 
 class Upstreams:
@@ -191,7 +240,7 @@ class Upstreams:
             MIRROR_B: self.json({"elements": overpass_elements()}),
             MIRROR_C: self.json({"elements": overpass_elements()}),
             "ors": self._ors_ok,
-            "wikipedia": self.json({"thumbnail": {"source": "https://upload.test/thumb/320px-photo.jpg"}}),
+            "wikipedia": self.json({"thumbnail": {"source": "https://upload.wikimedia.org/thumb/320px-photo.jpg"}}),
             "wikidata": self.json({"claims": {"P18": [{"mainsnak": {"datavalue": {"value": "Atelier.jpg"}}}]}}),
         }
 

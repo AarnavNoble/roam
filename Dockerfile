@@ -4,11 +4,13 @@
 # traffic to port 7860. docker compose uses the same image.
 #
 #   docker build -t roam .
-#   docker run -p 7860:7860 -e GROQ_API_KEY=... roam
+#   docker run -p 7860:7860 -e JWT_SECRET=... -e GROQ_API_KEY=... roam
 #
-# Configuration is by environment variable, see backend/.env.example. With
-# nothing set the API still starts: SQLite under /app/data, and itinerary text
-# written without an LLM.
+# Configuration is by environment variable, see backend/.env.example.
+# JWT_SECRET is required (the server refuses to start without it, unless
+# ROAM_DEV=1 marks a development machine). Everything else is optional: with
+# nothing else set it uses SQLite under /app/data and writes itinerary text
+# without an LLM.
 
 FROM python:3.12-slim
 

@@ -326,3 +326,131 @@ def test_itinerary_with_a_bad_token_is_401_and_runs_nothing(client, upstreams):
     r = client.post("/api/itinerary", json=trip_request(), headers={"Authorization": "Bearer nope"})
     assert r.status_code == 401
     assert upstreams.calls == []
+
+
+# ── Writes are committed before the response leaves ──────────────────────────
+# FastAPI runs a dependency's teardown after the response has been sent. The
+# session used to commit there, so for a moment the client held a token for an
+# account, or a link for a share, that was not in the database yet.
+
+def committed(model, **where) -> int:
+    """Rows another connection can see right now, i.e. committed ones."""
+    from sqlalchemy import func, select
+    from backend.db.session import engine
+    stmt = select(func.count()).select_from(model)
+    for column, value in where.items():
+        stmt = stmt.where(getattr(model, column) == value)
+    with engine.connect() as other:
+        return other.execute(stmt).scalar()
+
+
+def test_register_is_committed_when_the_response_is_sent():
+    from backend.tests.conftest import raw_asgi
+    seen = []
+    status, _ = raw_asgi("POST", "/api/auth/register", {"email": "ada@example.com", "password": PASSWORD},
+                         on_body=lambda: seen.append(committed(User)))
+    assert status == 201
+    assert seen == [1]  # was 0: the row only appeared after the body had gone out
+
+
+def test_new_token_works_on_the_very_next_request(client):
+    # The user-facing symptom of the late commit, in a tight loop.
+    for i in range(5):
+        account = register(client, email=f"user{i}@example.com")
+        assert client.get("/api/auth/me", headers=account["headers"]).status_code == 200
+
+
+def test_share_unshare_and_delete_are_committed_when_the_response_is_sent(client):
+    from backend.tests.conftest import raw_asgi
+    owner = register(client)
+    trip_id = make_trip(owner["user"]["id"])
+    seen = []
+    status, _ = raw_asgi("POST", f"/api/trips/{trip_id}/share", headers=owner["headers"],
+                         on_body=lambda: seen.append(committed(Trip, share_slug=None)))
+    assert (status, seen) == (200, [0])  # the slug is already stored
+    seen.clear()
+    status, _ = raw_asgi("DELETE", f"/api/trips/{trip_id}/share", headers=owner["headers"],
+                         on_body=lambda: seen.append(committed(Trip, share_slug=None)))
+    assert (status, seen) == (204, [1])
+    seen.clear()
+    status, _ = raw_asgi("DELETE", f"/api/trips/{trip_id}", headers=owner["headers"],
+                         on_body=lambda: seen.append(committed(Trip)))
+    assert (status, seen) == (204, [0])
+
+
+def test_register_reports_a_failed_commit_instead_of_success(client, monkeypatch):
+    # If the commit fails the client must not be told 201 and handed a token.
+    from sqlalchemy.exc import OperationalError
+    from sqlalchemy.orm import Session
+
+    def commit(self):
+        raise OperationalError("COMMIT", {}, ConnectionError("connection lost"))
+    monkeypatch.setattr(Session, "commit", commit)
+    from fastapi.testclient import TestClient
+    from backend.main import app
+    with TestClient(app, raise_server_exceptions=False) as failing:
+        r = failing.post("/api/auth/register", json={"email": "ada@example.com", "password": PASSWORD})
+    assert r.status_code == 500
+    assert "token" not in r.text
+
+
+# ── A signed-in request does not hold a database connection while it works ───
+
+@pytest.mark.parametrize("path", ["/api/itinerary", "/api/itinerary/stream"])
+def test_no_pooled_connection_is_held_during_the_pipeline(client, monkeypatch, path):
+    # The user used to be loaded through the request's session, which then sat on a pooled
+    # connection (idle in transaction on Postgres) for the whole pipeline. A handful of slow
+    # signed-in requests could exhaust the pool.
+    from backend.api import routes
+    from backend.db.session import engine
+    from backend.pipeline import PipelineOutput
+    from backend.tests.conftest import trip_request
+    owner = register(client)
+    held = []
+
+    def run_pipeline(req, **kwargs):
+        held.append(engine.pool.checkedout())
+        return PipelineOutput(result={"days": [], "overview": "x"}, route=[])
+    monkeypatch.setattr(routes, "run_pipeline", run_pipeline)
+    r = client.post(path, json=trip_request(), headers=owner["headers"])
+    assert r.status_code == 200
+    assert held == [0]
+    with session_scope() as db:  # and the trip was still saved under the account
+        assert db.query(Trip).filter_by(user_id=owner["user"]["id"]).count() == 1
+
+
+# ── Input that the database cannot store ─────────────────────────────────────
+
+@pytest.mark.parametrize("path", ["/api/auth/register", "/api/auth/login"])
+@pytest.mark.parametrize("creds", [{"email": "a\x00da@example.com", "password": PASSWORD},
+                                   {"email": "ada@example.com", "password": "correct\x00horse"}])
+def test_nul_bytes_in_credentials_are_422(client, path, creds):
+    # Postgres rejects NUL in text and bcrypt rejects it in passwords; both used to surface as a 500.
+    assert client.post(path, json=creds).status_code == 422
+
+
+# ── JWT secret ───────────────────────────────────────────────────────────────
+
+def test_app_refuses_to_start_with_the_public_default_secret(monkeypatch):
+    # JWT_SECRET unset and no ROAM_DEV=1: anyone could forge a token for any account,
+    # so the server does not come up at all.
+    from fastapi.testclient import TestClient
+    from backend.main import app
+    monkeypatch.setattr(config, "JWT_SECRET", config.DEV_JWT_SECRET)
+    monkeypatch.setattr(config, "DEV_MODE", False)
+    with pytest.raises(RuntimeError, match="JWT_SECRET is not set"):
+        with TestClient(app):
+            pass
+
+
+def test_dev_flag_allows_the_default_secret_and_a_real_secret_needs_no_flag(monkeypatch):
+    from fastapi.testclient import TestClient
+    from backend.main import app
+    monkeypatch.setattr(config, "JWT_SECRET", config.DEV_JWT_SECRET)
+    monkeypatch.setattr(config, "DEV_MODE", True)
+    with TestClient(app) as c:
+        assert c.get("/api/health").status_code == 200
+    monkeypatch.setattr(config, "JWT_SECRET", "a-real-secret-set-by-the-operator")
+    monkeypatch.setattr(config, "DEV_MODE", False)
+    with TestClient(app) as c:
+        assert c.get("/api/health").status_code == 200

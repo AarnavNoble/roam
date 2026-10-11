@@ -70,7 +70,12 @@ def _is_open_during(oh_str: str, weekday: int, trip_start: float, trip_end: floa
     found_parseable = False
     verdict: bool | None = None              # what the last rule covering today says
 
-    for rule in oh_str.split(";"):
+    # 'Mo, We 09:00-18:00' → 'Mo,We 09:00-18:00': a space inside a day list
+    # would otherwise cut the list short.
+    oh_str = re.sub(r"(?<=[A-Za-z]{2}),\s+(?=[A-Za-z]{2}\b)", ",", oh_str)
+    # Rules are separated by ';', and also by ',' when a new day selector
+    # follows a time or 'off' ('Mo-Fr 09:00-18:00, Sa 10:00-14:00').
+    for rule in re.split(r";|(?:(?<=\d)|(?<=off)|(?<=closed)),\s*(?=[A-Za-z]{2}\b)", oh_str):
         rule = rule.strip()
         if not rule:
             continue
@@ -99,7 +104,9 @@ def _is_open_during(oh_str: str, weekday: int, trip_start: float, trip_end: floa
         # no rule covers is a closed day (Mo-Fr 09:00-18:00 on a Saturday).
         found_parseable = True
         if today:
-            verdict = any(trip_start < close_h and trip_end > open_h for open_h, close_h in ranges)
+            # the window is closed at both ends: a bar opening at 23:00 is open
+            # "at some point" of a trip that runs until 23:00
+            verdict = any(trip_start < close_h and trip_end >= open_h for open_h, close_h in ranges)
 
     if verdict is not None:
         return verdict
@@ -183,7 +190,7 @@ HEDGE_AFTER_S = 4.0      # start a second mirror if the first has not answered
 MIRROR_TIMEOUT_S = 25.0
 ROUNDS = 3               # passes over the mirror list before giving up
 
-_memory_cache = TTLCache(ttl=FRESH_TTL_S, max_size=256)
+_memory_cache = TTLCache(ttl=FRESH_TTL_S, stale_ttl=STALE_TTL_S, max_size=256)
 _breakers: dict[str, CircuitBreaker] = {}
 
 
@@ -199,16 +206,20 @@ def _build_query(lat: float, lon: float, radius_m: int, categories: list[str],
     One Overpass request covering every category.
 
     Each category is collected into its own named set and printed with its own
-    limit, so every category gets fair representation regardless of how dense
-    its tags are, and the whole lookup costs one round trip instead of one per
-    category.
+    limit, so a dense category (restaurants) cannot use up the response and
+    leave a sparse one (viewpoints) with nothing, and the whole lookup costs
+    one round trip instead of one per category. The limit is a cap, not a
+    ranking: when a category has more matches than the cap, which ones come
+    back is Overpass's choice (element order), not the nearest or the best.
+    Only named elements are requested, since unnamed ones are discarded later
+    and would otherwise take up places under the cap.
     """
     blocks = []
     for i, category in enumerate(categories):
         filters = []
         for tag_expr in CATEGORY_QUERIES.get(category, []):
-            filters.append(f'node[{tag_expr}][!"brand"](around:{radius_m},{lat},{lon});')
-            filters.append(f'way[{tag_expr}][!"brand"](around:{radius_m},{lat},{lon});')
+            filters.append(f'node[{tag_expr}]["name"][!"brand"](around:{radius_m},{lat},{lon});')
+            filters.append(f'way[{tag_expr}]["name"][!"brand"](around:{radius_m},{lat},{lon});')
         if filters:
             blocks.append(f"({''.join(filters)})->.c{i};\n.c{i} out center {per_category};")
     return "[out:json][timeout:25];\n" + "\n".join(blocks)
@@ -235,9 +246,12 @@ def _query_overpass(query: str, deadline: Deadline | None = None) -> list:
     failures, unless every mirror is open, in which case they are probed anyway.
     """
     with stage("overpass.query"):
-        timeout = deadline.timeout(MIRROR_TIMEOUT_S) if deadline else MIRROR_TIMEOUT_S
-
         def call(mirror: str) -> list:
+            # Worked out for every attempt from what is left of the deadline, so a
+            # later retry round cannot get the full mirror timeout again. Done
+            # before the breaker is involved: running out of our own time is
+            # not the mirror's failure.
+            timeout = deadline.timeout(MIRROR_TIMEOUT_S) if deadline else MIRROR_TIMEOUT_S
             breaker = _breaker(mirror)
             if any(_breaker(m).state != "open" for m in mirrors):
                 return breaker.call(lambda: _post(mirror, query, timeout))
@@ -255,12 +269,17 @@ def _query_overpass(query: str, deadline: Deadline | None = None) -> list:
         # their breaker refuses instantly, so they cost nothing until it resets.
         mirrors = sorted(OVERPASS_MIRRORS, key=lambda m: _breaker(m).state == "open")
         calls = [in_context(lambda m=m: call(m)) for m in mirrors]
+        def one_round() -> list:
+            budget = MIRROR_TIMEOUT_S + HEDGE_AFTER_S * len(calls)
+            if deadline is not None:
+                budget = deadline.timeout(budget)  # never wait past the request deadline
+            return hedged(calls, hedge_after=HEDGE_AFTER_S, timeout=budget)
+
         # Mirrors often answer 5xx for a few seconds and then recover, so one
         # failed round across all of them is retried after a backoff.
         try:
             return retry(
-                lambda: hedged(calls, hedge_after=HEDGE_AFTER_S,
-                               timeout=timeout + HEDGE_AFTER_S * len(calls)),
+                one_round,
                 attempts=ROUNDS, base_delay=1.5, max_delay=6.0,
                 retry_on=(UpstreamError,), deadline=deadline,
             )
@@ -297,6 +316,12 @@ def _load_durable(key: str) -> list | None:
     return None
 
 
+def _stale_copy(key: str) -> list | None:
+    """The last good answer for this query: from memory if this process has it, else the database."""
+    stale = _memory_cache.get_stale(key)
+    return stale if stale is not None else _load_durable(key)
+
+
 def _fetch_elements(lat: float, lon: float, radius_m: int, categories: list[str],
                     deadline: Deadline | None) -> tuple[list, str]:
     """Return (elements, source) where source is live | cache | stale."""
@@ -304,10 +329,17 @@ def _fetch_elements(lat: float, lon: float, radius_m: int, categories: list[str]
     cached = _memory_cache.get(key)
     if cached is not None:
         return cached, "cache"
+    # Every mirror's breaker is open, so they all failed moments ago. With a
+    # stored copy there is no reason to make the traveller wait out another
+    # round of timeouts; the mirrors are probed again once a breaker resets.
+    if all(_breaker(m).state == "open" for m in OVERPASS_MIRRORS):
+        stale = _stale_copy(key)
+        if stale is not None:
+            return stale, "stale"
     try:
         elements = _query_overpass(_build_query(lat, lon, radius_m, categories), deadline)
     except UpstreamError:
-        stale = _load_durable(key)
+        stale = _stale_copy(key)
         if stale is None:
             raise
         return stale, "stale"
@@ -345,11 +377,16 @@ def fetch_pois_with_source(
         weekday = datetime.now().weekday()
     elements, source = _fetch_elements(lat, lon, radius_m, list(categories), deadline)
 
-    seen_ids: set[int] = set()
+    seen: set[tuple[str, int]] = set()
     all_pois: list[POI] = []
     for el in elements:
-        if el["id"] in seen_ids:
+        # OSM numbers nodes and ways separately, so node 7 and way 7 are two
+        # different places. An element is identified by (type, id). The POI id
+        # stays a single integer for the ranker, the client and the feedback
+        # table by folding the type into the sign: nodes positive, ways negative.
+        if (el["type"], el["id"]) in seen:
             continue
+        poi_id = el["id"] if el["type"] == "node" else -el["id"]
 
         tags = el.get("tags", {})
         name = tags.get("name")
@@ -379,9 +416,9 @@ def fetch_pois_with_source(
         if not _is_open_during(oh, weekday, visit_start_h, visit_end_h):
             continue
 
-        seen_ids.add(el["id"])
+        seen.add((el["type"], el["id"]))
         all_pois.append(POI(
-            id=el["id"], name=name,
+            id=poi_id, name=name,
             lat=lat_el, lon=lon_el,
             category=inferred, tags=tags,
         ))

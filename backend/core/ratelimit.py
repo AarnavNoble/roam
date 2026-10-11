@@ -16,6 +16,8 @@ from typing import Callable
 
 from fastapi import HTTPException, Request
 
+from backend import config
+
 
 class TokenBucket:
     def __init__(self, capacity: float, rate: float, clock: Callable[[], float] = time.monotonic,
@@ -31,13 +33,14 @@ class TokenBucket:
         """Take one token. Returns 0 if allowed, else seconds until one is available."""
         now = self._clock()
         with self._lock:
-            tokens, last = self._buckets.get(key, (self.capacity, now))
+            # pop and re-insert, so the dict stays ordered least recently seen first
+            tokens, last = self._buckets.pop(key, (self.capacity, now))
             tokens = min(self.capacity, tokens + (now - last) * self.rate)
+            while len(self._buckets) >= self._max_clients:
+                del self._buckets[next(iter(self._buckets))]  # bound memory: evict the stalest client
             if tokens < 1:
                 self._buckets[key] = (tokens, now)
                 return (1 - tokens) / self.rate
-            if len(self._buckets) >= self._max_clients and key not in self._buckets:
-                self._buckets.clear()  # crude bound on memory; refills everyone
             self._buckets[key] = (tokens - 1, now)
             return 0.0
 
@@ -47,10 +50,17 @@ class TokenBucket:
 
 
 def client_key(request: Request) -> str:
-    # Behind the Hugging Face proxy the socket peer is the proxy itself.
-    forwarded = request.headers.get("x-forwarded-for", "")
-    if forwarded:
-        return forwarded.split(",")[0].strip()
+    """
+    The address to rate-limit on. Behind a proxy the socket peer is the proxy,
+    so the address comes from X-Forwarded-For. Each proxy appends the peer it
+    saw, so only the last TRUSTED_PROXIES entries were written by our own
+    infrastructure. The leftmost entry is whatever the client sent and must not
+    be used: a client could pick a new one per request and never be limited.
+    """
+    hops = [h.strip() for h in request.headers.get("x-forwarded-for", "").split(",") if h.strip()]
+    n = config.TRUSTED_PROXIES
+    if n > 0 and len(hops) >= n:
+        return hops[-n]
     return request.client.host if request.client else "unknown"
 
 

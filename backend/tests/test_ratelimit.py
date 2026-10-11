@@ -67,20 +67,42 @@ def test_reset_refills_everyone():
     assert bucket.take("a") == 0.0
 
 
-def test_number_of_tracked_clients_is_bounded():
-    # Memory bound: at max_clients the table is dropped rather than grown.
-    bucket = TokenBucket(capacity=1, rate=0.1, clock=FakeClock(), max_clients=3)
-    for key in "abcd":
-        bucket.take(key)
-    assert len(bucket._buckets) <= 3
+def test_at_max_clients_the_least_recently_seen_is_evicted():
+    # Memory bound. Only the stalest client is dropped; the old code cleared the whole table,
+    # which refilled every throttled client at once.
+    clock = FakeClock()
+    bucket = TokenBucket(capacity=1, rate=0.1, clock=clock, max_clients=3)
+    for key in "abc":
+        bucket.take(key)          # a, b, c are all empty now
+        clock.now += 0.001
+    assert bucket.take("a") > 0   # refused, but this makes "a" the most recently seen
+    bucket.take("d")              # table is full: "b" is the stalest and goes
+    assert set(bucket._buckets) == {"c", "a", "d"}
+    assert bucket.take("c") > 0 and bucket.take("a") > 0  # the others are still throttled
+    assert len(bucket._buckets) == 3
 
 
-def test_client_key_uses_first_forwarded_hop_then_socket_peer():
-    def request(headers, host="10.0.0.1"):
-        return SimpleNamespace(headers=headers, client=SimpleNamespace(host=host) if host else None)
-    assert client_key(request({"x-forwarded-for": "203.0.113.7, 10.0.0.2"})) == "203.0.113.7"
-    assert client_key(request({})) == "10.0.0.1"
-    assert client_key(request({}, host=None)) == "unknown"
+def _request(headers, host="10.0.0.1"):
+    return SimpleNamespace(headers=headers, client=SimpleNamespace(host=host) if host else None)
+
+
+def test_client_key_is_the_entry_our_proxy_appended_not_the_one_the_client_sent():
+    # One trusted proxy (the default): it appends the address it saw, so the last entry is the
+    # client. Everything to the left of it came from the client and is ignored.
+    assert client_key(_request({"x-forwarded-for": "203.0.113.7"})) == "203.0.113.7"
+    assert client_key(_request({"x-forwarded-for": "6.6.6.6, 203.0.113.7"})) == "203.0.113.7"
+    assert client_key(_request({"x-forwarded-for": "a, b, c ,  203.0.113.7 "})) == "203.0.113.7"
+    assert client_key(_request({})) == "10.0.0.1"
+    assert client_key(_request({}, host=None)) == "unknown"
+
+
+def test_client_key_with_two_proxies_and_with_none(monkeypatch):
+    from backend import config
+    monkeypatch.setattr(config, "TRUSTED_PROXIES", 2)  # e.g. CDN then load balancer
+    assert client_key(_request({"x-forwarded-for": "spoof, 203.0.113.7, 198.51.100.9"})) == "203.0.113.7"
+    assert client_key(_request({"x-forwarded-for": "203.0.113.7"})) == "10.0.0.1"  # fewer hops than proxies
+    monkeypatch.setattr(config, "TRUSTED_PROXIES", 0)  # exposed directly: the header is all client-written
+    assert client_key(_request({"x-forwarded-for": "203.0.113.7"})) == "10.0.0.1"
 
 
 def _fail_fast(monkeypatch):
@@ -125,3 +147,13 @@ def test_login_attempts_are_limited(client):
     creds = {"email": "nobody@example.com", "password": "guess-number-one"}
     statuses = [client.post("/api/auth/login", json=creds).status_code for _ in range(11)]
     assert statuses == [401] * 10 + [429]
+
+
+def test_spoofing_x_forwarded_for_does_not_bypass_the_limit(client):
+    # The attacker sends a different made-up first hop on every request. The proxy still appends
+    # the real address last, so all of them land in one bucket.
+    creds = {"email": "nobody@example.com", "password": "guess-number-one"}
+    statuses = [client.post("/api/auth/login", json=creds,
+                            headers={"X-Forwarded-For": f"10.0.0.{i}, 203.0.113.7"}).status_code
+                for i in range(12)]
+    assert statuses == [401] * 10 + [429] * 2

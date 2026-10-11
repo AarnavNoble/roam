@@ -10,8 +10,9 @@ been down or rate-limited at some point, so every call goes through:
   retry           bounded attempts with exponential backoff and full jitter
   CircuitBreaker  stop calling an upstream that keeps failing, probe it later
   hedged          race replicas of the same call and take the first success
-  TTLCache        serve repeats locally, and serve stale data when the
-                  upstream is down
+  TTLCache        serve repeats locally, and (get_stale) serve an expired
+                  entry when the upstream that would refresh it is down.
+                  Overpass uses both; the geocoder cache only uses get()
 """
 
 import random
@@ -135,12 +136,24 @@ class CircuitBreaker:
                 self._opened_at = self._clock()
             self._probing = False
 
+    def abandon(self) -> None:
+        """
+        An allowed call ended without telling us anything about the upstream
+        (we ran out of time, or the request itself was bad). Neither success
+        nor failure is recorded, but a half-open probe slot is given back so
+        the next caller can probe.
+        """
+        with self._lock:
+            self._probing = False
+
     def call(self, fn: Callable[[], T]) -> T:
         if not self.allow():
             raise UpstreamError(f"{self.name}: circuit open")
+        # BaseException, so that nothing (not even a cancelled thread) can leave
+        # a half-open breaker with its probe slot taken forever.
         try:
             result = fn()
-        except Exception:
+        except BaseException:
             self.record_failure()
             raise
         self.record_success()

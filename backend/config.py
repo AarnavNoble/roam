@@ -39,10 +39,21 @@ OVERPASS_MIRRORS = _csv(
 # postgresql+psycopg:// URL.
 DATABASE_URL = os.getenv("DATABASE_URL", f"sqlite:///{DATA_DIR / 'roam.db'}")
 
-JWT_SECRET = os.getenv("JWT_SECRET", "dev-only-secret-change-me")
+# Tokens are signed with JWT_SECRET. The fallback below is public, so the app
+# refuses to start with it (see main.py) unless ROAM_DEV=1 says this is a
+# development machine.
+DEV_JWT_SECRET = "dev-only-secret-change-me"
+DEV_MODE = os.getenv("ROAM_DEV", "").strip() == "1"
+JWT_SECRET = os.getenv("JWT_SECRET", "").strip() or DEV_JWT_SECRET
 JWT_TTL_HOURS = int(os.getenv("JWT_TTL_HOURS", "720"))
 
 # Total wall-clock budget for one itinerary request, in seconds.
 REQUEST_DEADLINE_S = float(os.getenv("REQUEST_DEADLINE_S", "60"))
+
+# Reverse proxies between the internet and this process. Each appends the
+# address it saw to X-Forwarded-For, so the client address is that many entries
+# from the right; anything further left was written by the client. 0 means no
+# proxy: ignore the header and use the socket address.
+TRUSTED_PROXIES = int(os.getenv("TRUSTED_PROXIES", "1"))
 
 OTEL_ENDPOINT = os.getenv("OTEL_EXPORTER_OTLP_ENDPOINT", "").strip()

@@ -564,28 +564,40 @@ def test_deadline_spent_before_pois_is_503(client, upstreams, monkeypatch):
 
 
 def test_deadline_spent_mid_pipeline_degrades_instead_of_failing(client, upstreams, monkeypatch):
-    # Overpass answers, but so slowly that the budget is gone once the POIs are in hand. The stages
-    # that still need the network are skipped: no LLM call is made and the text is written from tags.
-    monkeypatch.setattr(config, "REQUEST_DEADLINE_S", 0.8)
-    upstreams.handlers[MIRROR_A] = upstreams.slow(1.0, upstreams.handlers[MIRROR_A])
+    # OpenRouteService hangs until the request's budget is gone, after the POIs are in hand. The
+    # stages that still need the network are skipped: no LLM call is made, text is written from tags.
+    monkeypatch.setattr(config, "REQUEST_DEADLINE_S", 1.5)
+    monkeypatch.setattr(config, "ORS_API_KEY", "test-key")
+    upstreams.handlers["ors"] = upstreams.hang(at_most=5.0)
     for _ in range(2):
-        overpass._memory_cache.clear()
+        started = time.monotonic()
         r = post(client)
         assert r.status_code == 200
+        assert time.monotonic() - started < 3.0  # the hang was cut off at the deadline, not at 5s
         # photos get a 0.1s grace period at this point, which the fake may or may not make
         flags = [f for f in r.json()["degraded"] if f != "photos:unavailable"]
-        assert flags == ["rag:unavailable", "llm:fallback"]
+        assert flags == ["matrix:haversine", "rag:unavailable", "llm:fallback"]
         assert_complete(r.json())
     assert upstreams.llm.calls == []
     # Running out of our own time says nothing about the models' health: their breakers stay closed
     # and the next request, with a normal budget, is written by the model.
     assert all(b.state == "closed" for b in llm._breakers.values())
     monkeypatch.setattr(config, "REQUEST_DEADLINE_S", 60.0)
-    upstreams.handlers[MIRROR_A] = upstreams.json({"elements": overpass_elements()})
-    overpass._memory_cache.clear()
+    monkeypatch.setattr(config, "ORS_API_KEY", "")
     r = post(client)
     assert r.json()["degraded"] == []
     assert upstreams.llm.calls == ["model-a"]
+
+
+def test_slow_overpass_answer_is_not_waited_for_past_the_deadline(client, upstreams, monkeypatch):
+    # Every mirror would answer, but only after the request's budget. The request fails at the
+    # deadline (503) instead of running on for as long as the mirrors take.
+    monkeypatch.setattr(config, "REQUEST_DEADLINE_S", 0.4)
+    upstreams.break_all_mirrors(upstreams.hang(at_most=5.0))
+    started = time.monotonic()
+    r = post(client)
+    assert r.status_code == 503
+    assert time.monotonic() - started < 2.0
 
 
 # ── Several faults at once ───────────────────────────────────────────────────
@@ -688,3 +700,117 @@ def test_stream_error_event_for_unknown_place(client, upstreams):
     events = sse_events(client.post("/api/itinerary/stream", json=trip_request()).text)
     assert [name for name, _ in events] == ["progress", "error"]
     assert "Could not geocode" in events[-1][1]["message"]
+
+
+def test_stream_client_disconnect_stops_the_pipeline_and_saves_nothing(upstreams):
+    # The client hangs up while the pipeline is geocoding. The pipeline stops at the next stage
+    # boundary: Overpass and the LLM are never called and no trip is stored for nobody to read.
+    from backend.tests.conftest import raw_asgi
+    upstreams.handlers["nominatim"] = upstreams.slow(0.4, upstreams.handlers["nominatim"])
+    status, body = raw_asgi("POST", "/api/itinerary/stream", trip_request(), disconnect_on=b"geocoding")
+    assert status == 200 and b"result" not in body
+    deadline = time.monotonic() + 5
+    while upstreams.count("nominatim") == 0 and time.monotonic() < deadline:
+        time.sleep(0.05)
+    time.sleep(0.8)  # the worker thread finishes geocoding and reaches the next progress call
+    assert upstreams.count("nominatim") == 1
+    assert upstreams.count(MIRROR_A) == 0
+    assert upstreams.llm.calls == []
+    with session_scope() as db:
+        assert db.query(Trip).count() == 0
+
+
+# ── LLM breaker bookkeeping (llm.chat called directly) ───────────────────────
+
+def ask(deadline_s: float | None = None):
+    from backend.core.resilience import Deadline
+    return llm.chat([{"role": "user", "content": "[1] 09:00 Somewhere"}],
+                    deadline=Deadline(deadline_s) if deadline_s is not None else None)
+
+
+def test_timeout_under_a_shortened_deadline_is_not_held_against_the_model(upstreams):
+    # 5 seconds of the request are left, so the call gets a 5s timeout instead of 40s and times
+    # out. That measures our budget, not the model: after two such requests it is still in rotation.
+    upstreams.llm.behaviour = {"model-a": llm_error(None), "model-b": llm_error(None)}
+    for _ in range(2):
+        with pytest.raises(llm.LLMUnavailable):
+            ask(deadline_s=5)
+    assert upstreams.llm.calls == ["model-a", "model-b"] * 2
+    assert all(b.state == "closed" and b._failures == 0 for b in llm._breakers.values())
+    # the same timeout with the full budget does count
+    with pytest.raises(llm.LLMUnavailable):
+        ask(deadline_s=120)
+    assert llm._breakers["model-a"]._failures == 1
+
+
+def test_no_completion_is_started_without_a_minimum_budget(upstreams):
+    # One second left: a completion cannot finish, so none is attempted and none is billed.
+    with pytest.raises(llm.LLMUnavailable, match="deadline"):
+        ask(deadline_s=1)
+    assert upstreams.llm.calls == []
+    assert llm._breakers == {}
+
+
+def test_unexpected_error_during_half_open_probe_does_not_wedge_the_breaker(upstreams):
+    # model-a's breaker is open, its reset window passes, and the single probe call dies with an
+    # error the client never anticipated. The breaker used to keep the probe slot forever, so a
+    # recovered model was never called again; and the error escaped as a 500.
+    upstreams.llm.behaviour["model-a"] = llm_error(500)
+    ask(), ask()
+    breaker = llm._breakers["model-a"]
+    assert breaker.state == "open"
+    breaker._opened_at -= 1000  # the reset window has passed
+
+    def malformed(prompt):
+        raise AttributeError("'NoneType' object has no attribute 'prompt_tokens'")
+    upstreams.llm.behaviour["model-a"] = malformed
+    _, meta = ask()  # the probe fails, model-b answers; nothing escapes
+    assert meta["model"] == "model-b" and meta["failed_over"] == ["model-a: AttributeError"]
+    assert breaker.state == "open" and breaker._probing is False
+
+    breaker._opened_at -= 100000  # later, the model has recovered
+    del upstreams.llm.behaviour["model-a"]
+    assert ask()[1]["model"] == "model-a"
+    assert breaker.state == "closed"
+
+
+def test_request_specific_4xx_moves_on_without_counting_against_the_model(upstreams):
+    # A 400 (prompt over the context length, malformed tool call) is about this request. The next
+    # model gets it, and however many times it happens the first model's breaker stays closed.
+    upstreams.llm.behaviour["model-a"] = llm_error(400)
+    for _ in range(4):
+        assert ask()[1]["model"] == "model-b"
+    assert upstreams.llm.calls == ["model-a", "model-b"] * 4
+    assert llm._breakers["model-a"].state == "closed" and llm._breakers["model-a"]._failures == 0
+
+
+def test_breaker_call_settles_the_probe_whatever_is_raised():
+    # CircuitBreaker.call gives the same guarantee for anything, including BaseException.
+    from backend.core.resilience import CircuitBreaker
+
+    class Killed(BaseException):
+        pass
+
+    def die():
+        raise Killed()
+    now = [0.0]
+    breaker = CircuitBreaker("x", failure_threshold=1, reset_after=30, clock=lambda: now[0])
+    breaker.record_failure()
+    now[0] = 31
+    with pytest.raises(Killed):
+        breaker.call(die)
+    assert breaker._probing is False and breaker.state == "open"
+    now[0] = 62
+    assert breaker.call(lambda: "ok") == "ok" and breaker.state == "closed"
+
+
+def test_breaker_abandon_returns_the_probe_slot_without_a_verdict():
+    from backend.core.resilience import CircuitBreaker
+    now = [0.0]
+    breaker = CircuitBreaker("x", failure_threshold=1, reset_after=30, clock=lambda: now[0])
+    breaker.record_failure()
+    now[0] = 31
+    assert breaker.allow() is True and breaker.allow() is False  # one probe at a time
+    breaker.abandon()
+    assert breaker.state == "half-open"  # neither closed nor re-opened
+    assert breaker.allow() is True       # the next caller may probe

@@ -5,9 +5,11 @@ backend/pipeline.py; this module only translates between HTTP and it.
 
 import asyncio
 import json
+import threading
+from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 from sqlalchemy import text
 from sse_starlette.sse import EventSourceResponse
 
@@ -29,11 +31,22 @@ feedback_bucket = TokenBucket(capacity=30, rate=1)
 
 
 class FeedbackRequest(BaseModel):
-    poi_id: int
+    poi_id: int = Field(ge=-2 ** 63, le=2 ** 63 - 1)  # the column is a signed 64-bit integer
     relevant: bool
     poi_name: str = Field(default="", max_length=300)
     category: str = Field(default="", max_length=40)
-    goals: list[str] = Field(default_factory=list, max_length=8)
+    goals: list[Annotated[str, Field(max_length=40)]] = Field(default_factory=list, max_length=8)
+
+    @field_validator("poi_name", "category", "goals")
+    @classmethod
+    def _no_nul(cls, v):
+        if "\x00" in "".join([v] if isinstance(v, str) else v):
+            raise ValueError("must not contain NUL bytes")  # Postgres rejects them in text and JSON
+        return v
+
+
+class Cancelled(Exception):
+    """The streaming client went away, so the rest of the pipeline is not worth running."""
 
 
 def _persist(req: TripRequest, output: PipelineOutput, user_id: str | None) -> dict:
@@ -79,19 +92,31 @@ async def create_itinerary_stream(req: TripRequest, user: User | None = Depends(
     Server-sent events: one `progress` event as each stage starts, then a
     single `result` (or `error`). The pipeline runs on a worker thread and
     hands events to the response through a queue.
+
+    If the client disconnects, the generator below is closed and sets
+    `cancelled`. The pipeline reports progress before every stage, so it stops
+    at the next stage boundary instead of spending Overpass and LLM quota on
+    an answer nobody will read, and nothing is stored.
     """
     loop = asyncio.get_running_loop()
     queue: asyncio.Queue = asyncio.Queue()
     user_id = user.id if user else None
+    cancelled = threading.Event()
 
     def on_progress(step: str, message: str, pct: int) -> None:
+        if cancelled.is_set():
+            raise Cancelled()
         event = {"event": "progress", "data": json.dumps({"step": step, "message": message, "progress": pct})}
         loop.call_soon_threadsafe(queue.put_nowait, event)
 
     def work() -> None:
         try:
             output = run_pipeline(req, on_progress=on_progress)
+            if cancelled.is_set():
+                return
             event = {"event": "result", "data": json.dumps(_persist(req, output, user_id))}
+        except Cancelled:
+            return
         except Exception as e:
             if not isinstance(e, (NoPlacesFound, UpstreamError, ValueError)):
                 print(f"Pipeline error: {type(e).__name__}: {e}")
@@ -101,9 +126,12 @@ async def create_itinerary_stream(req: TripRequest, user: User | None = Depends(
 
     async def events():
         task = loop.run_in_executor(None, in_context(work))
-        while (event := await queue.get()) is not None:
-            yield event
-        await task
+        try:
+            while (event := await queue.get()) is not None:
+                yield event
+            await task
+        finally:
+            cancelled.set()  # reached on disconnect too; after a normal finish it changes nothing
 
     return EventSourceResponse(events())
 

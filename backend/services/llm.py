@@ -21,6 +21,7 @@ from backend.core.resilience import CircuitBreaker, Deadline, DeadlineExceeded, 
 from backend.core.telemetry import stage
 
 CALL_TIMEOUT_S = 40.0
+MIN_CALL_BUDGET_S = 3.0  # with less than this left a completion cannot finish, so none is started
 _breakers: dict[str, CircuitBreaker] = {}
 _client: Groq | None = None
 
@@ -33,6 +34,21 @@ def _breaker(model: str) -> CircuitBreaker:
     if model not in _breakers:
         _breakers[model] = CircuitBreaker(f"llm:{model}", failure_threshold=2, reset_after=120)
     return _breakers[model]
+
+
+def _is_model_fault(e: Exception) -> bool:
+    """
+    Does this error say the model is unhealthy? Rate limits, server errors,
+    timeouts and connection failures do. A 4xx about one request (a bad tool
+    call, a prompt over the context length) does not: the next request to the
+    same model may be fine, so it must not push the breaker towards open.
+    """
+    if isinstance(e, groq.APIConnectionError):  # includes APITimeoutError
+        return True
+    status = getattr(e, "status_code", None)
+    if isinstance(e, groq.APIError) and status is not None:
+        return status == 429 or status >= 500
+    return True  # anything unexpected is treated as a failure of that model
 
 
 def get_client() -> Groq:
@@ -62,6 +78,9 @@ def chat(messages: list[dict], *, tools: list[dict] | None = None, json_mode: bo
         except DeadlineExceeded:
             errors.append("request deadline exceeded")
             break
+        if timeout < MIN_CALL_BUDGET_S:
+            errors.append(f"only {timeout:.1f}s of the request deadline left")
+            break
         breaker = _breaker(model)
         if not breaker.allow():
             errors.append(f"{model}: circuit open")
@@ -81,6 +100,7 @@ def chat(messages: list[dict], *, tools: list[dict] | None = None, json_mode: bo
                 usage = response.usage
                 span.set_attribute("llm.prompt_tokens", usage.prompt_tokens)
                 span.set_attribute("llm.completion_tokens", usage.completion_tokens)
+                message = response.choices[0].message
         except groq.NotFoundError as e:
             # The model no longer exists. Keep its breaker open for an hour.
             breaker.record_failure()
@@ -88,14 +108,21 @@ def chat(messages: list[dict], *, tools: list[dict] | None = None, json_mode: bo
             breaker.reset_after = 3600
             errors.append(f"{model}: {type(e).__name__}")
             continue
-        except (groq.APIError, UpstreamError) as e:
-            breaker.record_failure()
+        except Exception as e:
+            # Every path out of here must settle the breaker: allow() may have
+            # handed us the single half-open probe, and leaving it unsettled
+            # would keep the model out of rotation for good.
+            cut_short = isinstance(e, groq.APITimeoutError) and timeout < CALL_TIMEOUT_S
+            if cut_short or not _is_model_fault(e):
+                breaker.abandon()  # our deadline or our request, not the model's health
+            else:
+                breaker.record_failure()
             errors.append(f"{model}: {type(e).__name__}")
             continue
         breaker.record_success()
         meta = {"model": model, "prompt_tokens": usage.prompt_tokens,
                 "completion_tokens": usage.completion_tokens, "failed_over": errors}
-        return response.choices[0].message, meta
+        return message, meta
     raise LLMUnavailable("; ".join(errors) or "no models configured")
 
 

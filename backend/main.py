@@ -15,9 +15,12 @@ STATIC_DIR = Path(__file__).resolve().parent / "static"
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    if config.JWT_SECRET == config.DEV_JWT_SECRET:
+        if not config.DEV_MODE:
+            raise RuntimeError("JWT_SECRET is not set, so login tokens would be signed with a public "
+                               "default. Set JWT_SECRET, or set ROAM_DEV=1 on a development machine.")
+        print("WARNING: ROAM_DEV=1 and no JWT_SECRET: tokens are signed with the public development secret.")
     run_migrations()
-    if config.JWT_SECRET == "dev-only-secret-change-me":
-        print("WARNING: JWT_SECRET is the development default. Set it before exposing this server.")
     # Pre-warm models so the first request isn't slow
     try:
         from backend.ml.ranker.scorer import get_ranker

@@ -12,13 +12,28 @@ raised as PhotoLookupError so the pipeline can report photos:unavailable.
 
 import re
 import httpx
-from urllib.parse import quote
+from urllib.parse import quote, urlsplit
 from concurrent.futures import ThreadPoolExecutor
 
 from backend.core.resilience import UpstreamError
 
 _HEADERS = {"User-Agent": "roam-travel-app/1.0 (open-source travel planner)"}
 _TIMEOUT = 4  # seconds per request — keep it short so slow lookups don't stall the pipeline
+
+
+# OSM tags are editable by anyone, and these two end up in URLs this server
+# requests. So the language code (which becomes part of a hostname) and the
+# Wikidata id are checked against their real shapes before any request is
+# made, redirects are not followed, and a photo URL is only passed on to the
+# client if it points at Wikimedia's own image hosts.
+_LANG = re.compile(r"[a-z]{2,3}(-[a-z0-9]+)*")   # en, fr, zh-yue, be-tarask
+_QID = re.compile(r"Q\d+")
+_PHOTO_HOSTS = {"upload.wikimedia.org", "commons.wikimedia.org"}
+
+
+def _safe_photo_url(url: str) -> str | None:
+    parts = urlsplit(url)
+    return url if parts.scheme == "https" and parts.hostname in _PHOTO_HOSTS else None
 
 
 class PhotoLookupError(UpstreamError):
@@ -42,12 +57,14 @@ def _fetch_wikipedia_photo(tag: str) -> str | None:
     Calls the Wikipedia REST summary endpoint and returns the thumbnail URL.
     """
     lang, title = tag.split(":", 1) if ":" in tag else ("en", tag)
-    encoded = quote(title.strip().replace(" ", "_"))
-    resp = _get(f"https://{lang.strip()}.wikipedia.org/api/rest_v1/page/summary/{encoded}",
-                follow_redirects=True)
+    lang = lang.strip().lower()
+    if not _LANG.fullmatch(lang):
+        return None  # not a language code: never let it into the hostname
+    encoded = quote(title.strip().replace(" ", "_"), safe="")
+    resp = _get(f"https://{lang}.wikipedia.org/api/rest_v1/page/summary/{encoded}")
     try:
         if resp is not None:
-            src = resp.json().get("thumbnail", {}).get("source", "")
+            src = _safe_photo_url(str(resp.json().get("thumbnail", {}).get("source", "")))
             if src:
                 # Bump to 500px width for a sharper banner
                 return re.sub(r"/\d+px-", "/500px-", src)
@@ -61,6 +78,9 @@ def _fetch_wikidata_photo(qid: str) -> str | None:
     qid: 'Q12345'
     Fetches the P18 (image) claim from Wikidata and builds a Commons thumbnail URL.
     """
+    qid = qid.strip()
+    if not _QID.fullmatch(qid):
+        return None
     resp = _get("https://www.wikidata.org/w/api.php",
                 params={"action": "wbgetclaims", "entity": qid, "property": "P18", "format": "json"})
     try:
