@@ -115,7 +115,7 @@ def retrain_if_needed() -> bool:
     print(f"Post-retrain metrics: {post_metrics}")
 
     # Reload the global ranker instance
-    scorer_mod._ranker = ranker
+    scorer_mod.set_ranker(ranker)
 
     _feedback_count_at_last_train = current_count
     print(f"Retraining complete. Model updated.")

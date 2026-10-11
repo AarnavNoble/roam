@@ -1,61 +1,34 @@
 """
-SQLite store for POI feedback signals.
-Logs thumbs up/down to disk for incremental ranker retraining.
+Feedback signals (thumbs up/down on a stop), stored in the feedback table.
+They are the ranker's online training data.
 """
 
-import sqlite3
-from pathlib import Path
-from datetime import datetime
+from sqlalchemy import func, select
 
-DB_PATH = Path(__file__).resolve().parents[3] / "data" / "feedback.db"
-
-
-def _get_conn() -> sqlite3.Connection:
-    DB_PATH.parent.mkdir(parents=True, exist_ok=True)
-    conn = sqlite3.connect(DB_PATH)
-    conn.execute("""
-        CREATE TABLE IF NOT EXISTS feedback (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            poi_id INTEGER NOT NULL,
-            poi_name TEXT,
-            category TEXT,
-            goals TEXT,
-            relevant INTEGER NOT NULL,
-            created_at TEXT NOT NULL
-        )
-    """)
-    conn.commit()
-    return conn
+from backend.db.models import Feedback
+from backend.db.session import session_scope
 
 
-def log_feedback(poi_id: int, relevant: bool, poi_name: str = "", category: str = "", goals: list[str] = None) -> None:
+def log_feedback(poi_id: int, relevant: bool, poi_name: str = "", category: str = "",
+                 goals: list[str] | None = None, user_id: str | None = None) -> None:
     """Store a feedback signal."""
-    conn = _get_conn()
-    conn.execute(
-        "INSERT INTO feedback (poi_id, poi_name, category, goals, relevant, created_at) VALUES (?, ?, ?, ?, ?, ?)",
-        (poi_id, poi_name, category, ",".join(goals or []), int(relevant), datetime.utcnow().isoformat())
-    )
-    conn.commit()
-    conn.close()
+    with session_scope() as db:
+        db.add(Feedback(poi_id=poi_id, relevant=relevant, poi_name=poi_name,
+                        category=category, goals=list(goals or []), user_id=user_id))
 
 
 def get_feedback_count() -> int:
     """Return total number of feedback signals collected."""
-    conn = _get_conn()
-    count = conn.execute("SELECT COUNT(*) FROM feedback").fetchone()[0]
-    conn.close()
-    return count
+    with session_scope() as db:
+        return db.scalar(select(func.count()).select_from(Feedback)) or 0
 
 
 def get_feedback_as_training_data() -> list[dict]:
     """Return all feedback signals as structured dicts for retraining."""
-    conn = _get_conn()
-    rows = conn.execute(
-        "SELECT poi_id, poi_name, category, goals, relevant FROM feedback"
-    ).fetchall()
-    conn.close()
-    return [
-        {"poi_id": r[0], "poi_name": r[1], "category": r[2],
-         "goals": r[3].split(","), "relevant": bool(r[4])}
-        for r in rows
-    ]
+    with session_scope() as db:
+        rows = db.scalars(select(Feedback).order_by(Feedback.id)).all()
+        return [
+            {"poi_id": r.poi_id, "poi_name": r.poi_name, "category": r.category,
+             "goals": list(r.goals or []), "relevant": bool(r.relevant)}
+            for r in rows
+        ]

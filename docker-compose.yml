@@ -1,0 +1,33 @@
+# Local stack: API + Postgres.  docker compose up --build
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: roam
+      POSTGRES_PASSWORD: roam
+      POSTGRES_DB: roam
+    ports:
+      - "15434:5432"
+    volumes:
+      - roam-pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U roam"]
+      interval: 2s
+      timeout: 2s
+      retries: 20
+
+  api:
+    build: .
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql+psycopg://roam:roam@db:5432/roam
+      GROQ_API_KEY: ${GROQ_API_KEY:-}
+      ORS_API_KEY: ${ORS_API_KEY:-}
+      JWT_SECRET: ${JWT_SECRET:-dev-only-secret-change-me}
+    ports:
+      - "7860:7860"
+
+volumes:
+  roam-pgdata:

@@ -1,333 +1,175 @@
 """
-FastAPI route handlers. Wires the full ML pipeline together.
+Itinerary, feedback and metrics endpoints. The pipeline itself lives in
+backend/pipeline.py; this module only translates between HTTP and it.
 """
 
-import json
-import math
 import asyncio
-import threading
-from datetime import date as _date, datetime as _datetime
-from fastapi import APIRouter, HTTPException
-from pydantic import BaseModel
+import json
+
+from fastapi import APIRouter, Depends, HTTPException
+from pydantic import BaseModel, Field
+from sqlalchemy import text
 from sse_starlette.sse import EventSourceResponse
 
-from backend.services.nominatim import geocode
-from backend.services.overpass import fetch_pois
-from backend.services.groq_client import generate_itinerary
-from backend.services.wiki_photos import fetch_photos_for_itinerary
-from backend.ml.rag.retriever import retrieve, format_context
-from backend.ml.ranker.scorer import rank_pois, get_ranker
-from backend.ml.optimizer.scheduler import build_itinerary
-from backend.core.telemetry import stage, collect_timings, aggregator
+from backend.api.auth import optional_user
+from backend.api.trips import save_trip
+from backend.core.ratelimit import TokenBucket, limiter
+from backend.core.resilience import UpstreamError
+from backend.core.telemetry import aggregator, in_context
+from backend.db.models import User
+from backend.db.session import session_scope
+from backend.pipeline import NoPlacesFound, PipelineOutput, TripRequest, run_pipeline
 
 router = APIRouter()
 
-MOBILITY_RADIUS = {"easy": 1500, "moderate": 2000, "active": 3000}
-
-
-PACE_STOPS_PER_DAY = {"relaxed": 4, "moderate": 6, "packed": 9}
-
-
-def _n_days(duration_hours: int) -> int:
-    return max(1, math.ceil(duration_hours / 10))
-
-
-def _top_k(duration_hours: int, pace: str, n_goals: int) -> int:
-    """Stops to select: scales with pace, always enough for each goal to appear."""
-    base = PACE_STOPS_PER_DAY.get(pace, 6)
-    n_days = _n_days(duration_hours)
-    return max(n_days * base, n_goals * 2)
-
-
-def _trip_weekday(trip_date: str) -> int:
-    """Return weekday (0=Mon…6=Sun) from ISO date string, defaulting to today."""
-    if trip_date:
-        try:
-            return _datetime.fromisoformat(trip_date).weekday()
-        except ValueError:
-            pass
-    return _date.today().weekday()
-
-
-def _start_hour(start_time: str) -> int:
-    return {"morning": 9, "afternoon": 13, "evening": 17}.get(start_time, 9)
-
-
-def _effective_goals(goals: list[str], familiarity: str) -> list[str]:
-    """Returning visitors get hidden_gems appended to surface lesser-known spots."""
-    if familiarity == "returning" and "hidden_gems" not in goals:
-        return goals + ["hidden_gems"]
-    return goals
-
-
-class TripRequest(BaseModel):
-    city: str                              # area for context (e.g. "Paris")
-    start_location: str                    # where you are now (e.g. "Montmartre")
-    duration_hours: int = 6               # how many hours you have
-    goals: list[str]                       # ["food", "nature", ...]
-    transport: str = "walking"             # walking | transit
-    pace: str = "moderate"                 # relaxed | moderate | packed
-    budget: str = "mid"                    # free | budget | mid | splurge
-    style: str = "solo"                    # solo | couple | family | group
-    dietary: str = "none"                  # none | vegetarian | vegan | halal | kosher
-    mobility: str = "moderate"             # easy | moderate | active
-    familiarity: str = "first_time"        # first_time | returning
-    start_time: str = "morning"            # morning | afternoon | evening
-    notes: str = ""
-    trip_date: str = ""                    # ISO date string e.g. "2026-04-12", defaults to today
+# 6 itineraries in a burst, then one every 20s, per client. Each one spends
+# shared LLM and Overpass quota.
+itinerary_bucket = TokenBucket(capacity=6, rate=1 / 20)
+feedback_bucket = TokenBucket(capacity=30, rate=1)
 
 
 class FeedbackRequest(BaseModel):
     poi_id: int
     relevant: bool
-    poi_name: str = ""
-    category: str = ""
-    goals: list[str] = []
+    poi_name: str = Field(default="", max_length=300)
+    category: str = Field(default="", max_length=40)
+    goals: list[str] = Field(default_factory=list, max_length=8)
 
 
-def _build_trip_dict(req: TripRequest, start_lat: float, start_lon: float) -> dict:
-    return {
-        "city": req.city,
-        "start_location": req.start_location,
-        "duration_hours": req.duration_hours,
-        "transport": req.transport,
-        "goals": req.goals,
-        "pace": req.pace,
-        "budget": req.budget,
-        "style": req.style,
-        "dietary": req.dietary,
-        "mobility": req.mobility,
-        "familiarity": req.familiarity,
-        "start_time": req.start_time,
-        "notes": req.notes,
-        "start_lat": start_lat,
-        "start_lon": start_lon,
-    }
-
-
-def _run_pipeline(req: TripRequest, explain: bool = False) -> dict:
-    """Run the full itinerary pipeline synchronously. Returns result dict."""
-    # 1. Geocode start location within city context
-    with stage("geocode"):
-        start_lat, start_lon = geocode(f"{req.start_location}, {req.city}")
-
-    # 2. Fetch POIs around where the user actually is
-    effective_goals = _effective_goals(req.goals, req.familiarity)
-    radius_m = MOBILITY_RADIUS.get(req.mobility, 2500)
-    start_h = _start_hour(req.start_time)
-    with stage("fetch_pois"):
-        pois = fetch_pois(
-            start_lat, start_lon, categories=effective_goals, radius_m=radius_m,
-            dietary=req.dietary, visit_start_h=start_h, visit_end_h=min(start_h + req.duration_hours, 23),
-            weekday=_trip_weekday(req.trip_date),
-        )
-    if not pois:
-        raise HTTPException(status_code=404, detail=f"No POIs found near {req.start_location}")
-
-    poi_dicts = [p.to_dict() for p in pois]
-
-    # 3. Rank POIs
-    n_days = _n_days(req.duration_hours)
-    with stage("rank"):
-        ranked_pois = rank_pois(
-            user_goals=req.goals, pois=poi_dicts,
-            top_k=_top_k(req.duration_hours, req.pace, len(req.goals)), explain=explain,
-        )
-
-    # 4. Optimize route starting from user's location
-    with stage("route"):
-        itinerary = build_itinerary(
-            pois=ranked_pois, n_days=n_days, transport=req.transport,
-            start_lat=start_lat, start_lon=start_lon,
-            start_hour=_start_hour(req.start_time),
-        )
-
-    # 5. RAG retrieval + photo fetch (run photo fetch in background while RAG+LLM run)
-    query = f"{req.city} {' '.join(req.goals)}"
-    with stage("retrieve"):
-        chunks = retrieve(query=query, destination=req.city, top_k=5)
-    rag_context = format_context(chunks)
-
-    photo_map: dict[str, str] = {}
-    def _bg_photos():
-        nonlocal photo_map
-        photo_map = fetch_photos_for_itinerary(itinerary)
-    photo_thread = threading.Thread(target=_bg_photos, daemon=True)
-    photo_thread.start()
-
-    # 6. Groq synthesis
-    trip = _build_trip_dict(req, start_lat, start_lon)
-    with stage("llm"):
-        result = generate_itinerary(trip=trip, itinerary=itinerary, rag_context=rag_context)
-
-    # Attach photos (thread should be done by now — LLM takes ~5s, photos ~3s)
-    with stage("photos_join"):
-        photo_thread.join(timeout=10)
-    oh_map: dict[str, str] = {
-        p["name"]: p.get("tags", {}).get("opening_hours", "")
-        for p in ranked_pois if p.get("name")
-    }
-    for day in result.get("days", []):
-        for stop in day.get("stops", []):
-            name = stop.get("name", "")
-            url = photo_map.get(name)
-            if url:
-                stop["photo_url"] = url
-            oh = oh_map.get(name, "")
-            if oh:
-                stop["opening_hours"] = oh
-
-    if explain:
-        result["ranking_explanations"] = {
-            poi["name"]: poi["explanation"]
-            for poi in ranked_pois if "explanation" in poi
-        }
-        try:
-            result["global_feature_importance"] = get_ranker().feature_importance()
-        except Exception:
-            pass
-
-    return result
-
-
-@router.post("/itinerary")
-async def create_itinerary(req: TripRequest):
-    """Full pipeline — returns complete result with ML explanations."""
+def _persist(req: TripRequest, output: PipelineOutput, user_id: str | None) -> dict:
+    """Store the trip and return the response body. A storage failure never loses the itinerary."""
+    result = output.result
     try:
-        result = await asyncio.to_thread(_run_pipeline, req, True)
-    except ValueError as e:
-        raise HTTPException(status_code=400, detail=str(e))
-    except HTTPException:
-        raise
+        with session_scope() as db:
+            trip = save_trip(db, user_id=user_id, request=req.model_dump(), route=output.route,
+                             itinerary=result, degraded=output.degraded)
+            result["trip_id"] = trip.id
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Pipeline error: {str(e)}")
+        print(f"Trip not saved: {e}")
+        result["trip_id"] = None
     return result
 
 
-@router.post("/itinerary/stream")
-async def create_itinerary_stream(req: TripRequest):
-    """SSE streaming endpoint — sends pipeline progress events then the final result."""
-    async def event_generator():
-        try:
-            # Step 1: Geocode start location
-            yield {"event": "progress", "data": json.dumps({"step": "geocoding", "message": f"Locating {req.start_location}...", "progress": 10})}
-            start_lat, start_lon = await asyncio.to_thread(geocode, f"{req.start_location}, {req.city}")
-
-            # Step 2: Fetch POIs around where the user is
-            yield {"event": "progress", "data": json.dumps({"step": "fetching_pois", "message": "Discovering places near you...", "progress": 25})}
-            effective_goals = _effective_goals(req.goals, req.familiarity)
-            radius_m = MOBILITY_RADIUS.get(req.mobility, 2500)
-            start_h = _start_hour(req.start_time)
-            pois = await asyncio.to_thread(
-                fetch_pois, start_lat, start_lon, effective_goals, radius_m,
-                req.dietary, start_h, min(start_h + req.duration_hours, 23),
-                _trip_weekday(req.trip_date),
-            )
-            if not pois:
-                yield {"event": "error", "data": json.dumps({"message": f"No places found near {req.start_location}"})}
-                return
-            poi_dicts = [p.to_dict() for p in pois]
-
-            # Step 3: Rank
-            yield {"event": "progress", "data": json.dumps({"step": "ranking", "message": "Ranking with ML model...", "progress": 45})}
-            n_days = _n_days(req.duration_hours)
-            ranked_pois = await asyncio.to_thread(rank_pois, req.goals, poi_dicts, _top_k(req.duration_hours, req.pace, len(req.goals)), True)
-
-            # Step 4: Optimize route from start location
-            yield {"event": "progress", "data": json.dumps({"step": "optimizing", "message": "Building your route...", "progress": 60})}
-            itinerary = await asyncio.to_thread(
-                build_itinerary, ranked_pois, n_days, req.transport,
-                start_lat, start_lon, _start_hour(req.start_time),
-            )
-
-            # Step 5: RAG + kick off photo fetch in background
-            yield {"event": "progress", "data": json.dumps({"step": "retrieving", "message": "Gathering local knowledge...", "progress": 75})}
-            query = f"{req.city} {' '.join(req.goals)}"
-            chunks = await asyncio.to_thread(retrieve, query=query, destination=req.city, top_k=5)
-            rag_context = format_context(chunks)
-
-            photo_task = asyncio.create_task(
-                asyncio.to_thread(fetch_photos_for_itinerary, itinerary)
-            )
-
-            # Step 6: LLM synthesis
-            yield {"event": "progress", "data": json.dumps({"step": "generating", "message": "Writing your journey...", "progress": 90})}
-            trip = _build_trip_dict(req, start_lat, start_lon)
-            result = await asyncio.to_thread(generate_itinerary, trip, itinerary, rag_context)
-
-            # Attach photos + opening hours
-            oh_map: dict[str, str] = {
-                p["name"]: p.get("tags", {}).get("opening_hours", "")
-                for p in ranked_pois if p.get("name")
-            }
-            try:
-                photo_map = await asyncio.wait_for(photo_task, timeout=10)
-            except Exception:
-                photo_map = {}
-            for day in result.get("days", []):
-                for stop in day.get("stops", []):
-                    name = stop.get("name", "")
-                    url = photo_map.get(name)
-                    if url:
-                        stop["photo_url"] = url
-                    oh = oh_map.get(name, "")
-                    if oh:
-                        stop["opening_hours"] = oh
-
-            # Attach ML metadata
-            result["ranking_explanations"] = {
-                poi["name"]: poi["explanation"]
-                for poi in ranked_pois if "explanation" in poi
-            }
-            try:
-                result["global_feature_importance"] = get_ranker().feature_importance()
-            except Exception:
-                pass
-
-            yield {"event": "result", "data": json.dumps(result)}
-
-        except ValueError as e:
-            yield {"event": "error", "data": json.dumps({"message": str(e)})}
-        except Exception as e:
-            yield {"event": "error", "data": json.dumps({"message": f"Pipeline error: {str(e)}"})}
-
-    return EventSourceResponse(event_generator())
+def _http_error(e: Exception) -> HTTPException:
+    if isinstance(e, NoPlacesFound):
+        return HTTPException(status_code=404, detail=str(e))
+    if isinstance(e, UpstreamError):
+        return HTTPException(status_code=503, detail=f"A data source is unavailable: {e}",
+                             headers={"Retry-After": "30"})
+    if isinstance(e, ValueError):
+        return HTTPException(status_code=400, detail=str(e))
+    return HTTPException(status_code=500, detail="Internal error")
 
 
-@router.get("/metrics")
-async def get_metrics():
-    """Return evaluation metrics history and global feature importance."""
-    from backend.ml.ranker.metrics import get_metrics_history
-    history = get_metrics_history()
+@router.post("/itinerary", dependencies=[Depends(limiter(itinerary_bucket))])
+async def create_itinerary(req: TripRequest, user: User | None = Depends(optional_user)):
+    """Run the pipeline and return the finished itinerary."""
     try:
-        importance = get_ranker().feature_importance()
-    except Exception:
-        importance = {}
-    return {"history": history, "global_feature_importance": importance}
+        output = await asyncio.to_thread(run_pipeline, req)
+    except Exception as e:
+        if not isinstance(e, (NoPlacesFound, UpstreamError, ValueError)):
+            print(f"Pipeline error: {type(e).__name__}: {e}")
+        raise _http_error(e)
+    return _persist(req, output, user.id if user else None)
 
 
-@router.post("/feedback")
-async def submit_feedback(req: FeedbackRequest):
-    """Receive thumbs up/down on a POI. Logs signal and triggers retraining at threshold."""
-    from backend.ml.ranker.scorer import apply_feedback
-    from backend.ml.ranker.feedback_store import get_feedback_count
-    retrained = apply_feedback(req.poi_id, req.relevant, req.poi_name, req.category, req.goals)
-    return {"status": "ok", "total_feedback": get_feedback_count(), "retrained": retrained}
+@router.post("/itinerary/stream", dependencies=[Depends(limiter(itinerary_bucket))])
+async def create_itinerary_stream(req: TripRequest, user: User | None = Depends(optional_user)):
+    """
+    Server-sent events: one `progress` event as each stage starts, then a
+    single `result` (or `error`). The pipeline runs on a worker thread and
+    hands events to the response through a queue.
+    """
+    loop = asyncio.get_running_loop()
+    queue: asyncio.Queue = asyncio.Queue()
+    user_id = user.id if user else None
+
+    def on_progress(step: str, message: str, pct: int) -> None:
+        event = {"event": "progress", "data": json.dumps({"step": step, "message": message, "progress": pct})}
+        loop.call_soon_threadsafe(queue.put_nowait, event)
+
+    def work() -> None:
+        try:
+            output = run_pipeline(req, on_progress=on_progress)
+            event = {"event": "result", "data": json.dumps(_persist(req, output, user_id))}
+        except Exception as e:
+            if not isinstance(e, (NoPlacesFound, UpstreamError, ValueError)):
+                print(f"Pipeline error: {type(e).__name__}: {e}")
+            event = {"event": "error", "data": json.dumps({"message": _http_error(e).detail})}
+        loop.call_soon_threadsafe(queue.put_nowait, event)
+        loop.call_soon_threadsafe(queue.put_nowait, None)
+
+    async def events():
+        task = loop.run_in_executor(None, in_context(work))
+        while (event := await queue.get()) is not None:
+            yield event
+        await task
+
+    return EventSourceResponse(events())
+
+
+@router.post("/feedback", dependencies=[Depends(limiter(feedback_bucket))])
+async def submit_feedback(req: FeedbackRequest, user: User | None = Depends(optional_user)):
+    """Thumbs up/down on a stop. Every RETRAIN_THRESHOLD signals a candidate model is trained and gated."""
+    from backend.ml.ranker.feedback_store import get_feedback_count, log_feedback
+    from backend.ml.ranker.retrain import retrain_if_needed
+
+    def work() -> dict:
+        log_feedback(req.poi_id, req.relevant, req.poi_name, req.category, req.goals,
+                     user_id=user.id if user else None)
+        outcome = retrain_if_needed()
+        return {"status": "ok", "total_feedback": get_feedback_count(),
+                "retrained": outcome == "promoted", "retrain_outcome": outcome}
+
+    return await asyncio.to_thread(work)
 
 
 @router.get("/feedback/stats")
-async def feedback_stats():
-    """Return feedback collection stats."""
-    from backend.ml.ranker.feedback_store import get_feedback_count, get_feedback_as_training_data
+def feedback_stats():
+    from backend.ml.ranker.feedback_store import get_feedback_count
     from backend.ml.ranker.retrain import RETRAIN_THRESHOLD
     count = get_feedback_count()
     return {
         "total_signals": count,
         "retrain_threshold": RETRAIN_THRESHOLD,
-        "signals_until_retrain": max(0, RETRAIN_THRESHOLD - (count % RETRAIN_THRESHOLD)),
+        "signals_until_retrain": RETRAIN_THRESHOLD - (count % RETRAIN_THRESHOLD),
     }
+
+
+@router.get("/metrics")
+def get_metrics():
+    """Ranker versions (with the eval-gate verdict on each) and feature importance."""
+    from backend.ml.ranker.registry import history
+    from backend.ml.ranker.scorer import get_ranker
+    try:
+        importance = get_ranker().feature_importance()
+    except Exception:
+        importance = {}
+    return {"history": history(), "global_feature_importance": importance}
+
+
+@router.get("/metrics/latency")
+def latency_metrics():
+    """p50/p95 per pipeline stage over the last 500 spans of each."""
+    return aggregator.summary()
 
 
 @router.get("/health")
 def health():
-    return {"status": "ok"}
+    """Liveness plus the state of each dependency the pipeline can degrade around."""
+    from backend.services import llm, nominatim, overpass
+    from backend.ml.optimizer import distance
+    try:
+        with session_scope() as db:
+            db.execute(text("SELECT 1"))
+        database = "ok"
+    except Exception as e:
+        database = f"error: {type(e).__name__}"
+    breakers = {
+        "nominatim": nominatim._nominatim_breaker.state,
+        "photon": nominatim._photon_breaker.state,
+        "openrouteservice": distance._ors_breaker.state,
+        **{f"overpass:{m.split('/')[2]}": b.state for m, b in overpass._breakers.items()},
+        **{f"llm:{m}": b.state for m, b in llm._breakers.items()},
+    }
+    return {"status": "ok" if database == "ok" else "degraded", "database": database, "breakers": breakers}

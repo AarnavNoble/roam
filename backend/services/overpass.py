@@ -3,10 +3,15 @@ Overpass API client for fetching POIs from OpenStreetMap.
 Completely free, no API key needed.
 """
 
+import hashlib
 import re
+import time
 import httpx
 from dataclasses import dataclass, field
 from datetime import datetime
+
+from backend.core.resilience import CircuitBreaker, Deadline, TTLCache, UpstreamError, hedged
+from backend.core.telemetry import in_context, stage
 
 # ── Opening-hours parser (OSM subset) ────────────────────────────────────────
 # Handles the formats that cover >90% of OSM tags:
@@ -159,37 +164,120 @@ class POI:
         }
 
 
-def _build_category_query(lat: float, lon: float, radius_m: int, category: str) -> str:
-    """Build a query for a single category, capped at 15 results."""
-    tag_filters = []
-    for tag_expr in CATEGORY_QUERIES.get(category, []):
-        tag_filters.append(f'node[{tag_expr}][!"brand"](around:{radius_m},{lat},{lon});')
-        tag_filters.append(f'way[{tag_expr}][!"brand"](around:{radius_m},{lat},{lon});')
-    union = "\n".join(tag_filters)
-    return f"""
-[out:json][timeout:25];
-(
-{union}
-);
-out center 15;
-"""
+PER_CATEGORY = 40        # candidates requested per category
+FRESH_TTL_S = 3600       # serve from memory without touching Overpass
+STALE_TTL_S = 7 * 86400  # how old a stored answer may be when every mirror is down
+HEDGE_AFTER_S = 4.0      # start a second mirror if the first has not answered
+MIRROR_TIMEOUT_S = 25.0
+
+_memory_cache = TTLCache(ttl=FRESH_TTL_S, max_size=256)
+_breakers: dict[str, CircuitBreaker] = {}
 
 
-def _query_overpass(query: str) -> list:
-    """Execute a query against Overpass mirrors, return elements list."""
-    last_error = None
-    for mirror in OVERPASS_MIRRORS:
+def _breaker(mirror: str) -> CircuitBreaker:
+    if mirror not in _breakers:
+        _breakers[mirror] = CircuitBreaker(mirror, failure_threshold=2, reset_after=60)
+    return _breakers[mirror]
+
+
+def _build_query(lat: float, lon: float, radius_m: int, categories: list[str],
+                 per_category: int = PER_CATEGORY) -> str:
+    """
+    One Overpass request covering every category.
+
+    Each category is collected into its own named set and printed with its own
+    limit, so every category gets fair representation regardless of how dense
+    its tags are, and the whole lookup costs one round trip instead of one per
+    category.
+    """
+    blocks = []
+    for i, category in enumerate(categories):
+        filters = []
+        for tag_expr in CATEGORY_QUERIES.get(category, []):
+            filters.append(f'node[{tag_expr}][!"brand"](around:{radius_m},{lat},{lon});')
+            filters.append(f'way[{tag_expr}][!"brand"](around:{radius_m},{lat},{lon});')
+        if filters:
+            blocks.append(f"({''.join(filters)})->.c{i};\n.c{i} out center {per_category};")
+    return "[out:json][timeout:25];\n" + "\n".join(blocks)
+
+
+def _post(mirror: str, query: str, timeout: float) -> list:
+    resp = httpx.post(mirror, data={"data": query}, timeout=timeout, headers=HEADERS)
+    resp.raise_for_status()
+    return resp.json().get("elements", [])
+
+
+def _query_overpass(query: str, deadline: Deadline | None = None) -> list:
+    """
+    Run a query against the mirrors and return the elements list.
+
+    Mirrors are raced with a hedge delay: the first is called alone, and a
+    second is started only if it is slow or fails. Mirrors whose breaker is
+    open are skipped, so a dead mirror costs nothing after its first failures.
+    """
+    with stage("overpass.query"):
+        mirrors = [m for m in OVERPASS_MIRRORS if _breaker(m).state != "open"] or list(OVERPASS_MIRRORS)
+        timeout = deadline.timeout(MIRROR_TIMEOUT_S) if deadline else MIRROR_TIMEOUT_S
+        calls = [
+            in_context(lambda m=m: _breaker(m).call(lambda: _post(m, query, timeout)))
+            for m in mirrors
+        ]
         try:
-            resp = httpx.post(mirror, data={"data": query}, timeout=30, headers=HEADERS)
-            resp.raise_for_status()
-            return resp.json().get("elements", [])
-        except Exception as e:
-            last_error = e
-            continue
-    raise RuntimeError(f"All Overpass mirrors failed: {last_error}")
+            return hedged(calls, hedge_after=HEDGE_AFTER_S, timeout=timeout + HEDGE_AFTER_S * len(calls))
+        except UpstreamError as e:
+            raise UpstreamError(f"All Overpass mirrors failed: {e}") from e
 
 
-def fetch_pois(
+def _cache_key(lat: float, lon: float, radius_m: int, categories: list[str]) -> str:
+    # ~100m grid: nearby starts share an entry
+    raw = f"{lat:.3f},{lon:.3f},{radius_m},{','.join(sorted(categories))},{PER_CATEGORY}"
+    return hashlib.sha256(raw.encode()).hexdigest()
+
+
+def _store_durable(key: str, elements: list) -> None:
+    try:
+        from backend.db.models import PoiCache
+        from backend.db.session import session_scope
+        with session_scope() as db:
+            db.merge(PoiCache(key=key, payload=elements, fetched_at=time.time()))
+    except Exception as e:  # the cache is an optimisation; never fail a request over it
+        print(f"POI cache write failed: {e}")
+
+
+def _load_durable(key: str) -> list | None:
+    try:
+        from backend.db.models import PoiCache
+        from backend.db.session import session_scope
+        with session_scope() as db:
+            row = db.get(PoiCache, key)
+            if row and time.time() - row.fetched_at <= STALE_TTL_S:
+                return row.payload
+    except Exception as e:
+        print(f"POI cache read failed: {e}")
+    return None
+
+
+def _fetch_elements(lat: float, lon: float, radius_m: int, categories: list[str],
+                    deadline: Deadline | None) -> tuple[list, str]:
+    """Return (elements, source) where source is live | cache | stale."""
+    key = _cache_key(lat, lon, radius_m, categories)
+    cached = _memory_cache.get(key)
+    if cached is not None:
+        return cached, "cache"
+    try:
+        elements = _query_overpass(_build_query(lat, lon, radius_m, categories), deadline)
+    except UpstreamError:
+        stale = _load_durable(key)
+        if stale is None:
+            raise
+        return stale, "stale"
+    if elements:
+        _memory_cache.set(key, elements)
+        _store_durable(key, elements)
+    return elements, "live"
+
+
+def fetch_pois_with_source(
     lat: float,
     lon: float,
     categories: list[str],
@@ -198,70 +286,78 @@ def fetch_pois(
     visit_start_h: int = 9,
     visit_end_h: int = 23,
     weekday: int | None = None,
-) -> list[POI]:
+    deadline: Deadline | None = None,
+) -> tuple[list[POI], str]:
     """
-    Fetch POIs from Overpass API around a coordinate.
-    Queries each category separately (15 results each) so every category
-    gets fair representation regardless of OSM node density.
+    Fetch POIs around a coordinate. Returns (pois, source), where source says
+    whether the data is live, from the in-memory cache, or stale from the
+    database because every mirror was down.
+
     dietary: filter food POIs by diet tag (none | vegetarian | vegan | halal | kosher)
     visit_start_h / visit_end_h: trip window in hours (0-24) used to filter
       places that are closed for the entire visit.
     weekday: 0=Mon…6=Sun, defaults to today if not provided.
+
+    Raw Overpass elements are cached, not filtered POIs, because the dietary
+    and opening-hours filters depend on the request.
     """
     if weekday is None:
         weekday = datetime.now().weekday()
+    elements, source = _fetch_elements(lat, lon, radius_m, list(categories), deadline)
+
     seen_ids: set[int] = set()
     all_pois: list[POI] = []
+    for el in elements:
+        if el["id"] in seen_ids:
+            continue
 
-    for category in categories:
-        query = _build_category_query(lat, lon, radius_m, category)
-        try:
-            elements = _query_overpass(query)
-        except RuntimeError:
-            continue  # skip category if mirrors fail, don't abort entire request
+        tags = el.get("tags", {})
+        name = tags.get("name")
+        if not name or _is_chain(name, tags):
+            continue
+        # Skip OSM nodes that are clearly sub-elements (zoo animals, benches, etc.)
+        if tags.get("species") or tags.get("animal") or tags.get("genus"):
+            continue
 
-        for el in elements:
-            if el["id"] in seen_ids:
+        if el["type"] == "node":
+            lat_el, lon_el = el.get("lat"), el.get("lon")
+        else:
+            center = el.get("center", {})
+            lat_el, lon_el = center.get("lat"), center.get("lon")
+
+        if lat_el is None or lon_el is None:
+            continue
+
+        inferred = _infer_category(tags)
+
+        if dietary != "none" and inferred == "food":
+            diet_tag = tags.get(f"diet:{dietary}", "")
+            if diet_tag not in ("yes", "only"):
                 continue
 
-            tags = el.get("tags", {})
-            name = tags.get("name")
-            if not name or _is_chain(name, tags):
-                continue
-            # Skip OSM nodes that are clearly sub-elements (zoo animals, benches, etc.)
-            if tags.get("species") or tags.get("animal") or tags.get("genus"):
-                continue
+        oh = tags.get("opening_hours", "")
+        if not _is_open_during(oh, weekday, visit_start_h, visit_end_h):
+            continue
 
-            if el["type"] == "node":
-                lat_el, lon_el = el.get("lat"), el.get("lon")
-            else:
-                center = el.get("center", {})
-                lat_el, lon_el = center.get("lat"), center.get("lon")
+        seen_ids.add(el["id"])
+        all_pois.append(POI(
+            id=el["id"], name=name,
+            lat=lat_el, lon=lon_el,
+            category=inferred, tags=tags,
+        ))
 
-            if lat_el is None or lon_el is None:
-                continue
-
-            inferred = _infer_category(tags)
-
-            if dietary != "none" and inferred == "food":
-                diet_tag = tags.get(f"diet:{dietary}", "")
-                if diet_tag not in ("yes", "only"):
-                    continue
-
-            oh = tags.get("opening_hours", "")
-            if not _is_open_during(oh, weekday, visit_start_h, visit_end_h):
-                continue
-
-            seen_ids.add(el["id"])
-            all_pois.append(POI(
-                id=el["id"], name=name,
-                lat=lat_el, lon=lon_el,
-                category=inferred, tags=tags,
-            ))
-
-    return all_pois
+    return all_pois, source
 
 
+def fetch_pois(lat: float, lon: float, categories: list[str], radius_m: int = 2500,
+               dietary: str = "none", visit_start_h: int = 9, visit_end_h: int = 23,
+               weekday: int | None = None) -> list[POI]:
+    """fetch_pois_with_source without the source, returning [] when Overpass is unreachable."""
+    try:
+        return fetch_pois_with_source(lat, lon, categories, radius_m, dietary,
+                                      visit_start_h, visit_end_h, weekday)[0]
+    except UpstreamError:
+        return []
 
 
 def _infer_category(tags: dict) -> str:
