@@ -1,0 +1,99 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    # Tests run against Postgres, the database production uses. SQLite is only
+    # the zero-setup default for a laptop.
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: roam
+          POSTGRES_PASSWORD: roam
+          POSTGRES_DB: roam
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U roam"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 12
+
+    env:
+      DATABASE_URL: postgresql+psycopg://roam:roam@localhost:5432/roam
+      JWT_SECRET: ci-only-secret-not-used-anywhere-else
+      TOKENIZERS_PARALLELISM: "false"
+      # No GROQ_API_KEY and no ORS_API_KEY on purpose: every upstream is faked
+      # in the tests, and the eval gates replay committed fixtures.
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: backend/requirements.txt
+
+      # all-MiniLM-L6-v2 (about 90 MB) is downloaded once and reused. The key
+      # only changes when the model name in embedder.py does.
+      - name: Cache the embedding model
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface
+          key: huggingface-${{ runner.os }}-${{ hashFiles('backend/ml/rag/embedder.py') }}
+          restore-keys: huggingface-${{ runner.os }}-
+
+      # The CPU wheel of torch is installed first so pip does not pull the
+      # default CUDA build (several GB) as a dependency of sentence-transformers.
+      # LightGBM needs libgomp1, which ubuntu-latest already has.
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install torch --index-url https://download.pytorch.org/whl/cpu
+          pip install -r backend/requirements.txt
+
+      - name: Apply migrations
+        run: alembic upgrade head
+
+      - name: Tests
+        run: python -m pytest backend/tests -q
+
+      - name: Ranker eval gate
+        run: python -m backend.bench.ranker_bench --check
+
+      - name: LLM contract eval gate
+        run: python -m backend.bench.contract_eval --check
+
+  mobile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: mobile
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: mobile/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Typecheck
+        run: npx tsc --noEmit
