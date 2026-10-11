@@ -74,3 +74,10 @@ def test_arrival_times_in_itinerary():
     for stop in itinerary[0]["pois"]:
         assert "arrival_time" in stop
         assert ":" in stop["arrival_time"]
+
+
+def test_day_without_food_stops():
+    # Regression: a day with zero food stops used to raise IndexError
+    no_food = [p for p in SAMPLE_POIS if p["category"] != "food"]
+    itinerary = build_itinerary(no_food, n_days=1, transport="walking")
+    assert len(itinerary[0]["pois"]) == len(no_food)

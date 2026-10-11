@@ -71,7 +71,9 @@ def _time_aware_order(pois: list[dict], time_matrix: np.ndarray, start_node: int
             buckets[CATEGORY_BUCKET.get(cat, 1)].append(i)
 
     # Spread food stops across the day so they're never back-to-back
-    if len(food_indices) == 1:
+    if not food_indices:
+        pass                                          # no food stops today
+    elif len(food_indices) == 1:
         buckets[1].append(food_indices[0])            # single food → lunch
     elif len(food_indices) == 2:
         buckets[0].append(food_indices[0])            # breakfast
