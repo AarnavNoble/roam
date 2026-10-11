@@ -18,12 +18,14 @@ so the client (and the tests) can tell a full answer from a reduced one:
     llm:repaired          the model's answer broke the contract and was repaired
     photos:unavailable    photo lookup failed or ran out of time
 
-Only two things fail a request: a place that does not exist (400) and having
-no POI data at all, live or stored (503).
+A request fails only when there is nothing to build on: the place does not
+exist (400), Overpass answered and nothing matches nearby (404), or no
+geocoder or no POI data, live or stored, could be reached (503).
 """
 
 import math
 from concurrent.futures import ThreadPoolExecutor
+from contextlib import contextmanager
 from dataclasses import dataclass, field
 from datetime import date as _date, datetime as _datetime
 from typing import Callable, Literal
@@ -95,6 +97,11 @@ def n_days(duration_hours: int) -> int:
     return max(1, math.ceil(duration_hours / 10))
 
 
+def day_budget_sec(duration_hours: int) -> int:
+    """Time available per day: the whole trip if it fits in one day, else 10 hours."""
+    return min(duration_hours, 10) * 3600
+
+
 def top_k(duration_hours: int, pace: str, n_goals: int) -> int:
     """Stops to select: scales with pace, always enough for each goal to appear."""
     return max(n_days(duration_hours) * PACE_STOPS_PER_DAY.get(pace, 6), n_goals * 2)
@@ -147,6 +154,20 @@ def attach_stop_extras(itinerary: dict, route: list[dict], photo_map: dict[str, 
                 stop["opening_hours"] = hours
 
 
+@contextmanager
+def _worker_pool():
+    """
+    Two background workers (retrieval, photos). Unlike `with ThreadPoolExecutor()`,
+    leaving the block does not wait for them: a photo lookup that is still
+    hanging after PHOTO_WAIT_S is abandoned instead of holding the response.
+    """
+    pool = ThreadPoolExecutor(max_workers=2)
+    try:
+        yield pool
+    finally:
+        pool.shutdown(wait=False, cancel_futures=True)
+
+
 def run_pipeline(req: TripRequest, explain: bool = True,
                  on_progress: Callable[[str, str, int], None] | None = None) -> PipelineOutput:
     """Run the whole pipeline synchronously. Raises ValueError, NoPlacesFound or UpstreamError."""
@@ -154,7 +175,7 @@ def run_pipeline(req: TripRequest, explain: bool = True,
     deadline = Deadline(config.REQUEST_DEADLINE_S)
     degraded: list[str] = []
 
-    with collect_timings() as timings, stage("pipeline"), ThreadPoolExecutor(max_workers=2) as pool:
+    with collect_timings() as timings, stage("pipeline"), _worker_pool() as pool:
         # Retrieval needs only the request, so it runs while we geocode and fetch POIs.
         def _retrieve() -> str:
             with stage("retrieve"):
@@ -198,6 +219,7 @@ def run_pipeline(req: TripRequest, explain: bool = True,
             route, route_meta = build_itinerary_with_meta(
                 pois=ranked, n_days=n_days(req.duration_hours), transport=req.transport,
                 start_lat=start_lat, start_lon=start_lon, start_hour=start_h, deadline=deadline,
+                day_budget_sec=day_budget_sec(req.duration_hours),
             )
         if route_meta["matrix"] == "haversine_fallback":
             degraded.append("matrix:haversine")

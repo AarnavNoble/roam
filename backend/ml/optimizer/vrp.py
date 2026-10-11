@@ -102,9 +102,13 @@ CATEGORY_WINDOW = {
     "nightlife": EVENING,
 }
 
-# Cost of arriving one second outside a stop's window, in travel-seconds.
-# 1 means a minute early or late is worth exactly a minute of extra walking.
+# The objective is TRAVEL_WEIGHT * travel seconds + WINDOW_PENALTY * seconds
+# outside a window, so the ratio says how much bad timing one minute of
+# walking is worth. At 1:1 the solver walked 24% further than the old greedy
+# heuristic to fix timing. route_bench sweeps the ratio; 6:1 is where the
+# solver beats the heuristic on travel and on timing at once.
 WINDOW_PENALTY = 1
+TRAVEL_WEIGHT = 6
 
 # Guided local search never stops on its own. route_bench sweeps this limit;
 # tour quality is flat from 0.1s up at the sizes a day produces (<= 9 stops).
@@ -154,6 +158,8 @@ def solve_day(
     depot_times: np.ndarray | None = None,
     day_start_sec: int = DAY_START_SEC,
     time_limit_s: float = SOLVER_TIME_LIMIT_S,
+    window_penalty: int = WINDOW_PENALTY,
+    travel_weight: int = TRAVEL_WEIGHT,
 ) -> list[int] | None:
     """
     Order one day's stops. Returns indices into pois, or None if the solver
@@ -185,7 +191,7 @@ def solve_day(
     routing = pywrapcp.RoutingModel(manager)
 
     cost_idx = routing.RegisterTransitCallback(
-        lambda i, j: travel(manager.IndexToNode(i), manager.IndexToNode(j)))
+        lambda i, j: travel_weight * travel(manager.IndexToNode(i), manager.IndexToNode(j)))
     routing.SetArcCostEvaluatorOfAllVehicles(cost_idx)
 
     time_idx = routing.RegisterTransitCallback(
@@ -198,8 +204,9 @@ def solve_day(
 
     for i, (lo, hi) in enumerate(preferred_windows(pois)):
         index = manager.NodeToIndex(i + 1)
-        time_dim.SetCumulVarSoftLowerBound(index, lo, WINDOW_PENALTY)
-        time_dim.SetCumulVarSoftUpperBound(index, hi, WINDOW_PENALTY)
+        if window_penalty > 0:  # 0 gives the pure shortest path, the benchmark's lower bound
+            time_dim.SetCumulVarSoftLowerBound(index, lo, window_penalty)
+            time_dim.SetCumulVarSoftUpperBound(index, hi, window_penalty)
 
     search_params = pywrapcp.DefaultRoutingSearchParameters()
     search_params.first_solution_strategy = routing_enums_pb2.FirstSolutionStrategy.PATH_CHEAPEST_ARC

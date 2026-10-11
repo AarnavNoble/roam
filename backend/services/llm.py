@@ -17,7 +17,7 @@ import groq
 from groq import Groq
 
 from backend import config
-from backend.core.resilience import CircuitBreaker, Deadline, UpstreamError
+from backend.core.resilience import CircuitBreaker, Deadline, DeadlineExceeded, UpstreamError
 from backend.core.telemetry import stage
 
 CALL_TIMEOUT_S = 40.0
@@ -55,6 +55,13 @@ def chat(messages: list[dict], *, tools: list[dict] | None = None, json_mode: bo
     client = get_client()
     errors: list[str] = []
     for model in config.GROQ_MODELS:
+        # Checked before the breaker is consulted: running out of our own time
+        # says nothing about the model, so it must not count as its failure.
+        try:
+            timeout = deadline.timeout(CALL_TIMEOUT_S) if deadline else CALL_TIMEOUT_S
+        except DeadlineExceeded:
+            errors.append("request deadline exceeded")
+            break
         breaker = _breaker(model)
         if not breaker.allow():
             errors.append(f"{model}: circuit open")
@@ -69,7 +76,6 @@ def chat(messages: list[dict], *, tools: list[dict] | None = None, json_mode: bo
             kwargs["tools"] = tools
             kwargs["tool_choice"] = "auto"
         try:
-            timeout = deadline.timeout(CALL_TIMEOUT_S) if deadline else CALL_TIMEOUT_S
             with stage("llm.call", model=model) as span:
                 response = client.chat.completions.create(timeout=timeout, **kwargs)
                 usage = response.usage
@@ -95,7 +101,11 @@ def chat(messages: list[dict], *, tools: list[dict] | None = None, json_mode: bo
 
 def complete_json(prompt: str, *, max_tokens: int = 2500,
                   deadline: Deadline | None = None) -> tuple[dict, dict]:
-    """Ask for a JSON object. Unparseable output counts as that call failing."""
+    """
+    Ask for a JSON object. An answer that does not parse raises LLMUnavailable
+    without trying another model: the caller's deterministic writer takes over,
+    which is cheaper than spending a second completion on the same prompt.
+    """
     message, meta = chat([{"role": "user", "content": prompt}], json_mode=True,
                          max_tokens=max_tokens, deadline=deadline)
     try:

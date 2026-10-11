@@ -62,16 +62,26 @@ def geocode_with_source(destination: str, deadline: Deadline | None = None) -> t
         for source, breaker, lookup in (("nominatim", _nominatim_breaker, _nominatim),
                                         ("photon", _photon_breaker, _photon)):
             timeout = deadline.timeout(TIMEOUT_S) if deadline else TIMEOUT_S
+
+            def answer() -> tuple[float, float] | NotFound:
+                # "No such place" is an answer from a healthy geocoder. It is returned
+                # rather than raised so the breaker does not count it as a failure.
+                try:
+                    return lookup(destination, timeout)
+                except NotFound as e:
+                    return e
+
             try:
-                lat, lon = retry(
-                    lambda: breaker.call(lambda: lookup(destination, timeout)),
+                result = retry(
+                    lambda: breaker.call(answer),
                     attempts=2, retry_on=(httpx.HTTPError,), deadline=deadline,
                 )
-            except NotFound:
-                raise
             except Exception as e:
                 last_error = e
                 continue
+            if isinstance(result, NotFound):
+                raise result
+            lat, lon = result
             _cache.set(key, (lat, lon))
             return lat, lon, source
         raise UpstreamError(f"Geocoding unavailable: {last_error}")

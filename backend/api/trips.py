@@ -8,6 +8,7 @@ link can be revoked without deleting the trip and never exposes the trip id.
 """
 
 import secrets
+from datetime import datetime, timezone
 
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy import select
@@ -32,10 +33,15 @@ def save_trip(db: Session, *, user_id: str | None, request: dict, route: list, i
     return trip
 
 
+def _utc_iso(dt: datetime) -> str:
+    # SQLite hands back naive datetimes; they were stored as UTC
+    return (dt if dt.tzinfo else dt.replace(tzinfo=timezone.utc)).isoformat()
+
+
 def _summary(trip: Trip) -> dict:
     return {
         "id": trip.id, "city": trip.city, "goals": trip.request.get("goals", []),
-        "trip_date": trip.request.get("trip_date", ""), "created_at": trip.created_at.isoformat(),
+        "trip_date": trip.request.get("trip_date", ""), "created_at": _utc_iso(trip.created_at),
         "stops": sum(len(d.get("stops", [])) for d in trip.itinerary.get("days", [])),
         "share_slug": trip.share_slug, "parent_id": trip.parent_id,
     }

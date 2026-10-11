@@ -5,6 +5,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 
+from backend import config
 from backend.api import agent, auth, routes, trips
 from backend.core import telemetry  # noqa: F401  (installs the tracer provider)
 from backend.db.session import run_migrations
@@ -15,6 +16,8 @@ STATIC_DIR = Path(__file__).resolve().parent / "static"
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     run_migrations()
+    if config.JWT_SECRET == "dev-only-secret-change-me":
+        print("WARNING: JWT_SECRET is the development default. Set it before exposing this server.")
     # Pre-warm models so the first request isn't slow
     try:
         from backend.ml.ranker.scorer import get_ranker
@@ -40,6 +43,7 @@ app.add_middleware(
     allow_origins=["*"],
     allow_methods=["*"],
     allow_headers=["*"],
+    expose_headers=["Retry-After"],
 )
 
 for r in (routes.router, auth.router, trips.router, agent.router):

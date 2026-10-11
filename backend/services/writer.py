@@ -74,7 +74,8 @@ def build_prompt(trip: dict, route: list[dict], rag_context: str) -> str:
         lines.extend(_stop_line(s) for s in stops if s["day"] == day["day"])
     notes = (trip.get("notes") or "").strip()
     dietary = trip.get("dietary", "none")
-    transport = "public transit" if trip.get("transport") == "transit" else "walking"
+    transport = {"transit": "public transit", "cycling": "bike", "driving": "car"}.get(
+        trip.get("transport"), "walking")
 
     profile = [
         f"- Starting from: {trip.get('start_location', '')}, {trip.get('city', '')}",
@@ -125,6 +126,11 @@ Return JSON exactly in this shape:
 }}"""
 
 
+def _is_id(value) -> bool:
+    # bool is a subclass of int in Python, so JSON true would otherwise pass as stop 1
+    return isinstance(value, int) and not isinstance(value, bool)
+
+
 def _entries(raw: dict) -> list:
     stops = raw.get("stops")
     return stops if isinstance(stops, list) else []
@@ -140,7 +146,7 @@ def validate(raw: dict, route: list[dict], allow_exclusions: bool) -> list[Viola
     seen: set[int] = set()
     for entry in _entries(raw):
         sid = entry.get("id") if isinstance(entry, dict) else None
-        if not isinstance(sid, int) or isinstance(sid, bool):
+        if not _is_id(sid):
             violations.append(Violation("bad_shape", f"stop entry without an integer id: {str(entry)[:60]}"))
             continue
         if sid not in expected:
@@ -157,7 +163,7 @@ def validate(raw: dict, route: list[dict], allow_exclusions: bool) -> list[Viola
     if not isinstance(excluded, list):
         violations.append(Violation("bad_shape", '"excluded" is not a list'))
         excluded = []
-    valid_excluded = {e for e in excluded if isinstance(e, int) and e in expected}
+    valid_excluded = {e for e in excluded if _is_id(e) and e in expected}
     if excluded and not allow_exclusions:
         violations.append(Violation("illegal_exclusion", "stops excluded although the traveler gave no notes"))
         valid_excluded = set()
@@ -218,15 +224,17 @@ def assemble(raw: dict, route: list[dict], trip: dict) -> tuple[dict, list[Viola
 
     prose: dict[int, dict] = {}
     for entry in _entries(raw):
-        if isinstance(entry, dict) and isinstance(entry.get("id"), int) and entry["id"] not in prose:
+        if isinstance(entry, dict) and _is_id(entry.get("id")) and entry["id"] not in prose:
             prose[entry["id"]] = entry
 
     excluded: set[int] = set()
     if allow_exclusions and not any(v.code == "illegal_exclusion" for v in violations):
         valid_ids = {s["sid"] for s in stops}
-        excluded = {e for e in (raw.get("excluded") or []) if isinstance(e, int) and e in valid_ids}
+        raw_excluded = raw.get("excluded") if isinstance(raw.get("excluded"), list) else []
+        excluded = {e for e in raw_excluded if _is_id(e) and e in valid_ids}
 
-    day_meta = {d.get("day"): d for d in (raw.get("days") or []) if isinstance(d, dict)}
+    raw_days = raw.get("days") if isinstance(raw.get("days"), list) else []
+    day_meta = {d["day"]: d for d in raw_days if isinstance(d, dict) and _is_id(d.get("day"))}
     fallback = fallback_raw(trip, route)
     fallback_days = {d["day"]: d for d in fallback["days"]}
 

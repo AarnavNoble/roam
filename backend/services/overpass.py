@@ -10,7 +10,7 @@ import httpx
 from dataclasses import dataclass, field
 from datetime import datetime
 
-from backend.core.resilience import CircuitBreaker, Deadline, TTLCache, UpstreamError, hedged
+from backend.core.resilience import CircuitBreaker, Deadline, TTLCache, UpstreamError, hedged, retry
 from backend.core.telemetry import in_context, stage
 
 # ── Opening-hours parser (OSM subset) ────────────────────────────────────────
@@ -40,14 +40,19 @@ def _parse_oh_days(expr: str) -> set[int]:
     return days
 
 
-def _parse_oh_time(expr: str) -> tuple[float, float] | None:
-    """'09:00-18:00' → (9.0, 18.0); returns None if unparseable."""
-    m = re.match(r"(\d{1,2}):(\d{2})-(\d{1,2}):(\d{2})", expr.strip())
-    if not m:
-        return None
-    sh, sm, eh, em = int(m.group(1)), int(m.group(2)), int(m.group(3)), int(m.group(4))
-    end = eh + em / 60 or 24.0   # 00:00 closing = midnight
-    return sh + sm / 60, end
+def _parse_oh_times(expr: str) -> list[tuple[float, float]]:
+    """
+    '09:00-18:00' → [(9.0, 18.0)]; '12:00-14:00,19:00-22:30' → both ranges;
+    '18:00-02:00' → [(18.0, 26.0)], closing after midnight. [] if unparseable.
+    """
+    ranges = []
+    for m in re.finditer(r"(\d{1,2}):(\d{2})\s*-\s*(\d{1,2}):(\d{2})", expr):
+        sh, sm, eh, em = (int(g) for g in m.groups())
+        start, end = sh + sm / 60, eh + em / 60
+        if end <= start:
+            end += 24.0                      # 00:00 closing, or open past midnight
+        ranges.append((start, end))
+    return ranges
 
 
 def _is_open_during(oh_str: str, weekday: int, trip_start: float, trip_end: float) -> bool:
@@ -55,6 +60,7 @@ def _is_open_during(oh_str: str, weekday: int, trip_start: float, trip_end: floa
     Returns True if a place is open at any point in [trip_start, trip_end].
     weekday: 0=Mon … 6=Sun.
     Defaults to True when the tag is absent or unparseable (never over-filter).
+    As in the OSM spec, a later rule for the same day overrides an earlier one.
     """
     if not oh_str:
         return True
@@ -62,6 +68,7 @@ def _is_open_during(oh_str: str, weekday: int, trip_start: float, trip_end: floa
         return True
 
     found_parseable = False
+    verdict: bool | None = None              # what the last rule covering today says
 
     for rule in oh_str.split(";"):
         rule = rule.strip()
@@ -73,25 +80,30 @@ def _is_open_during(oh_str: str, weekday: int, trip_start: float, trip_end: floa
         if m:
             day_expr, time_expr = m.group(1), m.group(2).strip()
             days = _parse_oh_days(day_expr)
-            if not days or weekday not in days:
-                continue
+            if not days:
+                continue                     # PH, SH and other selectors we do not model
+            today = weekday in days
         else:
-            time_expr = rule
+            time_expr, today = rule, True
 
-        if time_expr.lower() == "off":
-            found_parseable = True
-            continue                         # explicitly closed — try next rule
+        if time_expr.lower() in ("off", "closed"):
+            if today:
+                found_parseable, verdict = True, False
+            continue
 
-        parsed = _parse_oh_time(time_expr)
-        if parsed is None:
+        ranges = _parse_oh_times(time_expr)
+        if not ranges:
             continue                         # unrecognized format — skip rule
 
+        # A rule for other days still tells us the place keeps hours, so a day
+        # no rule covers is a closed day (Mo-Fr 09:00-18:00 on a Saturday).
         found_parseable = True
-        open_h, close_h = parsed
-        if trip_start < close_h and trip_end > open_h:
-            return True                      # trip window overlaps opening hours
+        if today:
+            verdict = any(trip_start < close_h and trip_end > open_h for open_h, close_h in ranges)
 
-    # If we found parseable rules but none matched → closed today
+    if verdict is not None:
+        return verdict
+    # If we found parseable rules but none covered today → closed today
     # If we found no parseable rules → can't tell, assume open
     return not found_parseable
 
@@ -169,6 +181,7 @@ FRESH_TTL_S = 3600       # serve from memory without touching Overpass
 STALE_TTL_S = 7 * 86400  # how old a stored answer may be when every mirror is down
 HEDGE_AFTER_S = 4.0      # start a second mirror if the first has not answered
 MIRROR_TIMEOUT_S = 25.0
+ROUNDS = 3               # passes over the mirror list before giving up
 
 _memory_cache = TTLCache(ttl=FRESH_TTL_S, max_size=256)
 _breakers: dict[str, CircuitBreaker] = {}
@@ -176,7 +189,7 @@ _breakers: dict[str, CircuitBreaker] = {}
 
 def _breaker(mirror: str) -> CircuitBreaker:
     if mirror not in _breakers:
-        _breakers[mirror] = CircuitBreaker(mirror, failure_threshold=2, reset_after=60)
+        _breakers[mirror] = CircuitBreaker(mirror, failure_threshold=3, reset_after=30)
     return _breakers[mirror]
 
 
@@ -204,7 +217,12 @@ def _build_query(lat: float, lon: float, radius_m: int, categories: list[str],
 def _post(mirror: str, query: str, timeout: float) -> list:
     resp = httpx.post(mirror, data={"data": query}, timeout=timeout, headers=HEADERS)
     resp.raise_for_status()
-    return resp.json().get("elements", [])
+    data = resp.json()
+    elements = data.get("elements", [])
+    # An overloaded server answers 200 with no elements and the error in "remark".
+    if not elements and "error" in str(data.get("remark", "")).lower():
+        raise UpstreamError(f"{mirror}: {data['remark']}")
+    return elements
 
 
 def _query_overpass(query: str, deadline: Deadline | None = None) -> list:
@@ -212,18 +230,40 @@ def _query_overpass(query: str, deadline: Deadline | None = None) -> list:
     Run a query against the mirrors and return the elements list.
 
     Mirrors are raced with a hedge delay: the first is called alone, and a
-    second is started only if it is slow or fails. Mirrors whose breaker is
-    open are skipped, so a dead mirror costs nothing after its first failures.
+    second is started only if it is slow or fails. A mirror whose breaker is
+    open refuses instantly, so a dead mirror costs nothing after its first
+    failures, unless every mirror is open, in which case they are probed anyway.
     """
     with stage("overpass.query"):
-        mirrors = [m for m in OVERPASS_MIRRORS if _breaker(m).state != "open"] or list(OVERPASS_MIRRORS)
         timeout = deadline.timeout(MIRROR_TIMEOUT_S) if deadline else MIRROR_TIMEOUT_S
-        calls = [
-            in_context(lambda m=m: _breaker(m).call(lambda: _post(m, query, timeout)))
-            for m in mirrors
-        ]
+
+        def call(mirror: str) -> list:
+            breaker = _breaker(mirror)
+            if any(_breaker(m).state != "open" for m in mirrors):
+                return breaker.call(lambda: _post(mirror, query, timeout))
+            # Every breaker is open, so refusing would fail the request for
+            # certain. Probe anyway and let the result update the breaker.
+            try:
+                elements = _post(mirror, query, timeout)
+            except Exception:
+                breaker.record_failure()
+                raise
+            breaker.record_success()
+            return elements
+
+        # Healthy mirrors first. Open ones stay in the list as a last resort:
+        # their breaker refuses instantly, so they cost nothing until it resets.
+        mirrors = sorted(OVERPASS_MIRRORS, key=lambda m: _breaker(m).state == "open")
+        calls = [in_context(lambda m=m: call(m)) for m in mirrors]
+        # Mirrors often answer 5xx for a few seconds and then recover, so one
+        # failed round across all of them is retried after a backoff.
         try:
-            return hedged(calls, hedge_after=HEDGE_AFTER_S, timeout=timeout + HEDGE_AFTER_S * len(calls))
+            return retry(
+                lambda: hedged(calls, hedge_after=HEDGE_AFTER_S,
+                               timeout=timeout + HEDGE_AFTER_S * len(calls)),
+                attempts=ROUNDS, base_delay=1.5, max_delay=6.0,
+                retry_on=(UpstreamError,), deadline=deadline,
+            )
         except UpstreamError as e:
             raise UpstreamError(f"All Overpass mirrors failed: {e}") from e
 

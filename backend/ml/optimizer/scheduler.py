@@ -146,10 +146,13 @@ def build_itinerary_with_meta(
     start_lon: float = None,
     start_hour: int = 9,
     deadline: Deadline | None = None,
+    day_budget_sec: int | None = None,
 ) -> tuple[list[dict], dict]:
     """
     Full scheduling pipeline. Returns (itinerary, meta) where meta records
     which travel-time source and which ordering method were actually used.
+    day_budget_sec caps travel plus visits per day (a 3-hour trip must end
+    within 3 hours); stops that do not fit are dropped, lowest-ranked first.
     """
     meta = {"matrix": "none", "ordering": "ortools"}
     if not pois:
@@ -172,22 +175,35 @@ def build_itinerary_with_meta(
         if not poi_indices:
             continue
 
-        day_pois = [pois[i] for i in poi_indices]
-        day_matrix = time_matrix[np.ix_(poi_indices, poi_indices)]
-        depot_times = depot_to_poi[poi_indices] if depot_to_poi is not None else None
         # start_hour applies to day 1; later days start at 9am
         day_start = start_hour * 3600 if day_num == 0 else DAY_START_SEC
 
-        with stage("route.solve", stops=len(day_pois)):
-            try:
-                order = solve_day(day_pois, day_matrix, depot_times, day_start)
-            except Exception as e:
-                print(f"Route solver failed ({e}), using greedy ordering")
-                order = None
-        if order is None:
-            meta["ordering"] = "greedy_fallback"
-            closest = int(np.argmin(depot_times)) if depot_times is not None else 0
-            order = _time_aware_order(day_pois, day_matrix, start_node=closest)
+        # Order the day, and if it runs past the time the traveller has, drop
+        # the lowest-ranked stop and order again. poi_indices is in relevance
+        # order, so the last one is always the one to lose.
+        while True:
+            day_pois = [pois[i] for i in poi_indices]
+            day_matrix = time_matrix[np.ix_(poi_indices, poi_indices)]
+            depot_times = depot_to_poi[poi_indices] if depot_to_poi is not None else None
+
+            with stage("route.solve", stops=len(day_pois)):
+                try:
+                    order = solve_day(day_pois, day_matrix, depot_times, day_start)
+                except Exception as e:
+                    print(f"Route solver failed ({e}), using greedy ordering")
+                    order = None
+            if order is None:
+                meta["ordering"] = "greedy_fallback"
+                closest = int(np.argmin(depot_times)) if depot_times is not None else 0
+                order = _time_aware_order(day_pois, day_matrix, start_node=closest)
+
+            elapsed = _estimate_day_duration(day_pois, day_matrix, order)
+            if depot_times is not None:
+                elapsed += int(depot_times[order[0]])
+            if day_budget_sec is None or elapsed <= day_budget_sec or len(poi_indices) == 1:
+                break
+            poi_indices = poi_indices[:-1]
+            meta["trimmed"] = meta.get("trimmed", 0) + 1
 
         ordered_pois = [day_pois[i] for i in order]
         travel_times = [int(day_matrix[a][b]) for a, b in zip(order, order[1:])]
