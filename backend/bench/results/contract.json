@@ -1,0 +1,22 @@
+{
+  "cases": 10,
+  "legacy": {
+    "answers": 10,
+    "violating": 0,
+    "violation_rate": 0.0,
+    "violations": {},
+    "mean_prompt_tokens": 5239.5,
+    "mean_completion_tokens": 990.2,
+    "mean_seconds": 2.6
+  },
+  "keyed": {
+    "answers": 10,
+    "violating": 0,
+    "violation_rate": 0.0,
+    "violations": {},
+    "mean_prompt_tokens": 1122.0,
+    "mean_completion_tokens": 510.2,
+    "mean_seconds": 1.5
+  },
+  "assembled_mismatches": []
+}

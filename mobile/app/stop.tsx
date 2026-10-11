@@ -101,7 +101,8 @@ export default function StopDetailScreen() {
     if (feedback) return;
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
     setFeedback(relevant ? 'up' : 'down');
-    try { await submitFeedback(stop.id || 0, relevant, stop.name, stop.category, goals); } catch {}
+    if (stop.id == null) return; // saved by an older version without ids: nothing to attach the feedback to
+    try { await submitFeedback(stop.id, relevant, stop.name, stop.category, goals); } catch {}
   };
 
   return (

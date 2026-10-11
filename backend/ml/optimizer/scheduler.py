@@ -2,16 +2,19 @@
 Day scheduler: assigns ranked POIs across trip days, then orders each day's route.
 
 Strategy:
-  1. Estimate total visit + travel time for all POIs
+  1. Build the travel time matrix, anchored on the start location
   2. Greedily assign POIs to days respecting daily time budget
-  3. Order each day's stops by time-of-day logic (nature→morning, culture→afternoon, nightlife→evening)
-     with food spread across the day and greedy nearest-neighbor within each bucket
+  3. Order each day with OR-Tools (vrp.solve_day): minimise travel subject to
+     soft time-of-day windows. If the solver returns nothing, fall back to the
+     greedy bucket heuristic below, which is what shipped before.
   4. Return structured day-by-day itinerary
 """
 
 import numpy as np
-from .vrp import VISIT_DURATION, DAY_START_SEC
-from .distance import build_time_matrix
+from backend.core.resilience import Deadline
+from backend.core.telemetry import stage
+from .vrp import VISIT_DURATION, DAY_START_SEC, solve_day
+from .distance import build_time_matrix_with_source
 
 # Time-of-day bucket for each category (0=morning, 1=afternoon, 2=evening)
 CATEGORY_BUCKET = {
@@ -71,7 +74,9 @@ def _time_aware_order(pois: list[dict], time_matrix: np.ndarray, start_node: int
             buckets[CATEGORY_BUCKET.get(cat, 1)].append(i)
 
     # Spread food stops across the day so they're never back-to-back
-    if len(food_indices) == 1:
+    if not food_indices:
+        pass                                          # no food stops today
+    elif len(food_indices) == 1:
         buckets[1].append(food_indices[0])            # single food → lunch
     elif len(food_indices) == 2:
         buckets[0].append(food_indices[0])            # breakfast
@@ -105,7 +110,8 @@ def _estimate_day_duration(pois: list[dict], time_matrix: np.ndarray, indices: l
     return total
 
 
-def assign_days(pois: list[dict], n_days: int, time_matrix: np.ndarray) -> list[list[int]]:
+def assign_days(pois: list[dict], n_days: int, time_matrix: np.ndarray,
+                budgets: list[int] | None = None) -> list[list[int]]:
     """
     Greedily assign POIs to days.
     POIs are pre-sorted by relevance score (highest first).
@@ -121,7 +127,7 @@ def assign_days(pois: list[dict], n_days: int, time_matrix: np.ndarray) -> list[
         best_day = None
         best_remaining = -1
         for d in range(n_days):
-            remaining = DAILY_BUDGET_SEC - day_times[d]
+            remaining = (budgets[d] if budgets else DAILY_BUDGET_SEC) - day_times[d]
             if remaining >= visit_time and remaining > best_remaining:
                 best_day = d
                 best_remaining = remaining
@@ -133,66 +139,83 @@ def assign_days(pois: list[dict], n_days: int, time_matrix: np.ndarray) -> list[
     return days
 
 
-def build_itinerary(
+def build_itinerary_with_meta(
     pois: list[dict],
     n_days: int,
     transport: str,
     start_lat: float = None,
     start_lon: float = None,
     start_hour: int = 9,
-) -> list[dict]:
+    deadline: Deadline | None = None,
+    day_budget_sec: int | list[int] | None = None,
+) -> tuple[list[dict], dict]:
     """
-    Full scheduling pipeline:
-    1. Build travel time matrix (optionally anchored to start location)
-    2. Assign POIs to days
-    3. Order each day's stops by time-of-day bucket + greedy nearest-neighbor
-    4. Return structured itinerary
+    Full scheduling pipeline. Returns (itinerary, meta) where meta records
+    which travel-time source and which ordering method were actually used.
+    day_budget_sec caps travel plus visits per day (a 3-hour trip must end
+    within 3 hours); stops that do not fit are dropped, lowest-ranked first.
+    It is one number for every day, or a list with one entry per day when the
+    days differ (the last day of an 11-hour trip has one hour).
     """
+    meta = {"matrix": "none", "ordering": "ortools"}
     if not pois:
-        return []
+        return [], meta
 
     # Prepend start location as a virtual depot node (index 0)
     if start_lat is not None and start_lon is not None:
         depot = {"lat": start_lat, "lon": start_lon, "category": "_depot", "name": "_start"}
-        all_nodes = [depot] + pois
-        full_matrix = build_time_matrix(all_nodes, transport)
-        # Time matrix for just the real POIs
+        full_matrix, meta["matrix"] = build_time_matrix_with_source([depot] + pois, transport, deadline)
         time_matrix = full_matrix[1:, 1:]
-        # Travel time from depot to each POI (used to anchor day 1)
         depot_to_poi = full_matrix[0, 1:]
     else:
-        time_matrix = build_time_matrix(pois, transport)
+        time_matrix, meta["matrix"] = build_time_matrix_with_source(pois, transport, deadline)
         depot_to_poi = None
 
-    day_assignments = assign_days(pois, n_days, time_matrix)
-
-    day_start_sec = start_hour * 3600
+    budgets = day_budget_sec if isinstance(day_budget_sec, list) else None
+    day_assignments = assign_days(pois, n_days, time_matrix, budgets)
 
     itinerary = []
     for day_num, poi_indices in enumerate(day_assignments):
         if not poi_indices:
             continue
 
-        day_pois = [pois[i] for i in poi_indices]
-        day_matrix = time_matrix[np.ix_(poi_indices, poi_indices)]
+        # start_hour applies to day 1; later days start at 9am
+        day_start = start_hour * 3600 if day_num == 0 else DAY_START_SEC
 
-        # For day 1, seed the TSP so the closest POI to the start location goes first
-        if day_num == 0 and depot_to_poi is not None:
-            depot_times = depot_to_poi[poi_indices]
-            closest = int(np.argmin(depot_times))
-        else:
-            closest = 0
+        # Order the day, and if it runs past the time the traveller has, drop
+        # the lowest-ranked stop and order again. poi_indices is in relevance
+        # order, so the last one is always the one to lose.
+        while True:
+            day_pois = [pois[i] for i in poi_indices]
+            day_matrix = time_matrix[np.ix_(poi_indices, poi_indices)]
+            depot_times = depot_to_poi[poi_indices] if depot_to_poi is not None else None
 
-        optimized_order = _time_aware_order(day_pois, day_matrix, start_node=closest)
-        ordered_pois = [day_pois[i] for i in optimized_order]
+            with stage("route.solve", stops=len(day_pois)):
+                try:
+                    order = solve_day(day_pois, day_matrix, depot_times, day_start)
+                except Exception as e:
+                    print(f"Route solver failed ({e}), using greedy ordering")
+                    order = None
+            if order is None:
+                meta["ordering"] = "greedy_fallback"
+                closest = int(np.argmin(depot_times)) if depot_times is not None else 0
+                order = _time_aware_order(day_pois, day_matrix, start_node=closest)
 
-        # compute travel times between consecutive stops
-        travel_times = []
-        for a, b in zip(optimized_order, optimized_order[1:]):
-            travel_times.append(int(day_matrix[a][b]))
+            elapsed = _estimate_day_duration(day_pois, day_matrix, order)
+            if depot_times is not None:
+                elapsed += int(depot_times[order[0]])
+            budget = budgets[day_num] if budgets else day_budget_sec
+            if budget is None or elapsed <= budget or len(poi_indices) == 1:
+                break
+            poi_indices = poi_indices[:-1]
+            meta["trimmed"] = meta.get("trimmed", 0) + 1
 
-        # estimate arrival times from start_hour on day 1, 9am on subsequent days
-        current_time = day_start_sec if day_num == 0 else DAY_START_SEC
+        ordered_pois = [day_pois[i] for i in order]
+        travel_times = [int(day_matrix[a][b]) for a, b in zip(order, order[1:])]
+
+        current_time = day_start
+        if depot_times is not None:
+            current_time += int(depot_times[order[0]])
         for i, poi in enumerate(ordered_pois):
             poi = poi.copy()
             poi["arrival_time"] = _seconds_to_time(current_time)
@@ -210,7 +233,12 @@ def build_itinerary(
             "total_travel_min": sum(travel_times) // 60,
         })
 
-    return itinerary
+    return itinerary, meta
+
+
+def build_itinerary(pois: list[dict], n_days: int, transport: str, start_lat: float = None,
+                    start_lon: float = None, start_hour: int = 9) -> list[dict]:
+    return build_itinerary_with_meta(pois, n_days, transport, start_lat, start_lon, start_hour)[0]
 
 
 def _seconds_to_time(seconds: int) -> str:

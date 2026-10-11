@@ -3,10 +3,15 @@ Overpass API client for fetching POIs from OpenStreetMap.
 Completely free, no API key needed.
 """
 
+import hashlib
 import re
+import time
 import httpx
 from dataclasses import dataclass, field
 from datetime import datetime
+
+from backend.core.resilience import CircuitBreaker, Deadline, TTLCache, UpstreamError, hedged, retry
+from backend.core.telemetry import in_context, stage
 
 # ── Opening-hours parser (OSM subset) ────────────────────────────────────────
 # Handles the formats that cover >90% of OSM tags:
@@ -35,14 +40,19 @@ def _parse_oh_days(expr: str) -> set[int]:
     return days
 
 
-def _parse_oh_time(expr: str) -> tuple[float, float] | None:
-    """'09:00-18:00' → (9.0, 18.0); returns None if unparseable."""
-    m = re.match(r"(\d{1,2}):(\d{2})-(\d{1,2}):(\d{2})", expr.strip())
-    if not m:
-        return None
-    sh, sm, eh, em = int(m.group(1)), int(m.group(2)), int(m.group(3)), int(m.group(4))
-    end = eh + em / 60 or 24.0   # 00:00 closing = midnight
-    return sh + sm / 60, end
+def _parse_oh_times(expr: str) -> list[tuple[float, float]]:
+    """
+    '09:00-18:00' → [(9.0, 18.0)]; '12:00-14:00,19:00-22:30' → both ranges;
+    '18:00-02:00' → [(18.0, 26.0)], closing after midnight. [] if unparseable.
+    """
+    ranges = []
+    for m in re.finditer(r"(\d{1,2}):(\d{2})\s*-\s*(\d{1,2}):(\d{2})", expr):
+        sh, sm, eh, em = (int(g) for g in m.groups())
+        start, end = sh + sm / 60, eh + em / 60
+        if end <= start:
+            end += 24.0                      # 00:00 closing, or open past midnight
+        ranges.append((start, end))
+    return ranges
 
 
 def _is_open_during(oh_str: str, weekday: int, trip_start: float, trip_end: float) -> bool:
@@ -50,6 +60,7 @@ def _is_open_during(oh_str: str, weekday: int, trip_start: float, trip_end: floa
     Returns True if a place is open at any point in [trip_start, trip_end].
     weekday: 0=Mon … 6=Sun.
     Defaults to True when the tag is absent or unparseable (never over-filter).
+    As in the OSM spec, a later rule for the same day overrides an earlier one.
     """
     if not oh_str:
         return True
@@ -57,8 +68,14 @@ def _is_open_during(oh_str: str, weekday: int, trip_start: float, trip_end: floa
         return True
 
     found_parseable = False
+    verdict: bool | None = None              # what the last rule covering today says
 
-    for rule in oh_str.split(";"):
+    # 'Mo, We 09:00-18:00' → 'Mo,We 09:00-18:00': a space inside a day list
+    # would otherwise cut the list short.
+    oh_str = re.sub(r"(?<=[A-Za-z]{2}),\s+(?=[A-Za-z]{2}\b)", ",", oh_str)
+    # Rules are separated by ';', and also by ',' when a new day selector
+    # follows a time or 'off' ('Mo-Fr 09:00-18:00, Sa 10:00-14:00').
+    for rule in re.split(r";|(?:(?<=\d)|(?<=off)|(?<=closed)),\s*(?=[A-Za-z]{2}\b)", oh_str):
         rule = rule.strip()
         if not rule:
             continue
@@ -68,32 +85,39 @@ def _is_open_during(oh_str: str, weekday: int, trip_start: float, trip_end: floa
         if m:
             day_expr, time_expr = m.group(1), m.group(2).strip()
             days = _parse_oh_days(day_expr)
-            if not days or weekday not in days:
-                continue
+            if not days:
+                continue                     # PH, SH and other selectors we do not model
+            today = weekday in days
         else:
-            time_expr = rule
+            time_expr, today = rule, True
 
-        if time_expr.lower() == "off":
-            found_parseable = True
-            continue                         # explicitly closed — try next rule
+        if time_expr.lower() in ("off", "closed"):
+            if today:
+                found_parseable, verdict = True, False
+            continue
 
-        parsed = _parse_oh_time(time_expr)
-        if parsed is None:
+        ranges = _parse_oh_times(time_expr)
+        if not ranges:
             continue                         # unrecognized format — skip rule
 
+        # A rule for other days still tells us the place keeps hours, so a day
+        # no rule covers is a closed day (Mo-Fr 09:00-18:00 on a Saturday).
         found_parseable = True
-        open_h, close_h = parsed
-        if trip_start < close_h and trip_end > open_h:
-            return True                      # trip window overlaps opening hours
+        if today:
+            # the window is closed at both ends: a bar opening at 23:00 is open
+            # "at some point" of a trip that runs until 23:00
+            verdict = any(trip_start < close_h and trip_end >= open_h for open_h, close_h in ranges)
 
-    # If we found parseable rules but none matched → closed today
+    if verdict is not None:
+        return verdict
+    # If we found parseable rules but none covered today → closed today
     # If we found no parseable rules → can't tell, assume open
     return not found_parseable
 
-OVERPASS_MIRRORS = [
-    "https://overpass-api.de/api/interpreter",
-    "https://overpass.kumi.systems/api/interpreter",
-]
+from backend import config
+OVERPASS_MIRRORS = config.OVERPASS_MIRRORS
+# overpass-api.de answers 406 to requests without an identifying User-Agent
+HEADERS = {"User-Agent": "roam-app/1.0 (github.com/AarnavNoble/roam)"}
 
 # OSM tags that map to travel interest categories
 # Global chain brands to filter out — we want local places
@@ -159,37 +183,173 @@ class POI:
         }
 
 
-def _build_category_query(lat: float, lon: float, radius_m: int, category: str) -> str:
-    """Build a query for a single category, capped at 15 results."""
-    tag_filters = []
-    for tag_expr in CATEGORY_QUERIES.get(category, []):
-        tag_filters.append(f'node[{tag_expr}][!"brand"](around:{radius_m},{lat},{lon});')
-        tag_filters.append(f'way[{tag_expr}][!"brand"](around:{radius_m},{lat},{lon});')
-    union = "\n".join(tag_filters)
-    return f"""
-[out:json][timeout:25];
-(
-{union}
-);
-out center 15;
-"""
+PER_CATEGORY = 40        # candidates requested per category
+FRESH_TTL_S = 3600       # serve from memory without touching Overpass
+STALE_TTL_S = 7 * 86400  # how old a stored answer may be when every mirror is down
+HEDGE_AFTER_S = 4.0      # start a second mirror if the first has not answered
+MIRROR_TIMEOUT_S = 25.0
+ROUNDS = 3               # passes over the mirror list before giving up
+
+_memory_cache = TTLCache(ttl=FRESH_TTL_S, stale_ttl=STALE_TTL_S, max_size=256)
+_breakers: dict[str, CircuitBreaker] = {}
 
 
-def _query_overpass(query: str) -> list:
-    """Execute a query against Overpass mirrors, return elements list."""
-    last_error = None
-    for mirror in OVERPASS_MIRRORS:
+def _breaker(mirror: str) -> CircuitBreaker:
+    if mirror not in _breakers:
+        _breakers[mirror] = CircuitBreaker(mirror, failure_threshold=3, reset_after=30)
+    return _breakers[mirror]
+
+
+def _build_query(lat: float, lon: float, radius_m: int, categories: list[str],
+                 per_category: int = PER_CATEGORY) -> str:
+    """
+    One Overpass request covering every category.
+
+    Each category is collected into its own named set and printed with its own
+    limit, so a dense category (restaurants) cannot use up the response and
+    leave a sparse one (viewpoints) with nothing, and the whole lookup costs
+    one round trip instead of one per category. The limit is a cap, not a
+    ranking: when a category has more matches than the cap, which ones come
+    back is Overpass's choice (element order), not the nearest or the best.
+    Only named elements are requested, since unnamed ones are discarded later
+    and would otherwise take up places under the cap.
+    """
+    blocks = []
+    for i, category in enumerate(categories):
+        filters = []
+        for tag_expr in CATEGORY_QUERIES.get(category, []):
+            filters.append(f'node[{tag_expr}]["name"][!"brand"](around:{radius_m},{lat},{lon});')
+            filters.append(f'way[{tag_expr}]["name"][!"brand"](around:{radius_m},{lat},{lon});')
+        if filters:
+            blocks.append(f"({''.join(filters)})->.c{i};\n.c{i} out center {per_category};")
+    return "[out:json][timeout:25];\n" + "\n".join(blocks)
+
+
+def _post(mirror: str, query: str, timeout: float) -> list:
+    resp = httpx.post(mirror, data={"data": query}, timeout=timeout, headers=HEADERS)
+    resp.raise_for_status()
+    data = resp.json()
+    elements = data.get("elements", [])
+    # An overloaded server answers 200 with no elements and the error in "remark".
+    if not elements and "error" in str(data.get("remark", "")).lower():
+        raise UpstreamError(f"{mirror}: {data['remark']}")
+    return elements
+
+
+def _query_overpass(query: str, deadline: Deadline | None = None) -> list:
+    """
+    Run a query against the mirrors and return the elements list.
+
+    Mirrors are raced with a hedge delay: the first is called alone, and a
+    second is started only if it is slow or fails. A mirror whose breaker is
+    open refuses instantly, so a dead mirror costs nothing after its first
+    failures, unless every mirror is open, in which case they are probed anyway.
+    """
+    with stage("overpass.query"):
+        def call(mirror: str) -> list:
+            # Worked out for every attempt from what is left of the deadline, so a
+            # later retry round cannot get the full mirror timeout again. Done
+            # before the breaker is involved: running out of our own time is
+            # not the mirror's failure.
+            timeout = deadline.timeout(MIRROR_TIMEOUT_S) if deadline else MIRROR_TIMEOUT_S
+            breaker = _breaker(mirror)
+            if any(_breaker(m).state != "open" for m in mirrors):
+                return breaker.call(lambda: _post(mirror, query, timeout))
+            # Every breaker is open, so refusing would fail the request for
+            # certain. Probe anyway and let the result update the breaker.
+            try:
+                elements = _post(mirror, query, timeout)
+            except Exception:
+                breaker.record_failure()
+                raise
+            breaker.record_success()
+            return elements
+
+        # Healthy mirrors first. Open ones stay in the list as a last resort:
+        # their breaker refuses instantly, so they cost nothing until it resets.
+        mirrors = sorted(OVERPASS_MIRRORS, key=lambda m: _breaker(m).state == "open")
+        calls = [in_context(lambda m=m: call(m)) for m in mirrors]
+        def one_round() -> list:
+            budget = MIRROR_TIMEOUT_S + HEDGE_AFTER_S * len(calls)
+            if deadline is not None:
+                budget = deadline.timeout(budget)  # never wait past the request deadline
+            return hedged(calls, hedge_after=HEDGE_AFTER_S, timeout=budget)
+
+        # Mirrors often answer 5xx for a few seconds and then recover, so one
+        # failed round across all of them is retried after a backoff.
         try:
-            resp = httpx.post(mirror, data={"data": query}, timeout=30)
-            resp.raise_for_status()
-            return resp.json().get("elements", [])
-        except Exception as e:
-            last_error = e
-            continue
-    raise RuntimeError(f"All Overpass mirrors failed: {last_error}")
+            return retry(
+                one_round,
+                attempts=ROUNDS, base_delay=1.5, max_delay=6.0,
+                retry_on=(UpstreamError,), deadline=deadline,
+            )
+        except UpstreamError as e:
+            raise UpstreamError(f"All Overpass mirrors failed: {e}") from e
 
 
-def fetch_pois(
+def _cache_key(lat: float, lon: float, radius_m: int, categories: list[str]) -> str:
+    # ~100m grid: nearby starts share an entry
+    raw = f"{lat:.3f},{lon:.3f},{radius_m},{','.join(sorted(categories))},{PER_CATEGORY}"
+    return hashlib.sha256(raw.encode()).hexdigest()
+
+
+def _store_durable(key: str, elements: list) -> None:
+    try:
+        from backend.db.models import PoiCache
+        from backend.db.session import session_scope
+        with session_scope() as db:
+            db.merge(PoiCache(key=key, payload=elements, fetched_at=time.time()))
+    except Exception as e:  # the cache is an optimisation; never fail a request over it
+        print(f"POI cache write failed: {e}")
+
+
+def _load_durable(key: str) -> list | None:
+    try:
+        from backend.db.models import PoiCache
+        from backend.db.session import session_scope
+        with session_scope() as db:
+            row = db.get(PoiCache, key)
+            if row and time.time() - row.fetched_at <= STALE_TTL_S:
+                return row.payload
+    except Exception as e:
+        print(f"POI cache read failed: {e}")
+    return None
+
+
+def _stale_copy(key: str) -> list | None:
+    """The last good answer for this query: from memory if this process has it, else the database."""
+    stale = _memory_cache.get_stale(key)
+    return stale if stale is not None else _load_durable(key)
+
+
+def _fetch_elements(lat: float, lon: float, radius_m: int, categories: list[str],
+                    deadline: Deadline | None) -> tuple[list, str]:
+    """Return (elements, source) where source is live | cache | stale."""
+    key = _cache_key(lat, lon, radius_m, categories)
+    cached = _memory_cache.get(key)
+    if cached is not None:
+        return cached, "cache"
+    # Every mirror's breaker is open, so they all failed moments ago. With a
+    # stored copy there is no reason to make the traveller wait out another
+    # round of timeouts; the mirrors are probed again once a breaker resets.
+    if all(_breaker(m).state == "open" for m in OVERPASS_MIRRORS):
+        stale = _stale_copy(key)
+        if stale is not None:
+            return stale, "stale"
+    try:
+        elements = _query_overpass(_build_query(lat, lon, radius_m, categories), deadline)
+    except UpstreamError:
+        stale = _stale_copy(key)
+        if stale is None:
+            raise
+        return stale, "stale"
+    if elements:
+        _memory_cache.set(key, elements)
+        _store_durable(key, elements)
+    return elements, "live"
+
+
+def fetch_pois_with_source(
     lat: float,
     lon: float,
     categories: list[str],
@@ -198,70 +358,83 @@ def fetch_pois(
     visit_start_h: int = 9,
     visit_end_h: int = 23,
     weekday: int | None = None,
-) -> list[POI]:
+    deadline: Deadline | None = None,
+) -> tuple[list[POI], str]:
     """
-    Fetch POIs from Overpass API around a coordinate.
-    Queries each category separately (15 results each) so every category
-    gets fair representation regardless of OSM node density.
+    Fetch POIs around a coordinate. Returns (pois, source), where source says
+    whether the data is live, from the in-memory cache, or stale from the
+    database because every mirror was down.
+
     dietary: filter food POIs by diet tag (none | vegetarian | vegan | halal | kosher)
     visit_start_h / visit_end_h: trip window in hours (0-24) used to filter
       places that are closed for the entire visit.
     weekday: 0=Mon…6=Sun, defaults to today if not provided.
+
+    Raw Overpass elements are cached, not filtered POIs, because the dietary
+    and opening-hours filters depend on the request.
     """
     if weekday is None:
         weekday = datetime.now().weekday()
-    seen_ids: set[int] = set()
+    elements, source = _fetch_elements(lat, lon, radius_m, list(categories), deadline)
+
+    seen: set[tuple[str, int]] = set()
     all_pois: list[POI] = []
+    for el in elements:
+        # OSM numbers nodes and ways separately, so node 7 and way 7 are two
+        # different places. An element is identified by (type, id). The POI id
+        # stays a single integer for the ranker, the client and the feedback
+        # table by folding the type into the sign: nodes positive, ways negative.
+        if (el["type"], el["id"]) in seen:
+            continue
+        poi_id = el["id"] if el["type"] == "node" else -el["id"]
 
-    for category in categories:
-        query = _build_category_query(lat, lon, radius_m, category)
-        try:
-            elements = _query_overpass(query)
-        except RuntimeError:
-            continue  # skip category if mirrors fail, don't abort entire request
+        tags = el.get("tags", {})
+        name = tags.get("name")
+        if not name or _is_chain(name, tags):
+            continue
+        # Skip OSM nodes that are clearly sub-elements (zoo animals, benches, etc.)
+        if tags.get("species") or tags.get("animal") or tags.get("genus"):
+            continue
 
-        for el in elements:
-            if el["id"] in seen_ids:
+        if el["type"] == "node":
+            lat_el, lon_el = el.get("lat"), el.get("lon")
+        else:
+            center = el.get("center", {})
+            lat_el, lon_el = center.get("lat"), center.get("lon")
+
+        if lat_el is None or lon_el is None:
+            continue
+
+        inferred = _infer_category(tags)
+
+        if dietary != "none" and inferred == "food":
+            diet_tag = tags.get(f"diet:{dietary}", "")
+            if diet_tag not in ("yes", "only"):
                 continue
 
-            tags = el.get("tags", {})
-            name = tags.get("name")
-            if not name or _is_chain(name, tags):
-                continue
-            # Skip OSM nodes that are clearly sub-elements (zoo animals, benches, etc.)
-            if tags.get("species") or tags.get("animal") or tags.get("genus"):
-                continue
+        oh = tags.get("opening_hours", "")
+        if not _is_open_during(oh, weekday, visit_start_h, visit_end_h):
+            continue
 
-            if el["type"] == "node":
-                lat_el, lon_el = el.get("lat"), el.get("lon")
-            else:
-                center = el.get("center", {})
-                lat_el, lon_el = center.get("lat"), center.get("lon")
+        seen.add((el["type"], el["id"]))
+        all_pois.append(POI(
+            id=poi_id, name=name,
+            lat=lat_el, lon=lon_el,
+            category=inferred, tags=tags,
+        ))
 
-            if lat_el is None or lon_el is None:
-                continue
-
-            inferred = _infer_category(tags)
-
-            if dietary != "none" and inferred == "food":
-                diet_tag = tags.get(f"diet:{dietary}", "")
-                if diet_tag not in ("yes", "only"):
-                    continue
-
-            oh = tags.get("opening_hours", "")
-            if not _is_open_during(oh, weekday, visit_start_h, visit_end_h):
-                continue
-
-            seen_ids.add(el["id"])
-            all_pois.append(POI(
-                id=el["id"], name=name,
-                lat=lat_el, lon=lon_el,
-                category=inferred, tags=tags,
-            ))
-
-    return all_pois
+    return all_pois, source
 
 
+def fetch_pois(lat: float, lon: float, categories: list[str], radius_m: int = 2500,
+               dietary: str = "none", visit_start_h: int = 9, visit_end_h: int = 23,
+               weekday: int | None = None) -> list[POI]:
+    """fetch_pois_with_source without the source, returning [] when Overpass is unreachable."""
+    try:
+        return fetch_pois_with_source(lat, lon, categories, radius_m, dietary,
+                                      visit_start_h, visit_end_h, weekday)[0]
+    except UpstreamError:
+        return []
 
 
 def _infer_category(tags: dict) -> str:

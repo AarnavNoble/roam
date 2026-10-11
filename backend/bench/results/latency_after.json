@@ -1,0 +1,522 @@
+{
+  "label": "after",
+  "summary": {
+    "runs": 16,
+    "failed": 4,
+    "total": {
+      "p50_ms": 12085,
+      "p95_ms": 23478
+    },
+    "stages": {
+      "fetch_pois": {
+        "p50_ms": 9320,
+        "p95_ms": 20621,
+        "share": 0.786
+      },
+      "geocode": {
+        "p50_ms": 1,
+        "p95_ms": 468,
+        "share": 0.013
+      },
+      "geocode.lookup": {
+        "p50_ms": 0,
+        "p95_ms": 466,
+        "share": 0.013
+      },
+      "llm": {
+        "p50_ms": 1218,
+        "p95_ms": 1866,
+        "share": 0.109
+      },
+      "llm.call": {
+        "p50_ms": 1218,
+        "p95_ms": 1864,
+        "share": 0.109
+      },
+      "overpass.query": {
+        "p50_ms": 9305,
+        "p95_ms": 20601,
+        "share": 0.785
+      },
+      "photos": {
+        "p50_ms": 4,
+        "p95_ms": 386,
+        "share": 0.011
+      },
+      "pipeline": {
+        "p50_ms": 12085,
+        "p95_ms": 23477,
+        "share": 1.0
+      },
+      "rank": {
+        "p50_ms": 557,
+        "p95_ms": 918,
+        "share": 0.038
+      },
+      "retrieve": {
+        "p50_ms": 13,
+        "p95_ms": 1039,
+        "share": 0.027
+      },
+      "route": {
+        "p50_ms": 511,
+        "p95_ms": 873,
+        "share": 0.053
+      },
+      "route.solve": {
+        "p50_ms": 507,
+        "p95_ms": 872,
+        "share": 0.053
+      }
+    },
+    "cold": {
+      "runs": 8,
+      "failed": 3,
+      "total": {
+        "p50_ms": 17704,
+        "p95_ms": 24614
+      },
+      "stages": {
+        "fetch_pois": {
+          "p50_ms": 14540,
+          "p95_ms": 21568,
+          "share": 0.829
+        },
+        "geocode": {
+          "p50_ms": 437,
+          "p95_ms": 483,
+          "share": 0.019
+        },
+        "geocode.lookup": {
+          "p50_ms": 437,
+          "p95_ms": 482,
+          "share": 0.019
+        },
+        "llm": {
+          "p50_ms": 1342,
+          "p95_ms": 1737,
+          "share": 0.08
+        },
+        "llm.call": {
+          "p50_ms": 1342,
+          "p95_ms": 1732,
+          "share": 0.08
+        },
+        "overpass.query": {
+          "p50_ms": 14520,
+          "p95_ms": 21552,
+          "share": 0.828
+        },
+        "photos": {
+          "p50_ms": 1,
+          "p95_ms": 418,
+          "share": 0.009
+        },
+        "pipeline": {
+          "p50_ms": 17703,
+          "p95_ms": 24613,
+          "share": 1.0
+        },
+        "rank": {
+          "p50_ms": 661,
+          "p95_ms": 848,
+          "share": 0.04
+        },
+        "retrieve": {
+          "p50_ms": 485,
+          "p95_ms": 1384,
+          "share": 0.04
+        },
+        "route": {
+          "p50_ms": 512,
+          "p95_ms": 754,
+          "share": 0.032
+        },
+        "route.solve": {
+          "p50_ms": 512,
+          "p95_ms": 754,
+          "share": 0.032
+        }
+      }
+    },
+    "warm": {
+      "runs": 8,
+      "failed": 1,
+      "total": {
+        "p50_ms": 2044,
+        "p95_ms": 18910
+      },
+      "stages": {
+        "fetch_pois": {
+          "p50_ms": 3,
+          "p95_ms": 16557,
+          "share": 0.703
+        },
+        "geocode": {
+          "p50_ms": 0,
+          "p95_ms": 1,
+          "share": 0.0
+        },
+        "llm": {
+          "p50_ms": 731,
+          "p95_ms": 1736,
+          "share": 0.167
+        },
+        "llm.call": {
+          "p50_ms": 730,
+          "p95_ms": 1733,
+          "share": 0.167
+        },
+        "overpass.query": {
+          "p50_ms": 0,
+          "p95_ms": 16532,
+          "share": 0.701
+        },
+        "photos": {
+          "p50_ms": 6,
+          "p95_ms": 315,
+          "share": 0.014
+        },
+        "pipeline": {
+          "p50_ms": 2044,
+          "p95_ms": 18909,
+          "share": 1.0
+        },
+        "rank": {
+          "p50_ms": 7,
+          "p95_ms": 844,
+          "share": 0.036
+        },
+        "retrieve": {
+          "p50_ms": 5,
+          "p95_ms": 13,
+          "share": 0.001
+        },
+        "route": {
+          "p50_ms": 509,
+          "p95_ms": 933,
+          "share": 0.093
+        },
+        "route.solve": {
+          "p50_ms": 503,
+          "p95_ms": 933,
+          "share": 0.093
+        }
+      }
+    }
+  },
+  "runs": [
+    {
+      "scenario": "paris_marais",
+      "total_ms": 11866.1,
+      "stages": {
+        "geocode.lookup": 177.3,
+        "geocode": 177.3,
+        "retrieve": 1581.0,
+        "overpass.query": 9066.9,
+        "fetch_pois": 9088.1,
+        "rank": 651.7,
+        "route.solve": 512.0,
+        "route": 512.4,
+        "photos": 300.7,
+        "llm.call": 1408.4,
+        "llm": 1433.9,
+        "pipeline": 11865.9
+      },
+      "stops": 5,
+      "degraded": [
+        "ranker:semantic"
+      ],
+      "error": null,
+      "trial": 0
+    },
+    {
+      "scenario": "tokyo_shinjuku",
+      "total_ms": 18024.6,
+      "stages": {
+        "retrieve": 389.5,
+        "geocode.lookup": 491.8,
+        "geocode": 492.1,
+        "overpass.query": 14520.3,
+        "fetch_pois": 14539.5,
+        "rank": 889.1,
+        "route.solve": 753.7,
+        "route": 754.3,
+        "photos": 1.4,
+        "llm.call": 1341.9,
+        "llm": 1342.3,
+        "pipeline": 18024.4
+      },
+      "stops": 4,
+      "degraded": [
+        "ranker:semantic"
+      ],
+      "error": null,
+      "trial": 0
+    },
+    {
+      "scenario": "rome_trastevere",
+      "total_ms": 12303.8,
+      "stages": {
+        "retrieve": 435.0,
+        "geocode.lookup": 436.7,
+        "geocode": 437.0,
+        "overpass.query": 9542.2,
+        "fetch_pois": 9552.9,
+        "rank": 684.6,
+        "route.solve": 502.4,
+        "route": 502.9,
+        "photos": 447.2,
+        "llm.call": 1118.2,
+        "llm": 1118.4,
+        "pipeline": 12303.2
+      },
+      "stops": 5,
+      "degraded": [
+        "ranker:semantic"
+      ],
+      "error": null,
+      "trial": 0
+    },
+    {
+      "scenario": "london_soho",
+      "total_ms": 4566.9,
+      "stages": {},
+      "stops": 0,
+      "degraded": [],
+      "error": "UpstreamError: All Overpass mirrors failed: all 4 replicas failed: Server error '500 Internal Server Error' for url 'https://overpass.k",
+      "trial": 0
+    },
+    {
+      "scenario": "barcelona_gothic",
+      "total_ms": 6518.9,
+      "stages": {},
+      "stops": 0,
+      "degraded": [],
+      "error": "UpstreamError: All Overpass mirrors failed: all 4 replicas failed: Server error '500 Internal Server Error' for url 'https://overpass.k",
+      "trial": 0
+    },
+    {
+      "scenario": "nyc_village",
+      "total_ms": 17703.6,
+      "stages": {
+        "geocode.lookup": 84.1,
+        "geocode": 84.4,
+        "retrieve": 594.9,
+        "overpass.query": 14987.9,
+        "fetch_pois": 14993.5,
+        "rank": 661.2,
+        "route.solve": 753.7,
+        "route": 754.1,
+        "photos": 0.6,
+        "llm.call": 1203.4,
+        "llm": 1203.6,
+        "pipeline": 17702.7
+      },
+      "stops": 4,
+      "degraded": [
+        "ranker:semantic"
+      ],
+      "error": null,
+      "trial": 0
+    },
+    {
+      "scenario": "sydney_bondi",
+      "total_ms": 26261.6,
+      "stages": {
+        "geocode.lookup": 445.2,
+        "geocode": 447.8,
+        "retrieve": 484.6,
+        "overpass.query": 23193.3,
+        "fetch_pois": 23211.6,
+        "rank": 525.5,
+        "route.solve": 251.2,
+        "route": 254.9,
+        "photos": 0.8,
+        "llm.call": 1812.4,
+        "llm": 1812.6,
+        "pipeline": 26260.6
+      },
+      "stops": 6,
+      "degraded": [
+        "ranker:semantic"
+      ],
+      "error": null,
+      "trial": 0
+    },
+    {
+      "scenario": "bangkok_sukhumvit",
+      "total_ms": 4865.1,
+      "stages": {},
+      "stops": 0,
+      "degraded": [],
+      "error": "UpstreamError: All Overpass mirrors failed: all 4 replicas failed: Server error '500 Internal Server Error' for url 'https://overpass.k",
+      "trial": 0
+    },
+    {
+      "scenario": "paris_marais",
+      "total_ms": 2442.3,
+      "stages": {
+        "geocode": 0.1,
+        "fetch_pois": 0.8,
+        "retrieve": 3.5,
+        "rank": 4.0,
+        "route.solve": 502.2,
+        "route": 502.6,
+        "llm.call": 1928.1,
+        "photos": 266.0,
+        "llm": 1932.0,
+        "pipeline": 2442.1
+      },
+      "stops": 5,
+      "degraded": [
+        "ranker:semantic"
+      ],
+      "error": null,
+      "trial": 1
+    },
+    {
+      "scenario": "tokyo_shinjuku",
+      "total_ms": 2044.2,
+      "stages": {
+        "geocode": 0.1,
+        "fetch_pois": 0.7,
+        "retrieve": 7.8,
+        "rank": 2.1,
+        "route.solve": 753.7,
+        "route": 754.2,
+        "photos": 6.5,
+        "llm.call": 1278.2,
+        "llm": 1279.2,
+        "pipeline": 2044.0
+      },
+      "stops": 4,
+      "degraded": [
+        "ranker:semantic"
+      ],
+      "error": null,
+      "trial": 1
+    },
+    {
+      "scenario": "rome_trastevere",
+      "total_ms": 1271.8,
+      "stages": {
+        "geocode": 1.8,
+        "retrieve": 13.2,
+        "fetch_pois": 17.2,
+        "rank": 7.0,
+        "route.solve": 502.8,
+        "route": 509.2,
+        "llm.call": 729.8,
+        "photos": 335.5,
+        "llm": 730.8,
+        "pipeline": 1271.4
+      },
+      "stops": 5,
+      "degraded": [
+        "ranker:semantic"
+      ],
+      "error": null,
+      "trial": 1
+    },
+    {
+      "scenario": "london_soho",
+      "total_ms": 21200.6,
+      "stages": {
+        "geocode": 0.2,
+        "retrieve": 4.9,
+        "overpass.query": 18479.3,
+        "fetch_pois": 18502.0,
+        "rank": 953.6,
+        "route.solve": 1005.5,
+        "route": 1006.1,
+        "photos": 1.4,
+        "llm.call": 729.2,
+        "llm": 730.5,
+        "pipeline": 21199.8
+      },
+      "stops": 3,
+      "degraded": [
+        "ranker:semantic"
+      ],
+      "error": null,
+      "trial": 1
+    },
+    {
+      "scenario": "barcelona_gothic",
+      "total_ms": 4693.6,
+      "stages": {},
+      "stops": 0,
+      "degraded": [],
+      "error": "UpstreamError: All Overpass mirrors failed: all 4 replicas failed: Server error '500 Internal Server Error' for url 'https://overpass.k",
+      "trial": 1
+    },
+    {
+      "scenario": "nyc_village",
+      "total_ms": 1442.4,
+      "stages": {
+        "geocode": 0.1,
+        "fetch_pois": 1.1,
+        "retrieve": 2.8,
+        "rank": 2.3,
+        "route.solve": 763.3,
+        "route": 763.9,
+        "photos": 2.3,
+        "llm.call": 666.0,
+        "llm": 666.2,
+        "pipeline": 1441.7
+      },
+      "stops": 4,
+      "degraded": [
+        "ranker:semantic"
+      ],
+      "error": null,
+      "trial": 1
+    },
+    {
+      "scenario": "sydney_bondi",
+      "total_ms": 1511.7,
+      "stages": {
+        "geocode": 0.6,
+        "fetch_pois": 3.4,
+        "retrieve": 12.3,
+        "rank": 7.1,
+        "route.solve": 253.2,
+        "route": 255.0,
+        "photos": 0.8,
+        "llm.call": 1232.5,
+        "llm": 1232.9,
+        "pipeline": 1511.0
+      },
+      "stops": 6,
+      "degraded": [
+        "ranker:semantic"
+      ],
+      "error": null,
+      "trial": 1
+    },
+    {
+      "scenario": "bangkok_sukhumvit",
+      "total_ms": 13564.1,
+      "stages": {
+        "geocode": 0.2,
+        "retrieve": 4.8,
+        "overpass.query": 11988.5,
+        "fetch_pois": 12018.1,
+        "rank": 589.4,
+        "route.solve": 253.3,
+        "route": 257.2,
+        "photos": 13.0,
+        "llm.call": 675.8,
+        "llm": 687.0,
+        "pipeline": 13563.7
+      },
+      "stops": 6,
+      "degraded": [
+        "ranker:semantic"
+      ],
+      "error": null,
+      "trial": 1
+    }
+  ]
+}

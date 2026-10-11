@@ -1,0 +1,389 @@
+{
+  "protocol": "leave-one-city-out cross validation; per-fold value is the mean over that city's queries",
+  "label_source": "silver labels from an LLM judge (qwen/qwen3.8-27b), graded 0 to 4",
+  "n_cities": 4,
+  "n_queries": 20,
+  "n_pairs": {
+    "full_pool": 4785,
+    "goal_pool": 1330
+  },
+  "label_distribution": {
+    "0": 2898,
+    "1": 488,
+    "2": 319,
+    "3": 900,
+    "4": 180
+  },
+  "features": [
+    "semantic_score",
+    "semantic_rank",
+    "category_match",
+    "cuisine_match",
+    "nature_match",
+    "history_match",
+    "culture_match",
+    "nightlife_match",
+    "shopping_match",
+    "adventure_match",
+    "is_notable",
+    "tag_count_norm",
+    "has_details",
+    "is_tourism"
+  ],
+  "model_params": {
+    "boosting_type": "gbdt",
+    "colsample_bytree": 0.8,
+    "importance_type": "gain",
+    "learning_rate": 0.05,
+    "max_depth": -1,
+    "min_child_samples": 20,
+    "min_child_weight": 0.001,
+    "min_split_gain": 0.0,
+    "n_estimators": 150,
+    "n_jobs": 1,
+    "num_leaves": 15,
+    "objective": "lambdarank",
+    "random_state": 0,
+    "reg_alpha": 0.0,
+    "reg_lambda": 0.0,
+    "subsample": 1.0,
+    "subsample_for_bin": 200000,
+    "subsample_freq": 0,
+    "lambdarank_truncation_level": 20,
+    "verbose": -1
+  },
+  "check": {
+    "view": "full_pool",
+    "metric": "ndcg@10"
+  },
+  "full_pool": {
+    "per_fold": {
+      "london_soho": {
+        "random": {
+          "ndcg@5": 0.16508424089655832,
+          "ndcg@10": 0.18389324622010036,
+          "precision@5": 0.24000000000000005,
+          "precision@10": 0.23
+        },
+        "cosine_only": {
+          "ndcg@5": 0.5949875814229441,
+          "precision@5": 0.8400000000000001,
+          "ndcg@10": 0.6513926709603288,
+          "precision@10": 0.82
+        },
+        "lambdarank": {
+          "ndcg@5": 0.739676571748349,
+          "precision@5": 0.8400000000000001,
+          "ndcg@10": 0.8046975865880958,
+          "precision@10": 0.8400000000000001
+        }
+      },
+      "paris_marais": {
+        "random": {
+          "ndcg@5": 0.15784119759557447,
+          "ndcg@10": 0.1665457082317349,
+          "precision@5": 0.2416,
+          "precision@10": 0.24119999999999997
+        },
+        "cosine_only": {
+          "ndcg@5": 0.5649892978382677,
+          "precision@5": 0.9199999999999999,
+          "ndcg@10": 0.5892012148964716,
+          "precision@10": 0.9199999999999999
+        },
+        "lambdarank": {
+          "ndcg@5": 0.7303713247466211,
+          "precision@5": 1.0,
+          "ndcg@10": 0.73777126977928,
+          "precision@10": 0.9800000000000001
+        }
+      },
+      "rome_trastevere": {
+        "random": {
+          "ndcg@5": 0.1561875276002017,
+          "ndcg@10": 0.16785680899999025,
+          "precision@5": 0.2248,
+          "precision@10": 0.22400000000000003
+        },
+        "cosine_only": {
+          "ndcg@5": 0.6140002269233955,
+          "precision@5": 0.96,
+          "ndcg@10": 0.6584243685900772,
+          "precision@10": 0.9199999999999999
+        },
+        "lambdarank": {
+          "ndcg@5": 0.7197993773567493,
+          "precision@5": 0.9199999999999999,
+          "ndcg@10": 0.7658773726903652,
+          "precision@10": 0.9400000000000001
+        }
+      },
+      "tokyo_shinjuku": {
+        "random": {
+          "ndcg@5": 0.15536002005549066,
+          "ndcg@10": 0.17952413973323306,
+          "precision@5": 0.2184,
+          "precision@10": 0.21960000000000002
+        },
+        "cosine_only": {
+          "ndcg@5": 0.4329642409885362,
+          "precision@5": 0.68,
+          "ndcg@10": 0.5524161732637101,
+          "precision@10": 0.78
+        },
+        "lambdarank": {
+          "ndcg@5": 0.6568010632790471,
+          "precision@5": 0.8399999999999999,
+          "ndcg@10": 0.7174130264269923,
+          "precision@10": 0.86
+        }
+      }
+    },
+    "mean": {
+      "random": {
+        "ndcg@5": 0.15861824653695628,
+        "ndcg@10": 0.17445497579626462,
+        "precision@5": 0.23120000000000002,
+        "precision@10": 0.22870000000000001
+      },
+      "cosine_only": {
+        "ndcg@5": 0.5517353367932859,
+        "ndcg@10": 0.6128586069276469,
+        "precision@5": 0.85,
+        "precision@10": 0.8599999999999999
+      },
+      "lambdarank": {
+        "ndcg@5": 0.7116620842826916,
+        "ndcg@10": 0.7564398138711833,
+        "precision@5": 0.8999999999999999,
+        "precision@10": 0.905
+      }
+    },
+    "min": {
+      "random": {
+        "ndcg@5": 0.15536002005549066,
+        "ndcg@10": 0.1665457082317349,
+        "precision@5": 0.2184,
+        "precision@10": 0.21960000000000002
+      },
+      "cosine_only": {
+        "ndcg@5": 0.4329642409885362,
+        "ndcg@10": 0.5524161732637101,
+        "precision@5": 0.68,
+        "precision@10": 0.78
+      },
+      "lambdarank": {
+        "ndcg@5": 0.6568010632790471,
+        "ndcg@10": 0.7174130264269923,
+        "precision@5": 0.8399999999999999,
+        "precision@10": 0.8400000000000001
+      }
+    },
+    "max": {
+      "random": {
+        "ndcg@5": 0.16508424089655832,
+        "ndcg@10": 0.18389324622010036,
+        "precision@5": 0.2416,
+        "precision@10": 0.24119999999999997
+      },
+      "cosine_only": {
+        "ndcg@5": 0.6140002269233955,
+        "ndcg@10": 0.6584243685900772,
+        "precision@5": 0.96,
+        "precision@10": 0.9199999999999999
+      },
+      "lambdarank": {
+        "ndcg@5": 0.739676571748349,
+        "ndcg@10": 0.8046975865880958,
+        "precision@5": 1.0,
+        "precision@10": 0.9800000000000001
+      }
+    },
+    "lift_over_cosine_only": {
+      "ndcg@5": {
+        "absolute": 0.15992674748940572,
+        "relative_pct": 28.98613462369624
+      },
+      "ndcg@10": {
+        "absolute": 0.14358120694353638,
+        "relative_pct": 23.428112997112127
+      },
+      "precision@5": {
+        "absolute": 0.04999999999999993,
+        "relative_pct": 5.882352941176463
+      },
+      "precision@10": {
+        "absolute": 0.04500000000000015,
+        "relative_pct": 5.232558139534902
+      }
+    },
+    "folds_won": 4,
+    "queries_won": 17,
+    "n_queries": 20
+  },
+  "goal_pool": {
+    "per_fold": {
+      "london_soho": {
+        "random": {
+          "ndcg@5": 0.46303501413935494,
+          "ndcg@10": 0.5292646608185134,
+          "precision@5": 0.6975999999999999,
+          "precision@10": 0.7020000000000001
+        },
+        "cosine_only": {
+          "ndcg@5": 0.6434857741610867,
+          "precision@5": 0.9199999999999999,
+          "ndcg@10": 0.7026404878079358,
+          "precision@10": 0.9
+        },
+        "lambdarank": {
+          "ndcg@5": 0.6997311278186689,
+          "precision@5": 0.8400000000000001,
+          "ndcg@10": 0.7598049193671157,
+          "precision@10": 0.8400000000000001
+        }
+      },
+      "paris_marais": {
+        "random": {
+          "ndcg@5": 0.48343154166444713,
+          "ndcg@10": 0.5290850248145869,
+          "precision@5": 0.8151999999999999,
+          "precision@10": 0.8119999999999998
+        },
+        "cosine_only": {
+          "ndcg@5": 0.5649892978382677,
+          "precision@5": 0.9199999999999999,
+          "ndcg@10": 0.5972495642944649,
+          "precision@10": 0.9199999999999999
+        },
+        "lambdarank": {
+          "ndcg@5": 0.6979311808127466,
+          "precision@5": 1.0,
+          "ndcg@10": 0.7339036368767761,
+          "precision@10": 1.0
+        }
+      },
+      "rome_trastevere": {
+        "random": {
+          "ndcg@5": 0.4128899340020191,
+          "ndcg@10": 0.4611432622569131,
+          "precision@5": 0.6704000000000001,
+          "precision@10": 0.6788
+        },
+        "cosine_only": {
+          "ndcg@5": 0.6323356234675351,
+          "precision@5": 1.0,
+          "ndcg@10": 0.6916557637267571,
+          "precision@10": 0.9400000000000001
+        },
+        "lambdarank": {
+          "ndcg@5": 0.7213101058878841,
+          "precision@5": 0.96,
+          "ndcg@10": 0.7380203910720432,
+          "precision@10": 0.9800000000000001
+        }
+      },
+      "tokyo_shinjuku": {
+        "random": {
+          "ndcg@5": 0.5197429090121466,
+          "ndcg@10": 0.6002993163507875,
+          "precision@5": 0.7904000000000001,
+          "precision@10": 0.8036
+        },
+        "cosine_only": {
+          "ndcg@5": 0.4329642409885362,
+          "precision@5": 0.68,
+          "ndcg@10": 0.5524161732637101,
+          "precision@10": 0.78
+        },
+        "lambdarank": {
+          "ndcg@5": 0.5780089770326394,
+          "precision@5": 0.7200000000000001,
+          "ndcg@10": 0.6693930816898639,
+          "precision@10": 0.8
+        }
+      }
+    },
+    "mean": {
+      "random": {
+        "ndcg@5": 0.46977484970449196,
+        "ndcg@10": 0.5299480660602003,
+        "precision@5": 0.7434000000000001,
+        "precision@10": 0.7490999999999999
+      },
+      "cosine_only": {
+        "ndcg@5": 0.5684437341138565,
+        "ndcg@10": 0.6359904972732169,
+        "precision@5": 0.88,
+        "precision@10": 0.885
+      },
+      "lambdarank": {
+        "ndcg@5": 0.6742453478879847,
+        "ndcg@10": 0.7252805072514497,
+        "precision@5": 0.88,
+        "precision@10": 0.905
+      }
+    },
+    "min": {
+      "random": {
+        "ndcg@5": 0.4128899340020191,
+        "ndcg@10": 0.4611432622569131,
+        "precision@5": 0.6704000000000001,
+        "precision@10": 0.6788
+      },
+      "cosine_only": {
+        "ndcg@5": 0.4329642409885362,
+        "ndcg@10": 0.5524161732637101,
+        "precision@5": 0.68,
+        "precision@10": 0.78
+      },
+      "lambdarank": {
+        "ndcg@5": 0.5780089770326394,
+        "ndcg@10": 0.6693930816898639,
+        "precision@5": 0.7200000000000001,
+        "precision@10": 0.8
+      }
+    },
+    "max": {
+      "random": {
+        "ndcg@5": 0.5197429090121466,
+        "ndcg@10": 0.6002993163507875,
+        "precision@5": 0.8151999999999999,
+        "precision@10": 0.8119999999999998
+      },
+      "cosine_only": {
+        "ndcg@5": 0.6434857741610867,
+        "ndcg@10": 0.7026404878079358,
+        "precision@5": 1.0,
+        "precision@10": 0.9400000000000001
+      },
+      "lambdarank": {
+        "ndcg@5": 0.7213101058878841,
+        "ndcg@10": 0.7598049193671157,
+        "precision@5": 1.0,
+        "precision@10": 1.0
+      }
+    },
+    "lift_over_cosine_only": {
+      "ndcg@5": {
+        "absolute": 0.10580161377412822,
+        "relative_pct": 18.612504180217893
+      },
+      "ndcg@10": {
+        "absolute": 0.08929000997823278,
+        "relative_pct": 14.039519515002194
+      },
+      "precision@5": {
+        "absolute": 0.0,
+        "relative_pct": 0.0
+      },
+      "precision@10": {
+        "absolute": 0.020000000000000018,
+        "relative_pct": 2.25988700564972
+      }
+    },
+    "folds_won": 4,
+    "queries_won": 16,
+    "n_queries": 20
+  }
+}

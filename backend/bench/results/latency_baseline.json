@@ -1,0 +1,301 @@
+{
+  "label": "baseline",
+  "summary": {
+    "runs": 16,
+    "failed": 1,
+    "total": {
+      "p50_ms": 40664,
+      "p95_ms": 59619
+    },
+    "stages": {
+      "fetch_pois": {
+        "p50_ms": 33753,
+        "p95_ms": 50272,
+        "share": 0.819
+      },
+      "geocode": {
+        "p50_ms": 2,
+        "p95_ms": 649,
+        "share": 0.004
+      },
+      "llm": {
+        "p50_ms": 3665,
+        "p95_ms": 6889,
+        "share": 0.106
+      },
+      "photos_join": {
+        "p50_ms": 0,
+        "p95_ms": 1,
+        "share": 0.0
+      },
+      "rank": {
+        "p50_ms": 1221,
+        "p95_ms": 8472,
+        "share": 0.065
+      },
+      "retrieve": {
+        "p50_ms": 66,
+        "p95_ms": 500,
+        "share": 0.004
+      },
+      "route": {
+        "p50_ms": 4,
+        "p95_ms": 39,
+        "share": 0.0
+      }
+    }
+  },
+  "runs": [
+    {
+      "scenario": "paris_marais",
+      "total_ms": 40663.7,
+      "stages": {
+        "geocode": 198.3,
+        "fetch_pois": 21652.0,
+        "rank": 14667.3,
+        "route": 16.8,
+        "retrieve": 113.1,
+        "llm": 3884.6,
+        "photos_join": 0.1
+      },
+      "stops": 6,
+      "error": null,
+      "trial": 0
+    },
+    {
+      "scenario": "tokyo_shinjuku",
+      "total_ms": 43202.6,
+      "stages": {
+        "geocode": 799.7,
+        "fetch_pois": 36340.2,
+        "rank": 1607.9,
+        "route": 3.6,
+        "retrieve": 49.4,
+        "llm": 4321.9,
+        "photos_join": 1.6
+      },
+      "stops": 6,
+      "error": null,
+      "trial": 0
+    },
+    {
+      "scenario": "rome_trastevere",
+      "total_ms": 50496.6,
+      "stages": {
+        "geocode": 171.5,
+        "fetch_pois": 46252.1,
+        "rank": 1221.0,
+        "route": 8.8,
+        "retrieve": 110.3,
+        "llm": 2716.3,
+        "photos_join": 0.2
+      },
+      "stops": 3,
+      "error": null,
+      "trial": 0
+    },
+    {
+      "scenario": "london_soho",
+      "total_ms": 31884.9,
+      "stages": {
+        "geocode": 193.9,
+        "fetch_pois": 27115.9,
+        "rank": 1033.1,
+        "route": 3.6,
+        "retrieve": 57.1,
+        "llm": 3478.2,
+        "photos_join": 0.0
+      },
+      "stops": 6,
+      "error": null,
+      "trial": 0
+    },
+    {
+      "scenario": "barcelona_gothic",
+      "total_ms": 31331.5,
+      "stages": {
+        "geocode": 156.7,
+        "fetch_pois": 26741.0,
+        "rank": 382.5,
+        "route": 0.3,
+        "retrieve": 41.3,
+        "llm": 4007.5,
+        "photos_join": 0.1
+      },
+      "stops": 6,
+      "error": null,
+      "trial": 0
+    },
+    {
+      "scenario": "nyc_village",
+      "total_ms": 40064.3,
+      "stages": {
+        "geocode": 248.9,
+        "fetch_pois": 39812.9
+      },
+      "stops": 0,
+      "error": "HTTPException: 404: No POIs found near Greenwich Village",
+      "trial": 0
+    },
+    {
+      "scenario": "sydney_bondi",
+      "total_ms": 67574.7,
+      "stages": {
+        "geocode": 538.1,
+        "fetch_pois": 57153.5,
+        "rank": 5817.0,
+        "route": 63.0,
+        "retrieve": 358.7,
+        "llm": 3570.8,
+        "photos_join": 0.4
+      },
+      "stops": 6,
+      "error": null,
+      "trial": 0
+    },
+    {
+      "scenario": "bangkok_sukhumvit",
+      "total_ms": 44460.7,
+      "stages": {
+        "geocode": 585.0,
+        "fetch_pois": 38782.4,
+        "rank": 1341.6,
+        "route": 3.7,
+        "retrieve": 65.4,
+        "llm": 3673.4,
+        "photos_join": 0.0
+      },
+      "stops": 6,
+      "error": null,
+      "trial": 0
+    },
+    {
+      "scenario": "paris_marais",
+      "total_ms": 26821.2,
+      "stages": {
+        "geocode": 1.8,
+        "fetch_pois": 22464.2,
+        "rank": 989.3,
+        "route": 0.8,
+        "retrieve": 30.5,
+        "llm": 3332.2,
+        "photos_join": 0.3
+      },
+      "stops": 6,
+      "error": null,
+      "trial": 1
+    },
+    {
+      "scenario": "tokyo_shinjuku",
+      "total_ms": 41002.7,
+      "stages": {
+        "geocode": 0.9,
+        "fetch_pois": 35850.5,
+        "rank": 1408.9,
+        "route": 3.3,
+        "retrieve": 65.8,
+        "llm": 3664.9,
+        "photos_join": 0.4
+      },
+      "stops": 3,
+      "error": null,
+      "trial": 1
+    },
+    {
+      "scenario": "rome_trastevere",
+      "total_ms": 56209.1,
+      "stages": {
+        "geocode": 0.6,
+        "fetch_pois": 47322.1,
+        "rank": 3679.3,
+        "route": 29.3,
+        "retrieve": 274.1,
+        "llm": 4881.3,
+        "photos_join": 0.3
+      },
+      "stops": 6,
+      "error": null,
+      "trial": 1
+    },
+    {
+      "scenario": "london_soho",
+      "total_ms": 44199.9,
+      "stages": {
+        "geocode": 0.5,
+        "fetch_pois": 35825.6,
+        "rank": 4647.7,
+        "route": 15.2,
+        "retrieve": 276.6,
+        "llm": 3385.6,
+        "photos_join": 0.3
+      },
+      "stops": 6,
+      "error": null,
+      "trial": 1
+    },
+    {
+      "scenario": "barcelona_gothic",
+      "total_ms": 26418.5,
+      "stages": {
+        "geocode": 0.6,
+        "fetch_pois": 22695.8,
+        "rank": 559.9,
+        "route": 5.0,
+        "retrieve": 81.7,
+        "llm": 3066.8,
+        "photos_join": 0.3
+      },
+      "stops": 6,
+      "error": null,
+      "trial": 1
+    },
+    {
+      "scenario": "nyc_village",
+      "total_ms": 28763.1,
+      "stages": {
+        "geocode": 1.0,
+        "fetch_pois": 24187.3,
+        "rank": 681.8,
+        "route": 1.8,
+        "retrieve": 829.6,
+        "llm": 3058.7,
+        "photos_join": 0.2
+      },
+      "stops": 6,
+      "error": null,
+      "trial": 1
+    },
+    {
+      "scenario": "sydney_bondi",
+      "total_ms": 38907.6,
+      "stages": {
+        "geocode": 0.8,
+        "fetch_pois": 33753.4,
+        "rank": 498.3,
+        "route": 0.3,
+        "retrieve": 17.0,
+        "llm": 4633.2,
+        "photos_join": 0.8
+      },
+      "stops": 6,
+      "error": null,
+      "trial": 1
+    },
+    {
+      "scenario": "bangkok_sukhumvit",
+      "total_ms": 24284.8,
+      "stages": {
+        "geocode": 0.5,
+        "fetch_pois": 12224.6,
+        "rank": 472.2,
+        "route": 0.3,
+        "retrieve": 11.6,
+        "llm": 11573.8,
+        "photos_join": 0.1
+      },
+      "stops": 6,
+      "error": null,
+      "trial": 1
+    }
+  ]
+}

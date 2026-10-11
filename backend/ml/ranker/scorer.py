@@ -3,50 +3,64 @@ Runtime POI scoring: ranks a list of POIs against user goals.
 Used by the API at request time.
 """
 
-import numpy as np
-from .features import extract_features
+import threading
+
 from .model import POIRanker
 
 _ranker = None
+_ranker_lock = threading.Lock()
 
 
 def get_ranker() -> POIRanker:
     global _ranker
-    if _ranker is None:
-        _ranker = POIRanker.load()
-    return _ranker
+    with _ranker_lock:
+        if _ranker is None:
+            _ranker = POIRanker.load()
+        return _ranker
 
 
-def rank_pois(user_goals: list[str], pois: list[dict], top_k: int = 20, explain: bool = False) -> list[dict]:
+def set_ranker(ranker: POIRanker) -> None:
+    """Swap the serving model. Requests in flight keep the instance they already hold."""
+    global _ranker
+    with _ranker_lock:
+        _ranker = ranker
+
+
+def rank_pois(user_goals: list[str], pois: list[dict], top_k: int = 20, explain: bool = False,
+              with_source: bool = False):
     """
     Score and rank a list of POIs against user goals.
     Returns top_k POIs sorted by relevance score.
     If explain=True, attaches per-POI feature values and SHAP contributions.
+    If with_source=True, returns (pois, source): "model" normally, "semantic"
+    when no trained model could be loaded and POIs were ordered by embedding
+    similarity alone.
     """
     if not pois:
-        return []
+        return ([], "model") if with_source else []
 
-    ranker = get_ranker()
+    from .features import extract_features_explained
+    features, feature_dicts = extract_features_explained(user_goals, pois)
 
-    if explain:
-        from .features import extract_features_explained
-        features, feature_dicts = extract_features_explained(user_goals, pois)
+    source = "model"
+    try:
+        ranker = get_ranker()
         scores = ranker.score(features)
-        contributions = ranker.explain(features)
+        if explain:
+            for poi, feat_dict, contrib in zip(pois, feature_dicts, ranker.explain(features)):
+                poi["explanation"] = {"features": feat_dict, "contributions": contrib}
+        ranked = ranker.rank_pois(pois, scores)
+    except Exception as e:
+        # No model file, or one written for a different feature set. Ranking by
+        # the semantic feature alone is the baseline the model has to beat.
+        print(f"Ranker unavailable ({e}), ranking by semantic similarity")
+        source = "semantic"
+        order = sorted(range(len(pois)), key=lambda i: features[i][0], reverse=True)
+        ranked = [{**pois[i], "relevance_score": float(features[i][0])} for i in order]
 
-        # Attach explanation to each POI before sorting
-        for poi, feat_dict, contrib in zip(pois, feature_dicts, contributions):
-            poi["explanation"] = {"features": feat_dict, "contributions": contrib}
-    else:
-        features = extract_features(user_goals, pois)
-        scores = ranker.score(features)
-
-    ranked = ranker.rank_pois(pois, scores)
-
-    # Enforce category diversity: no single category can exceed 40% of top_k slots
-    # This prevents e.g. 6 food places crowding out nature/culture/history
+    # Enforce category diversity so one category cannot crowd out the rest
     diverse = _diversify(ranked, top_k, user_goals)
-    return diverse
+    return (diverse, source) if with_source else diverse
 
 
 def _diversify(ranked: list[dict], top_k: int, user_goals: list[str]) -> list[dict]:
@@ -101,10 +115,10 @@ def _diversify(ranked: list[dict], top_k: int, user_goals: list[str]) -> list[di
     return selected[:top_k]
 
 
-def apply_feedback(poi_id: int, relevant: bool, poi_name: str = "", category: str = "", goals: list[str] = None) -> bool:
+def apply_feedback(poi_id: int, relevant: bool, poi_name: str = "", category: str = "", goals: list[str] = None) -> str:
     """
     Log feedback signal and trigger retraining if threshold is reached.
-    Returns True if retraining occurred.
+    Returns the retraining outcome: "skipped", "promoted" or "rejected".
     """
     from .feedback_store import log_feedback
     from .retrain import retrain_if_needed

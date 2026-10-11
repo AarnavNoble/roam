@@ -1,0 +1,14 @@
+{
+  "name": "bangkok_sukhumvit",
+  "city": "Bangkok",
+  "start_location": "Sukhumvit",
+  "goals": [
+    "food",
+    "shopping"
+  ],
+  "duration_hours": 10,
+  "transport": "walking",
+  "start_lat": 13.7373948,
+  "start_lon": 100.5613401,
+  "pois": []
+}

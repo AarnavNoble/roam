@@ -3,14 +3,142 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const BASE_URL = process.env.EXPO_PUBLIC_API_URL || 'http://localhost:8000/api';
 
+// Share links live on the API's origin, outside /api (https://host/t/<slug>)
+export const API_ORIGIN = BASE_URL.replace(/\/api\/?$/, '');
+
 const api = axios.create({ baseURL: BASE_URL, timeout: 120000 });
+
+// ── Errors ────────────────────────────────────────────────────────────────────
+
+// Every failed API call throws one of these, with a message that can be shown as is.
+// status is the HTTP status, or 0 when the server could not be reached.
+export class ApiError extends Error {
+  status: number;
+  constructor(status: number, message: string) {
+    super(message);
+    this.status = status;
+  }
+}
+
+function errorMessage(status: number, detail: unknown, retryAfter?: string | null): string {
+  if (status === 429) {
+    const secs = Math.ceil(Number(retryAfter));
+    return secs > 0
+      ? `Too many requests. Try again in ${secs} seconds.`
+      : 'Too many requests. Try again in a moment.';
+  }
+  if (status === 503) return 'The service is temporarily unavailable. Please try again shortly.';
+  // Validation errors (422) arrive as a list of { msg }, everything else as a string
+  if (Array.isArray(detail) && detail[0]?.msg) return String(detail[0].msg).replace(/^Value error, /, '');
+  if (typeof detail === 'string' && detail) return detail;
+  return `Request failed (HTTP ${status})`;
+}
+
+async function toApiError(status: number, detail: unknown, retryAfter: string | null | undefined, sentToken: boolean): Promise<ApiError> {
+  // A 401 on a request that carried a token means the token expired or was revoked.
+  // Sign out so the next request goes through anonymously instead of failing again.
+  if (status === 401 && sentToken) {
+    await logout();
+    return new ApiError(401, 'Your session has expired. Please sign in again.');
+  }
+  return new ApiError(status, errorMessage(status, detail, retryAfter));
+}
+
+// ── Account ───────────────────────────────────────────────────────────────────
+
+const SESSION_KEY = 'roam_session';
+
+export interface User {
+  id: string;
+  email: string;
+}
+
+interface Session {
+  token: string;
+  user: User;
+}
+
+// The token is stored in AsyncStorage, which is plain unencrypted app storage,
+// not the keychain. That is an accepted trade-off for this app: the token only
+// grants access to saved trips and expires on the server.
+let _session: Session | null = null;
+let _sessionLoaded = false;
+
+async function getSession(): Promise<Session | null> {
+  if (!_sessionLoaded) {
+    let stored: Session | null = null;
+    try {
+      const raw = await AsyncStorage.getItem(SESSION_KEY);
+      stored = raw ? JSON.parse(raw) : null;
+    } catch {}
+    // A sign in or sign out may have finished while we were reading; it wins
+    if (!_sessionLoaded) { _session = stored; _sessionLoaded = true; }
+  }
+  return _session;
+}
+
+export async function getCurrentUser(): Promise<User | null> {
+  const session = await getSession();
+  return session ? session.user : null;
+}
+
+async function authHeaders(): Promise<Record<string, string>> {
+  const session = await getSession();
+  return session ? { Authorization: `Bearer ${session.token}` } : {};
+}
+
+api.interceptors.request.use(async config => {
+  const session = await getSession();
+  if (session) config.headers.Authorization = `Bearer ${session.token}`;
+  return config;
+});
+
+api.interceptors.response.use(
+  res => res,
+  async error => {
+    if (!error.response) throw new ApiError(0, 'Could not reach the server. Check your connection and try again.');
+    const { status, data, headers } = error.response;
+    throw await toApiError(status, data?.detail, headers?.['retry-after'], !!error.config?.headers?.Authorization);
+  },
+);
+
+async function authenticate(path: '/auth/register' | '/auth/login', email: string, password: string): Promise<User> {
+  const res = await api.post<Session>(path, { email, password });
+  _session = { token: res.data.token, user: res.data.user };
+  _sessionLoaded = true;
+  await AsyncStorage.setItem(SESSION_KEY, JSON.stringify(_session));
+  return _session.user;
+}
+
+export function register(email: string, password: string): Promise<User> {
+  return authenticate('/auth/register', email, password);
+}
+
+export function login(email: string, password: string): Promise<User> {
+  return authenticate('/auth/login', email, password);
+}
+
+// Tokens are stateless on the server, so signing out is just forgetting the token.
+export async function logout(): Promise<void> {
+  _session = null;
+  _sessionLoaded = true;
+  try { await AsyncStorage.removeItem(SESSION_KEY); } catch {}
+}
+
+// Asks the server who the stored token belongs to. Throws (and signs out) if it has expired.
+export async function fetchMe(): Promise<User> {
+  const res = await api.get<User>('/auth/me');
+  return res.data;
+}
+
+// ── Types ─────────────────────────────────────────────────────────────────────
 
 export interface TripRequest {
   city: string;
   start_location: string;
   duration_hours: number;
   goals: string[];
-  transport: 'walking' | 'transit';
+  transport: 'walking' | 'transit' | 'cycling' | 'driving';
   pace: 'relaxed' | 'moderate' | 'packed';
   budget: 'free' | 'budget' | 'mid' | 'splurge';
   style: 'solo' | 'couple' | 'family' | 'group';
@@ -23,7 +151,7 @@ export interface TripRequest {
 }
 
 export interface Stop {
-  id?: number;
+  id: number; // OSM id. Trips saved on this device by older versions may not have it
   name: string;
   arrival_time: string;
   duration_min: number;
@@ -53,6 +181,10 @@ export interface Itinerary {
   overview: string;
   ranking_explanations?: Record<string, FeatureExplanation>;
   global_feature_importance?: Record<string, number>;
+  // The three below are missing on trips saved on this device by older versions
+  trip_id?: string | null;               // server id, null if the server could not store the trip
+  degraded?: string[];                   // fallbacks the server used, e.g. "llm:fallback"
+  timings_ms?: Record<string, number>;
 }
 
 export interface PipelineProgress {
@@ -116,6 +248,61 @@ export async function saveTrip(city: string, goals: string[], itinerary: Itinera
 export async function deleteTrip(id: string): Promise<void> {
   const trips = await getSavedTrips();
   await AsyncStorage.setItem(SAVED_KEY, JSON.stringify(trips.filter(t => t.id !== id)));
+}
+
+// ── Trips on the server ───────────────────────────────────────────────────────
+// Every generated itinerary is stored by the server. When signed in they are
+// tied to the account, so they can be listed from any device.
+
+export interface TripSummary {
+  id: string;
+  city: string;
+  goals: string[];
+  trip_date: string;
+  created_at: string; // ISO timestamp
+  stops: number;
+  share_slug: string | null;
+  parent_id: string | null; // set when this trip is an edit of another one
+}
+
+export interface TripDetail extends TripSummary {
+  request: TripRequest;
+  itinerary: Itinerary;
+}
+
+// An edit returns the new itinerary plus a list of what was changed
+export interface EditedItinerary extends Itinerary {
+  changes: string[];
+}
+
+export async function getServerTrips(): Promise<TripSummary[]> {
+  const res = await api.get<{ trips: TripSummary[] }>('/trips');
+  return res.data.trips;
+}
+
+export async function getServerTrip(id: string): Promise<TripDetail> {
+  const res = await api.get<TripDetail>(`/trips/${id}`);
+  return res.data;
+}
+
+export async function deleteServerTrip(id: string): Promise<void> {
+  await api.delete(`/trips/${id}`);
+}
+
+// Creates (or returns the existing) public link for a trip
+export async function shareTrip(id: string): Promise<string> {
+  const res = await api.post<{ share_slug: string; path: string }>(`/trips/${id}/share`);
+  return API_ORIGIN + res.data.path;
+}
+
+export async function unshareTrip(id: string): Promise<void> {
+  await api.delete(`/trips/${id}/share`);
+}
+
+// Asks the server to change a trip. The original is kept; the result is a new trip with its own trip_id.
+export async function editTrip(id: string, message: string): Promise<EditedItinerary> {
+  const res = await api.post<EditedItinerary>(`/trips/${id}/edit`, { message });
+  return res.data;
 }
 
 // ── User preferences ─────────────────────────────────────────────────────────
@@ -264,28 +451,54 @@ export async function generateItinerary(req: TripRequest): Promise<Itinerary> {
   return res.data;
 }
 
+// Handles one line of the event stream. Progress events are passed to onProgress,
+// the result event is returned, and an error event is thrown.
+function readStreamLine(line: string, onProgress: (progress: PipelineProgress) => void): Itinerary | null {
+  const trimmed = line.trim();
+  if (!trimmed.startsWith('data: ')) return null;
+  let parsed: any;
+  try { parsed = JSON.parse(trimmed.slice(6)); } catch { return null; }
+  if (parsed.step !== undefined) onProgress(parsed as PipelineProgress);
+  else if (parsed.days) return parsed as Itinerary;
+  else if (parsed.message) throw new Error(parsed.message);
+  return null;
+}
+
 export async function generateItineraryStreaming(
   req: TripRequest,
   onProgress: (progress: PipelineProgress) => void,
 ): Promise<Itinerary> {
-  const response = await fetch(`${BASE_URL}/itinerary/stream`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', 'Accept': 'text/event-stream' },
-    body: JSON.stringify(req),
-  });
+  const auth = await authHeaders();
+  let response: Response;
+  try {
+    response = await fetch(`${BASE_URL}/itinerary/stream`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'text/event-stream', ...auth },
+      body: JSON.stringify(req),
+    });
+  } catch {
+    throw new ApiError(0, 'Could not reach the server. Check your connection and try again.');
+  }
 
   if (!response.ok) {
-    throw new Error(`HTTP ${response.status}`);
+    let detail: unknown;
+    try { detail = (await response.json()).detail; } catch {}
+    throw await toApiError(response.status, detail, response.headers.get('Retry-After'), !!auth.Authorization);
   }
+
   if (!response.body) {
-    // Fallback: streaming not supported, use regular endpoint
-    const res = await api.post<Itinerary>('/itinerary', req);
-    return res.data;
+    // React Native's fetch cannot read a body as it arrives. The whole stream is
+    // already here by now, so read the same events from the full text.
+    const text = await response.text();
+    for (const line of text.split('\n')) {
+      const result = readStreamLine(line, onProgress);
+      if (result) return result;
+    }
+    throw new Error('No result received from pipeline');
   }
 
   const reader = response.body.getReader();
   const decoder = new TextDecoder();
-  let result: Itinerary | null = null;
   let buffer = '';
 
   while (true) {
@@ -297,29 +510,12 @@ export async function generateItineraryStreaming(
     buffer = lines.pop() || '';
 
     for (const line of lines) {
-      const trimmed = line.trim();
-      if (trimmed.startsWith('data: ')) {
-        const raw = trimmed.slice(6).trim();
-        if (!raw) continue;
-        try {
-          const parsed = JSON.parse(raw);
-          if (parsed.step !== undefined) {
-            onProgress(parsed as PipelineProgress);
-          } else if (parsed.days) {
-            return parsed as Itinerary;
-          } else if (parsed.message) {
-            throw new Error(parsed.message);
-          }
-        } catch (e: any) {
-          if (e instanceof SyntaxError) continue;
-          throw e;
-        }
-      }
+      const result = readStreamLine(line, onProgress);
+      if (result) return result;
     }
   }
 
-  if (!result) throw new Error('No result received from pipeline');
-  return result;
+  throw new Error('No result received from pipeline');
 }
 
 export interface FeedbackResult {

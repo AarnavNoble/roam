@@ -1,7 +1,7 @@
 import numpy as np
 from backend.ml.optimizer.distance import haversine_km, haversine_matrix
 from backend.ml.optimizer.vrp import solve_tsp
-from backend.ml.optimizer.scheduler import assign_days, build_itinerary, _seconds_to_time
+from backend.ml.optimizer.scheduler import assign_days, build_itinerary, build_itinerary_with_meta, _seconds_to_time
 
 
 SAMPLE_POIS = [
@@ -74,3 +74,35 @@ def test_arrival_times_in_itinerary():
     for stop in itinerary[0]["pois"]:
         assert "arrival_time" in stop
         assert ":" in stop["arrival_time"]
+
+
+def test_day_without_food_stops():
+    # Regression: a day with zero food stops used to raise IndexError
+    no_food = [p for p in SAMPLE_POIS if p["category"] != "food"]
+    itinerary = build_itinerary(no_food, n_days=1, transport="walking")
+    assert len(itinerary[0]["pois"]) == len(no_food)
+
+
+def test_short_trip_is_trimmed_to_its_duration():
+    # Regression: a 3-hour trip was scheduled across a full day
+    budget = 3 * 3600
+    route, meta = build_itinerary_with_meta(SAMPLE_POIS, n_days=1, transport="walking",
+                                            start_lat=35.68, start_lon=139.76, day_budget_sec=budget)
+    stops = route[0]["pois"]
+    assert 1 <= len(stops) < len(SAMPLE_POIS)
+    assert meta["trimmed"] == len(SAMPLE_POIS) - len(stops)
+    assert stops[0]["name"] in {p["name"] for p in SAMPLE_POIS[:len(stops)]}  # highest ranked kept
+    h, m = map(int, stops[-1]["arrival_time"].split(":"))
+    assert (h * 60 + m) * 60 + stops[-1]["visit_duration_min"] * 60 <= 9 * 3600 + budget
+
+
+def test_solver_orders_nightlife_after_morning_stops():
+    pois = [
+        {"name": "Bar", "lat": 35.6801, "lon": 139.7601, "category": "nightlife"},
+        {"name": "Park", "lat": 35.70, "lon": 139.75, "category": "nature"},
+        {"name": "Museum", "lat": 35.69, "lon": 139.77, "category": "culture"},
+    ]
+    route = build_itinerary(pois, n_days=1, transport="walking", start_lat=35.68, start_lon=139.76)
+    names = [p["name"] for p in route[0]["pois"]]
+    # the bar is next to the start, but its evening window pushes it to the end
+    assert names[-1] == "Bar"

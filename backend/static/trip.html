@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shared trip · roam</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #09090b; --surface: #111113; --border: rgba(255,255,255,0.07);
+    --border-hover: rgba(255,255,255,0.15); --text: #fff; --text-muted: rgba(255,255,255,0.4);
+    --text-dim: rgba(255,255,255,0.25); --blue: #3B82F6; --green: #10B981;
+    --purple: #8B5CF6; --amber: #F59E0B; --pink: #EC4899; --orange: #F97316; --red: #EF4444;
+  }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; min-height: 100vh; }
+  a { color: var(--blue); text-decoration: none; }
+
+  /* ── Layout ─────────────────────────────────── */
+  .wrapper { max-width: 720px; margin: 0 auto; padding: 48px 24px 80px; }
+  .hero { margin-bottom: 40px; position: relative; }
+  .hero::before { content: ''; position: absolute; top: -40px; left: -80px; width: 260px; height: 260px; border-radius: 50%; background: var(--blue); opacity: 0.07; pointer-events: none; }
+  .wordmark { display: inline-block; color: var(--text); font-size: 40px; font-weight: 800; letter-spacing: -2px; position: relative; }
+  .wordmark-accent { display: block; width: 32px; height: 3px; background: var(--blue); border-radius: 2px; margin-top: 8px; }
+  .hero-sub { color: var(--text-muted); font-size: 14px; margin-top: 12px; letter-spacing: 0.2px; }
+
+  /* ── Status (loading, revoked link, network error) ── */
+  .status { color: var(--text-muted); font-size: 14px; text-align: center; padding: 48px 0; }
+  .status-title { color: var(--text); font-size: 17px; font-weight: 600; margin-bottom: 6px; }
+  .status-btn { margin-top: 16px; color: var(--text-muted); font-size: 13px; cursor: pointer; padding: 8px 16px; border-radius: 100px; background: rgba(255,255,255,0.06); border: 1px solid var(--border); }
+  .status-btn:hover { border-color: var(--border-hover); }
+
+  /* ── Trip header ────────────────────────────── */
+  .trip { display: none; }
+  .trip.active { display: block; }
+  .trip-title { font-size: 24px; font-weight: 700; letter-spacing: -0.4px; overflow-wrap: anywhere; }
+  .trip-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 10px 0 16px; }
+  .trip-date { color: var(--text-dim); font-size: 12px; text-transform: uppercase; letter-spacing: 0.3px; margin-right: 6px; }
+  .goal-pill { padding: 3px 10px; border-radius: 100px; background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.5); font-size: 11px; }
+  .overview { color: var(--text-muted); font-size: 14px; line-height: 1.6; margin-bottom: 32px; overflow-wrap: anywhere; }
+
+  /* ── Map ────────────────────────────────────── */
+  .map-container { width: 100%; height: 320px; border-radius: 16px; overflow: hidden; margin-bottom: 32px; border: 1px solid var(--border); }
+  .map-marker { width: 26px; height: 26px; border-radius: 50%; color: #fff; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; border: 2px solid #09090b; }
+  .popup-name { font-family: system-ui; font-size: 13px; font-weight: 700; color: #111; }
+  .popup-time { font-family: system-ui; font-size: 12px; color: #666; }
+
+  /* ── Day section ────────────────────────────── */
+  .day-section { margin-bottom: 36px; }
+  .day-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+  .day-num { font-size: 13px; font-weight: 700; padding: 4px 10px; border-radius: 8px; border: 1px solid; white-space: nowrap; }
+  .day-theme { color: var(--text); font-size: 16px; font-weight: 600; overflow-wrap: anywhere; }
+  .day-summary { color: var(--text-dim); font-size: 13px; font-style: italic; margin-top: 12px; padding-left: 12px; border-left: 2px solid rgba(255,255,255,0.06); }
+
+  /* ── Stop card ──────────────────────────────── */
+  .timeline-row { display: flex; gap: 16px; }
+  .timeline-track { display: flex; flex-direction: column; align-items: center; width: 28px; flex-shrink: 0; }
+  .timeline-dot { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 12px; font-weight: 700; flex-shrink: 0; }
+  .timeline-line { width: 2px; flex: 1; min-height: 20px; opacity: 0.3; }
+  .stop-card { flex: 1; min-width: 0; background: var(--surface); border-radius: 14px; border: 1px solid var(--border); overflow: hidden; margin-bottom: 12px; }
+  .stop-photo { display: block; width: 100%; height: 140px; object-fit: cover; }
+  .stop-content { padding: 16px; }
+  .stop-meta { display: flex; gap: 10px; align-items: center; margin-bottom: 6px; }
+  .stop-time { color: var(--text-muted); font-size: 12px; font-weight: 600; }
+  .stop-duration { color: var(--text-dim); font-size: 12px; }
+  .stop-name { font-size: 16px; font-weight: 700; letter-spacing: -0.2px; margin-bottom: 6px; overflow-wrap: anywhere; }
+  .stop-badge { display: inline-block; padding: 2px 8px; border-radius: 100px; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; border: 1px solid; }
+  .stop-desc { color: var(--text-muted); font-size: 13px; margin-top: 10px; line-height: 1.6; overflow-wrap: anywhere; }
+  .stop-tip { margin-top: 10px; padding: 10px 12px; background: rgba(255,255,255,0.03); border-radius: 10px; border: 1px solid rgba(255,255,255,0.05); }
+  .stop-tip-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--amber); margin-bottom: 4px; }
+  .stop-tip-text { color: var(--text-muted); font-size: 12px; line-height: 1.5; overflow-wrap: anywhere; }
+  .stop-link { display: inline-block; margin-top: 12px; font-size: 12px; font-weight: 600; }
+
+  /* ── Footer ────────────────────────────────── */
+  .footer { margin-top: 64px; padding-top: 32px; border-top: 1px solid rgba(255,255,255,0.06); text-align: center; }
+  .footer-text { color: var(--text-dim); font-size: 12px; line-height: 1.8; }
+
+  /* ── Responsive ─────────────────────────────── */
+  @media (max-width: 520px) {
+    .wrapper { padding: 32px 16px 60px; }
+    .wordmark { font-size: 34px; }
+    .map-container { height: 240px; }
+    .timeline-row { gap: 10px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrapper">
+
+  <!-- Hero -->
+  <div class="hero">
+    <a class="wordmark" href="/">roam<span class="wordmark-accent"></span></a>
+    <p class="hero-sub">A trip someone shared with you</p>
+  </div>
+
+  <!-- Loading and error messages -->
+  <div class="status" id="status">Loading trip...</div>
+
+  <!-- Trip -->
+  <div class="trip" id="trip">
+    <div class="trip-title" id="trip-title"></div>
+    <div class="trip-meta" id="trip-meta"></div>
+    <div class="overview" id="trip-overview"></div>
+    <div class="map-container" id="map"></div>
+    <div id="trip-days"></div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <div class="footer-text">
+      Planned with roam. <a href="/">Plan your own trip</a><br>
+      Place data &copy; OpenStreetMap contributors
+    </div>
+  </div>
+
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+const CATEGORY_COLORS = { food:'#F59E0B', nature:'#10B981', history:'#8B5CF6', culture:'#3B82F6', nightlife:'#EC4899', shopping:'#F97316', adventure:'#EF4444', attraction:'#6B7280' };
+const DAY_COLORS = ['#3B82F6','#10B981','#F59E0B','#EC4899','#8B5CF6','#EF4444'];
+
+// ── Safe DOM helpers ─────────────────────────────
+// Place names come from OpenStreetMap and the descriptions from an LLM, so
+// nothing from the response is ever parsed as HTML. Text goes in through
+// textContent, and a URL is only used if it starts with https://.
+function el(tag, className, text) {
+  const node = document.createElement(tag);
+  if (className) node.className = className;
+  if (text !== undefined && text !== null) node.textContent = String(text);
+  return node;
+}
+
+function httpsUrl(url) {
+  return typeof url === 'string' && url.startsWith('https://') ? url : null;
+}
+
+// ── Status messages ──────────────────────────────
+function showStatus(title, message, withRetry) {
+  const status = document.getElementById('status');
+  status.textContent = '';
+  status.appendChild(el('div', 'status-title', title));
+  status.appendChild(el('div', '', message));
+  if (withRetry) {
+    const btn = el('button', 'status-btn', 'Try again');
+    btn.addEventListener('click', () => location.reload());
+    status.appendChild(btn);
+  }
+  status.style.display = '';
+  document.getElementById('trip').classList.remove('active');
+}
+
+// ── Load ─────────────────────────────────────────
+// The page is served at /t/<slug>
+function slugFromPath() {
+  const parts = location.pathname.split('/').filter(Boolean);
+  return parts[0] === 't' && parts[1] ? parts[1] : null;
+}
+
+function loadTrip() {
+  const slug = slugFromPath();
+  if (!slug) return showStatus('Trip not found', 'This link is missing its trip code.', false);
+
+  fetch('/api/shared/' + encodeURIComponent(slug))
+    .then(res => {
+      if (res.status === 404) return null;
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      return res.json();
+    })
+    .then(data => {
+      if (data === null) {
+        showStatus('This link is no longer available', 'The trip was removed or its owner stopped sharing it.', false);
+        return;
+      }
+      renderTrip(data);
+    })
+    .catch(() => {
+      showStatus('Could not load this trip', 'Check your connection and try again.', true);
+    });
+}
+
+// ── Render ───────────────────────────────────────
+function renderTrip(data) {
+  const itinerary = data.itinerary || {};
+  const days = Array.isArray(itinerary.days) ? itinerary.days : [];
+  const city = data.city || 'Shared trip';
+
+  document.title = city + ' · roam';
+  document.getElementById('trip-title').textContent = city;
+  document.getElementById('trip-overview').textContent = itinerary.overview || '';
+
+  // Date and interests
+  const meta = document.getElementById('trip-meta');
+  meta.textContent = '';
+  const date = data.trip_date ? new Date(data.trip_date + 'T00:00:00') : null;
+  if (date && !isNaN(date.getTime())) {
+    meta.appendChild(el('span', 'trip-date', date.toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' })));
+  }
+  (Array.isArray(data.goals) ? data.goals : []).forEach(g => meta.appendChild(el('span', 'goal-pill', g)));
+
+  // Days
+  const daysEl = document.getElementById('trip-days');
+  daysEl.textContent = '';
+  const allStops = [];
+
+  days.forEach((day, di) => {
+    const color = DAY_COLORS[di % DAY_COLORS.length];
+    const stops = Array.isArray(day.stops) ? day.stops : [];
+    const section = el('div', 'day-section');
+
+    const header = el('div', 'day-header');
+    const num = el('span', 'day-num', 'Day ' + (day.day || di + 1));
+    num.style.color = color;
+    num.style.background = color + '18';
+    num.style.borderColor = color + '30';
+    header.appendChild(num);
+    header.appendChild(el('span', 'day-theme', day.theme || ''));
+    section.appendChild(header);
+
+    stops.forEach((stop, si) => {
+      allStops.push({ stop, color, dayIndex: di, number: si + 1 });
+      section.appendChild(renderStop(stop, si, si === stops.length - 1, color));
+    });
+
+    if (day.summary) section.appendChild(el('div', 'day-summary', day.summary));
+    daysEl.appendChild(section);
+  });
+
+  document.getElementById('status').style.display = 'none';
+  document.getElementById('trip').classList.add('active');
+  // The map needs its container to be visible to size itself, so it is drawn last
+  renderMap(allStops);
+}
+
+function renderStop(stop, index, isLast, dayColor) {
+  const row = el('div', 'timeline-row');
+
+  const track = el('div', 'timeline-track');
+  const dot = el('div', 'timeline-dot', index + 1);
+  dot.style.background = dayColor;
+  track.appendChild(dot);
+  if (!isLast) {
+    const line = el('div', 'timeline-line');
+    line.style.background = dayColor;
+    track.appendChild(line);
+  }
+  row.appendChild(track);
+
+  const card = el('div', 'stop-card');
+  const photoUrl = httpsUrl(stop.photo_url);
+  if (photoUrl) {
+    const img = el('img', 'stop-photo');
+    img.loading = 'lazy';
+    img.alt = stop.name || '';
+    img.addEventListener('error', () => img.remove());
+    img.src = photoUrl;
+    card.appendChild(img);
+  }
+
+  const content = el('div', 'stop-content');
+  const meta = el('div', 'stop-meta');
+  meta.appendChild(el('span', 'stop-time', stop.arrival_time || ''));
+  if (stop.duration_min) meta.appendChild(el('span', 'stop-duration', stop.duration_min + ' min'));
+  content.appendChild(meta);
+  content.appendChild(el('div', 'stop-name', stop.name || ''));
+
+  if (stop.category) {
+    const catColor = CATEGORY_COLORS[stop.category] || '#6B7280';
+    const badge = el('span', 'stop-badge', stop.category);
+    badge.style.color = catColor;
+    badge.style.background = catColor + '15';
+    badge.style.borderColor = catColor + '30';
+    content.appendChild(badge);
+  }
+
+  if (stop.description) content.appendChild(el('div', 'stop-desc', stop.description));
+
+  if (stop.tip) {
+    const tip = el('div', 'stop-tip');
+    tip.appendChild(el('div', 'stop-tip-label', 'Tip'));
+    tip.appendChild(el('div', 'stop-tip-text', stop.tip));
+    content.appendChild(tip);
+  }
+
+  // Directions link, built from the coordinates only
+  const lat = Number(stop.lat), lon = Number(stop.lon);
+  if (stop.lat && stop.lon && isFinite(lat) && isFinite(lon)) {
+    const link = el('a', 'stop-link', 'Directions');
+    link.href = 'https://www.google.com/maps/dir/?api=1&destination=' + lat + ',' + lon;
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+    content.appendChild(link);
+  }
+
+  card.appendChild(content);
+  row.appendChild(card);
+  return row;
+}
+
+function renderMap(entries) {
+  const container = document.getElementById('map');
+  const valid = entries.filter(e => e.stop.lat && e.stop.lon && isFinite(Number(e.stop.lat)) && isFinite(Number(e.stop.lon)));
+  // Leaflet is loaded from a CDN; if that failed the rest of the page still works
+  if (valid.length === 0 || typeof L === 'undefined') { container.style.display = 'none'; return; }
+
+  const map = L.map(container, { zoomControl: true });
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors', maxZoom: 19
+  }).addTo(map);
+
+  // One dashed line per day
+  const byDay = {};
+  valid.forEach(e => { (byDay[e.dayIndex] = byDay[e.dayIndex] || []).push(e); });
+  Object.values(byDay).forEach(dayEntries => {
+    const latlngs = dayEntries.map(e => [Number(e.stop.lat), Number(e.stop.lon)]);
+    L.polyline(latlngs, { color: dayEntries[0].color, weight: 3, opacity: 0.7, dashArray: '8 5' }).addTo(map);
+  });
+
+  valid.forEach(e => {
+    // Marker and popup are built as DOM nodes, so the stop name is never parsed as HTML
+    const marker = el('div', 'map-marker', e.number);
+    marker.style.background = e.color;
+    const icon = L.divIcon({ html: marker, className: '', iconSize: [26, 26], iconAnchor: [13, 13] });
+
+    const popup = el('div');
+    popup.appendChild(el('div', 'popup-name', e.stop.name || ''));
+    popup.appendChild(el('div', 'popup-time', (e.stop.arrival_time || '') + (e.stop.duration_min ? ' · ' + e.stop.duration_min + ' min' : '')));
+
+    L.marker([Number(e.stop.lat), Number(e.stop.lon)], { icon }).bindPopup(popup, { closeButton: false }).addTo(map);
+  });
+
+  map.fitBounds(L.latLngBounds(valid.map(e => [Number(e.stop.lat), Number(e.stop.lon)])), { padding: [30, 30] });
+}
+
+loadTrip();
+</script>
+</body>
+</html>

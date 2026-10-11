@@ -1,0 +1,14 @@
+{
+  "name": "barcelona_gothic",
+  "city": "Barcelona",
+  "start_location": "Gothic Quarter",
+  "goals": [
+    "culture",
+    "food"
+  ],
+  "duration_hours": 8,
+  "transport": "walking",
+  "start_lat": 41.38384,
+  "start_lon": 2.1745119,
+  "pois": []
+}

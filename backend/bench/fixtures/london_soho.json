@@ -1,0 +1,5328 @@
+{
+  "name": "london_soho",
+  "city": "London",
+  "start_location": "Soho",
+  "goals": [
+    "nightlife",
+    "food"
+  ],
+  "duration_hours": 6,
+  "transport": "walking",
+  "start_lat": 51.5140654,
+  "start_lon": -0.1350494,
+  "pool_categories": [
+    "food",
+    "nature",
+    "history",
+    "culture",
+    "nightlife",
+    "shopping",
+    "adventure",
+    "hidden_gems"
+  ],
+  "pois": [
+    {
+      "id": 21593237,
+      "name": "The Polish Bar (Na Zdrowie)",
+      "lat": 51.5173465,
+      "lon": -0.1189566,
+      "category": "nightlife",
+      "description": "The Polish Bar (Na Zdrowie) nightlife polish bar",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "6",
+        "addr:postcode": "WC1V 7DX",
+        "addr:street": "Little Turnstile",
+        "amenity": "bar",
+        "cuisine": "polish",
+        "fhrs:id": "424696",
+        "fhrs:local_authority_id": "30976",
+        "food": "yes",
+        "name": "The Polish Bar (Na Zdrowie)",
+        "old_name": "Bar Polski",
+        "toilets": "yes",
+        "toilets:access": "customers"
+      }
+    },
+    {
+      "id": 25475389,
+      "name": "Woburn Cafe",
+      "lat": 51.5265807,
+      "lon": -0.1292505,
+      "category": "food",
+      "description": "Woburn Cafe food cafe",
+      "tags": {
+        "amenity": "cafe",
+        "fixme": "not on FHRS",
+        "name": "Woburn Cafe"
+      }
+    },
+    {
+      "id": 25496840,
+      "name": "26 Furnival Street",
+      "lat": 51.5167141,
+      "lon": -0.1103638,
+      "category": "food",
+      "description": "26 Furnival Street food pizza;burger restaurant",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "26",
+        "addr:postcode": "EC4A 1JS",
+        "addr:street": "Furnival Street",
+        "amenity": "restaurant",
+        "contact:email": "hello@26furnivalstreet.com",
+        "cuisine": "pizza;burger",
+        "name": "26 Furnival Street",
+        "old_name": "The Castle",
+        "phone": "+44 20 3301 7555",
+        "website": "https://www.26furnivalstreet.com/"
+      }
+    },
+    {
+      "id": 25497832,
+      "name": "Cafe Angel",
+      "lat": 51.5247641,
+      "lon": -0.1161125,
+      "category": "food",
+      "description": "Cafe Angel food cafe",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "250",
+        "amenity": "cafe",
+        "name": "Cafe Angel"
+      }
+    },
+    {
+      "id": 26845558,
+      "name": "Old Tree Daiwan Bee",
+      "lat": 51.5110542,
+      "lon": -0.1325596,
+      "category": "food",
+      "description": "Old Tree Daiwan Bee food taiwanese restaurant",
+      "tags": {
+        "amenity": "restaurant",
+        "cuisine": "taiwanese",
+        "name": "Old Tree Daiwan Bee"
+      }
+    },
+    {
+      "id": 32921722,
+      "name": "Lazy Ballerinas",
+      "lat": 51.5140621,
+      "lon": -0.1088749,
+      "category": "nightlife",
+      "description": "Lazy Ballerinas nightlife bar",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "50",
+        "addr:street": "Fleet Street",
+        "amenity": "bar",
+        "name": "Lazy Ballerinas"
+      }
+    },
+    {
+      "id": 169355678,
+      "name": "Bon Gusto",
+      "lat": 51.4992102,
+      "lon": -0.1378188,
+      "category": "food",
+      "description": "Bon Gusto food italian restaurant",
+      "tags": {
+        "addr:city": "London",
+        "addr:country": "GB",
+        "addr:housenumber": "75-76",
+        "addr:postcode": "SW1E 6PD",
+        "addr:street": "Buckingham Gate",
+        "amenity": "restaurant",
+        "cuisine": "italian",
+        "fhrs:id": "412670",
+        "name": "Bon Gusto"
+      }
+    },
+    {
+      "id": 169368767,
+      "name": "Bank Restaurant & Bar",
+      "lat": 51.4986304,
+      "lon": -0.1372558,
+      "category": "food",
+      "description": "Bank Restaurant & Bar food restaurant",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "45",
+        "addr:postcode": "SW1E 6BS",
+        "addr:street": "Buckingham Gate",
+        "alt_name": "Zander Bar",
+        "amenity": "restaurant",
+        "email": "westminster.reservations@bankrestaurants.com",
+        "name": "Bank Restaurant & Bar",
+        "phone": "+44 20 7630 6644",
+        "website": "https://www.individualrestaurants.com/"
+      }
+    },
+    {
+      "id": 169436940,
+      "name": "Buckingham Coffee Lounge",
+      "lat": 51.4987752,
+      "lon": -0.1412257,
+      "category": "food",
+      "description": "Buckingham Coffee Lounge food cafe",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "19-21",
+        "addr:postcode": "SW1E 5HS",
+        "addr:street": "Palace Street",
+        "amenity": "cafe",
+        "fhrs:confidence_management": "5",
+        "fhrs:hygiene": "5",
+        "fhrs:id": "413465",
+        "fhrs:local_authority_id": "01205/0019/0/004",
+        "fhrs:rating": "5",
+        "fhrs:structural": "5",
+        "name": "Buckingham Coffee Lounge",
+        "source:addr": "FSA Food Hygiene Ratings Database",
+        "source:postcode": "FSA Food Hygiene Ratings Database"
+      }
+    },
+    {
+      "id": 180403503,
+      "name": "Spaghetti House",
+      "lat": 51.5186204,
+      "lon": -0.1214512,
+      "category": "food",
+      "description": "Spaghetti House food italian restaurant",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "20",
+        "addr:postcode": "WC1A 2QD",
+        "addr:street": "Sicilian Avenue",
+        "amenity": "restaurant",
+        "cuisine": "italian",
+        "email": "sa@spaghettihouse.co.uk",
+        "fhrs:id": "423742",
+        "name": "Spaghetti House",
+        "phone": "+44 20 7405 5215",
+        "website": "https://www.spaghettihouse.co.uk/location/holborn/"
+      }
+    },
+    {
+      "id": 256497884,
+      "name": "The Garrick",
+      "lat": 51.5134807,
+      "lon": -0.1165232,
+      "category": "food",
+      "description": "The Garrick food cafe",
+      "tags": {
+        "addr:city": "London",
+        "addr:housename": "Columbia House",
+        "addr:housenumber": "69",
+        "addr:postcode": "WC2B 4RR",
+        "addr:street": "Aldwych",
+        "alt_name": "LSE Garrick",
+        "amenity": "cafe",
+        "check_date": "2026-09-07",
+        "fhrs:id": "412911",
+        "fhrs:local_authority_id": "00974/4000/0/001",
+        "level": "0;-1",
+        "name": "The Garrick",
+        "opening_hours": "Mo-Fr 08:00-19:00",
+        "operator": "London School of Economics and Political Science (LSE)",
+        "smoking": "no",
+        "source": "http://www.lse.ac.uk/intranet/LSEServices/cateringServices/restaurantsAndCafes/garrick.aspx",
+        "website": "http://www.lse.ac.uk/intranet/LSEServices/cateringServices/restaurantsAndCafes/garrick.aspx",
+        "wheelchair": "limited"
+      }
+    },
+    {
+      "id": 259774384,
+      "name": "Sketch",
+      "lat": 51.5127342,
+      "lon": -0.1414857,
+      "category": "food",
+      "description": "Sketch food restaurant",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "9",
+        "addr:postcode": "W1S 2XD",
+        "addr:street": "Conduit Street",
+        "amenity": "restaurant",
+        "fhrs:confidence_management": "0",
+        "fhrs:hygiene": "0",
+        "fhrs:id": "413604",
+        "fhrs:local_authority_id": "01288/0009/0/000",
+        "fhrs:rating": "5",
+        "fhrs:structural": "5",
+        "name": "Sketch",
+        "phone": "+44 20 7659 4500",
+        "source": "freind's local knowledge",
+        "source:addr": "FSA Food Hygiene Ratings Database",
+        "source:postcode": "FSA Food Hygiene Ratings Database",
+        "website": "https://sketch.london/",
+        "wheelchair": "no",
+        "wikidata": "Q14955160"
+      }
+    },
+    {
+      "id": 264513354,
+      "name": "The Bowery Bar",
+      "lat": 51.5171827,
+      "lon": -0.1255515,
+      "category": "nightlife",
+      "description": "The Bowery Bar nightlife bar",
+      "tags": {
+        "amenity": "bar",
+        "name": "The Bowery Bar"
+      }
+    },
+    {
+      "id": 266481945,
+      "name": "Tank & Paddle",
+      "lat": 51.5108588,
+      "lon": -0.1395168,
+      "category": "nightlife",
+      "description": "Tank & Paddle nightlife bar",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "15",
+        "addr:postcode": "W1B 4BF",
+        "addr:street": "Heddon Street",
+        "amenity": "bar",
+        "fhrs:confidence_management": "5",
+        "fhrs:hygiene": "5",
+        "fhrs:id": "412928",
+        "fhrs:local_authority_id": "00982/0015/0/000",
+        "fhrs:rating": "5",
+        "fhrs:structural": "5",
+        "name": "Tank & Paddle",
+        "source:postcode": "FSA Food Hygiene Ratings Database",
+        "website": "https://www.tankandpaddle.co.uk/heddon-street/"
+      }
+    },
+    {
+      "id": 266481948,
+      "name": "Icebar",
+      "lat": 51.5113103,
+      "lon": -0.1398884,
+      "category": "nightlife",
+      "description": "Icebar nightlife bar",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "29-33",
+        "addr:interpolation": "odd",
+        "addr:postcode": "W1B 4BN",
+        "addr:street": "Heddon Street",
+        "amenity": "bar",
+        "name": "Icebar",
+        "opening_hours": "Mo 14:15-22:15; Tu-Th 13:30-23:00; Fr 13:30-00:30; Sa 10:30-01:15; Su 10:00-20:15",
+        "toilets": "yes",
+        "toilets:access": "customers",
+        "website": "https://www.belowzeroicebar.com/"
+      }
+    },
+    {
+      "id": 266481949,
+      "name": "Aubaine",
+      "lat": 51.5109108,
+      "lon": -0.1393146,
+      "category": "food",
+      "description": "Aubaine food french restaurant",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "4",
+        "addr:postcode": "W1B 4BS",
+        "addr:street": "Heddon Street",
+        "amenity": "restaurant",
+        "cuisine": "french",
+        "name": "Aubaine",
+        "website": "https://aubaine.co.uk/locations/heddon-street/"
+      }
+    },
+    {
+      "id": 267406074,
+      "name": "Riverside Terrace Cafe",
+      "lat": 51.5059312,
+      "lon": -0.1171709,
+      "category": "food",
+      "description": "Riverside Terrace Cafe food cafe",
+      "tags": {
+        "addr:city": "London",
+        "addr:housename": "Royal Festival Hall",
+        "addr:postcode": "SE1 8XX",
+        "amenity": "cafe",
+        "check_date": "2023-12-17",
+        "contact:website": "https://www.southbankcentre.co.uk/visit/cafes-restaurants-bars/riverside-terrace-cafe",
+        "fhrs:id": "483405",
+        "name": "Riverside Terrace Cafe",
+        "opening_hours": "Mo-Tu 10:00-18:00; We-Su 10:00-20:30",
+        "source:addr": "FHRS Open Data",
+        "wheelchair": "yes",
+        "wheelchair:description": "Lift from ground floor, Low counter. Wide doors to outside seating. Accessible Toilets not checked. [6/2017 lift to Jubilee Bridge not working]"
+      }
+    },
+    {
+      "id": 271949508,
+      "name": "Goodman",
+      "lat": 51.5131214,
+      "lon": -0.1422056,
+      "category": "food",
+      "description": "Goodman food steak house restaurant",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "26",
+        "addr:street": "Maddox Street",
+        "amenity": "restaurant",
+        "check_date": "2026-02-19",
+        "cuisine": "steak_house",
+        "name": "Goodman",
+        "phone": "+44 20 7499 3776",
+        "warning": "service charge included",
+        "website": "https://www.goodmanrestaurants.com/",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": 271949545,
+      "name": "Mary's",
+      "lat": 51.513393,
+      "lon": -0.1423314,
+      "category": "food",
+      "description": "Mary's food restaurant",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "8-10",
+        "addr:street": "Pollen Street",
+        "amenity": "restaurant",
+        "name": "Mary's",
+        "toilets": "yes",
+        "toilets:access": "customers",
+        "toilets:wheelchair": "no",
+        "website": "https://www.pollenstreetsocial.com/",
+        "wheelchair": "limited",
+        "wikidata": "Q13956892"
+      }
+    },
+    {
+      "id": 273217489,
+      "name": "City Brunch",
+      "lat": 51.496539,
+      "lon": -0.1354705,
+      "category": "food",
+      "description": "City Brunch food cafe",
+      "tags": {
+        "amenity": "cafe",
+        "name": "City Brunch",
+        "old_name": "XLNT",
+        "outdoor_seating": "yes",
+        "start_date": "2020-01",
+        "wheelchair": "limited"
+      }
+    },
+    {
+      "id": 273217510,
+      "name": "Cafe Nuvo",
+      "lat": 51.4964968,
+      "lon": -0.1357931,
+      "category": "food",
+      "description": "Cafe Nuvo food cafe",
+      "tags": {
+        "addr:city": "London",
+        "addr:country": "GB",
+        "addr:housenumber": "12",
+        "addr:postcode": "SW1P 1RZ",
+        "addr:street": "Artillery Row",
+        "amenity": "cafe",
+        "fhrs:id": "411329",
+        "name": "Cafe Nuvo",
+        "old_name": "Cafe Hamlet",
+        "opening_hours": "Mo-Fr 06:00-16:00; Sa 07:00-14:00"
+      }
+    },
+    {
+      "id": 281851003,
+      "name": "The Courts Café at The Regent's Park",
+      "lat": 51.525503,
+      "lon": -0.1538118,
+      "category": "food",
+      "description": "The Courts Café at The Regent's Park food cafe",
+      "tags": {
+        "amenity": "cafe",
+        "check_date": "2024-06-14",
+        "name": "The Courts Café at The Regent's Park",
+        "payment:cash": "no",
+        "payment:credit_cards": "yes",
+        "payment:debit_cards": "yes"
+      }
+    },
+    {
+      "id": 282686488,
+      "name": "Strada",
+      "lat": 51.5058554,
+      "lon": -0.1176662,
+      "category": "food",
+      "description": "Strada food italian restaurant",
+      "tags": {
+        "addr:city": "London",
+        "addr:housename": "Royal Festival Hall",
+        "addr:postcode": "SE1 8XX",
+        "addr:street": "Royal Festival Hall",
+        "addr:unit": "6",
+        "amenity": "restaurant",
+        "brand:wikidata": "Q7620883",
+        "check_date": "2026-09-20",
+        "cuisine": "italian",
+        "fhrs:id": "483199",
+        "fixme:addr:1": "South Bank",
+        "indoor_seating": "yes",
+        "name": "Strada",
+        "opening_hours": "Mo-We 08:00-23:00; Th-Sa 08:00-24:00; Su 11:30-22:00",
+        "outdoor_seating": "yes",
+        "phone": "+44 20 7401 9126",
+        "source:addr": "FHRS Open Data",
+        "website": "https://www.strada.co.uk/italian-restaurant/royal-festival-hall",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": 292384037,
+      "name": "The Cinnamon Club",
+      "lat": 51.4975224,
+      "lon": -0.129607,
+      "category": "food",
+      "description": "The Cinnamon Club food indian;curry restaurant",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "30",
+        "addr:postcode": "SW1P 3BU",
+        "addr:street": "Great Smith Street",
+        "amenity": "restaurant",
+        "contact:facebook": "https://www.facebook.com/Cinnamonclub",
+        "cuisine": "indian;curry",
+        "fhrs:id": "413742",
+        "fhrs:local_authority_id": "01378/0030/3/000",
+        "indoor_seating": "yes",
+        "name": "The Cinnamon Club",
+        "outdoor_seating": "no",
+        "phone": "+44 20 7222 2555",
+        "source:addr": "FSA Food Hygiene Ratings Database",
+        "source:postcode": "FSA Food Hygiene Ratings Database",
+        "website": "http://www.cinnamonclub.com/",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "id": 292387300,
+      "name": "Wash House",
+      "lat": 51.4973427,
+      "lon": -0.1295433,
+      "category": "food",
+      "description": "Wash House food cafe",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "34",
+        "addr:postcode": "SW1P 3BU",
+        "addr:street": "Great Smith Street",
+        "amenity": "cafe",
+        "fhrs:id": "1920934",
+        "name": "Wash House",
+        "source:addr": "FHRS Open Data",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": 296639103,
+      "name": "Oxo Tower Restaurant",
+      "lat": 51.5083936,
+      "lon": -0.108242,
+      "category": "food",
+      "description": "Oxo Tower Restaurant food restaurant",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "8th floor",
+        "addr:postcode": "SE1 9PH",
+        "amenity": "restaurant",
+        "check_date": "2023-12-13",
+        "fhrs:id": "364330",
+        "name": "Oxo Tower Restaurant",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": 309114626,
+      "name": "Namaste Holborn",
+      "lat": 51.5206484,
+      "lon": -0.1212446,
+      "category": "food",
+      "description": "Namaste Holborn food indian restaurant",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "33",
+        "addr:postcode": "WC1N 3BP",
+        "addr:street": "Boswell Street",
+        "amenity": "restaurant",
+        "contact:email": "sales@namasteholborn.com",
+        "cuisine": "indian",
+        "diet:vegan": "yes",
+        "diet:vegetarian": "yes",
+        "fhrs:id": "1255653",
+        "name": "Namaste Holborn",
+        "opening_hours": "Mo-Su 10:00-21:00",
+        "phone": "+44 20 7242 2434",
+        "website": "https://namasteholborn.com"
+      }
+    },
+    {
+      "id": 311877303,
+      "name": "The Shell",
+      "lat": 51.520757,
+      "lon": -0.1230014,
+      "category": "food",
+      "description": "The Shell food restaurant",
+      "tags": {
+        "amenity": "restaurant",
+        "check_date": "2026-09-17",
+        "name": "The Shell",
+        "opening_hours": "Mo-Sa 12:00-23:00; Su 12:00-22:00"
+      }
+    },
+    {
+      "id": 312183255,
+      "name": "Má Là",
+      "lat": 51.4967352,
+      "lon": -0.130632,
+      "category": "food",
+      "description": "Má Là food chinese restaurant",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "37",
+        "addr:postcode": "SW1P 2BL",
+        "addr:street": "Monck Street",
+        "amenity": "restaurant",
+        "check_date": "2024-06-08",
+        "cuisine": "chinese",
+        "fhrs:id": "447068",
+        "name": "Má Là",
+        "opening_hours": "Tu-Fr 12:00-14:30,17:30-22:30; Mo off; Sa 12:00-22:30; Su 16:00-22:00",
+        "outdoor_seating": "no"
+      }
+    },
+    {
+      "id": 313349031,
+      "name": "Pastaio",
+      "lat": 51.5129035,
+      "lon": -0.1390316,
+      "category": "food",
+      "description": "Pastaio food italian restaurant",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "19",
+        "addr:postcode": "W1F 7BU",
+        "addr:street": "Ganton Street",
+        "amenity": "restaurant",
+        "check_date": "2026-07-21",
+        "cuisine": "italian",
+        "level": "0",
+        "name": "Pastaio",
+        "website": "https://www.pastaio.co.uk"
+      }
+    },
+    {
+      "id": 313913802,
+      "name": "Caffé Pronto Grill Bar",
+      "lat": 51.4966438,
+      "lon": -0.1335105,
+      "category": "food",
+      "description": "Caffé Pronto Grill Bar food cafe",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "51",
+        "addr:postcode": "SW1P 2HY",
+        "addr:street": "Sutton Ground",
+        "amenity": "cafe",
+        "drive_through": "no",
+        "name": "Caffé Pronto Grill Bar",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "id": 317930333,
+      "name": "Bung Hole Cellars",
+      "lat": 51.518344,
+      "lon": -0.1153178,
+      "category": "food",
+      "description": "Bung Hole Cellars food restaurant",
+      "tags": {
+        "amenity": "restaurant",
+        "internet_access": "wlan",
+        "internet_access:fee": "no",
+        "name": "Bung Hole Cellars"
+      }
+    },
+    {
+      "id": 332117344,
+      "name": "NONÓS",
+      "lat": 51.5281039,
+      "lon": -0.125102,
+      "category": "food",
+      "description": "NONÓS food greek restaurant",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "114",
+        "addr:postcode": "WC1H 9NT",
+        "addr:street": "Judd Street",
+        "amenity": "restaurant",
+        "check_date": "2026-08-28",
+        "check_date:opening_hours": "2026-08-28",
+        "cuisine": "greek",
+        "indoor_seating": "yes",
+        "name": "NONÓS",
+        "opening_hours": "Mo-We 08:30-22:00; Th-Sa 08:30-23:00; Su 08:30-22:00",
+        "outdoor_seating": "yes",
+        "source:addr": "FHRS Open Data"
+      }
+    },
+    {
+      "id": 332117592,
+      "name": "Sandwich Street Kitchen",
+      "lat": 51.5277186,
+      "lon": -0.1262783,
+      "category": "food",
+      "description": "Sandwich Street Kitchen food coffee shop;turkish cafe",
+      "tags": {
+        "amenity": "cafe",
+        "check_date": "2024-09-24",
+        "cuisine": "coffee_shop;turkish",
+        "name": "Sandwich Street Kitchen",
+        "outdoor_seating": "yes"
+      }
+    },
+    {
+      "id": 333726500,
+      "name": "Indian YMCA",
+      "lat": 51.5227666,
+      "lon": -0.1389599,
+      "category": "food",
+      "description": "Indian YMCA food indian hostel restaurant",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "41",
+        "addr:postcode": "W1T 6AQ",
+        "addr:street": "Fitzroy Street",
+        "amenity": "restaurant",
+        "check_date": "2025-11-21",
+        "check_date:internet_access": "2024-11-14",
+        "cuisine": "indian",
+        "diet:vegan": "yes",
+        "diet:vegetarian": "yes",
+        "email": "enquiries@indianymca.com",
+        "indoor_seating": "yes",
+        "internet_access": "wlan",
+        "name": "Indian YMCA",
+        "opening_hours": "Mo-Fr 07:30-09:15, 12:00-15:00; Sa-Su 07:30-09:15, 12:00-14:00",
+        "outdoor_seating": "yes",
+        "phone": "+44 20 7387 0411",
+        "tourism": "hostel",
+        "website": "https://www.indianymca.org/our-restaurant/",
+        "wheelchair": "no",
+        "wikidata": "Q6021671",
+        "wikimedia_commons": "Category:Indian YMCA, London",
+        "wikipedia": "en:YMCA Indian Students' Union and Hostel"
+      }
+    },
+    {
+      "id": 338463558,
+      "name": "Mugen",
+      "lat": 51.5195377,
+      "lon": -0.1093681,
+      "category": "food",
+      "description": "Mugen food japanese restaurant",
+      "tags": {
+        "addr:housenumber": "9-15",
+        "addr:postcode": "EC1N 7ST",
+        "addr:street": "Leather Lane",
+        "amenity": "restaurant",
+        "check_date": "2025-05-03",
+        "check_date:opening_hours": "2025-05-03",
+        "cuisine": "japanese",
+        "diet:vegetarian": "yes",
+        "fhrs:id": "424557",
+        "name": "Mugen",
+        "opening_hours": "Mo-Fr 12:00-15:00,18:00-23:00; Sa 17:30-22:00",
+        "phone": "+44 20 7404 9665",
+        "website": "http://www.mugenholdings.com/"
+      }
+    },
+    {
+      "id": 338505169,
+      "name": "The Chancery",
+      "lat": 51.5165567,
+      "lon": -0.1110982,
+      "category": "food",
+      "description": "The Chancery food restaurant",
+      "tags": {
+        "amenity": "restaurant",
+        "name": "The Chancery"
+      }
+    },
+    {
+      "id": 338505171,
+      "name": "Bivio Deli",
+      "lat": 51.5156486,
+      "lon": -0.1121349,
+      "category": "food",
+      "description": "Bivio Deli food fast food",
+      "tags": {
+        "amenity": "fast_food",
+        "name": "Bivio Deli"
+      }
+    },
+    {
+      "id": 1982055860,
+      "name": "Nannies' Lawn",
+      "lat": 51.5045297,
+      "lon": -0.1580207,
+      "category": "nature",
+      "description": "Nannies' Lawn nature garden",
+      "tags": {
+        "leisure": "garden",
+        "name": "Nannies' Lawn"
+      }
+    },
+    {
+      "id": 1982085234,
+      "name": "The Parade Ground",
+      "lat": 51.5082101,
+      "lon": -0.1589965,
+      "category": "nature",
+      "description": "The Parade Ground nature garden",
+      "tags": {
+        "leisure": "garden",
+        "name": "The Parade Ground"
+      }
+    },
+    {
+      "id": 6582725771,
+      "name": "Levita House Plantation",
+      "lat": 51.5292528,
+      "lon": -0.1288306,
+      "category": "nature",
+      "description": "Levita House Plantation nature This area has newly been upgraded for the residents of Levita house to start gardening and growing small vegetables and fruits where possible garden",
+      "tags": {
+        "addr:city": "London",
+        "addr:housename": "Levita House",
+        "addr:postcode": "NW1 1JJ",
+        "addr:street": "Chalton Street",
+        "description": "This area has newly been upgraded for the residents of Levita house to start gardening and growing small vegetables and fruits where possible",
+        "garden:type": "community",
+        "leisure": "garden",
+        "name": "Levita House Plantation",
+        "opening_hours": "24/7",
+        "operator": "Camden"
+      }
+    },
+    {
+      "id": 8794628426,
+      "name": "The Mound",
+      "lat": 51.4989711,
+      "lon": -0.1463617,
+      "category": "nature",
+      "description": "The Mound nature",
+      "tags": {
+        "name": "The Mound",
+        "natural": "peak"
+      }
+    },
+    {
+      "id": 12156767568,
+      "name": "Onion Garden",
+      "lat": 51.4979232,
+      "lon": -0.1370762,
+      "category": "nature",
+      "description": "Onion Garden nature garden",
+      "tags": {
+        "garden:type": "community",
+        "leisure": "garden",
+        "name": "Onion Garden"
+      }
+    },
+    {
+      "id": 3241371,
+      "name": "Russell Square",
+      "lat": 51.5216943,
+      "lon": -0.126069,
+      "category": "nature",
+      "description": "Russell Square nature park",
+      "tags": {
+        "GBV": "Active",
+        "barrier": "fence",
+        "leisure": "park",
+        "name": "Russell Square",
+        "name:ar": "ميدان راسل",
+        "name:en": "Russell Square",
+        "wikidata": "Q1346906",
+        "wikimedia_commons": "Category:Russell_Square_Gardens",
+        "wikipedia": "en:Russell Square"
+      }
+    },
+    {
+      "id": 3241840,
+      "name": "Tavistock Square",
+      "lat": 51.5250414,
+      "lon": -0.1290244,
+      "category": "nature",
+      "description": "Tavistock Square nature park",
+      "tags": {
+        "access": "permissive",
+        "barrier": "fence",
+        "leisure": "park",
+        "name": "Tavistock Square",
+        "name:etymology:wikidata": "Q668262",
+        "opening_hours": "07:30-sunset",
+        "source": "Survey of 2014-10-05",
+        "wikidata": "Q1936696",
+        "wikipedia": "en:Tavistock Square"
+      }
+    },
+    {
+      "id": 4075108,
+      "name": "Lincoln's Inn",
+      "lat": 51.5170075,
+      "lon": -0.1144526,
+      "category": "nature",
+      "description": "Lincoln's Inn nature park",
+      "tags": {
+        "leisure": "park",
+        "name": "Lincoln's Inn",
+        "wikidata": "Q69482",
+        "wikipedia": "en:Lincoln's Inn"
+      }
+    },
+    {
+      "id": 4081035,
+      "name": "Park Crescent Gardens",
+      "lat": 51.523381,
+      "lon": -0.1464773,
+      "category": "nature",
+      "description": "Park Crescent Gardens nature garden",
+      "tags": {
+        "access": "private",
+        "garden:type": "residential",
+        "leisure": "garden",
+        "name": "Park Crescent Gardens",
+        "source": "OS",
+        "website": "https://cepc.org.uk/gardens/park-square-and-park-crescent-gardens/"
+      }
+    },
+    {
+      "id": 4081036,
+      "name": "Park Square Gardens",
+      "lat": 51.5244103,
+      "lon": -0.1468696,
+      "category": "nature",
+      "description": "Park Square Gardens nature garden",
+      "tags": {
+        "access": "private",
+        "garden:type": "residential",
+        "leisure": "garden",
+        "name": "Park Square Gardens",
+        "website": "https://cepc.org.uk/gardens/park-square-and-park-crescent-gardens/",
+        "wikidata": "Q7138034",
+        "wikipedia": "en:Park Square, London"
+      }
+    },
+    {
+      "id": 4081049,
+      "name": "Grosvenor Square",
+      "lat": 51.5115067,
+      "lon": -0.1513923,
+      "category": "nature",
+      "description": "Grosvenor Square nature park",
+      "tags": {
+        "access": "yes",
+        "check_date": "2025-10-12",
+        "leisure": "park",
+        "name": "Grosvenor Square",
+        "note": "closed until summer 2026",
+        "opening_hours": "24/7 closed",
+        "operator": "The Royal Parks",
+        "operator:type": "public",
+        "operator:wikidata": "Q7761716",
+        "wikidata": "Q932992",
+        "wikipedia": "en:Grosvenor Square",
+        "wikipedia:es": "Plaza_Grosvenor"
+      }
+    },
+    {
+      "id": 4082589,
+      "name": "Leicester Square",
+      "lat": 51.5104369,
+      "lon": -0.1301305,
+      "category": "nature",
+      "description": "Leicester Square nature attraction park",
+      "tags": {
+        "layer": "0",
+        "leisure": "park",
+        "name": "Leicester Square",
+        "name:etymology:wikidata": "Q26898080",
+        "opening_hours": "sunrise-sunset",
+        "tourism": "attraction",
+        "wheelchair": "yes",
+        "wikidata": "Q848912",
+        "wikipedia": "en:Leicester Square"
+      }
+    },
+    {
+      "id": 4253286,
+      "name": "Woburn Square",
+      "lat": 51.5233255,
+      "lon": -0.1296417,
+      "category": "nature",
+      "description": "Woburn Square nature park",
+      "tags": {
+        "barrier": "fence",
+        "fence_type": "railing",
+        "leisure": "park",
+        "name": "Woburn Square",
+        "wikidata": "Q8028979",
+        "wikipedia": "en:Woburn Square"
+      }
+    },
+    {
+      "id": 4253288,
+      "name": "Gordon Square",
+      "lat": 51.524262,
+      "lon": -0.1308717,
+      "category": "nature",
+      "description": "Gordon Square nature park",
+      "tags": {
+        "barrier": "fence",
+        "fence_type": "railing",
+        "leisure": "park",
+        "name": "Gordon Square",
+        "name:etymology:wikidata": "Q55993365",
+        "wikidata": "Q5585854",
+        "wikipedia": "en:Gordon Square"
+      }
+    },
+    {
+      "id": 4253431,
+      "name": "Bedford Square",
+      "lat": 51.518967,
+      "lon": -0.130029,
+      "category": "nature",
+      "description": "Bedford Square nature garden",
+      "tags": {
+        "GBV": "InActive",
+        "access": "private",
+        "barrier": "fence",
+        "leisure": "garden",
+        "name": "Bedford Square",
+        "wikidata": "Q2893581",
+        "wikipedia": "en:Bedford Square"
+      }
+    },
+    {
+      "id": 4253511,
+      "name": "Friends House Garden",
+      "lat": 51.5265907,
+      "lon": -0.1318344,
+      "category": "nature",
+      "description": "Friends House Garden nature garden",
+      "tags": {
+        "access": "permissive",
+        "fee": "no",
+        "fixme": "Friends House shuts and locks this garden at times, I think overnight. It would be good to identify the hours the garden is open.",
+        "leisure": "garden",
+        "name": "Friends House Garden",
+        "operator": "Friends House",
+        "operator:type": "religious"
+      }
+    },
+    {
+      "id": 4253646,
+      "name": "Queen Square Gardens",
+      "lat": 51.5217715,
+      "lon": -0.1224453,
+      "category": "nature",
+      "description": "Queen Square Gardens nature park",
+      "tags": {
+        "GBV": "Active",
+        "barrier": "fence",
+        "leisure": "park",
+        "name": "Queen Square Gardens",
+        "smoking": "no",
+        "wikidata": "Q3414013",
+        "wikipedia": "en:Queen Square, London"
+      }
+    },
+    {
+      "id": 4253657,
+      "name": "Red Lion Square Gardens",
+      "lat": 51.5191892,
+      "lon": -0.1188966,
+      "category": "nature",
+      "description": "Red Lion Square Gardens nature park",
+      "tags": {
+        "barrier": "fence",
+        "leisure": "park",
+        "name": "Red Lion Square Gardens",
+        "name:en": "Red Lion Square Gardens",
+        "name:ko": "레드 라이언 광장",
+        "wikidata": "Q7304535",
+        "wikipedia": "en:Red Lion Square"
+      }
+    },
+    {
+      "id": 4253887,
+      "name": "Berkeley Square",
+      "lat": 51.5096414,
+      "lon": -0.1458119,
+      "category": "nature",
+      "description": "Berkeley Square nature park",
+      "tags": {
+        "access": "yes",
+        "addr:city": "London",
+        "barrier": "fence",
+        "heritage": "2",
+        "heritage:operator": "he",
+        "heritage:website": "https://historicengland.org.uk/listing/the-list/list-entry/1000516",
+        "leisure": "park",
+        "listed_status": "Grade II",
+        "name": "Berkeley Square",
+        "name:etymology:wikidata": "Q2421797",
+        "ref:GB:nhle": "1000516",
+        "wikidata": "Q127212",
+        "wikipedia": "en:Berkeley Square"
+      }
+    },
+    {
+      "id": 4254099,
+      "name": "Victoria Embankment Gardens",
+      "lat": 51.5086189,
+      "lon": -0.121026,
+      "category": "nature",
+      "description": "Victoria Embankment Gardens nature park",
+      "tags": {
+        "access": "yes",
+        "addr:city": "London",
+        "addr:street": "Victoria Embankment",
+        "leisure": "park",
+        "name": "Victoria Embankment Gardens",
+        "name:ar": "حدائق فيكتوريا إمبانكمينت",
+        "name:lt": "Viktorijos krantines sodai",
+        "opening_hours": "Jan 01-Feb 15 08:30-16:30,Feb 16-Feb 29 08:30-17:30,Mar 01-Mar Su[4] 08:30-18:00,Mar Mo[4]-Mar 31 08:30-19:30,Apr 01-Apr 15 08:30-20:00,Apr 16-Apr 30 08:30-20:30,May 01-May 15 08:30-21:00,Mar 16-Jul 31 08:30-21:30,Aug 01-Aug 15 08:30-21:00,Aug 16-Aug 31 0",
+        "operator": "City of Westminster",
+        "operator:type": "government",
+        "website": "https://www.westminster.gov.uk/parks-and-open-spaces/victoria-embankment-gardens",
+        "wheelchair": "limited",
+        "wheelchair:description": "level asphalt paths between lawns. Most statues and monuments are close to the path edge",
+        "wikidata": "Q7926695",
+        "wikimedia_commons": "Category:Victoria_Embankment_Gardens",
+        "wikipedia": "en:Victoria Embankment Gardens"
+      }
+    },
+    {
+      "id": 4256144,
+      "name": "Argyle Square Gardens",
+      "lat": 51.5290446,
+      "lon": -0.122248,
+      "category": "nature",
+      "description": "Argyle Square Gardens nature park",
+      "tags": {
+        "leisure": "park",
+        "name": "Argyle Square Gardens",
+        "name:en": "Argyle Square Gardens",
+        "name:ja": "アーガイル・スクエア",
+        "operator": "Camden London Borough Council",
+        "wikidata": "Q96372341",
+        "wikimedia_commons": "Category:Argyle Square, London",
+        "wikipedia": "en:Argyle Square"
+      }
+    },
+    {
+      "id": 4256229,
+      "name": "Golden Square",
+      "lat": 51.511655,
+      "lon": -0.1371829,
+      "category": "nature",
+      "description": "Golden Square nature park",
+      "tags": {
+        "leisure": "park",
+        "name": "Golden Square",
+        "operator": "Westminster City Council",
+        "wikidata": "Q5579811",
+        "wikipedia": "en:Golden Square"
+      }
+    },
+    {
+      "id": 4256950,
+      "name": "Whitehall Garden",
+      "lat": 51.5056433,
+      "lon": -0.1233752,
+      "category": "nature",
+      "description": "Whitehall Garden nature park",
+      "tags": {
+        "leisure": "park",
+        "name": "Whitehall Garden",
+        "name:ar": "حديقة وايتهول",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": 4256953,
+      "name": "Whitehall Garden",
+      "lat": 51.5039218,
+      "lon": -0.1239099,
+      "category": "nature",
+      "description": "Whitehall Garden nature park",
+      "tags": {
+        "leisure": "park",
+        "name": "Whitehall Garden",
+        "wheelchair": "yes",
+        "wikidata": "Q18901051",
+        "wikipedia": "en:Privy Garden of the Palace of Whitehall"
+      }
+    },
+    {
+      "id": 4256999,
+      "name": "Victoria Square",
+      "lat": 51.497709,
+      "lon": -0.144933,
+      "category": "nature",
+      "description": "Victoria Square nature garden",
+      "tags": {
+        "access": "private",
+        "garden:type": "private",
+        "leisure": "garden",
+        "name": "Victoria Square",
+        "wikidata": "Q7927047"
+      }
+    },
+    {
+      "id": 4257005,
+      "name": "Grosvenor Gardens",
+      "lat": 51.4977368,
+      "lon": -0.1472135,
+      "category": "nature",
+      "description": "Grosvenor Gardens nature park",
+      "tags": {
+        "leisure": "park",
+        "name": "Grosvenor Gardens"
+      }
+    },
+    {
+      "id": 4258095,
+      "name": "Christchurch Gardens",
+      "lat": 51.4981134,
+      "lon": -0.1344937,
+      "category": "nature",
+      "description": "Christchurch Gardens nature park",
+      "tags": {
+        "leisure": "park",
+        "name": "Christchurch Gardens",
+        "operator": "City of Westminster",
+        "wheelchair": "yes",
+        "wikidata": "Q59818439"
+      }
+    },
+    {
+      "id": 4259619,
+      "name": "Dean's Yard",
+      "lat": 51.4985817,
+      "lon": -0.1290543,
+      "category": "history",
+      "description": "Dean's Yard history yes park",
+      "tags": {
+        "historic": "yes",
+        "leisure": "park",
+        "name": "Dean's Yard",
+        "old_name": "The Elms",
+        "wikidata": "Q5245943",
+        "wikipedia": "en:Dean's Yard"
+      }
+    },
+    {
+      "id": 4259627,
+      "name": "College Green",
+      "lat": 51.4981024,
+      "lon": -0.1261387,
+      "category": "nature",
+      "description": "College Green nature park",
+      "tags": {
+        "alt_name": "Abingdon Street Gardens",
+        "leisure": "park",
+        "name": "College Green",
+        "note": "The world knows this as College Green but the council says it is Abington Street Gardens (with a t) - the street next door doesn't have a T.",
+        "official_name": "Abington Street Gardens",
+        "wikidata": "Q59756",
+        "wikipedia": "en:College Green, London"
+      }
+    },
+    {
+      "id": 4259687,
+      "name": "Victoria Tower Gardens",
+      "lat": 51.4964596,
+      "lon": -0.1248658,
+      "category": "nature",
+      "description": "Victoria Tower Gardens nature park",
+      "tags": {
+        "access": "yes",
+        "leisure": "park",
+        "name": "Victoria Tower Gardens",
+        "name:ar": "حدائق برج فيكتوريا",
+        "operator": "The Royal Parks",
+        "operator:type": "public",
+        "operator:wikidata": "Q7761716",
+        "website": "https://www.royalparks.org.uk/parks/victoria-tower-gardens",
+        "wikidata": "Q2485117",
+        "wikipedia": "en:Victoria Tower Gardens"
+      }
+    },
+    {
+      "id": 4272920,
+      "name": "Crabtree Fields",
+      "lat": 51.5192383,
+      "lon": -0.1345606,
+      "category": "nature",
+      "description": "Crabtree Fields nature park",
+      "tags": {
+        "leisure": "park",
+        "name": "Crabtree Fields"
+      }
+    },
+    {
+      "id": 4315778,
+      "name": "The Walks",
+      "lat": 51.5202491,
+      "lon": -0.1141872,
+      "category": "nature",
+      "description": "The Walks nature garden",
+      "tags": {
+        "access": "permissive",
+        "access:conditional": "permissive@(12:00-14:30)",
+        "fee": "no",
+        "leisure": "garden",
+        "name": "The Walks",
+        "website": "https://www.graysinn.org.uk/the-inn/the-estate/the-walks/"
+      }
+    },
+    {
+      "id": 4358458,
+      "name": "St James's Square Gardens",
+      "lat": 51.5071797,
+      "lon": -0.1352818,
+      "category": "nature",
+      "description": "St James's Square Gardens nature park",
+      "tags": {
+        "access": "permissive",
+        "dog": "no",
+        "leisure": "park",
+        "name": "St James's Square Gardens",
+        "opening_hours": "Mo-Fr 10:00-16:30",
+        "wikidata": "Q500529",
+        "wikipedia": "en:St James's Square"
+      }
+    },
+    {
+      "id": 4373996,
+      "name": "Jubilee Gardens",
+      "lat": 51.5039559,
+      "lon": -0.1181316,
+      "category": "nature",
+      "description": "Jubilee Gardens nature park",
+      "tags": {
+        "access": "permissive",
+        "addr:city": "London",
+        "addr:postcode": "SE1 7PG",
+        "addr:street": "Belvedere Road",
+        "leisure": "park",
+        "name": "Jubilee Gardens",
+        "name:ar": "حدائق اليوبيل",
+        "opening_hours": "24/7",
+        "operator": "Jubilee Gardens Trust",
+        "owner": "Southbank Centre",
+        "phone": "+44 20 7202 6900",
+        "website": "https://jubileegardens.org.uk/",
+        "wheelchair": "yes",
+        "wikidata": "Q2290816"
+      }
+    },
+    {
+      "id": 4393572,
+      "name": "Bloomsbury Square Gardens",
+      "lat": 51.5189192,
+      "lon": -0.1228238,
+      "category": "nature",
+      "description": "Bloomsbury Square Gardens nature park",
+      "tags": {
+        "barrier": "fence",
+        "leisure": "park",
+        "name": "Bloomsbury Square Gardens",
+        "operator": "London Borough of Camden",
+        "operator:type": "government",
+        "website": "https://cindex.camden.gov.uk/kb5/camden/cd/service.page?id=c_N-L9tmdrs",
+        "wikidata": "Q885408",
+        "wikipedia": "en:Bloomsbury Square"
+      }
+    },
+    {
+      "id": 4969746,
+      "name": "Inner Temple Garden",
+      "lat": 51.5118836,
+      "lon": -0.1095735,
+      "category": "nature",
+      "description": "Inner Temple Garden nature garden",
+      "tags": {
+        "access": "private",
+        "leisure": "garden",
+        "name": "Inner Temple Garden",
+        "wikidata": "Q127869154",
+        "wikipedia": "en:Inner Temple"
+      }
+    },
+    {
+      "id": 14164486,
+      "name": "Gray's Inn Gardens",
+      "lat": 51.5255089,
+      "lon": -0.1161849,
+      "category": "nature",
+      "description": "Gray's Inn Gardens nature park",
+      "tags": {
+        "addr:city": "London",
+        "addr:street": "Gray's Inn Road",
+        "alt_name": "The Walks",
+        "leisure": "park",
+        "name": "Gray's Inn Gardens",
+        "opening_hours": "Mo-Fr 12:00-14:30",
+        "website": "https://www.graysinn.org.uk/the-inn/history/the-historic-estate/the-walks/"
+      }
+    },
+    {
+      "id": 20947360,
+      "name": "The Diana Princess of Wales Memorial Walk",
+      "lat": 51.5039855,
+      "lon": -0.1567217,
+      "category": "history",
+      "description": "The Diana Princess of Wales Memorial Walk history memorial information",
+      "tags": {
+        "historic": "memorial",
+        "information": "guidepost",
+        "inscription": "The Diana Princess of Wales Memorial Walk",
+        "material": "metal",
+        "memorial": "plaque",
+        "name": "The Diana Princess of Wales Memorial Walk",
+        "tourism": "information"
+      }
+    },
+    {
+      "id": 20947380,
+      "name": "The Diana Princess of Wales Memorial Walk",
+      "lat": 51.5050342,
+      "lon": -0.1594156,
+      "category": "history",
+      "description": "The Diana Princess of Wales Memorial Walk history memorial information",
+      "tags": {
+        "historic": "memorial",
+        "information": "guidepost",
+        "inscription": "The Diana Princess of Wales Memorial Walk",
+        "material": "metal",
+        "memorial": "plaque",
+        "name": "The Diana Princess of Wales Memorial Walk",
+        "tourism": "information"
+      }
+    },
+    {
+      "id": 25507018,
+      "name": "Royal Tank Regiment Memorial",
+      "lat": 51.5061264,
+      "lon": -0.1244528,
+      "category": "history",
+      "description": "Royal Tank Regiment Memorial history memorial",
+      "tags": {
+        "historic": "memorial",
+        "memorial": "statue",
+        "name": "Royal Tank Regiment Memorial",
+        "name:hu": "Királyi harkocsizó ezred emlékműve",
+        "start_date": "2000",
+        "wikidata": "Q9323038"
+      }
+    },
+    {
+      "id": 25507019,
+      "name": "The Gurkha Soldier",
+      "lat": 51.5050924,
+      "lon": -0.1249977,
+      "category": "history",
+      "description": "The Gurkha Soldier history memorial",
+      "tags": {
+        "historic": "memorial",
+        "memorial": "statue",
+        "name": "The Gurkha Soldier",
+        "subject:wikipedia": "en:Brigade of Gurkhas",
+        "wikidata": "Q18574747",
+        "wikipedia": "en:Gurkha Memorial, London"
+      }
+    },
+    {
+      "id": 25507022,
+      "name": "Anglo-Belgian War Memorial",
+      "lat": 51.5086558,
+      "lon": -0.1207417,
+      "category": "history",
+      "description": "Anglo-Belgian War Memorial history memorial",
+      "tags": {
+        "description:hu": "Felirat magyarul: \"Belgium hálás népétől a brit nemzetnek 1914–1918\"",
+        "historic": "memorial",
+        "inscription": "To the British nation from the grateful people of Belgium, 1914–1918",
+        "name": "Anglo-Belgian War Memorial",
+        "name:hu": "Belgiumi I. világháborús emlékmű",
+        "start_date": "1920",
+        "wikidata": "Q18562303",
+        "wikipedia": "en:Anglo-Belgian Memorial, London"
+      }
+    },
+    {
+      "id": 25507033,
+      "name": "Royal Air Force Memorial",
+      "lat": 51.5039918,
+      "lon": -0.1230828,
+      "category": "history",
+      "description": "Royal Air Force Memorial history memorial",
+      "tags": {
+        "historic": "memorial",
+        "memorial": "war_memorial",
+        "name": "Royal Air Force Memorial",
+        "operator": "Royal Air Force Benevolent Fund",
+        "wikidata": "Q7373614",
+        "wikipedia": "en:Royal Air Force Memorial"
+      }
+    },
+    {
+      "id": 25507034,
+      "name": "Battle of Britain Memorial",
+      "lat": 51.502939,
+      "lon": -0.123428,
+      "category": "history",
+      "description": "Battle of Britain Memorial history memorial",
+      "tags": {
+        "historic": "memorial",
+        "memorial": "war_memorial",
+        "name": "Battle of Britain Memorial",
+        "start_date": "2005",
+        "wikidata": "Q2919484",
+        "wikipedia": "en:Battle of Britain Monument, London"
+      }
+    },
+    {
+      "id": 25507035,
+      "name": "Douglas Haig",
+      "lat": 51.5042783,
+      "lon": -0.1262449,
+      "category": "history",
+      "description": "Douglas Haig history monument",
+      "tags": {
+        "alt_name": "Douglas Haig, 1st Earl Haig",
+        "artwork_type": "statue",
+        "historic": "monument",
+        "inscription": "Field Marshal Earl Haig Commander-in-Chief of the British Armies in France 1915-1918",
+        "name": "Douglas Haig",
+        "subject:wikidata": "Q312564",
+        "subject:wikipedia": "en:Douglas Haig, 1st Earl Haig",
+        "wheelchair": "limited",
+        "wheelchair:description": "In traffic island with kerbs, view from pavement.",
+        "wikidata": "Q5325895",
+        "wikipedia": "en:Earl Haig Memorial"
+      }
+    },
+    {
+      "id": 25507036,
+      "name": "Alan Brooke, 1st Viscount Alanbrooke",
+      "lat": 51.5035868,
+      "lon": -0.1258141,
+      "category": "history",
+      "description": "Alan Brooke, 1st Viscount Alanbrooke history memorial",
+      "tags": {
+        "addr:city": "London",
+        "addr:street": "Whitehall",
+        "alt_name": "Alan Brooke, 1st Viscount Alanbrooke",
+        "artwork_type": "statue",
+        "historic": "memorial",
+        "memorial": "war_memorial",
+        "name": "Alan Brooke, 1st Viscount Alanbrooke",
+        "subject:wikidata": "Q335889",
+        "subject:wikipedia": "en:Alan Brooke, 1st Viscount Alanbrooke",
+        "wheelchair": "yes",
+        "wheelchair:description": "On paved area beside footway.",
+        "wikidata": "Q19590532",
+        "wikipedia": "en:Statue of the Viscount Alanbrooke, London"
+      }
+    },
+    {
+      "id": 25507037,
+      "name": "Monty",
+      "lat": 51.503367,
+      "lon": -0.1258314,
+      "category": "history",
+      "description": "Monty history memorial",
+      "tags": {
+        "addr:city": "London",
+        "addr:street": "Whitehall",
+        "alt_name": "Bernard Montgomery, 1st Viscount Montgomery of Alamein",
+        "artwork_type": "statue",
+        "historic": "memorial",
+        "memorial": "statue",
+        "name": "Monty",
+        "subject:wikidata": "Q152025",
+        "subject:wikipedia": "en:Bernard Montgomery",
+        "wheelchair": "yes",
+        "wheelchair:description": "On paved area beside footway.",
+        "wikidata": "Q19360013",
+        "wikipedia": "en:Statue of the Viscount Montgomery, London"
+      }
+    },
+    {
+      "id": 207639305,
+      "name": "Cavalry Memorial",
+      "lat": 51.503119,
+      "lon": -0.1559092,
+      "category": "history",
+      "description": "Cavalry Memorial history memorial",
+      "tags": {
+        "historic": "memorial",
+        "name": "Cavalry Memorial"
+      }
+    },
+    {
+      "id": 260278473,
+      "name": "New Zealand War Memorial",
+      "lat": 51.5030529,
+      "lon": -0.1502053,
+      "category": "history",
+      "description": "New Zealand War Memorial history cross shaped metal girders memorial",
+      "tags": {
+        "description": "cross shaped metal girders",
+        "historic": "memorial",
+        "memorial": "sculpture",
+        "name": "New Zealand War Memorial",
+        "wikidata": "Q13528920"
+      }
+    },
+    {
+      "id": 260279816,
+      "name": "Australia War Memorial",
+      "lat": 51.5020626,
+      "lon": -0.151515,
+      "category": "history",
+      "description": "Australia War Memorial history memorial",
+      "tags": {
+        "historic": "memorial",
+        "memorial": "war_memorial",
+        "memorial:conflict": "WW1;WW2",
+        "name": "Australia War Memorial",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": 345830787,
+      "name": "Monument to the 2002 Bali bombings",
+      "lat": 51.502415,
+      "lon": -0.1295519,
+      "category": "history",
+      "description": "Monument to the 2002 Bali bombings history memorial",
+      "tags": {
+        "historic": "memorial",
+        "memorial": "sculpture",
+        "name": "Monument to the 2002 Bali bombings",
+        "wheelchair": "yes",
+        "wikidata": "Q18458048",
+        "wikimedia_commons": "File:Bali bombing memorial in London, Horse Guard Road.JPG",
+        "wikipedia": "en:Bali Bombings Memorial, London"
+      }
+    },
+    {
+      "id": 345839407,
+      "name": "Earl Mountbatten of Burma",
+      "lat": 51.5036056,
+      "lon": -0.1286361,
+      "category": "history",
+      "description": "Earl Mountbatten of Burma history memorial artwork",
+      "tags": {
+        "artwork_type": "statue",
+        "historic": "memorial",
+        "memorial": "statue",
+        "name": "Earl Mountbatten of Burma",
+        "name:zh": "缅甸蒙巴顿伯爵像",
+        "tourism": "artwork",
+        "wheelchair": "no",
+        "wikidata": "Q18548908",
+        "wikipedia": "en:Statue of the Earl Mountbatten, London"
+      }
+    },
+    {
+      "id": 345863424,
+      "name": "Captain James Cook",
+      "lat": 51.5063418,
+      "lon": -0.1292321,
+      "category": "history",
+      "description": "Captain James Cook history memorial",
+      "tags": {
+        "historic": "memorial",
+        "memorial": "statue",
+        "name": "Captain James Cook",
+        "wikidata": "Q17514442",
+        "wikipedia": "en:Statue of Captain James Cook, The Mall"
+      }
+    },
+    {
+      "id": 345863425,
+      "name": "Royal Marines",
+      "lat": 51.5065383,
+      "lon": -0.1295323,
+      "category": "history",
+      "description": "Royal Marines history memorial",
+      "tags": {
+        "historic": "memorial",
+        "memorial": "statue",
+        "name": "Royal Marines",
+        "name:hu": "Királyi tengerészgyalogosok",
+        "wikidata": "Q18121475",
+        "wikipedia": "en:Royal Marines Memorial"
+      }
+    },
+    {
+      "id": 345876970,
+      "name": "George III",
+      "lat": 51.5077837,
+      "lon": -0.1305623,
+      "category": "history",
+      "description": "George III history monument",
+      "tags": {
+        "artist_name": "Matthew Cotes Wyatt",
+        "historic": "monument",
+        "memorial": "equestrian_statue",
+        "name": "George III",
+        "name:hu": "III. György király",
+        "name:zh": "乔治三世像",
+        "start_date": "1836",
+        "subject:wikidata": "Q127318",
+        "subject:wikipedia": "en:George III",
+        "wikidata": "Q19902765"
+      }
+    },
+    {
+      "id": 347142989,
+      "name": "Winston Churchill",
+      "lat": 51.5008416,
+      "lon": -0.1264307,
+      "category": "history",
+      "description": "Winston Churchill history memorial",
+      "tags": {
+        "addr:city": "London",
+        "addr:street": "Parliament Square",
+        "alt_name": "Winston Churchill Statue",
+        "artist:wikidata": "Q3402750",
+        "artist:wikipedia": "en:Ivor Roberts-Jones",
+        "artist_name": "Ivor Roberts-Jones",
+        "height": "3.7",
+        "historic": "memorial",
+        "material": "bronze",
+        "memorial": "statue",
+        "name": "Winston Churchill",
+        "name:zh": "丘吉尔雕像",
+        "start_date": "1973-11-01",
+        "subject:wikidata": "Q8016",
+        "subject:wikipedia": "en:Winston Churchill",
+        "wheelchair": "yes",
+        "wikidata": "Q7604505",
+        "wikipedia": "en:Statue of Winston Churchill, Parliament Square"
+      }
+    },
+    {
+      "id": 347143044,
+      "name": "Jan Smuts",
+      "lat": 51.5008657,
+      "lon": -0.1268841,
+      "category": "history",
+      "description": "Jan Smuts history memorial",
+      "tags": {
+        "artist:wikidata": "Q354779",
+        "artist:wikipedia": "en:Jacob Epstein",
+        "artist_name": "Jacob Epstein",
+        "historic": "memorial",
+        "material": "bronze",
+        "memorial": "statue",
+        "name": "Jan Smuts",
+        "start_date": "1956",
+        "subject:wikidata": "Q214321",
+        "subject:wikipedia": "en:Jan Smuts",
+        "wikidata": "Q20785576",
+        "wikipedia": "en:Statue of Jan Smuts, Parliament Square"
+      }
+    },
+    {
+      "id": 347143584,
+      "name": "Earl of Derby",
+      "lat": 51.5007874,
+      "lon": -0.1273028,
+      "category": "history",
+      "description": "Earl of Derby history memorial",
+      "tags": {
+        "artist:wikidata": "Q6791021",
+        "artist:wikipedia": "en:Matthew Noble",
+        "artist_name": "Matthew Noble",
+        "historic": "memorial",
+        "memorial": "statue",
+        "name": "Earl of Derby",
+        "start_date": "1874-07-11",
+        "subject:wikidata": "Q237829",
+        "subject:wikipedia": "en:Edward Smith-Stanley, 14th Earl of Derby",
+        "wikidata": "Q18116483",
+        "wikipedia": "en:Statue of the Earl of Derby, Parliament Square"
+      }
+    },
+    {
+      "id": 347144006,
+      "name": "Nelson Mandela",
+      "lat": 51.5004212,
+      "lon": -0.1272452,
+      "category": "history",
+      "description": "Nelson Mandela history memorial",
+      "tags": {
+        "artist:wikidata": "Q5983204",
+        "artist:wikipedia": "en:Ian Walters",
+        "artist_name": "Ian Walters",
+        "height": "2.7",
+        "historic": "memorial",
+        "material": "bronze",
+        "memorial": "statue",
+        "name": "Nelson Mandela",
+        "name:zh": "纳尔逊·曼德拉雕像",
+        "start_date": "2007-08-29",
+        "subject:wikidata": "Q8023",
+        "subject:wikipedia": "en:Nelson Mandela",
+        "wikidata": "Q7604495",
+        "wikipedia": "en:Statue of Nelson Mandela, Parliament Square"
+      }
+    },
+    {
+      "id": 347144267,
+      "name": "David Lloyd George",
+      "lat": 51.5008535,
+      "lon": -0.1266578,
+      "category": "history",
+      "description": "David Lloyd George history memorial",
+      "tags": {
+        "artist:wikidata": "Q5572983",
+        "artist:wikipedia": "en:Glynn Williams",
+        "artist_name": "Glynn Williams",
+        "height": "2.4",
+        "historic": "memorial",
+        "material": "bronze",
+        "memorial": "statue",
+        "name": "David Lloyd George",
+        "start_date": "2007",
+        "subject:wikidata": "Q134982",
+        "subject:wikipedia": "en:David Lloyd George",
+        "wikidata": "Q18162009",
+        "wikipedia": "en:Statue of David Lloyd George, Parliament Square"
+      }
+    },
+    {
+      "id": 347144611,
+      "name": "Earl of Beaconsfield",
+      "lat": 51.5006372,
+      "lon": -0.1273001,
+      "category": "history",
+      "description": "Earl of Beaconsfield history memorial",
+      "tags": {
+        "historic": "memorial",
+        "memorial": "statue",
+        "name": "Earl of Beaconsfield"
+      }
+    },
+    {
+      "id": 347144620,
+      "name": "Sir Robert Peel",
+      "lat": 51.5004874,
+      "lon": -0.1272913,
+      "category": "history",
+      "description": "Sir Robert Peel history memorial",
+      "tags": {
+        "artist:wikidata": "Q6791021",
+        "artist:wikipedia": "en:Matthew Noble",
+        "artist_name": "Matthew Noble",
+        "historic": "memorial",
+        "material": "bronze",
+        "memorial": "statue",
+        "name": "Sir Robert Peel",
+        "start_date": "1876",
+        "subject:wikidata": "Q181875",
+        "subject:wikipedia": "en:Robert Peel",
+        "wikidata": "Q19277831",
+        "wikipedia": "en:Statue of Robert Peel, Parliament Square"
+      }
+    },
+    {
+      "id": 347144815,
+      "name": "Lord Palmerston",
+      "lat": 51.5009057,
+      "lon": -0.1270755,
+      "category": "history",
+      "description": "Lord Palmerston history memorial",
+      "tags": {
+        "artist:wikidata": "Q2280558",
+        "artist:wikipedia": "en:Thomas Woolner",
+        "artist_name": "Thomas Woolner",
+        "historic": "memorial",
+        "material": "bronze",
+        "memorial": "statue",
+        "name": "Lord Palmerston",
+        "start_date": "1876",
+        "subject:wikidata": "Q193656",
+        "subject:wikipedia": "en:Henry John Temple, 3rd Viscount Palmerston",
+        "wikidata": "Q18162030",
+        "wikipedia": "en:Statue of Lord Palmerston, Parliament Square"
+      }
+    },
+    {
+      "id": 348826086,
+      "name": "Sir Henry Irving",
+      "lat": 51.5096733,
+      "lon": -0.1282042,
+      "category": "history",
+      "description": "Sir Henry Irving history memorial",
+      "tags": {
+        "artist_name": "Thomas Brock",
+        "historic": "memorial",
+        "memorial": "statue",
+        "name": "Sir Henry Irving",
+        "start_date": "1910",
+        "subject:wikidata": "Q32505",
+        "subject:wikipedia": "en:Henry Irving",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": 348924286,
+      "name": "George Canning",
+      "lat": 51.5010033,
+      "lon": -0.1277194,
+      "category": "history",
+      "description": "George Canning history The statue was first erected near St Margaret's, Westminster, and was moved to Parliament Square in 1867. memorial",
+      "tags": {
+        "artist:wikidata": "Q6238282",
+        "artist:wikipedia": "en:Richard Westmacott",
+        "artist_name": "Richard Westmacott",
+        "description": "The statue was first erected near St Margaret's, Westminster, and was moved to Parliament Square in 1867.",
+        "height": "3.56",
+        "historic": "memorial",
+        "material": "bronze",
+        "memorial": "statue",
+        "name": "George Canning",
+        "start_date": "1832-05-02",
+        "subject:wikidata": "Q219731",
+        "subject:wikipedia": "en:George Canning",
+        "wikidata": "Q21546419",
+        "wikipedia": "en:Statue of George Canning, Parliament Square"
+      }
+    },
+    {
+      "id": 367735598,
+      "name": "Coventry Patmore",
+      "lat": 51.5184257,
+      "lon": -0.1330403,
+      "category": "history",
+      "description": "Coventry Patmore history memorial",
+      "tags": {
+        "erected_by": "London County Council",
+        "historic": "memorial",
+        "inscription": "Coventry Patmore 1823-1896 Poet and Essayist lived here 1863-1864",
+        "memorial": "blue_plaque",
+        "name": "Coventry Patmore",
+        "openplaques:id": "554",
+        "subject:wikidata": "Q716197"
+      }
+    },
+    {
+      "id": 381157967,
+      "name": "Emmeline and Christabel Pankhurst Memorial",
+      "lat": 51.4977775,
+      "lon": -0.1253086,
+      "category": "history",
+      "description": "Emmeline and Christabel Pankhurst Memorial history memorial",
+      "tags": {
+        "historic": "memorial",
+        "memorial": "statue",
+        "name": "Emmeline and Christabel Pankhurst Memorial",
+        "start_date": "1930",
+        "subject:wikidata": "Q211519",
+        "subject:wikipedia": "en:Emmeline Pankhurst",
+        "wheelchair": "yes",
+        "wheelchair:description": "In paved area. Step-free from street.",
+        "wikidata": "Q19364406",
+        "wikipedia": "en:Emmeline and Christabel Pankhurst Memorial"
+      }
+    },
+    {
+      "id": 381157973,
+      "name": "Richard the Lionheart",
+      "lat": 51.4991508,
+      "lon": -0.1255492,
+      "category": "history",
+      "description": "Richard the Lionheart history memorial artwork",
+      "tags": {
+        "alt_name": "Richard I of England",
+        "artwork_type": "statue",
+        "historic": "memorial",
+        "memorial": "equestrian_statue",
+        "name": "Richard the Lionheart",
+        "name:de": "Richard Löwenherz",
+        "name:en": "Richard the Lionheart",
+        "name:fr": "Richard Coeur de Lion",
+        "name:hu": "Oroszlánszívű Richárd",
+        "start_date": "1860",
+        "tourism": "artwork",
+        "wikidata": "Q7324819",
+        "wikipedia": "en:Richard Coeur de Lion (statue)"
+      }
+    },
+    {
+      "id": 382800994,
+      "name": "Abraham Lincoln",
+      "lat": 51.5005254,
+      "lon": -0.1277126,
+      "category": "history",
+      "description": "Abraham Lincoln history memorial",
+      "tags": {
+        "alt_name": "Standing Lincoln",
+        "artist:wikidata": "Q770625",
+        "artist:wikipedia": "en:Augustus Saint-Gaudens",
+        "artist_name": "Augustus Saint-Gaudens",
+        "height": "3.7",
+        "historic": "memorial",
+        "material": "bronze",
+        "memorial": "statue",
+        "name": "Abraham Lincoln",
+        "name:be": "Абрагам Лінкальн",
+        "name:en": "Abraham Lincoln",
+        "name:ru": "Авраам Линкольн",
+        "name:zh": "亚伯拉罕 林肯",
+        "start_date": "1920",
+        "subject:wikidata": "Q91",
+        "subject:wikipedia": "en:Abraham Lincoln",
+        "wikidata": "Q25338500"
+      }
+    },
+    {
+      "id": 441983867,
+      "name": "National Submarine War Memorial",
+      "lat": 51.5108862,
+      "lon": -0.1110141,
+      "category": "history",
+      "description": "National Submarine War Memorial history memorial",
+      "tags": {
+        "heritage": "2",
+        "heritage:operator": "Historic England",
+        "heritage:website": "https://historicengland.org.uk/listing/the-list/list-entry/1079109",
+        "historic": "memorial",
+        "inscription_date": "1972-06-05",
+        "memorial": "plaque",
+        "name": "National Submarine War Memorial",
+        "ref:GB:nhle": "1079109",
+        "start_date": "1922",
+        "wikidata": "Q6978759",
+        "wikipedia": "en:National Submarine War Memorial"
+      }
+    },
+    {
+      "id": 441984203,
+      "name": "Nelson Mandela",
+      "lat": 51.5054091,
+      "lon": -0.116756,
+      "category": "history",
+      "description": "Nelson Mandela history memorial",
+      "tags": {
+        "alt_name": "Mandela Statue",
+        "artist_name": "Ian Walters",
+        "historic": "memorial",
+        "inscription": "The struggle is my life",
+        "layer": "1",
+        "material": "bronze",
+        "memorial": "bust",
+        "name": "Nelson Mandela",
+        "subject:wikidata": "Q8023",
+        "wikidata": "Q22117590"
+      }
+    },
+    {
+      "id": 452212190,
+      "name": "William Pitt the Younger",
+      "lat": 51.5136399,
+      "lon": -0.1436547,
+      "category": "history",
+      "description": "William Pitt the Younger history memorial artwork",
+      "tags": {
+        "historic": "memorial",
+        "memorial": "statue",
+        "name": "William Pitt the Younger",
+        "tourism": "artwork",
+        "wikidata": "Q27081371"
+      }
+    },
+    {
+      "id": 454536529,
+      "name": "King George VI",
+      "lat": 51.5052166,
+      "lon": -0.1338073,
+      "category": "history",
+      "description": "King George VI history memorial",
+      "tags": {
+        "historic": "memorial",
+        "memorial": "statue",
+        "name": "King George VI",
+        "name:hu": "VI. György király",
+        "wikidata": "Q26319313"
+      }
+    },
+    {
+      "id": 454536850,
+      "name": "Queen Elizabeth (The Queen Mother)",
+      "lat": 51.5051598,
+      "lon": -0.1337633,
+      "category": "history",
+      "description": "Queen Elizabeth (The Queen Mother) history memorial",
+      "tags": {
+        "historic": "memorial",
+        "memorial": "statue",
+        "name": "Queen Elizabeth (The Queen Mother)",
+        "wikidata": "Q26689954"
+      }
+    },
+    {
+      "id": 470628773,
+      "name": "Samuel Johnson",
+      "lat": 51.5131754,
+      "lon": -0.1134745,
+      "category": "history",
+      "description": "Samuel Johnson history memorial",
+      "tags": {
+        "historic": "memorial",
+        "memorial": "statue",
+        "name": "Samuel Johnson",
+        "wikidata": "Q27081591"
+      }
+    },
+    {
+      "id": 246518191,
+      "name": "Piccadilly Comedy Club",
+      "lat": 51.509736,
+      "lon": -0.131926,
+      "category": "culture",
+      "description": "Piccadilly Comedy Club culture theatre",
+      "tags": {
+        "amenity": "theatre",
+        "name": "Piccadilly Comedy Club",
+        "theatre:genre": "stand_up_comedy",
+        "toilets": "yes",
+        "toilets:access": "customers"
+      }
+    },
+    {
+      "id": 332118767,
+      "name": "Shaw Theatre",
+      "lat": 51.5288526,
+      "lon": -0.1281323,
+      "category": "culture",
+      "description": "Shaw Theatre culture theatre",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "100-110",
+        "addr:postcode": "NW1 2AJ",
+        "addr:street": "Euston Road",
+        "amenity": "theatre",
+        "check_date": "2026-04-30",
+        "name": "Shaw Theatre",
+        "website": "https://www.shaw-theatre.com/",
+        "wheelchair": "yes",
+        "wikidata": "Q7491204",
+        "wikimedia_commons": "Category:Shaw Theatre, London",
+        "wikipedia": "en:Shaw Theatre"
+      }
+    },
+    {
+      "id": 334631276,
+      "name": "Charles Dickens Museum",
+      "lat": 51.5235936,
+      "lon": -0.1163232,
+      "category": "culture",
+      "description": "Charles Dickens Museum culture museum",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "48-49",
+        "addr:postcode": "WC1N 2LX",
+        "addr:street": "Doughty Street",
+        "check_date": "2025-07-03",
+        "contact:email": "info@dickensmuseum.com",
+        "contact:facebook": "dickensmuseum",
+        "contact:instagram": "dickensmuseum",
+        "contact:phone": "+44 20 7405 2127",
+        "contact:twitter": "DickensMuseum",
+        "fee": "yes",
+        "museum": "person",
+        "name": "Charles Dickens Museum",
+        "opening_hours": "We-Su 10:00-16:00",
+        "toilets:wheelchair": "yes",
+        "tourism": "museum",
+        "website": "https://dickensmuseum.com/",
+        "wheelchair": "yes",
+        "wikidata": "Q2723633",
+        "wikimedia_commons": "Category:Charles Dickens Museum",
+        "wikipedia": "en:Charles Dickens Museum"
+      }
+    },
+    {
+      "id": 345886715,
+      "name": "Charing Cross Theatre",
+      "lat": 51.5076633,
+      "lon": -0.1243661,
+      "category": "culture",
+      "description": "Charing Cross Theatre culture theatre",
+      "tags": {
+        "addr:city": "London",
+        "addr:postcode": "WC2N 6NL",
+        "addr:street": "Villiers Street",
+        "air_conditioning": "yes",
+        "amenity": "theatre",
+        "capacity": "265",
+        "contact:facebook": "https://www.facebook.com/CharingCrossThr/",
+        "contact:instagram": "https://www.instagram.com/charingcrossthr/",
+        "contact:twitter": "https://twitter.com/CharingCrossThr",
+        "email": "info@charingcrosstheatre.co.uk",
+        "layer": "-1",
+        "name": "Charing Cross Theatre",
+        "phone": "+44 8444 930 650",
+        "start_date": "1936",
+        "website": "https://www.charingcrosstheatre.co.uk/",
+        "wikidata": "Q16890141",
+        "wikipedia": "en:Charing Cross Theatre"
+      }
+    },
+    {
+      "id": 452238452,
+      "name": "The Fine Art Society",
+      "lat": 51.5113416,
+      "lon": -0.1436595,
+      "category": "culture",
+      "description": "The Fine Art Society culture gallery",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "148",
+        "addr:street": "New Bond Street",
+        "name": "The Fine Art Society",
+        "phone": "+44 20 7629 5116",
+        "tourism": "gallery",
+        "website": "https://thefineartsociety.com/",
+        "wheelchair": "yes",
+        "wikidata": "Q1416883",
+        "wikipedia": "en:Fine Art Society"
+      }
+    },
+    {
+      "id": 456717384,
+      "name": "Beaux Arts",
+      "lat": 51.5125682,
+      "lon": -0.1438088,
+      "category": "culture",
+      "description": "Beaux Arts culture gallery",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "48",
+        "addr:postcode": "W1S 1AY",
+        "addr:street": "Maddox Street",
+        "name": "Beaux Arts",
+        "phone": "+44 20 7493 1155",
+        "tourism": "gallery",
+        "website": "https://www.beauxartslondon.uk/"
+      }
+    },
+    {
+      "id": 456718348,
+      "name": "Helly Nahmad Gallery",
+      "lat": 51.5105962,
+      "lon": -0.1418878,
+      "category": "culture",
+      "description": "Helly Nahmad Gallery culture gallery",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "2-4",
+        "addr:interpolation": "all",
+        "addr:postcode": "W1S 3LB",
+        "addr:street": "Cork Street",
+        "name": "Helly Nahmad Gallery",
+        "tourism": "gallery",
+        "website": "https://nahmadprojects.com/"
+      }
+    },
+    {
+      "id": 472152158,
+      "name": "Topolski Century",
+      "lat": 51.5048027,
+      "lon": -0.1156513,
+      "category": "culture",
+      "description": "Topolski Century culture museum",
+      "tags": {
+        "name": "Topolski Century",
+        "tourism": "museum",
+        "website": "http://www.topolskicentury.org.uk/",
+        "wikidata": "Q7825056",
+        "wikipedia": "en:Bar Topolski"
+      }
+    },
+    {
+      "id": 549146398,
+      "name": "WW Gallery",
+      "lat": 51.5201701,
+      "lon": -0.108266,
+      "category": "culture",
+      "description": "WW Gallery culture gallery",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "34/35",
+        "addr:postcode": "EC1N 8DX",
+        "addr:street": "Hatton Garden",
+        "name": "WW Gallery",
+        "phone": "+44 7531342128",
+        "source": "leaflet",
+        "tourism": "gallery",
+        "website": "http://wilsonwilliamsgallery.com"
+      }
+    },
+    {
+      "id": 1043510888,
+      "name": "The Octagon Gallery",
+      "lat": 51.5247382,
+      "lon": -0.1335088,
+      "category": "culture",
+      "description": "The Octagon Gallery culture gallery",
+      "tags": {
+        "addr:city": "London",
+        "addr:postcode": "WC1E 6BT",
+        "addr:street": "Gower Street",
+        "fee": "no",
+        "name": "The Octagon Gallery",
+        "opening_hours": "Mo-Su 09:00-19:00",
+        "operator": "University College London",
+        "operator:type": "university",
+        "toilets:wheelchair": "no",
+        "tourism": "gallery",
+        "website": "https://www.ucl.ac.uk/culture/octagon",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": 1156568777,
+      "name": "October Gallery",
+      "lat": 51.5206559,
+      "lon": -0.1217929,
+      "category": "culture",
+      "description": "October Gallery culture gallery",
+      "tags": {
+        "addr:city": "London",
+        "addr:country": "GB",
+        "addr:housenumber": "24",
+        "addr:postcode": "WC1N 3AL",
+        "addr:street": "Old Gloucester Street",
+        "check_date": "2026-03-05",
+        "entrance": "main",
+        "name": "October Gallery",
+        "opening_hours": "Tu-Sa 12:30-17:30",
+        "source": "survey;Bing 2012",
+        "source:addr:postcode": "signage",
+        "survey:date": "2014-08-30",
+        "tourism": "gallery",
+        "website": "https://www.octobergallery.co.uk/",
+        "wikidata": "Q7076994",
+        "wikipedia": "en:October Gallery"
+      }
+    },
+    {
+      "id": 1216160782,
+      "name": "Grant Museum of Zoology",
+      "lat": 51.523732,
+      "lon": -0.1342662,
+      "category": "culture",
+      "description": "Grant Museum of Zoology culture museum",
+      "tags": {
+        "addr:city": "London",
+        "addr:housename": "Rockefeller Building",
+        "addr:housenumber": "21",
+        "addr:postcode": "WC1E 6DE",
+        "addr:street": "University Street",
+        "check_date": "2026-07-09",
+        "email": "museums@ucl.ac.uk",
+        "fee": "no",
+        "museum": "nature",
+        "name": "Grant Museum of Zoology",
+        "opening_hours": "Tu-Fr 13:00-17:00; Sa 11:00-17:00; Su,Mo,PH off",
+        "tourism": "museum",
+        "website": "https://www.ucl.ac.uk/museums-collections/ucl-grant-museum-zoology",
+        "wheelchair": "limited",
+        "wikidata": "Q5596372",
+        "wikimedia_commons": "Category:Grant Museum of Zoology and Comparative Anatomy",
+        "wikipedia": "en:Grant Museum of Zoology and Comparative Anatomy"
+      }
+    },
+    {
+      "id": 1265086991,
+      "name": "Albion Jeune",
+      "lat": 51.5169973,
+      "lon": -0.1418644,
+      "category": "culture",
+      "description": "Albion Jeune culture gallery",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "16-17",
+        "addr:street": "Little Portland Street",
+        "fee": "no",
+        "name": "Albion Jeune",
+        "tourism": "gallery"
+      }
+    },
+    {
+      "id": 1266124468,
+      "name": "Ratiu Foundation",
+      "lat": 51.5165154,
+      "lon": -0.1533588,
+      "category": "culture",
+      "description": "Ratiu Foundation culture Romanian Cultural Centre arts centre",
+      "tags": {
+        "amenity": "arts_centre",
+        "description": "Romanian Cultural Centre",
+        "name": "Ratiu Foundation"
+      }
+    },
+    {
+      "id": 1289223308,
+      "name": "The King's Gallery",
+      "lat": 51.4998279,
+      "lon": -0.142551,
+      "category": "culture",
+      "description": "The King's Gallery culture museum",
+      "tags": {
+        "fee": "yes",
+        "fee:conditional": "no @ (age < 5)",
+        "name": "The King's Gallery",
+        "outdoor_seating": "no",
+        "tourism": "museum",
+        "website": "https://www.rct.uk/visit/the-kings-gallery-buckingham-palace",
+        "wheelchair": "yes",
+        "wikidata": "Q1434767",
+        "wikipedia": "en:King's Gallery"
+      }
+    },
+    {
+      "id": 1493424622,
+      "name": "Handel & Hendrix",
+      "lat": 51.5129421,
+      "lon": -0.1458842,
+      "category": "culture",
+      "description": "Handel & Hendrix culture museum",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "25",
+        "addr:street": "Brook Street",
+        "fee": "yes",
+        "name": "Handel & Hendrix",
+        "tourism": "museum",
+        "website": "https://handelhendrix.org/",
+        "wikidata": "Q2920095",
+        "wikipedia": "en:Handel & Hendrix in London"
+      }
+    },
+    {
+      "id": 1731830617,
+      "name": "SOAS Gallery",
+      "lat": 51.521796,
+      "lon": -0.1287326,
+      "category": "culture",
+      "description": "SOAS Gallery culture museum",
+      "tags": {
+        "addr:city": "London",
+        "addr:postcode": "WC1H 0XG",
+        "addr:street": "Thornhaugh Street",
+        "check_date": "2026-01-31",
+        "fee": "no",
+        "name": "SOAS Gallery",
+        "opening_hours": "Tu-Sa 10:30-17:00; Th 10:30-20:00",
+        "operator": "SOAS",
+        "operator:type": "university",
+        "tourism": "museum",
+        "was:name": "Brunei Gallery",
+        "website": "https://www.soas.ac.uk/gallery/"
+      }
+    },
+    {
+      "id": 1961633388,
+      "name": "Laura Bartlett Gallery",
+      "lat": 51.5222701,
+      "lon": -0.1144587,
+      "category": "culture",
+      "description": "Laura Bartlett Gallery culture gallery",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "10",
+        "addr:postcode": "WC1N 2JG",
+        "addr:street": "Northington Street",
+        "name": "Laura Bartlett Gallery",
+        "phone": "+44 20 7404 9251",
+        "source": "leaflet",
+        "tourism": "gallery",
+        "website": "https://laurabartlettgallery.com/"
+      }
+    },
+    {
+      "id": 1961633395,
+      "name": "Domobaal",
+      "lat": 51.5215827,
+      "lon": -0.114798,
+      "category": "culture",
+      "description": "Domobaal culture gallery",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "3",
+        "addr:postcode": "WC1N 2ES",
+        "addr:street": "John Street",
+        "name": "Domobaal",
+        "phone": "+44 20 7242 9604",
+        "source": "leaflet",
+        "tourism": "gallery",
+        "website": "https://domobaal.com/"
+      }
+    },
+    {
+      "id": 1961640574,
+      "name": "Maria Stenfors",
+      "lat": 51.5258778,
+      "lon": -0.1149176,
+      "category": "culture",
+      "description": "Maria Stenfors culture gallery",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "21",
+        "addr:postcode": "WC1X 0HF",
+        "addr:street": "Wren Street",
+        "fixme": "Website broken. Survey in person may be necessary",
+        "name": "Maria Stenfors",
+        "phone": "+44 20 7837 0819",
+        "source": "leaflet",
+        "tourism": "gallery"
+      }
+    },
+    {
+      "id": 2145826681,
+      "name": "Comedy Store",
+      "lat": 51.5101213,
+      "lon": -0.1322569,
+      "category": "culture",
+      "description": "Comedy Store culture theatre",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "7",
+        "addr:postcode": "SW1Y 4EE",
+        "addr:street": "Oxendon Street",
+        "amenity": "theatre",
+        "fhrs:confidence_management": "5",
+        "fhrs:hygiene": "0",
+        "fhrs:id": "413473",
+        "fhrs:local_authority_id": "01210/0007/0/000",
+        "fhrs:rating": "5",
+        "fhrs:structural": "0",
+        "name": "Comedy Store",
+        "source:addr": "FSA Food Hygiene Ratings Database",
+        "source:postcode": "FSA Food Hygiene Ratings Database",
+        "theatre:genre": "stand_up_comedy",
+        "wheelchair": "limited",
+        "wikidata": "Q3520352"
+      }
+    },
+    {
+      "id": 2407075721,
+      "name": "Clarendon",
+      "lat": 51.5112033,
+      "lon": -0.1257608,
+      "category": "culture",
+      "description": "Clarendon culture gallery",
+      "tags": {
+        "name": "Clarendon",
+        "tourism": "gallery"
+      }
+    },
+    {
+      "id": 2434611707,
+      "name": "Atlas Gallery",
+      "lat": 51.5195211,
+      "lon": -0.1552886,
+      "category": "culture",
+      "description": "Atlas Gallery culture ATLAS specialises in classic and modern 20th Century vintage photography, photo-journalism and fashion photography. gallery",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "49",
+        "addr:postcode": "W1U 7NF",
+        "addr:street": "Dorset Street",
+        "description": "ATLAS specialises in classic and modern 20th Century vintage photography, photo-journalism and fashion photography.",
+        "email": "info@atlasgallery.com",
+        "fee": "no",
+        "name": "Atlas Gallery",
+        "opening_hours": "Mo-Fr 10:00-18:00; Sa 11:00-17:00",
+        "phone": "+44 20 7224 4192",
+        "tourism": "gallery",
+        "website": "https://www.atlasgallery.com"
+      }
+    },
+    {
+      "id": 2617232245,
+      "name": "British Library Exhibition Space",
+      "lat": 51.5295982,
+      "lon": -0.1281295,
+      "category": "culture",
+      "description": "British Library Exhibition Space culture museum",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "96",
+        "addr:street": "Euston Road",
+        "check_date": "2026-09-03",
+        "fee": "yes",
+        "name": "British Library Exhibition Space",
+        "opening_hours": "Jan-Dec: Mo, We-Fr 10:00-18:00; Jan-Dec: Tu 10:00-20:00; Sa 11:00-17:00; Su, PH off",
+        "phone": "+44 1937546546",
+        "toilets:wheelchair": "yes",
+        "tourism": "museum",
+        "website": "https://www.bl.uk/",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "id": 2617821322,
+      "name": "Wellcome Collection",
+      "lat": 51.5259739,
+      "lon": -0.1340195,
+      "category": "culture",
+      "description": "Wellcome Collection culture museum",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "183",
+        "addr:postcode": "NW1 2BE",
+        "addr:street": "Euston Road",
+        "check_date": "2025-11-21",
+        "check_date:opening_hours": "2023-09-05",
+        "email": "info@wellcomecollection.org",
+        "entrance": "main",
+        "fee": "no",
+        "name": "Wellcome Collection",
+        "opening_hours": "Tu-We,Fr-Su 10:00-18:00; Th 10:00-20:00",
+        "opening_hours:url": "https://wellcomecollection.org/visit-us/opening-times",
+        "phone": "+44 20 7611 2222",
+        "source": "unknown;survey",
+        "toilets:wheelchair": "yes",
+        "tourism": "museum",
+        "website": "http://www.wellcomecollection.org",
+        "wheelchair": "yes",
+        "wikidata": "Q7981191",
+        "wikimedia_commons": "Category:Wellcome Collection",
+        "wikipedia": "en:Wellcome Collection"
+      }
+    },
+    {
+      "id": 2622783204,
+      "name": "Fitzroy House",
+      "lat": 51.5225232,
+      "lon": -0.1391153,
+      "category": "culture",
+      "description": "Fitzroy House culture museum",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "37",
+        "addr:street": "Fitzroy Street",
+        "email": "info@fitzroyhouse.org",
+        "fee": "no",
+        "museum": "person",
+        "name": "Fitzroy House",
+        "opening_hours": "\"by appointment\"",
+        "operator": "Church of Scientology",
+        "operator:type": "private",
+        "phone": "+44 20 7255 2422",
+        "subject:wikidata": "Q216896",
+        "tourism": "museum",
+        "website": "https://www.fitzroyhouse.org/"
+      }
+    },
+    {
+      "id": 2647639741,
+      "name": "The Courtauld Gallery",
+      "lat": 51.5116244,
+      "lon": -0.1177002,
+      "category": "culture",
+      "description": "The Courtauld Gallery culture gallery art gallery",
+      "tags": {
+        "addr:city": "London",
+        "addr:postcode": "WC2R 1LA",
+        "addr:street": "Strand",
+        "amenity": "art_gallery",
+        "fee": "yes",
+        "name": "The Courtauld Gallery",
+        "opening_hours": "Mo-Su 10:00-18:00",
+        "operator": "The Courtauld Institute of Art",
+        "phone": "+44 20 7848 2526",
+        "toilets:wheelchair": "yes",
+        "tourism": "gallery",
+        "website": "https://courtauld.ac.uk/gallery/",
+        "wheelchair": "yes",
+        "wikidata": "Q12110695",
+        "wikipedia": "en:Courtauld Gallery"
+      }
+    },
+    {
+      "id": 2972228375,
+      "name": "diorama",
+      "lat": 51.5258142,
+      "lon": -0.1403557,
+      "category": "culture",
+      "description": "diorama culture arts centre",
+      "tags": {
+        "amenity": "arts_centre",
+        "name": "diorama"
+      }
+    },
+    {
+      "id": 3071849134,
+      "name": "St. Art Gallery",
+      "lat": 51.5165407,
+      "lon": -0.1390642,
+      "category": "culture",
+      "description": "St. Art Gallery culture gallery",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "36",
+        "addr:street": "Eastcastle Street",
+        "name": "St. Art Gallery",
+        "tourism": "gallery"
+      }
+    },
+    {
+      "id": 3071849234,
+      "name": "Pipeline",
+      "lat": 51.5165688,
+      "lon": -0.1389204,
+      "category": "culture",
+      "description": "Pipeline culture gallery",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "34",
+        "addr:postcode": "W1W 8DW",
+        "addr:street": "Eastcastle Street",
+        "name": "Pipeline",
+        "source:addr": "FHRS Open Data",
+        "tourism": "gallery"
+      }
+    },
+    {
+      "id": 3349882188,
+      "name": "Hunterian Museum",
+      "lat": 51.5152831,
+      "lon": -0.1158701,
+      "category": "culture",
+      "description": "Hunterian Museum culture museum",
+      "tags": {
+        "addr:city": "London",
+        "addr:housename": "Royal College of Surgeons",
+        "addr:housenumber": "35-43",
+        "addr:postcode": "WC2A 3PE",
+        "addr:street": "Lincoln's Inn Fields",
+        "check_date": "2025-06-19",
+        "fee": "no",
+        "name": "Hunterian Museum",
+        "opening_hours": "Tu-Sa 10:00-17:00",
+        "tourism": "museum",
+        "website": "https://hunterianmuseum.org/",
+        "wikidata": "Q48032180",
+        "wikipedia": "en:Hunterian Museum, London"
+      }
+    },
+    {
+      "id": 3531929147,
+      "name": "Gloucester Room",
+      "lat": 51.5187806,
+      "lon": -0.1511463,
+      "category": "culture",
+      "description": "Gloucester Room culture gallery",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "5",
+        "addr:postcode": "W1G 8UT",
+        "addr:street": "New Cavendish Street",
+        "fee": "no",
+        "name": "Gloucester Room",
+        "tourism": "gallery"
+      }
+    },
+    {
+      "id": 3758690563,
+      "name": "Leicester Square Theatre",
+      "lat": 51.5113093,
+      "lon": -0.1300926,
+      "category": "culture",
+      "description": "Leicester Square Theatre culture theatre",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "6",
+        "addr:postcode": "WC2H 7BX",
+        "addr:street": "Leicester Place",
+        "amenity": "theatre",
+        "check_date": "2025-04-09",
+        "name": "Leicester Square Theatre",
+        "phone": "+44 20 7734 2222",
+        "website": "https://www.leicestersquaretheatre.com/",
+        "wheelchair": "limited",
+        "wikidata": "Q14993771"
+      }
+    },
+    {
+      "id": 3916613190,
+      "name": "Sherlock Holmes Museum",
+      "lat": 51.5237629,
+      "lon": -0.1584743,
+      "category": "culture",
+      "description": "Sherlock Holmes Museum culture museum",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "221B",
+        "addr:postcode": "NW1 6XE",
+        "addr:street": "Baker Street",
+        "fee": "yes",
+        "level": "0-1",
+        "name": "Sherlock Holmes Museum",
+        "name:en": "Sherlock Holmes Museum",
+        "name:zh": "福爾摩斯博物館",
+        "opening_hours": "Mo-Su 09:30-18:00",
+        "phone": "+44 20 7224 3688",
+        "tourism": "museum",
+        "website": "https://www.sherlock-holmes.co.uk/",
+        "wheelchair": "no",
+        "wikidata": "Q1990172",
+        "wikipedia": "en:Sherlock Holmes Museum"
+      }
+    },
+    {
+      "id": 4038877608,
+      "name": "Hello Love",
+      "lat": 51.5195399,
+      "lon": -0.1215541,
+      "category": "culture",
+      "description": "Hello Love culture gallery",
+      "tags": {
+        "check_date": "2025-12-07",
+        "fee": "no",
+        "name": "Hello Love",
+        "tourism": "gallery",
+        "website": "https://www.hellolove.org/"
+      }
+    },
+    {
+      "id": 4270562972,
+      "name": "Frith Street Gallery",
+      "lat": 51.5142238,
+      "lon": -0.1320704,
+      "category": "culture",
+      "description": "Frith Street Gallery culture gallery",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "60",
+        "addr:postcode": "W1D 3JJ",
+        "addr:street": "Frith Street",
+        "check_date": "2025-06-17",
+        "email": "info@frithstreetgallery.com",
+        "name": "Frith Street Gallery",
+        "opening_hours": "We-Fr 10:00-18:00; Sa 11:00-17:00",
+        "phone": "+44 20 7494 1550",
+        "tourism": "gallery",
+        "website": "https://www.frithstreetgallery.com/"
+      }
+    },
+    {
+      "id": 21593232,
+      "name": "The Last Judgement",
+      "lat": 51.5153316,
+      "lon": -0.1117428,
+      "category": "nightlife",
+      "description": "The Last Judgement nightlife pub",
+      "tags": {
+        "addr:city": "London",
+        "addr:country": "GB",
+        "addr:housenumber": "95",
+        "addr:postcode": "WC2A 1DT",
+        "addr:street": "Chancery Lane",
+        "amenity": "pub",
+        "check_date": "2023-03-25",
+        "fhrs:id": "1619261",
+        "food": "yes",
+        "name": "The Last Judgement",
+        "start_date": "2023-05-03",
+        "was:name": "The Knights Templar",
+        "was:wikidata": "Q88965904",
+        "wheelchair": "yes",
+        "wikidata": "Q88965904"
+      }
+    },
+    {
+      "id": 21593236,
+      "name": "Ship Tavern",
+      "lat": 51.5172518,
+      "lon": -0.1191791,
+      "category": "nightlife",
+      "description": "Ship Tavern nightlife pub",
+      "tags": {
+        "addr:city": "London",
+        "addr:country": "GB",
+        "addr:housenumber": "12",
+        "addr:postcode": "WC2A 3HP",
+        "addr:street": "Gate Street",
+        "amenity": "pub",
+        "check_date": "2023-04-18",
+        "contact:email": "info@theshiptavern.co.uk",
+        "contact:phone": "+44 20 7405 1992",
+        "diet:vegetarian": "yes",
+        "fhrs:id": "423859",
+        "fhrs:local_authority_id": "13830",
+        "food": "yes",
+        "indoor_seating": "yes",
+        "name": "Ship Tavern",
+        "outdoor_seating": "no",
+        "real_ale": "yes",
+        "smoking": "no",
+        "wikidata": "Q7497944",
+        "wikipedia": "en:Ship Tavern, Holborn"
+      }
+    },
+    {
+      "id": 25746185,
+      "name": "The Cheshire Cheese",
+      "lat": 51.5123895,
+      "lon": -0.1131849,
+      "category": "nightlife",
+      "description": "The Cheshire Cheese nightlife pub",
+      "tags": {
+        "addr:city": "London",
+        "addr:postcode": "WC2R 3LD",
+        "amenity": "pub",
+        "fhrs:confidence_management": "10",
+        "fhrs:hygiene": "10",
+        "fhrs:id": "412472",
+        "fhrs:local_authority_id": "00842/0005/0/000",
+        "fhrs:rating": "3",
+        "fhrs:structural": "10",
+        "food": "yes",
+        "name": "The Cheshire Cheese",
+        "opening_hours": "Mo-Sa 11:23:00; Su 12:00-22:00",
+        "phone": "+44 20 7836 2347",
+        "real_ale": "yes",
+        "smoking": "no",
+        "toilets": "yes",
+        "toilets:access": "customers",
+        "website": "https://www.cheshirecheese.pub/",
+        "wheelchair": "yes",
+        "wikidata": "Q27087707"
+      }
+    },
+    {
+      "id": 29039088,
+      "name": "The Queen's Larder",
+      "lat": 51.5212273,
+      "lon": -0.1225308,
+      "category": "nightlife",
+      "description": "The Queen's Larder nightlife pub",
+      "tags": {
+        "addr:city": "London",
+        "addr:postcode": "WC1N 3AR",
+        "amenity": "pub",
+        "check_date": "2026-03-05",
+        "indoor_seating": "yes",
+        "name": "The Queen's Larder",
+        "outdoor_seating": "yes",
+        "smoking": "no",
+        "source:addr:postcode": "code-point_open",
+        "wheelchair": "limited",
+        "wikidata": "Q26432040"
+      }
+    },
+    {
+      "id": 49311908,
+      "name": "The Volunteer",
+      "lat": 51.5239797,
+      "lon": -0.1585799,
+      "category": "nightlife",
+      "description": "The Volunteer nightlife pub",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "245-247",
+        "addr:street": "Baker Street",
+        "amenity": "pub",
+        "brewery": "various",
+        "check_date": "2025-01-22",
+        "indoor_seating": "yes",
+        "live_sport": "yes",
+        "microbrewery": "no",
+        "name": "The Volunteer",
+        "outdoor_seating": "yes",
+        "smoking": "outside",
+        "website": "https://www.thevolunteernw1.co.uk/",
+        "wheelchair": "limited",
+        "wikidata": "Q26639765"
+      }
+    },
+    {
+      "id": 169440015,
+      "name": "Cask & Glass",
+      "lat": 51.4985497,
+      "lon": -0.1402518,
+      "category": "nightlife",
+      "description": "Cask & Glass nightlife pub",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "39-41",
+        "addr:postcode": "SW1E 5HN",
+        "addr:street": "Palace Street",
+        "amenity": "pub",
+        "check_date": "2026-02-18",
+        "fhrs:id": "428051",
+        "name": "Cask & Glass",
+        "source:addr": "FHRS Open Data",
+        "toilets": "yes",
+        "toilets:access": "customers"
+      }
+    },
+    {
+      "id": 246518042,
+      "name": "Walkers of Whitehall",
+      "lat": 51.5067276,
+      "lon": -0.1269618,
+      "category": "nightlife",
+      "description": "Walkers of Whitehall nightlife pub",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "15",
+        "addr:postcode": "SW1A 2DD",
+        "addr:street": "Craig's Court",
+        "amenity": "pub",
+        "fhrs:id": "1784337",
+        "fhrs:local_authority_id": "00881/0015/0/004",
+        "live_sport": "yes",
+        "name": "Walkers of Whitehall",
+        "source:addr": "FHRS Open Data",
+        "source:postcode": "FSA Food Hygiene Ratings Database"
+      }
+    },
+    {
+      "id": 246519847,
+      "name": "Halfway II Heaven",
+      "lat": 51.5084752,
+      "lon": -0.1267238,
+      "category": "nightlife",
+      "description": "Halfway II Heaven nightlife pub",
+      "tags": {
+        "addr:city": "London",
+        "addr:country": "GB",
+        "addr:housenumber": "7",
+        "addr:postcode": "WC2N 4JF",
+        "addr:street": "Duncannon Street",
+        "amenity": "pub",
+        "brewery": "various",
+        "check_date": "2026-01-17",
+        "contact:facebook": "https://www.facebook.com/HalfwaytoHeaven",
+        "contact:instagram": "https://www.instagram.com/onlyathalfway/",
+        "contact:twitter": "https://twitter.com/onlyathalfway",
+        "email": "halfwaytoheaven.london@stonegatepubs.com",
+        "fhrs:id": "411372",
+        "indoor_seating": "yes",
+        "internet_access": "wlan",
+        "lgbtq": "primary",
+        "name": "Halfway II Heaven",
+        "opening_hours": "Mo-Th 12:00-23:00; Fr, Sa 12:00-01:00; Su 12:00-20:00",
+        "operator": "Stonegate",
+        "operator:wikidata": "Q7619176",
+        "outdoor_seating": "no",
+        "payment:american_express": "yes",
+        "phone": "+44 20 7484 0736",
+        "toilets": "yes",
+        "toilets:access": "customers",
+        "toilets:female": "yes",
+        "toilets:male": "yes",
+        "toilets:unisex": "no",
+        "toilets:wheelchair": "no",
+        "website": "https://www.halfway2heaven.net/london",
+        "wheelchair": "limited",
+        "wikimedia_commons": "File:Halfway II Heaven, Trafalgar Square, WC2 (3614629275).jpg"
+      }
+    },
+    {
+      "id": 255747947,
+      "name": "The George IV",
+      "lat": 51.5147063,
+      "lon": -0.1168421,
+      "category": "nightlife",
+      "description": "The George IV nightlife pub",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "31",
+        "addr:postcode": "WC2A 2HF",
+        "addr:street": "Portugal Street",
+        "amenity": "pub",
+        "check_date": "2026-09-07",
+        "contact:phone": "+44 20 7955 7743",
+        "contact:website": "http://www.lse.ac.uk/intranet/LSEServices/cateringServices/restaurantsAndCafes/georgeIVPub.aspx",
+        "image": "https://en.wikipedia.org/wiki/File:Lse_george_iv.jpg",
+        "indoor_seating": "yes",
+        "level": "0;1",
+        "loc_name": "The George",
+        "name": "The George IV",
+        "opening_hours": "12:00-24:00",
+        "operator": "London School of Economics and Political Science (LSE)",
+        "outdoor_seating": "yes",
+        "smoking": "outside",
+        "toilets": "yes",
+        "toilets:access": "customers",
+        "toilets:wheelchair": "no",
+        "wheelchair": "limited",
+        "wheelchair:description": "Access through door on Portsmouth Street;no disabled toilet but nearby LSE library's toilet is available"
+      }
+    },
+    {
+      "id": 257937397,
+      "name": "The Grafton Arms",
+      "lat": 51.5231854,
+      "lon": -0.138689,
+      "category": "nightlife",
+      "description": "The Grafton Arms nightlife pub",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "72",
+        "addr:postcode": "W1T 5DU",
+        "addr:street": "Grafton Way",
+        "amenity": "pub",
+        "check_date": "2026-06-24",
+        "fhrs:id": "426441",
+        "indoor_seating": "yes",
+        "name": "The Grafton Arms",
+        "outdoor_seating": "yes",
+        "roof_terrace": "yes",
+        "source:addr": "FHRS Open Data",
+        "website": "https://www.graftonarms.co.uk/"
+      }
+    },
+    {
+      "id": 259774303,
+      "name": "Running Horse",
+      "lat": 51.5131349,
+      "lon": -0.1484154,
+      "category": "nightlife",
+      "description": "Running Horse nightlife pub",
+      "tags": {
+        "amenity": "pub",
+        "name": "Running Horse",
+        "wikidata": "Q27084619"
+      }
+    },
+    {
+      "id": 259774404,
+      "name": "The Windmill",
+      "lat": 51.5124213,
+      "lon": -0.1422011,
+      "category": "nightlife",
+      "description": "The Windmill nightlife pub",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "6-8",
+        "addr:street": "Mill Street",
+        "amenity": "pub",
+        "name": "The Windmill",
+        "website": "https://www.youngs.co.uk/"
+      }
+    },
+    {
+      "id": 266324793,
+      "name": "Hole In the Wall",
+      "lat": 51.5041063,
+      "lon": -0.1137203,
+      "category": "nightlife",
+      "description": "Hole In the Wall nightlife pub",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "5",
+        "addr:postcode": "SE1 8SQ",
+        "addr:street": "Mepham Street",
+        "amenity": "pub",
+        "check_date": "2026-09-20",
+        "fhrs:id": "484318",
+        "live_sport": "yes",
+        "name": "Hole In the Wall",
+        "payment:cash": "yes",
+        "payment:credit_cards": "yes",
+        "payment:debit_cards": "yes",
+        "toilets": "yes",
+        "toilets:access": "customers",
+        "wheelchair": "no",
+        "wikidata": "Q108464970"
+      }
+    },
+    {
+      "id": 266680230,
+      "name": "The Crown and Anchor",
+      "lat": 51.5139755,
+      "lon": -0.1249853,
+      "category": "nightlife",
+      "description": "The Crown and Anchor nightlife pub",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "22",
+        "addr:postcode": "WC2H 9PS",
+        "addr:street": "Neal Street",
+        "amenity": "pub",
+        "fhrs:id": "952263",
+        "live_sport": "yes",
+        "name": "The Crown and Anchor",
+        "phone": "+44 20 7836 5649",
+        "real_ale": "yes",
+        "source:addr": "FSA Food Hygiene Rating Scheme open data",
+        "toilets": "yes",
+        "toilets:access": "customers",
+        "wheelchair": "yes",
+        "wikidata": "Q18207855"
+      }
+    },
+    {
+      "id": 271949863,
+      "name": "The Adam & Eve",
+      "lat": 51.5165073,
+      "lon": -0.1373884,
+      "category": "nightlife",
+      "description": "The Adam & Eve nightlife pub",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "77A",
+        "addr:postcode": "W1T 3QQ",
+        "addr:street": "Wells Street",
+        "amenity": "pub",
+        "check_date": "2025-08-26",
+        "fhrs:id": "427765",
+        "food": "yes",
+        "indoor_seating": "yes",
+        "live_sport": "yes",
+        "name": "The Adam & Eve",
+        "old_name": "Ben Crouches Tavern",
+        "outdoor_seating": "yes",
+        "phone": "+44 20 7636 0717",
+        "source:addr": "FHRS Open Data",
+        "toilets": "yes",
+        "toilets:access": "customers",
+        "website": "https://www.theadamandevew1.co.uk/"
+      }
+    },
+    {
+      "id": 287553265,
+      "name": "Munich Cricket Club",
+      "lat": 51.4981992,
+      "lon": -0.1324675,
+      "category": "nightlife",
+      "description": "Munich Cricket Club nightlife german pub",
+      "tags": {
+        "addr:city": "London",
+        "addr:country": "GB",
+        "addr:housenumber": "1",
+        "addr:postcode": "SW1P 2LU",
+        "addr:street": "Abbey Orchard Street",
+        "amenity": "pub",
+        "brewery": "yes",
+        "cuisine": "german",
+        "fhrs:id": "1156885",
+        "indoor_seating": "yes",
+        "level": "-1",
+        "name": "Munich Cricket Club",
+        "outdoor_seating": "no"
+      }
+    },
+    {
+      "id": 295905009,
+      "name": "Bbar",
+      "lat": 51.4981242,
+      "lon": -0.1434293,
+      "category": "nightlife",
+      "description": "Bbar nightlife pub",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "43",
+        "addr:postcode": "SW1W 0PP",
+        "addr:street": "Buckingham Palace Road",
+        "amenity": "pub",
+        "check_date": "2026-02-21",
+        "fhrs:confidence_management": "20",
+        "fhrs:hygiene": "10",
+        "fhrs:id": "412685",
+        "fhrs:local_authority_id": "00915/0023/0/000",
+        "fhrs:rating": "1",
+        "fhrs:structural": "5",
+        "name": "Bbar",
+        "outdoor_seating": "yes",
+        "source": "TMJ-Mobile_0.6.2",
+        "website": "https://www.bbarlondon.com/"
+      }
+    },
+    {
+      "id": 296889741,
+      "name": "Shaker and Company",
+      "lat": 51.5283514,
+      "lon": -0.1389467,
+      "category": "nightlife",
+      "description": "Shaker and Company nightlife pub",
+      "tags": {
+        "amenity": "pub",
+        "name": "Shaker and Company",
+        "source": "TMJ-Mobile_0.6.2"
+      }
+    },
+    {
+      "id": 298347049,
+      "name": "Skinners Arms",
+      "lat": 51.5281822,
+      "lon": -0.1251425,
+      "category": "nightlife",
+      "description": "Skinners Arms nightlife pub",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "114",
+        "addr:postcode": "WC1H 9NT",
+        "addr:street": "Judd Street",
+        "amenity": "pub",
+        "brewery": "various",
+        "check_date": "2024-10-22",
+        "email": "skinnersarms@douglasinns.co.uk",
+        "fhrs:id": "424267",
+        "food": "yes",
+        "indoor_seating": "yes",
+        "name": "Skinners Arms",
+        "outdoor_seating": "yes",
+        "payment:credit_cards": "yes",
+        "payment:debit_cards": "yes",
+        "phone": "+442078376521",
+        "smoking": "outside",
+        "source:addr": "FHRS Open Data",
+        "website": "https://skinnersarmslondon.com/"
+      }
+    },
+    {
+      "id": 298347050,
+      "name": "The Boot",
+      "lat": 51.527567,
+      "lon": -0.1241966,
+      "category": "nightlife",
+      "description": "The Boot nightlife billiards pub",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "116",
+        "addr:postcode": "WC1H 8BS",
+        "addr:street": "Cromer Street",
+        "amenity": "pub",
+        "check_date": "2025-06-07",
+        "fhrs:id": "426351",
+        "indoor_seating": "yes",
+        "live_sport": "yes",
+        "name": "The Boot",
+        "opening_hours": "Mo-Sa 12:00-23:00; Su 12:00-22:30",
+        "outdoor_seating": "yes",
+        "source": "survey",
+        "source:postcode": "FHRS Open Data",
+        "sport": "billiards",
+        "wikidata": "Q7719374",
+        "wikimedia_commons": "Category:The Boot, Kings Cross",
+        "wikipedia": "en:The Boot, Cromer Street"
+      }
+    },
+    {
+      "id": 300500863,
+      "name": "The Victory",
+      "lat": 51.5292754,
+      "lon": -0.1439959,
+      "category": "nightlife",
+      "description": "The Victory nightlife pub",
+      "tags": {
+        "amenity": "pub",
+        "name": "The Victory",
+        "source": "TMJ-Mobile_0.6.2",
+        "wheelchair": "limited"
+      }
+    },
+    {
+      "id": 303585906,
+      "name": "The Retro Bar",
+      "lat": 51.5091024,
+      "lon": -0.1235665,
+      "category": "nightlife",
+      "description": "The Retro Bar nightlife pub",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "2",
+        "addr:postcode": "WC2N 6HH",
+        "addr:street": "George Court",
+        "amenity": "pub",
+        "contact:phone": "+44 20 7839 8760",
+        "fhrs:confidence_management": "5",
+        "fhrs:hygiene": "0",
+        "fhrs:id": "414454",
+        "fhrs:local_authority_id": "01796/4000/0/000",
+        "fhrs:rating": "5",
+        "fhrs:structural": "5",
+        "lgbtq": "primary",
+        "name": "The Retro Bar",
+        "opening_hours": "Mo-Th 16:00-23:00; Fr,Sa 14:00-23:00; Su 14:00-22:30",
+        "operator": "Stonegate",
+        "operator:wikidata": "Q7619176",
+        "payment:american_express": "yes",
+        "real_ale": "no",
+        "toilets": "yes",
+        "toilets:access": "customers",
+        "toilets:female": "yes",
+        "toilets:male": "yes",
+        "toilets:unisex": "no",
+        "toilets:wheelchair": "no",
+        "website": "https://www.retrobarlondon.co.uk/london",
+        "wheelchair": "no",
+        "wikimedia_commons": "File:The_Retro_Bar.jpg"
+      }
+    },
+    {
+      "id": 311153571,
+      "name": "The Red Lion",
+      "lat": 51.5056546,
+      "lon": -0.1376692,
+      "category": "nightlife",
+      "description": "The Red Lion nightlife pub",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "23",
+        "addr:postcode": "SW1A 1EA",
+        "addr:street": "Crown Passage",
+        "amenity": "pub",
+        "fhrs:id": "412441",
+        "name": "The Red Lion",
+        "wheelchair": "no",
+        "wikidata": "Q26319820"
+      }
+    },
+    {
+      "id": 311877348,
+      "name": "Dean's Bar",
+      "lat": 51.5209322,
+      "lon": -0.1231994,
+      "category": "nightlife",
+      "description": "Dean's Bar nightlife pub",
+      "tags": {
+        "amenity": "pub",
+        "name": "Dean's Bar",
+        "toilets": "yes",
+        "toilets:access": "customers"
+      }
+    },
+    {
+      "id": 312159181,
+      "name": "The Albany",
+      "lat": 51.523319,
+      "lon": -0.143984,
+      "category": "nightlife",
+      "description": "The Albany nightlife soccer pub",
+      "tags": {
+        "addr:city": "London",
+        "addr:floor": "G",
+        "addr:housenumber": "240-242",
+        "addr:postcode": "W1W 5QU",
+        "addr:street": "Great Portland Street",
+        "amenity": "pub",
+        "brewery": "various",
+        "check_date": "2026-02-04",
+        "diet:vegan": "yes",
+        "diet:vegetarian": "yes",
+        "fhrs:confidence_management": "0",
+        "fhrs:hygiene": "0",
+        "fhrs:id": "427851",
+        "fhrs:local_authority_id": "00603/0240/0/000",
+        "fhrs:rating": "2",
+        "fhrs:structural": "15",
+        "food": "yes",
+        "indoor_seating": "yes",
+        "level": "0",
+        "live_sport": "yes",
+        "name": "The Albany",
+        "outdoor_seating": "no",
+        "payment:american_express": "yes",
+        "payment:cash": "yes",
+        "payment:mastercard": "yes",
+        "payment:visa": "yes",
+        "payment:visa_debit": "yes",
+        "source:addr": "FSA Food Hygiene Ratings Database",
+        "source:postcode": "FSA Food Hygiene Ratings Database",
+        "sport": "soccer",
+        "toilets": "yes",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": 313349354,
+      "name": "100 Club",
+      "lat": 51.5161082,
+      "lon": -0.1353568,
+      "category": "nightlife",
+      "description": "100 Club nightlife nightclub",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "100",
+        "addr:postcode": "W1D 1LL",
+        "addr:street": "Oxford Street",
+        "amenity": "nightclub",
+        "check_date": "2025-02-02",
+        "fhrs:id": "427714",
+        "fhrs:local_authority_id": "00159/0100/0/001",
+        "level": "-1",
+        "live_music": "yes",
+        "name": "100 Club",
+        "payment:credit_cards": "yes",
+        "payment:debit_cards": "yes",
+        "source:postcode": "FSA Food Hygiene Ratings Database",
+        "toilets": "yes",
+        "toilets:access": "customers",
+        "toilets:wheelchair": "no",
+        "website": "https://www.the100club.co.uk/",
+        "wikidata": "Q8535",
+        "wikipedia": "en:100 Club"
+      }
+    },
+    {
+      "id": 338463555,
+      "name": "The Argyle",
+      "lat": 51.5190993,
+      "lon": -0.1088628,
+      "category": "nightlife",
+      "description": "The Argyle nightlife pub",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "1",
+        "addr:postcode": "EC1N 8PQ",
+        "addr:street": "Greville Street",
+        "amenity": "pub",
+        "check_date": "2023-07-03",
+        "fhrs:id": "423791",
+        "indoor_seating": "yes",
+        "name": "The Argyle",
+        "opening_hours": "Mo-Fr 11:30-23:00, Sa 12:00-20:00",
+        "outdoor_seating": "yes",
+        "source:addr": "FSA Food Hygiene Rating Scheme open data",
+        "toilets": "yes",
+        "toilets:access": "customers"
+      }
+    },
+    {
+      "id": 338504993,
+      "name": "Horse and Wig",
+      "lat": 51.5190282,
+      "lon": -0.1135508,
+      "category": "nightlife",
+      "description": "Horse and Wig nightlife pub",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "14",
+        "addr:postcode": "WC1V 6HZ",
+        "addr:street": "Fulwood Place",
+        "amenity": "pub",
+        "check_date": "2026-09-07",
+        "fhrs:id": "1066607",
+        "name": "Horse and Wig",
+        "website": "https://www.horseandwig.com/"
+      }
+    },
+    {
+      "id": 338505255,
+      "name": "Davy's Wine House",
+      "lat": 51.5182305,
+      "lon": -0.1153431,
+      "category": "nightlife",
+      "description": "Davy's Wine House nightlife bar",
+      "tags": {
+        "amenity": "bar",
+        "name": "Davy's Wine House",
+        "note": "posh wine bar",
+        "wheelchair": "limited"
+      }
+    },
+    {
+      "id": 344084670,
+      "name": "Craft Beer Co.",
+      "lat": 51.515637,
+      "lon": -0.125979,
+      "category": "nightlife",
+      "description": "Craft Beer Co. nightlife pub",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "168",
+        "addr:postcode": "WC1V 7AA",
+        "addr:street": "High Holborn",
+        "amenity": "pub",
+        "check_date": "2026-07-01",
+        "craft_keg": "yes",
+        "fhrs:id": "993196",
+        "food": "yes",
+        "level": "-1;0",
+        "name": "Craft Beer Co.",
+        "opening_hours": "Su-We 12:00-00:00;Th-Sa 12:00-01:00",
+        "payment:cash": "yes",
+        "payment:credit_cards": "yes",
+        "payment:debit_cards": "yes",
+        "real_ale": "yes",
+        "website": "http://thecraftbeerco.com/pubs/coventgarden/"
+      }
+    },
+    {
+      "id": 344652892,
+      "name": "Riley's",
+      "lat": 51.507901,
+      "lon": -0.131531,
+      "category": "nightlife",
+      "description": "Riley's nightlife bar",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "80",
+        "addr:postcode": "SW1Y 4TE",
+        "addr:street": "Haymarket",
+        "amenity": "bar",
+        "fhrs:confidence_management": "5",
+        "fhrs:hygiene": "0",
+        "fhrs:id": "410895",
+        "fhrs:local_authority_id": "00095/0080/1/023",
+        "fhrs:rating": "5",
+        "fhrs:structural": "5",
+        "name": "Riley's",
+        "source:addr": "FSA Food Hygiene Ratings Database",
+        "source:postcode": "FSA Food Hygiene Ratings Database",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": 345871050,
+      "name": "Rockwell",
+      "lat": 51.5073963,
+      "lon": -0.1291207,
+      "category": "nightlife",
+      "description": "Rockwell nightlife pub",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "2",
+        "addr:postcode": "SW1A 2TS",
+        "addr:street": "Spring Gardens",
+        "amenity": "pub",
+        "check_date": "2025-11-07",
+        "contact:phone": "+44 20 7870 2900",
+        "level": "0",
+        "name": "Rockwell",
+        "note": "part of The Trafalgar St. James Hotel",
+        "payment:apple_pay": "yes",
+        "payment:cash": "yes",
+        "payment:contactless": "yes",
+        "payment:credit_cards": "yes",
+        "payment:debit_cards": "yes",
+        "payment:google_pay": "yes",
+        "smoking": "no",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": 345886748,
+      "name": "Champagne Charlies",
+      "lat": 51.5078488,
+      "lon": -0.1241116,
+      "category": "nightlife",
+      "description": "Champagne Charlies nightlife bar",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "17",
+        "addr:postcode": "WC2N 6NG",
+        "addr:street": "The Arches",
+        "amenity": "bar",
+        "fhrs:id": "428163",
+        "fhrs:local_authority_id": "01650/0017/0/000",
+        "fhrs:rating": "4",
+        "indoor_seating": "yes",
+        "layer": "-1",
+        "name": "Champagne Charlies",
+        "operator": "Davy's",
+        "outdoor_seating": "no",
+        "real_ale": "yes",
+        "source:addr": "FSA Food Hygiene Ratings Database",
+        "source:postcode": "FSA Food Hygiene Ratings Database"
+      }
+    },
+    {
+      "id": 345887283,
+      "name": "Heaven",
+      "lat": 51.507865,
+      "lon": -0.1245597,
+      "category": "nightlife",
+      "description": "Heaven nightlife nightclub",
+      "tags": {
+        "addr:city": "London",
+        "addr:country": "GB",
+        "addr:housename": "The Arches",
+        "addr:housenumber": "10A",
+        "addr:postcode": "WC2N 6NG",
+        "addr:street": "Villiers Street",
+        "amenity": "nightclub",
+        "contact:email": "info@heavennightclublondon.com",
+        "contact:facebook": "G-A-Y-Heaven-Nightclub-148376865200372",
+        "contact:instagram": "heavenlgbtclub",
+        "contact:phone": "+44 20 7930 2020",
+        "fhrs:id": "414369",
+        "layer": "-1",
+        "lgbtq": "primary",
+        "name": "Heaven",
+        "payment:american_express": "yes",
+        "payment:card_minimum": "10",
+        "postal_code": "WC2N 6NG",
+        "source:addr": "FHRS Open Data",
+        "website": "http://www.heavennightclub-london.com",
+        "wheelchair": "no",
+        "wheelchair:description": "For further information contact us at mark@heavennightclublondon.com or 0207 930 2020",
+        "wikidata": "Q5694616"
+      }
+    },
+    {
+      "id": 348867089,
+      "name": "Waxy's Little Sister",
+      "lat": 51.5111295,
+      "lon": -0.1318044,
+      "category": "nightlife",
+      "description": "Waxy's Little Sister nightlife pub",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "20",
+        "addr:postcode": "W1D 6QG",
+        "addr:street": "Wardour Street",
+        "amenity": "pub",
+        "check_date": "2026-02-12",
+        "fhrs:id": "412164",
+        "indoor_seating": "yes",
+        "name": "Waxy's Little Sister",
+        "outdoor_seating": "yes",
+        "payment:cash": "no",
+        "payment:credit_cards": "yes",
+        "payment:debit_cards": "yes",
+        "source:addr": "FHRS Open Data",
+        "source:postcode": "FHRS Open Data",
+        "wheelchair": "no",
+        "wikimedia_commons": "File:Wardour Street - Waxy's Little Sister pub.jpg"
+      }
+    },
+    {
+      "id": 247957874,
+      "name": "Brand Academy",
+      "lat": 51.5084239,
+      "lon": -0.1078879,
+      "category": "shopping",
+      "description": "Brand Academy shopping",
+      "tags": {
+        "addr:city": "London",
+        "addr:housename": "OXO Tower",
+        "addr:postcode": "SE1 9PH",
+        "addr:street": "The Queen's Walk",
+        "level": "0",
+        "name": "Brand Academy",
+        "shop": "gift"
+      }
+    },
+    {
+      "id": 345879041,
+      "name": "Majestic Gifts",
+      "lat": 51.5072048,
+      "lon": -0.1270862,
+      "category": "shopping",
+      "description": "Majestic Gifts shopping",
+      "tags": {
+        "addr:city": "London",
+        "addr:country": "GB",
+        "addr:housenumber": "1/4",
+        "addr:postcode": "SW1A 2DR",
+        "addr:street": "Charing Cross",
+        "name": "Majestic Gifts",
+        "shop": "gift"
+      }
+    },
+    {
+      "id": 345880058,
+      "name": "Maison Caledon",
+      "lat": 51.507159,
+      "lon": -0.1272474,
+      "category": "shopping",
+      "description": "Maison Caledon shopping",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "1",
+        "addr:postcode": "SW1A 2DD",
+        "addr:street": "Whitehall",
+        "name": "Maison Caledon",
+        "old_name": "Pret A Manger",
+        "shop": "gift"
+      }
+    },
+    {
+      "id": 348911998,
+      "name": "Peachy Den",
+      "lat": 51.5124556,
+      "lon": -0.1338386,
+      "category": "shopping",
+      "description": "Peachy Den shopping",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "10",
+        "addr:street": "Brewer Street",
+        "check_date": "2026-05-08",
+        "check_date:opening_hours": "2025-07-21",
+        "name": "Peachy Den",
+        "opening_hours:signed": "no",
+        "shop": "clothes",
+        "wheelchair": "limited"
+      }
+    },
+    {
+      "id": 401529127,
+      "name": "Kiltane",
+      "lat": 51.5127283,
+      "lon": -0.1286031,
+      "category": "shopping",
+      "description": "Kiltane shopping",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "80",
+        "addr:postcode": "WC2H 0BF",
+        "addr:street": "Charing Cross Road",
+        "check_date": "2026-02-19",
+        "name": "Kiltane",
+        "phone": "+44 20 7240 8190",
+        "shop": "clothes"
+      }
+    },
+    {
+      "id": 401529128,
+      "name": "Andy & Tuly",
+      "lat": 51.5126071,
+      "lon": -0.1285413,
+      "category": "shopping",
+      "description": "Andy & Tuly shopping",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "74",
+        "addr:street": "Charing Cross Road",
+        "contact:website": "http://www.andytuly.co.uk/",
+        "name": "Andy & Tuly",
+        "shop": "clothes"
+      }
+    },
+    {
+      "id": 401529131,
+      "name": "Strange",
+      "lat": 51.5124232,
+      "lon": -0.1284393,
+      "category": "shopping",
+      "description": "Strange shopping",
+      "tags": {
+        "clothes": "goth_accessories",
+        "name": "Strange",
+        "shop": "clothes",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": 452168084,
+      "name": "Green Valley",
+      "lat": 51.5151994,
+      "lon": -0.1622861,
+      "category": "shopping",
+      "description": "Green Valley shopping lebanese",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "36-37",
+        "addr:postcode": "W1H 5QF",
+        "addr:street": "Upper Berkeley Street",
+        "cuisine": "lebanese",
+        "fhrs:confidence_management": "0",
+        "fhrs:hygiene": "5",
+        "fhrs:id": "412133",
+        "fhrs:local_authority_id": "00674/0036/0/000",
+        "fhrs:rating": "5",
+        "fhrs:structural": "5",
+        "name": "Green Valley",
+        "note": "Lebanese mini-mart, greengrocer and takeaway.",
+        "shop": "supermarket",
+        "source:postcode": "FSA Food Hygiene Ratings Database",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": 456235638,
+      "name": "Crombie",
+      "lat": 51.5120204,
+      "lon": -0.1419695,
+      "category": "shopping",
+      "description": "Crombie shopping",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "48",
+        "addr:postcode": "W1S 2YR",
+        "addr:street": "Conduit Street",
+        "name": "Crombie",
+        "shop": "clothes",
+        "website": "https://www.crombie.co.uk/"
+      }
+    },
+    {
+      "id": 456277366,
+      "name": "Ralph Lauren",
+      "lat": 51.5097499,
+      "lon": -0.1412403,
+      "category": "shopping",
+      "description": "Ralph Lauren shopping",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "1",
+        "addr:postcode": "W1S 3LU",
+        "addr:street": "New Bond Street",
+        "check_date": "2026-06-15",
+        "name": "Ralph Lauren",
+        "payment:cash": "yes",
+        "payment:credit_cards": "yes",
+        "payment:debit_cards": "yes",
+        "phone": "+44 20 7535 4600",
+        "shop": "clothes",
+        "website": "https://www.ralphlauren.co.uk/home/index.jsp",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": 466926259,
+      "name": "Fred Perry",
+      "lat": 51.5129959,
+      "lon": -0.1361217,
+      "category": "shopping",
+      "description": "Fred Perry shopping",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "8",
+        "addr:street": "Silver Place",
+        "check_date": "2026-05-08",
+        "name": "Fred Perry",
+        "shop": "clothes"
+      }
+    },
+    {
+      "id": 544456206,
+      "name": "Houses of Parliament Shop",
+      "lat": 51.5011303,
+      "lon": -0.1258693,
+      "category": "shopping",
+      "description": "Houses of Parliament Shop shopping",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "12",
+        "addr:postcode": "SW1A 2JX",
+        "addr:street": "Bridge Street",
+        "atm": "no",
+        "check_date": "2025-08-27",
+        "name": "Houses of Parliament Shop",
+        "opening_hours": "Mo-Fr 09:30-17:30; Sa 10:00-17:30",
+        "shop": "gift",
+        "website": "https://www.shop.parliament.uk/",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": 588875592,
+      "name": "The Buckingham Palace Shop",
+      "lat": 51.4990554,
+      "lon": -0.1430319,
+      "category": "shopping",
+      "description": "The Buckingham Palace Shop shopping",
+      "tags": {
+        "name": "The Buckingham Palace Shop",
+        "operator": "The Royal Collection",
+        "shop": "gift"
+      }
+    },
+    {
+      "id": 600923903,
+      "name": "Britannia",
+      "lat": 51.5112207,
+      "lon": -0.1198525,
+      "category": "shopping",
+      "description": "Britannia shopping",
+      "tags": {
+        "addr:city": "London",
+        "addr:street": "Strand",
+        "name": "Britannia",
+        "shop": "gift"
+      }
+    },
+    {
+      "id": 603114943,
+      "name": "Fred Perry",
+      "lat": 51.5138401,
+      "lon": -0.1267354,
+      "category": "shopping",
+      "description": "Fred Perry shopping",
+      "tags": {
+        "name": "Fred Perry",
+        "opening_hours": "Mo-We 11:00-19:00; Th 11:00-20:00; Fr,Sa 11:00-18:00; Su 12:00-18:00",
+        "shop": "clothes",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": 603137990,
+      "name": "Gee Ricci",
+      "lat": 51.5107624,
+      "lon": -0.1210538,
+      "category": "shopping",
+      "description": "Gee Ricci shopping",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "376",
+        "addr:postcode": "WC2R 0LQ",
+        "addr:street": "Strand",
+        "fhrs:confidence_management": "10",
+        "fhrs:hygiene": "10",
+        "fhrs:id": "414209",
+        "fhrs:local_authority_id": "01576/0377/0/000",
+        "fhrs:rating": "3",
+        "fhrs:structural": "10",
+        "name": "Gee Ricci",
+        "shop": "clothes",
+        "source:addr": "FSA Food Hygiene Ratings Database",
+        "website": "http://www.salieri.co.uk/",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": 621238755,
+      "name": "Pronuptia",
+      "lat": 51.5190459,
+      "lon": -0.1082822,
+      "category": "shopping",
+      "description": "Pronuptia shopping",
+      "tags": {
+        "clothes": "wedding",
+        "name": "Pronuptia",
+        "phone": "+44 20 7419 9013",
+        "sex": "male",
+        "shop": "clothes"
+      }
+    },
+    {
+      "id": 691084091,
+      "name": "Lace and Beads",
+      "lat": 51.5171846,
+      "lon": -0.1415711,
+      "category": "shopping",
+      "description": "Lace and Beads shopping",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "39",
+        "addr:street": "Great Portland Street",
+        "check_date": "2025-12-03",
+        "name": "Lace and Beads",
+        "shop": "clothes"
+      }
+    },
+    {
+      "id": 691084114,
+      "name": "tfnc",
+      "lat": 51.5170569,
+      "lon": -0.1415331,
+      "category": "shopping",
+      "description": "tfnc shopping",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "37",
+        "addr:street": "Great Portland Street",
+        "name": "tfnc",
+        "shop": "clothes"
+      }
+    },
+    {
+      "id": 691084126,
+      "name": "Pretty Little Things",
+      "lat": 51.5169832,
+      "lon": -0.1414944,
+      "category": "shopping",
+      "description": "Pretty Little Things shopping",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "35",
+        "addr:street": "Great Portland Street",
+        "name": "Pretty Little Things",
+        "shop": "clothes"
+      }
+    },
+    {
+      "id": 691114543,
+      "name": "Dennys Brands",
+      "lat": 51.516961,
+      "lon": -0.1367355,
+      "category": "shopping",
+      "description": "Dennys Brands shopping Department store specifically for the hospitality industry.",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "62",
+        "addr:postcode": "W1T 3NN",
+        "addr:street": "Berners Street",
+        "check_date": "2025-12-23",
+        "clothes": "hospitality",
+        "description": "Department store specifically for the hospitality industry.",
+        "name": "Dennys Brands",
+        "opening_hours": "Mo-Fr 10:00-18:00; Sa-Su off",
+        "payment:american_express": "yes",
+        "payment:cash": "yes",
+        "payment:credit_cards": "yes",
+        "payment:debit_cards": "yes",
+        "shop": "clothes",
+        "website": "https://www.dennys.co.uk/"
+      }
+    },
+    {
+      "id": 691588081,
+      "name": "Freed of London",
+      "lat": 51.5106751,
+      "lon": -0.127114,
+      "category": "shopping",
+      "description": "Freed of London shopping",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "94",
+        "addr:postcode": "WC2N 4AT",
+        "addr:street": "St Martin's Lane",
+        "check_date": "2025-06-28",
+        "clothes": "dancewear;shoes",
+        "name": "Freed of London",
+        "payment:american_express": "yes",
+        "shop": "clothes",
+        "website": "http://www.freedshop.com",
+        "wheelchair": "limited"
+      }
+    },
+    {
+      "id": 693188885,
+      "name": "N. Peal",
+      "lat": 51.50951,
+      "lon": -0.1349189,
+      "category": "shopping",
+      "description": "N. Peal shopping",
+      "tags": {
+        "check_date": "2025-07-30",
+        "name": "N. Peal",
+        "shop": "clothes"
+      }
+    },
+    {
+      "id": 799284852,
+      "name": "Beyond Retro",
+      "lat": 51.5149934,
+      "lon": -0.1412045,
+      "category": "shopping",
+      "description": "Beyond Retro shopping",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "19-21",
+        "addr:postcode": "W1F 7TR",
+        "addr:street": "Argyll Street",
+        "check_date": "2025-11-29",
+        "name": "Beyond Retro",
+        "opening_hours": "Mo-Sa 10:00-20:00; Su 12:00-18:00",
+        "shop": "clothes",
+        "website": "https://www.beyondretro.com/pages/store-locator-soho",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": 840184990,
+      "name": "Zara Kids",
+      "lat": 51.5134186,
+      "lon": -0.1236603,
+      "category": "shopping",
+      "description": "Zara Kids shopping",
+      "tags": {
+        "check_date": "2025-08-08",
+        "name": "Zara Kids",
+        "shop": "clothes",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "id": 849735717,
+      "name": "Cards Galore",
+      "lat": 51.507784,
+      "lon": -0.123521,
+      "category": "shopping",
+      "description": "Cards Galore shopping sandwich",
+      "tags": {
+        "addr:city": "London",
+        "cuisine": "sandwich",
+        "name": "Cards Galore",
+        "shop": "gift",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": 849735722,
+      "name": "Litttle London",
+      "lat": 51.507734,
+      "lon": -0.123425,
+      "category": "shopping",
+      "description": "Litttle London shopping",
+      "tags": {
+        "addr:city": "London",
+        "addr:housename": "Unit 16, Embankment Shopping Centre",
+        "addr:postcode": "WC2N 6NN",
+        "addr:street": "Villiers Street",
+        "name": "Litttle London",
+        "old_name": "Holland & Barrett",
+        "shop": "gift"
+      }
+    },
+    {
+      "id": 902513176,
+      "name": "Marylebone Farmers' Market",
+      "lat": 51.5193068,
+      "lon": -0.1530012,
+      "category": "shopping",
+      "description": "Marylebone Farmers' Market shopping marketplace",
+      "tags": {
+        "amenity": "marketplace",
+        "check_date": "2025-04-29",
+        "fish": "yes",
+        "meat": "yes",
+        "name": "Marylebone Farmers' Market",
+        "opening_hours": "Su 10:00-14:00",
+        "organic": "yes",
+        "shop": "market",
+        "vegetables": "yes",
+        "website": "https://www.lfm.org.uk/markets/marylebone/"
+      }
+    },
+    {
+      "id": 968568302,
+      "name": "Sunspel",
+      "lat": 51.5119144,
+      "lon": -0.1252061,
+      "category": "shopping",
+      "description": "Sunspel shopping",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "22",
+        "name": "Sunspel",
+        "shop": "clothes",
+        "source": "survey"
+      }
+    },
+    {
+      "id": 968589636,
+      "name": "Theory",
+      "lat": 51.5120674,
+      "lon": -0.1252602,
+      "category": "shopping",
+      "description": "Theory shopping",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "28",
+        "addr:street": "Floral Street",
+        "check_date": "2026-05-24",
+        "level": "0",
+        "name": "Theory",
+        "opening_hours": "Mo-Sa 10:00-19:00; Su 12:00-18:00",
+        "shop": "clothes",
+        "source": "survey"
+      }
+    },
+    {
+      "id": 973729513,
+      "name": "Sir Tom Baker",
+      "lat": 51.5169588,
+      "lon": -0.1376624,
+      "category": "shopping",
+      "description": "Sir Tom Baker shopping",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "74",
+        "addr:street": "Wells Street",
+        "check_date:opening_hours": "2025-07-20",
+        "name": "Sir Tom Baker",
+        "opening_hours:signed": "no",
+        "shop": "clothes",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "id": 1043340227,
+      "name": "The Hangar - Students' Union UCL",
+      "lat": 51.5255755,
+      "lon": -0.1332027,
+      "category": "shopping",
+      "description": "The Hangar - Students' Union UCL shopping pizza;fast food",
+      "tags": {
+        "addr:city": "London",
+        "addr:floor": "Ground",
+        "addr:housenumber": "25",
+        "addr:postcode": "WC1H 0AY",
+        "addr:street": "Gordon Street",
+        "cuisine": "pizza;fast_food",
+        "level": "0",
+        "name": "The Hangar - Students' Union UCL",
+        "opening_hours": "Mo-Fr 11:00-15:00",
+        "operator": "Students' Union UCL",
+        "shop": "clothes",
+        "takeaway": "no",
+        "website": "https://shop.studentsunionucl.org/",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": 1043340956,
+      "name": "The Hanger",
+      "lat": 51.5255858,
+      "lon": -0.1333106,
+      "category": "shopping",
+      "description": "The Hanger shopping",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "25",
+        "addr:postcode": "WC1H 0AY",
+        "addr:street": "Gordon Street",
+        "level": "0",
+        "name": "The Hanger",
+        "opening_hours": "Mo-Fr 11:00-14:00",
+        "operator": "Students' Union UCL",
+        "phone": "+44 20 7679 2937",
+        "shop": "clothes",
+        "website": "https://studentsunionucl.org/eat-drink-shop/shop/shop-hanger",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": 1262681777,
+      "name": "Browns Bride",
+      "lat": 51.5169833,
+      "lon": -0.1516845,
+      "category": "shopping",
+      "description": "Browns Bride shopping",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "12",
+        "addr:street": "Hinde Street",
+        "clothes": "wedding",
+        "name": "Browns Bride",
+        "shop": "clothes",
+        "website": "https://www.brownsbride.com/",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "id": 1265087036,
+      "name": "TwoJeys",
+      "lat": 51.5168863,
+      "lon": -0.142364,
+      "category": "shopping",
+      "description": "TwoJeys shopping",
+      "tags": {
+        "name": "TwoJeys",
+        "shop": "clothes"
+      }
+    },
+    {
+      "id": 1302605370,
+      "name": "Ede & Ravenscroft",
+      "lat": 51.5154601,
+      "lon": -0.1117566,
+      "category": "shopping",
+      "description": "Ede & Ravenscroft shopping",
+      "tags": {
+        "name": "Ede & Ravenscroft",
+        "shop": "clothes",
+        "wikidata": "Q5336719",
+        "wikipedia": "en:Ede and ravenscroft"
+      }
+    },
+    {
+      "id": 1330788657,
+      "name": "derschulze",
+      "lat": 51.5127064,
+      "lon": -0.1342327,
+      "category": "shopping",
+      "description": "derschulze shopping",
+      "tags": {
+        "name": "derschulze",
+        "shop": "clothes"
+      }
+    },
+    {
+      "id": 1331703661,
+      "name": "Gerard Darel",
+      "lat": 51.5138971,
+      "lon": -0.1481291,
+      "category": "shopping",
+      "description": "Gerard Darel shopping",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "46",
+        "addr:street": "South Molton Street",
+        "clothes": "women",
+        "name": "Gerard Darel",
+        "phone": "+44 20 7495 6905",
+        "shop": "clothes",
+        "website": "https://gerarddarel.com/",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": 1331703703,
+      "name": "T.ba",
+      "lat": 51.5136468,
+      "lon": -0.1476007,
+      "category": "shopping",
+      "description": "T.ba shopping",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "54",
+        "addr:street": "South Molton Street",
+        "name": "T.ba",
+        "phone": "+44 20 7495 7000",
+        "shop": "clothes",
+        "website": "https://www.tbalife.com/en/",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": 1331703712,
+      "name": "Vertice",
+      "lat": 51.5136028,
+      "lon": -0.1478907,
+      "category": "shopping",
+      "description": "Vertice shopping",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "16",
+        "addr:street": "South Molton Street",
+        "name": "Vertice",
+        "phone": "+44 20 7408 2031",
+        "shop": "clothes",
+        "website": "https://www.verticelondon.com/",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": 441948421,
+      "name": "South Bank Book Market",
+      "lat": 51.5073583,
+      "lon": -0.115794,
+      "category": "attraction",
+      "description": "South Bank Book Market attraction attraction",
+      "tags": {
+        "name": "South Bank Book Market",
+        "tourism": "attraction",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": 506327773,
+      "name": "London Duck Tours",
+      "lat": 51.5027401,
+      "lon": -0.1159027,
+      "category": "attraction",
+      "description": "London Duck Tours attraction attraction",
+      "tags": {
+        "addr:city": "London",
+        "addr:country": "GB",
+        "addr:housenumber": "55",
+        "addr:postcode": "SE1 7NJ",
+        "addr:street": "York Road",
+        "check_date": "2024-07-27",
+        "name": "London Duck Tours",
+        "tourism": "attraction"
+      }
+    },
+    {
+      "id": 1422415861,
+      "name": "Roman Baths",
+      "lat": 51.5117732,
+      "lon": -0.1157806,
+      "category": "history",
+      "description": "Roman Baths history archaeological site attraction",
+      "tags": {
+        "addr:city": "London",
+        "addr:street": "Strand Lane",
+        "contact:phone": "+44 20 7641 2000",
+        "designation": "National Trust",
+        "historic": "archaeological_site",
+        "name": "Roman Baths",
+        "official_name": "The Roman Bath Strand Lane",
+        "operator": "National Trust",
+        "operator:wikidata": "Q333515",
+        "tourism": "attraction",
+        "wheelchair": "yes",
+        "wikidata": "Q7361585"
+      }
+    },
+    {
+      "id": 1802652184,
+      "name": "Big Ben",
+      "lat": 51.5007042,
+      "lon": -0.1245721,
+      "category": "history",
+      "description": "Big Ben history technical monument attraction clock",
+      "tags": {
+        "addr:city": "London",
+        "addr:street": "Bridge Street",
+        "amenity": "clock",
+        "clock:roman4": "IV",
+        "date": "no",
+        "display": "analog",
+        "faces": "4",
+        "historic": "technical_monument",
+        "indoor": "no",
+        "name": "Big Ben",
+        "name:be-tarask": "Біг-Бэн",
+        "name:ja": "ビッグベン",
+        "name:ko": "빅벤",
+        "name:sk": "Big Ben",
+        "name:zh": "大本钟",
+        "support": "tower",
+        "tourism": "attraction",
+        "visibility": "area",
+        "wheelchair": "no",
+        "wheelchair:description": "Open Friday - 334 steps. Lift will be installed during 2017. (BBC news 17th December 2016)",
+        "wikidata": "Q37733713"
+      }
+    },
+    {
+      "id": 1937435160,
+      "name": "New Scotland Yard",
+      "lat": 51.5029707,
+      "lon": -0.1239626,
+      "category": "attraction",
+      "description": "New Scotland Yard attraction attraction",
+      "tags": {
+        "advertising": "sign",
+        "name": "New Scotland Yard",
+        "rotating": "yes",
+        "title": "New Scotland Yard",
+        "tourism": "attraction",
+        "wheelchair": "yes",
+        "wheelchair:description": "on paved level footway",
+        "wikimedia_commons": "File:New Scotland Yard (28376193167).jpg"
+      }
+    },
+    {
+      "id": 2250396691,
+      "name": "The London Dungeon",
+      "lat": 51.5026002,
+      "lon": -0.1192189,
+      "category": "attraction",
+      "description": "The London Dungeon attraction attraction",
+      "tags": {
+        "addr:city": "London",
+        "addr:housename": "Riverside Building, County Hall",
+        "addr:postcode": "SE1 7PB",
+        "fee": "yes",
+        "name": "The London Dungeon",
+        "opening_hours": "10:00-17:00; Th 11:00-17:00; Sa 10:00-18:00",
+        "tourism": "attraction",
+        "website": "https://www.thedungeons.com/london/",
+        "wheelchair": "limited",
+        "wheelchair:description": "Mostly accessible but some parts are not as good as different routes are required and some rides require walking.",
+        "wikidata": "Q1513107",
+        "wikipedia": "en:London Dungeon"
+      }
+    },
+    {
+      "id": 2404286600,
+      "name": "London Beatles Store",
+      "lat": 51.5236013,
+      "lon": -0.1584201,
+      "category": "shopping",
+      "description": "London Beatles Store shopping Beatles Merchandise and Memorabilia attraction",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "231-233",
+        "addr:street": "Baker Street",
+        "check_date": "2025-01-22",
+        "contact:phone": "+44 20 7935 4484",
+        "contact:website": "http://www.beatlesstorelondon.co.uk",
+        "description": "Beatles Merchandise and Memorabilia",
+        "name": "London Beatles Store",
+        "opening_hours": "10:00-18:30; Dec 25 off",
+        "shop": "gift",
+        "tourism": "attraction"
+      }
+    },
+    {
+      "id": 2841921180,
+      "name": "Thames Rib Experience",
+      "lat": 51.5069283,
+      "lon": -0.1214769,
+      "category": "shopping",
+      "description": "Thames Rib Experience shopping attraction",
+      "tags": {
+        "addr:city": "London",
+        "addr:postcode": "WC2N 6NU",
+        "addr:street": "Victoria Embankment",
+        "name": "Thames Rib Experience",
+        "shop": "sports",
+        "tourism": "attraction",
+        "website": "https://www.thamesribexperience.com/index.php"
+      }
+    },
+    {
+      "id": 3357569138,
+      "name": "Hinthut",
+      "lat": 51.5297385,
+      "lon": -0.1332551,
+      "category": "attraction",
+      "description": "Hinthut attraction escape game",
+      "tags": {
+        "leisure": "escape_game",
+        "name": "Hinthut"
+      }
+    },
+    {
+      "id": 3397886782,
+      "name": "Novelty Automation",
+      "lat": 51.5196865,
+      "lon": -0.1169088,
+      "category": "attraction",
+      "description": "Novelty Automation attraction attraction amusement arcade",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "1a",
+        "addr:postcode": "WC1R 4AX",
+        "addr:street": "Princeton Street",
+        "leisure": "amusement_arcade",
+        "name": "Novelty Automation",
+        "opening_hours": "Tu,We,Fr,Sa 11:00-18:00; Th 12:00-20:00; Su 12:00-18:00",
+        "operator": "Tim Hunkin",
+        "tourism": "attraction",
+        "website": "https://novelty-automation.com/",
+        "wikidata": "Q55098971",
+        "wikipedia": "en:Novelty Automation"
+      }
+    },
+    {
+      "id": 3498748654,
+      "name": "Spyscape & Spygames",
+      "lat": 51.5124073,
+      "lon": -0.1211269,
+      "category": "attraction",
+      "description": "Spyscape & Spygames attraction escape game",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "45",
+        "addr:postcode": "WC2E 7BN",
+        "addr:street": "Wellington Street",
+        "check_date": "2026-01-12",
+        "check_date:opening_hours": "2026-01-12",
+        "contact:instagram": "spygamesofficial",
+        "fee": "yes",
+        "leisure": "escape_game",
+        "name": "Spyscape & Spygames",
+        "opening_hours": "Su-We 10:00-20:00; Th-Sa 10:00-22:00",
+        "website": "https://www.spygames.com/tickets-london;https://spyscape.com/tickets-london"
+      }
+    },
+    {
+      "id": 4189248446,
+      "name": "Chinatown Gate",
+      "lat": 51.5109933,
+      "lon": -0.1318175,
+      "category": "attraction",
+      "description": "Chinatown Gate attraction attraction",
+      "tags": {
+        "ceremonial_gate": "paifang",
+        "image": "https://commons.wikimedia.org/wiki/File:Wardour_Street_Chinatown_gate.jpg",
+        "man_made": "ceremonial_gate",
+        "name": "Chinatown Gate",
+        "tourism": "attraction",
+        "wheelchair": "yes",
+        "wikidata": "Q137592619",
+        "wikimedia_commons": "Category:Chinatown Gate, Wardour Street"
+      }
+    },
+    {
+      "id": 4291579190,
+      "name": "Chinatown",
+      "lat": 51.5117463,
+      "lon": -0.1311021,
+      "category": "attraction",
+      "description": "Chinatown attraction attraction",
+      "tags": {
+        "name": "Chinatown",
+        "name:en": "Chinatown",
+        "name:zh": "唐人街",
+        "tourism": "attraction"
+      }
+    },
+    {
+      "id": 4800377221,
+      "name": "The Mall",
+      "lat": 51.5042691,
+      "lon": -0.1347305,
+      "category": "attraction",
+      "description": "The Mall attraction attraction",
+      "tags": {
+        "name": "The Mall",
+        "name:ar": "ذا مول",
+        "tourism": "attraction",
+        "wheelchair": "yes",
+        "wikidata": "Q842930",
+        "wikipedia": "en:The Mall, London"
+      }
+    },
+    {
+      "id": 5278307684,
+      "name": "Shrek's Adventure",
+      "lat": 51.5020422,
+      "lon": -0.1195319,
+      "category": "attraction",
+      "description": "Shrek's Adventure attraction attraction",
+      "tags": {
+        "name": "Shrek's Adventure",
+        "tourism": "attraction",
+        "website": "https://www.shreksadventure.com/",
+        "wheelchair": "limited",
+        "wikidata": "Q23461928",
+        "wikipedia": "en:DreamWorks Tours: Shrek's Adventure!"
+      }
+    },
+    {
+      "id": 5480809514,
+      "name": "Las Vegas Arcade",
+      "lat": 51.5126831,
+      "lon": -0.1335662,
+      "category": "attraction",
+      "description": "Las Vegas Arcade attraction Gaming machines, American pool, video games, casino. amusement arcade",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "89-91",
+        "addr:street": "Wardour Street",
+        "check_date": "2024-12-31",
+        "description": "Gaming machines, American pool, video games, casino.",
+        "leisure": "amusement_arcade",
+        "name": "Las Vegas Arcade",
+        "website": "https://www.lasvegasarcadesoho.co.uk/"
+      }
+    },
+    {
+      "id": 5568763423,
+      "name": "221B Baker Street",
+      "lat": 51.5233879,
+      "lon": -0.1582367,
+      "category": "attraction",
+      "description": "221B Baker Street attraction attraction",
+      "tags": {
+        "addr:city": "London",
+        "addr:street": "Baker Street",
+        "name": "221B Baker Street",
+        "tourism": "attraction",
+        "wikidata": "Q1992196",
+        "wikipedia": "en:221B Baker Street"
+      }
+    },
+    {
+      "id": 5657364621,
+      "name": "Carnaby Street",
+      "lat": 51.513122,
+      "lon": -0.1387655,
+      "category": "attraction",
+      "description": "Carnaby Street attraction attraction",
+      "tags": {
+        "name": "Carnaby Street",
+        "tourism": "attraction",
+        "website": "https://en.wikipedia.org/wiki/Carnaby_Street",
+        "wheelchair": "yes",
+        "wikidata": "Q38778"
+      }
+    },
+    {
+      "id": 6208085687,
+      "name": "Swingers",
+      "lat": 51.5159772,
+      "lon": -0.143456,
+      "category": "attraction",
+      "description": "Swingers attraction miniature golf",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "15",
+        "addr:street": "John Prince's Street",
+        "leisure": "miniature_golf",
+        "name": "Swingers",
+        "website": "https://swingersldn.com/home/west-end/#"
+      }
+    },
+    {
+      "id": 6571984977,
+      "name": "Sewer ventilation lamp",
+      "lat": 51.5098416,
+      "lon": -0.1208758,
+      "category": "attraction",
+      "description": "Sewer ventilation lamp attraction Last remaining Victorian sewer gas destructor lamp in London on Carting Lane. Invented to burn methane from sewers to provide light and ventilate the system. A rare historic relic of Victorian engineering, restored and protected. attraction",
+      "tags": {
+        "alt_name": "Sewer gas destructor lamp;fart lamp;carting lane lamp;farting lane lamp;James Webb patent sewer gas lamp;Sir Joseph Bazalgette lamp;London's methane sewer gas lamp",
+        "description": "Last remaining Victorian sewer gas destructor lamp in London on Carting Lane. Invented to burn methane from sewers to provide light and ventilate the system. A rare historic relic of Victorian engineering, restored and protected.",
+        "description:de": "Letzte viktorianische Abgas-Zerstörerlaterne Londons in der Carting Lane. Erfunden, um Methan aus Abwässern zu verbrennen, Licht zu spenden und das System zu belüften. Seltenes historisches Relikt viktorianischer Technik, restauriert und geschützt.",
+        "description:en": "Last remaining Victorian sewer gas destructor lamp in London on Carting Lane. Invented to burn methane from sewers to provide light and ventilate the system. A rare historic relic of Victorian engineering, restored and protected.",
+        "description:fr": "Dernière lampe destructrice de gaz d'égout victorienne à Londres, à Carting Lane. Inventée pour brûler le méthane des égouts, fournir lumière et ventiler le système. Une rare relique historique d'ingénierie victorienne, restaurée et protégée.",
+        "description:ja": "ロンドンのカーティング・レーンにある最後のビクトリア時代の下水ガス破壊灯。下水からのメタンを燃焼させて光を供給し、システムを換気するために発明されました。ビクトリア朝工学の希少な歴史的遺物であり、修復および保護されています。",
+        "description:ko": "런던 카팅 레인에 있는 마지막 남은 빅토리아 시대 하수구 가스 소멸등. 하수구의 메탄을 태워 빛을 제공하고 시스템을 환기하기 위해 발명됨. 빅토리아 시대 공학의 희귀한 역사 유물로 복원되어 보호받고 있음.",
+        "description:zh": "伦敦卡廷巷上最后一盏维多利亚时代的下水道气体销毁灯。发明用于燃烧下水道中的甲烷以提供照明和通风系统。维多利亚时代工程的罕见历史遗物，已修复并受保护。",
+        "direction": "0-360",
+        "highway": "street_lamp",
+        "lamp_mount": "pole",
+        "lamp_type": "gaslight",
+        "manufacturer": "Joseph Webb",
+        "name": "Sewer ventilation lamp",
+        "note": "https://historic-uk.com/HistoryMagazine/DestinationsUK/Farting-Lane",
+        "support": "pole",
+        "tourism": "attraction",
+        "wikidata": "Q27084021"
+      }
+    },
+    {
+      "id": 6717361002,
+      "name": "Chapter House and Pyx Chamber",
+      "lat": 51.4990317,
+      "lon": -0.1271403,
+      "category": "attraction",
+      "description": "Chapter House and Pyx Chamber attraction attraction",
+      "tags": {
+        "name": "Chapter House and Pyx Chamber",
+        "opening_hours": "Mo-Fr 10:00-16:30; Sa 10:00-14:30",
+        "tourism": "attraction"
+      }
+    },
+    {
+      "id": 7101131586,
+      "name": "St Christopher's place",
+      "lat": 51.5150919,
+      "lon": -0.1501528,
+      "category": "attraction",
+      "description": "St Christopher's place attraction attraction",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "23",
+        "addr:street": "Barrett Street",
+        "name": "St Christopher's place",
+        "tourism": "attraction"
+      }
+    },
+    {
+      "id": 7717850285,
+      "name": "NQ64",
+      "lat": 51.5155639,
+      "lon": -0.1363857,
+      "category": "nightlife",
+      "description": "NQ64 nightlife bar amusement arcade",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "53-54",
+        "addr:postcode": "W1F 8SP",
+        "addr:street": "Berwick Street",
+        "amenity": "bar",
+        "check_date": "2025-11-03",
+        "leisure": "amusement_arcade",
+        "name": "NQ64",
+        "opening_hours": "Mo-Fr 15:00-27:00; Sa 12:00-27:00; Su 12:00-24:00",
+        "website": "https://nq64.co.uk/soho"
+      }
+    },
+    {
+      "id": 7717850286,
+      "name": "Lullaby Factory",
+      "lat": 51.5228484,
+      "lon": -0.1203485,
+      "category": "attraction",
+      "description": "Lullaby Factory attraction attraction",
+      "tags": {
+        "addr:city": "London",
+        "addr:postcode": "WC1N 3RD",
+        "addr:street": "Great Ormond Street",
+        "name": "Lullaby Factory",
+        "tourism": "attraction",
+        "website": "https://www.gosh.nhs.uk/parents-and-visitors/gosh-arts/art-collection/lullaby-factory"
+      }
+    },
+    {
+      "id": 8047384526,
+      "name": "Cameron Mackintosh Ltd",
+      "lat": 51.5190177,
+      "lon": -0.1286073,
+      "category": "attraction",
+      "description": "Cameron Mackintosh Ltd attraction attraction",
+      "tags": {
+        "name": "Cameron Mackintosh Ltd",
+        "source": "https://www.visitlondon.com/things-to-do/place/3085893-cameron-mackintosh-ltd",
+        "tourism": "attraction"
+      }
+    },
+    {
+      "id": 9587468617,
+      "name": "All Star Lanes Bowling",
+      "lat": 51.5196492,
+      "lon": -0.1223979,
+      "category": "attraction",
+      "description": "All Star Lanes Bowling attraction attraction",
+      "tags": {
+        "name": "All Star Lanes Bowling",
+        "tourism": "attraction"
+      }
+    },
+    {
+      "id": 9777763616,
+      "name": "SEA LIFE Aquarium London",
+      "lat": 51.5016258,
+      "lon": -0.1194656,
+      "category": "attraction",
+      "description": "SEA LIFE Aquarium London attraction aquarium",
+      "tags": {
+        "addr:city": "London",
+        "addr:housename": "County Hall",
+        "addr:postcode": "SE1 7PB",
+        "addr:street": "Westminster Bridge Road",
+        "name": "SEA LIFE Aquarium London",
+        "opening_hours": "Mo-Su 10:00-18:00",
+        "operator": "SEA LIFE Aquarium",
+        "tourism": "aquarium",
+        "website": "https://www.visitsealife.com/london",
+        "wikidata": "Q3312744",
+        "wikipedia": "en:Sea Life London Aquarium"
+      }
+    },
+    {
+      "id": 10236390321,
+      "name": "Sandbox VR",
+      "lat": 51.516517,
+      "lon": -0.1243807,
+      "category": "attraction",
+      "description": "Sandbox VR attraction amusement arcade",
+      "tags": {
+        "check_date": "2026-08-15",
+        "leisure": "amusement_arcade",
+        "name": "Sandbox VR",
+        "virtual_reality": "yes",
+        "website": "https://sandboxvr.com/"
+      }
+    },
+    {
+      "id": 10996315066,
+      "name": "Behind Sweeney Todd barber shop",
+      "lat": 51.5143474,
+      "lon": -0.1099596,
+      "category": "attraction",
+      "description": "Behind Sweeney Todd barber shop attraction Sweeney Todd, the demon barber of Fleet Street, had his shop at number 186 Fleet Street. This alleyway is just several meters from his shop might had been a place where he killed his victims. attraction",
+      "tags": {
+        "description": "Sweeney Todd, the demon barber of Fleet Street, had his shop at number 186 Fleet Street. This alleyway is just several meters from his shop might had been a place where he killed his victims.",
+        "name": "Behind Sweeney Todd barber shop",
+        "tourism": "attraction"
+      }
+    },
+    {
+      "id": 11875003469,
+      "name": "Goodwin's Court",
+      "lat": 51.5109551,
+      "lon": -0.1262724,
+      "category": "attraction",
+      "description": "Goodwin's Court attraction attraction",
+      "tags": {
+        "name": "Goodwin's Court",
+        "tourism": "attraction"
+      }
+    },
+    {
+      "id": 12099602501,
+      "name": "The Crystal Maze LIVE Experience",
+      "lat": 51.5109259,
+      "lon": -0.1335527,
+      "category": "attraction",
+      "description": "The Crystal Maze LIVE Experience attraction attraction",
+      "tags": {
+        "addr:city": "London",
+        "addr:housenumber": "22-32",
+        "addr:postcode": "W1D 7EU",
+        "addr:street": "Shaftesbury Avenue",
+        "name": "The Crystal Maze LIVE Experience",
+        "tourism": "attraction",
+        "website": "https://the-crystal-maze.com/london/"
+      }
+    },
+    {
+      "id": 12114514287,
+      "name": "The Paddington Bear Experience",
+      "lat": 51.5013525,
+      "lon": -0.119574,
+      "category": "attraction",
+      "description": "The Paddington Bear Experience attraction attraction",
+      "tags": {
+        "addr:city": "London",
+        "addr:housename": "Riverside Building, County Hall",
+        "addr:postcode": "SE1 7PB",
+        "addr:street": "Westminster Bridge Road",
+        "contact:facebook": "https://www.facebook.com/PaddingtonBearExperience",
+        "contact:instagram": "https://www.instagram.com/PaddingtonBearExperience/",
+        "name": "The Paddington Bear Experience",
+        "operator": "The Path Entertainment Group",
+        "tourism": "attraction",
+        "website": "https://paddingtonbearexperience.com/"
+      }
+    },
+    {
+      "id": 13628663695,
+      "name": "Escape Hunt",
+      "lat": 51.5162554,
+      "lon": -0.1339562,
+      "category": "attraction",
+      "description": "Escape Hunt attraction escape game",
+      "tags": {
+        "leisure": "escape_game",
+        "name": "Escape Hunt"
+      }
+    },
+    {
+      "id": 4256958,
+      "name": "Horse Guards Parade",
+      "lat": 51.5046612,
+      "lon": -0.1282961,
+      "category": "attraction",
+      "description": "Horse Guards Parade attraction attraction",
+      "tags": {
+        "alt_name": "Horseguards Parade",
+        "foot": "yes",
+        "landuse": "military",
+        "lit": "no",
+        "name": "Horse Guards Parade",
+        "name:ar": "استعراض حرس الخيالة",
+        "name:en": "Horse Guards Parade",
+        "name:ja": "ホース・ガーズ・パレード",
+        "name:zh-Hans": "皇家骑兵卫队阅兵场",
+        "note": "translation: http://www.openstreetmap.org/note/917559",
+        "smoothness": "intermediate",
+        "surface": "compacted",
+        "tourism": "attraction",
+        "wheelchair": "yes",
+        "wikidata": "Q1254964",
+        "wikipedia": "en:Horse Guards Parade"
+      }
+    },
+    {
+      "id": 4361223,
+      "name": "Cecil Court",
+      "lat": 51.5107273,
+      "lon": -0.1276572,
+      "category": "attraction",
+      "description": "Cecil Court attraction attraction",
+      "tags": {
+        "bicycle": "no",
+        "highway": "pedestrian",
+        "lit": "yes",
+        "name": "Cecil Court",
+        "source": "survey of 2013-10-07",
+        "surface": "paving_stones",
+        "tourism": "attraction",
+        "wheelchair": "yes",
+        "wikidata": "Q5056027",
+        "wikipedia": "en:Cecil Court"
+      }
+    },
+    {
+      "id": 4680891,
+      "name": "British Library",
+      "lat": 51.5300022,
+      "lon": -0.1277087,
+      "category": "attraction",
+      "description": "British Library attraction attraction library",
+      "tags": {
+        "addr:city": "London",
+        "addr:housename": "The British Library",
+        "addr:housenumber": "96",
+        "addr:postcode": "NW1 2DB",
+        "addr:street": "Euston Road",
+        "air_conditioning": "yes",
+        "alt_name": "New British Library",
+        "alt_name:es": "Nueva Librería Británica",
+        "amenity": "library",
+        "architect": "Colin St John Wilson, MJ Long",
+        "architect:wikidata": "Q240826;Q57584021",
+        "building": "yes",
+        "building:levels": "5",
+        "changing_table": "yes",
+        "check_date": "2026-09-05",
+        "epims:property_id": "528365",
+        "heritage": "2",
+        "heritage:operator": "he",
+        "heritage:website": "https://historicengland.org.uk/listing/the-list/list-entry/1426345",
+        "highlight": "yes",
+        "internet_access": "wlan",
+        "internet_access:fee": "no",
+        "listed_status": "Grade I",
+        "name": "British Library",
+        "name:ar": "المكتبة البريطانية",
+        "name:en": "British Library",
+        "name:gd": "Leabharlann Bhreatainn",
+        "name:ja": "大英図書館",
+        "name:kn": "ಬ್ರಿಟೀಷ್ ಗ್ರಂಥಾಲಯ",
+        "name:uk": "Британська бібліотека",
+        "name:zh": "大英图书馆",
+        "opening_hours": "Mo-Th 09:30-20:00; Sa 09:30-17:00; Su 11:00-17:00; Fr 09:30-18:00",
+        "phone": "+44 330 333 1144",
+        "ref:GB:nhle": "1426345",
+        "source": "Bing",
+        "source:name:gd": "Acair",
+        "toilets": "yes",
+        "toilets:access": "yes",
+        "toilets:disposal": "flush",
+        "toilets:position": "seated;urinal",
+        "toilets:wheelchair": "designated",
+        "tourism": "attraction",
+        "website": "https://www.bl.uk/",
+        "wheelchair": "designated",
+        "wikidata": "Q23308",
+        "wikimedia_commons": "Category:British Library",
+        "wikipedia": "en:British Library"
+      }
+    },
+    {
+      "id": 5022282,
+      "name": "BT Tower",
+      "lat": 51.5214424,
+      "lon": -0.1388044,
+      "category": "attraction",
+      "description": "BT Tower attraction attraction",
+      "tags": {
+        "addr:city": "London",
+        "addr:postcode": "W1T 4JZ",
+        "addr:street": "Cleveland Street",
+        "alt_name": "Telecom Tower",
+        "building": "tower",
+        "building:levels": "37",
+        "building:material": "concrete",
+        "height": "188.4",
+        "layer": "3",
+        "man_made": "tower",
+        "name": "BT Tower",
+        "name:en": "BT Tower",
+        "name:he": "מגדל בריטיש טלקום",
+        "old_name": "GPO Tower",
+        "tourism": "attraction",
+        "tower:type": "communication",
+        "wikidata": "Q797085",
+        "wikipedia": "en:BT Tower"
+      }
+    },
+    {
+      "id": 5987419,
+      "name": "Royal Festival Hall",
+      "lat": 51.5058217,
+      "lon": -0.1167845,
+      "category": "culture",
+      "description": "Royal Festival Hall culture attraction theatre",
+      "tags": {
+        "addr:city": "London",
+        "addr:postcode": "SE1 8XX",
+        "amenity": "theatre",
+        "building": "yes",
+        "building:levels": "6",
+        "check_date": "2026-01-27",
+        "name": "Royal Festival Hall",
+        "name:ar": "قاعة المهرجان الملكي",
+        "opening_hours": "Mo-Tu 10:00-18:00; We-Su 10:00-23:00",
+        "toilets": "yes",
+        "toilets:access": "yes",
+        "toilets:handwashing": "yes",
+        "tourism": "attraction",
+        "website": "https://www.southbankcentre.co.uk/venues/royal-festival-hall",
+        "wheelchair": "yes",
+        "wikidata": "Q647390",
+        "wikipedia": "en:Royal Festival Hall"
+      }
+    },
+    {
+      "id": 10810446,
+      "name": "Westminster Cathedral",
+      "lat": 51.4958198,
+      "lon": -0.1395187,
+      "category": "attraction",
+      "description": "Westminster Cathedral attraction attraction place of worship",
+      "tags": {
+        "addr:city": "London",
+        "addr:postcode": "SW1P 1QW",
+        "addr:street": "Francis Street",
+        "amenity": "place_of_worship",
+        "architect": "John Francis Bentley",
+        "architect:wikidata": "Q3809275",
+        "building": "cathedral",
+        "building:architecture": "neo-byzantine",
+        "building:material": "brick",
+        "building:part": "yes",
+        "check_date": "2026-02-19",
+        "denomination": "roman_catholic",
+        "diocese": "Roman Catholic Diocese of Westminster",
+        "heritage": "2",
+        "heritage:operator": "he",
+        "heritage:website": "https://historicengland.org.uk/listing/the-list/list-entry/1066500",
+        "inscription_date": "1987-12-01",
+        "listed_status": "Grade I",
+        "name": "Westminster Cathedral",
+        "name:en": "Westminster Cathedral",
+        "name:es": "Catedral de Westminster",
+        "name:fr": "Cathédrale de Westminster",
+        "name:ja": "ウェストミンスター大聖堂",
+        "name:ko": "웨스터민스터 대성당",
+        "name:pl": "Katedra Westminsterska",
+        "name:ru": "Вестминстерский собор",
+        "name:zh": "西敏寺教堂",
+        "opening_hours": "Mo-Fr 09:30-17:00; Sa-Su 09:00-18:00",
+        "ref:GB:nhle": "1066500",
+        "ref:GB:uprn": "100023338161",
+        "religion": "christian",
+        "source": "Bing 2010",
+        "tourism": "attraction",
+        "website": "https://westminstercathedral.org.uk/",
+        "wikidata": "Q739364",
+        "wikipedia": "en:Westminster Cathedral",
+        "year_of_construction": "1895 - 1910"
+      }
+    },
+    {
+      "id": 24923117,
+      "name": "Wellington Arch",
+      "lat": 51.5025358,
+      "lon": -0.1508184,
+      "category": "history",
+      "description": "Wellington Arch history monument attraction",
+      "tags": {
+        "architect": "Decimus Burton",
+        "architect:wikidata": "Q714418",
+        "artist:wikidata": "Q686793",
+        "artist_name": "Adrian Jones",
+        "building": "monument",
+        "height": "16",
+        "heritage": "2",
+        "heritage:operator": "Historic England",
+        "heritage:website": "https://historicengland.org.uk/listing/the-list/list-entry/1278092",
+        "historic": "monument",
+        "inscription_date": "1970-01-09",
+        "layer": "1",
+        "listed_status": "Grade I",
+        "name": "Wellington Arch",
+        "name:ar": "قوس ويلينغتون",
+        "name:cs": "Wellingtonův oblouk",
+        "name:en": "Wellington Arch",
+        "name:zh": "威灵顿凯旋门",
+        "opening_hours": "Apr-Oct We-Su 10:00-17:00; Nov-Mar We-Su 10:00-16:00",
+        "ref:GB:nhle": "1278092",
+        "ref:GB:uprn": "10033548250",
+        "start_date": "1846",
+        "tourism": "attraction",
+        "wikidata": "Q526804",
+        "wikipedia": "en:Wellington Arch"
+      }
+    },
+    {
+      "id": 27922125,
+      "name": "All Souls Church",
+      "lat": 51.518153,
+      "lon": -0.1430256,
+      "category": "attraction",
+      "description": "All Souls Church attraction attraction place of worship",
+      "tags": {
+        "addr:city": "London",
+        "addr:postcode": "W1B 3DA",
+        "addr:street": "Langham Place",
+        "amenity": "place_of_worship",
+        "architect": "John Nash",
+        "architect:wikidata": "Q309905",
+        "building": "church",
+        "building:architecture": "classicism",
+        "check_date": "2026-02-18",
+        "churchmanship": "conservative evangelical",
+        "denomination": "anglican",
+        "diocese": "Diocese of London",
+        "heritage": "2",
+        "heritage:operator": "he",
+        "heritage:website": "https://historicengland.org.uk/listing/the-list/list-entry/1221802",
+        "inscription_date": "1954-09-10",
+        "name": "All Souls Church",
+        "name:en": "All Souls Church",
+        "name:es": "Iglesia All Souls",
+        "ref:GB:nhle": "1221802",
+        "ref:GB:uprn": "10033528872",
+        "religion": "christian",
+        "start_date": "1824",
+        "tourism": "attraction",
+        "website": "https://www.allsouls.org/",
+        "wikidata": "Q4729656",
+        "wikipedia": "en:All Souls Church, Langham Place"
+      }
+    },
+    {
+      "id": 30734422,
+      "name": "St Martin-in-the-Fields",
+      "lat": 51.5088308,
+      "lon": -0.1266767,
+      "category": "attraction",
+      "description": "St Martin-in-the-Fields attraction attraction place of worship",
+      "tags": {
+        "addr:city": "London",
+        "addr:country": "GB",
+        "addr:housenumber": "5",
+        "addr:postcode": "WC2N 4JH",
+        "addr:street": "St Martin's Place",
+        "amenity": "place_of_worship",
+        "architect": "James Gibbs",
+        "architect:wikidata": "Q1352355",
+        "building": "church",
+        "building:colour": "lightgrey",
+        "check_date": "2024-11-05",
+        "deanery": "Westminster (St. Margaret)",
+        "denomination": "anglican",
+        "diocese": "Diocese of London",
+        "heritage": "2",
+        "heritage:operator": "he",
+        "heritage:website": "https://historicengland.org.uk/listing/the-list/list-entry/1217661",
+        "inscription_date": "1958-02-24",
+        "listed_status": "Grade I",
+        "name": "St Martin-in-the-Fields",
+        "name:es": "Iglesia St. Martin in the Fields",
+        "name:ru": "Сент-Мартин-ин-зе-Филдс",
+        "ref:GB:nhle": "1217661",
+        "ref:GB:uprn": "10033533748",
+        "ref:dove": "15153",
+        "religion": "christian",
+        "roof:colour": "grey",
+        "source:heritage": "Historic England",
+        "start_date": "1724",
+        "toilets:wheelchair": "yes",
+        "tourism": "attraction",
+        "website": "https://www.stmartin-in-the-fields.org/",
+        "wheelchair": "yes",
+        "wheelchair:description": "There is access to ticket office, crypt and restaurant via a spacious lift at street level on the north side of the church.",
+        "wikidata": "Q1335201",
+        "wikimedia_commons": "Category:St_Martin-in-the-Fields",
+        "wikipedia": "en:St Martin-in-the-Fields",
+        "year_of_construction": "1722-1726"
+      }
+    }
+  ]
+}

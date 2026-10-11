@@ -1,0 +1,42 @@
+# Version control and CI
+.git
+.github
+.gitattributes
+
+# Secrets. backend/.env holds real API keys on a developer machine and must
+# never be copied into an image layer.
+.env
+.env.*
+**/.env
+**/.env.*
+!**/.env.example
+
+# Local environments and caches
+.venv
+venv
+**/__pycache__
+**/*.py[cod]
+.pytest_cache
+.mypy_cache
+.ruff_cache
+.hf-cache
+.DS_Store
+**/.DS_Store
+
+# The mobile app is not part of the API image
+mobile
+**/node_modules
+
+# Local data: scraped text, a FAISS index and ranker built on this machine,
+# and the SQLite database (which holds accounts). The image builds its own
+# index and model so that it never depends on what a laptop happened to have.
+data/*
+!data/.gitkeep
+
+# Not needed at runtime
+backend/tests
+backend/bench/results
+docker-compose.yml
+Dockerfile
+.dockerignore
+README.md

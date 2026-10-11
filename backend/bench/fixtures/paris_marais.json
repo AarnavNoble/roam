@@ -1,0 +1,4395 @@
+{
+  "name": "paris_marais",
+  "city": "Paris",
+  "start_location": "Le Marais",
+  "goals": [
+    "food",
+    "history"
+  ],
+  "duration_hours": 8,
+  "transport": "walking",
+  "start_lat": 48.8603823,
+  "start_lon": 2.360742,
+  "pool_categories": [
+    "food",
+    "nature",
+    "history",
+    "culture",
+    "nightlife",
+    "shopping",
+    "adventure",
+    "hidden_gems"
+  ],
+  "pois": [
+    {
+      "id": 247439841,
+      "name": "Uno",
+      "lat": 48.8618492,
+      "lon": 2.3434997,
+      "category": "food",
+      "description": "Uno food italian;pizza restaurant",
+      "tags": {
+        "addr:city": "Paris",
+        "addr:housenumber": "37",
+        "addr:postcode": "75001",
+        "addr:street": "Rue Berger",
+        "amenity": "restaurant",
+        "check_date": "2025-06-04",
+        "contact:city": "Paris",
+        "contact:housenumber": "37",
+        "contact:phone": "+33 1 42 36 20 47",
+        "contact:postcode": "75001",
+        "contact:street": "Rue Berger",
+        "cuisine": "italian;pizza",
+        "indoor_seating": "yes",
+        "name": "Uno",
+        "opening_hours": "Mo-Su 12:00-00:00",
+        "outdoor_seating": "yes",
+        "ref:FR:SIRET": "84330345400014",
+        "smoking": "outside",
+        "toilets:wheelchair": "no",
+        "website": "https://unoparis.com/",
+        "wheelchair": "limited",
+        "wheelchair:description": "only parts of the restaurant are wheelchair accessible. The toilet is not accessible."
+      }
+    },
+    {
+      "id": 247455913,
+      "name": "Juvéniles",
+      "lat": 48.8662564,
+      "lon": 2.3370561,
+      "category": "nightlife",
+      "description": "Juvéniles nightlife bar",
+      "tags": {
+        "amenity": "bar",
+        "contact:phone": "+33 1 42 97 46 49",
+        "name": "Juvéniles",
+        "opening_hours": "Tu-Sa 12:00-23:00"
+      }
+    },
+    {
+      "id": 247455920,
+      "name": "Mystery Cuisine",
+      "lat": 48.865893,
+      "lon": 2.3372573,
+      "category": "food",
+      "description": "Mystery Cuisine food restaurant",
+      "tags": {
+        "amenity": "restaurant",
+        "contact:city": "Paris",
+        "contact:housenumber": "37bis",
+        "contact:phone": "+33 1 40 20 03 02",
+        "contact:postcode": "75001",
+        "contact:street": "Rue de Montpensier",
+        "level": "-1",
+        "name": "Mystery Cuisine",
+        "opening_hours": "Tu-Sa 20:00-21:00",
+        "ref:FR:SIRET": "44866790700019",
+        "self_service": "yes",
+        "website": "https://mysterycuisine.fr"
+      }
+    },
+    {
+      "id": 247455923,
+      "name": "Chez Denise",
+      "lat": 48.8615239,
+      "lon": 2.3440891,
+      "category": "food",
+      "description": "Chez Denise food french restaurant",
+      "tags": {
+        "amenity": "restaurant",
+        "contact:city": "Paris",
+        "contact:housenumber": "5",
+        "contact:phone": "+33 1 42 36 21 82",
+        "contact:postcode": "75001",
+        "contact:street": "Rue des Prouvaires",
+        "cuisine": "french",
+        "indoor_seating": "yes",
+        "name": "Chez Denise",
+        "opening_hours": "Mo-Su 12:00-24:00; Mo-Su 00:00-02:00",
+        "outdoor_seating": "yes",
+        "ref:FR:SIRET": "87883911700024",
+        "smoking": "outside",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "id": 247455924,
+      "name": "La Robe et le Palais",
+      "lat": 48.8586437,
+      "lon": 2.3458501,
+      "category": "food",
+      "description": "La Robe et le Palais food bistro;french restaurant",
+      "tags": {
+        "amenity": "restaurant",
+        "cuisine": "bistro;french",
+        "indoor_seating": "yes",
+        "name": "La Robe et le Palais",
+        "outdoor_seating": "yes",
+        "phone": "+33 1 45 08 07 41",
+        "ref:FR:SIRET": "80982629000029",
+        "website": "https://www.robe-et-palais.com/",
+        "wheelchair": "limited"
+      }
+    },
+    {
+      "id": 247467737,
+      "name": "Willi's Wine Bar",
+      "lat": 48.8663449,
+      "lon": 2.3382902,
+      "category": "nightlife",
+      "description": "Willi's Wine Bar nightlife bar",
+      "tags": {
+        "addr:floor": "0",
+        "addr:housenumber": "13",
+        "addr:street": "Rue des Petits Champs",
+        "amenity": "bar",
+        "check_date": "2025-10-01",
+        "level": "0",
+        "name": "Willi's Wine Bar",
+        "wheelchair": "limited"
+      }
+    },
+    {
+      "id": 247467738,
+      "name": "Macéo",
+      "lat": 48.8664042,
+      "lon": 2.3380601,
+      "category": "food",
+      "description": "Macéo food restaurant",
+      "tags": {
+        "addr:housenumber": "15",
+        "addr:street": "Rue des Petits Champs",
+        "amenity": "restaurant",
+        "check_date": "2025-10-01",
+        "contact:facebook": "https://fr-fr.facebook.com/MaceoRestaurant.Paris/",
+        "contact:instagram": "https://www.instagram.com/restaurantmaceo/",
+        "contact:phone": "+33 1 42 97 53 85",
+        "diet:vegan": "yes",
+        "diet:vegetarian": "yes",
+        "email": "info@maceorestaurant.com",
+        "name": "Macéo",
+        "opening_hours": "Mo-Fr 12:00-14:00,19:00-22:00; Sa 19:00-22:00",
+        "opening_hours:kitchen": "Mo-Sa 12:00-14:30, 19:15-23:15; Su 19:30-22:30",
+        "opening_hours:url": "https://www.maceorestaurant.com",
+        "payment:cash": "yes",
+        "payment:credit_cards": "yes",
+        "payment:debit_cards": "yes",
+        "payment:visa": "yes",
+        "ref:FR:SIRET": "56210368900013",
+        "source:opening_hours": "website",
+        "website": "https://www.maceorestaurant.com",
+        "website:menu": "https://www.maceorestaurant.com/menu-carte/fr",
+        "wheelchair": "limited"
+      }
+    },
+    {
+      "id": 247696089,
+      "name": "Le Petit Marché",
+      "lat": 48.8572887,
+      "lon": 2.3660498,
+      "category": "food",
+      "description": "Le Petit Marché food french restaurant",
+      "tags": {
+        "addr:city": "Paris",
+        "addr:housenumber": "9",
+        "addr:street": "Rue de Béarn",
+        "amenity": "restaurant",
+        "cuisine": "french",
+        "indoor_seating": "yes",
+        "name": "Le Petit Marché",
+        "outdoor_seating": "yes"
+      }
+    },
+    {
+      "id": 247696090,
+      "name": "Café des Musées",
+      "lat": 48.8580708,
+      "lon": 2.3643313,
+      "category": "food",
+      "description": "Café des Musées food french restaurant",
+      "tags": {
+        "addr:housenumber": "49",
+        "addr:street": "Rue de Turenne",
+        "amenity": "restaurant",
+        "check_date": "2026-07-23",
+        "cuisine": "french",
+        "name": "Café des Musées",
+        "opening_hours": "Mo-Su 12:00-15:00,19:00-23:30",
+        "phone": "+33 1 42 72 96 17",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "id": 247696092,
+      "name": "Camille",
+      "lat": 48.8577772,
+      "lon": 2.3607273,
+      "category": "food",
+      "description": "Camille food french restaurant",
+      "tags": {
+        "addr:housenumber": "24",
+        "addr:street": "Rue des Francs Bourgeois",
+        "amenity": "restaurant",
+        "check_date": "2025-06-12",
+        "cuisine": "french",
+        "indoor_seating": "yes",
+        "name": "Camille",
+        "outdoor_seating": "sidewalk",
+        "source": "survey 2013",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": 247696094,
+      "name": "Les Enfants Rouges",
+      "lat": 48.8630297,
+      "lon": 2.3612527,
+      "category": "food",
+      "description": "Les Enfants Rouges food restaurant",
+      "tags": {
+        "amenity": "restaurant",
+        "contact:tripadvisor": "https://www.tripadvisor.com/Restaurant_Review-g187147-d1175069-Reviews-Les_Enfants_Rouges-Paris_Ile_de_France.html",
+        "contact:yelp": "https://www.yelp.co.uk/biz/les-enfants-rouges-paris-3",
+        "diet:vegetarian": "no",
+        "name": "Les Enfants Rouges",
+        "phone": "+33 1 48 87 80 61"
+      }
+    },
+    {
+      "id": 247696096,
+      "name": "404",
+      "lat": 48.864464,
+      "lon": 2.3543053,
+      "category": "food",
+      "description": "404 food moroccan restaurant",
+      "tags": {
+        "addr:housenumber": "69",
+        "addr:postcode": "75003",
+        "addr:street": "Rue des Gravilliers",
+        "amenity": "restaurant",
+        "check_date": "2025-08-12",
+        "cuisine": "moroccan",
+        "indoor_seating": "yes",
+        "name": "404",
+        "opening_hours": "Mo-Fr 12:00-14:30,19:30-22:30; Sa-Su 12:00-16:00,19:30-22:30",
+        "outdoor_seating": "no",
+        "phone": "+33 1 42 74 57 81",
+        "reservation": "yes",
+        "smoking": "no",
+        "website": "https://www.404-resto.com",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "id": 248493877,
+      "name": "Nha Do",
+      "lat": 48.8484352,
+      "lon": 2.3740335,
+      "category": "food",
+      "description": "Nha Do food vietnamese restaurant",
+      "tags": {
+        "addr:city": "Paris",
+        "addr:housenumber": "55",
+        "addr:postcode": "75012",
+        "addr:street": "Rue Traversière",
+        "amenity": "restaurant",
+        "check_date": "2026-07-14",
+        "contact:city": "Paris",
+        "contact:housenumber": "55",
+        "contact:postcode": "75012",
+        "contact:street": "Rue Traversière",
+        "cuisine": "vietnamese",
+        "name": "Nha Do",
+        "opening_hours": "Mo-Fr 12:00-14:30,19:00-22:30; Sa 12:00-15:00,19:00-23:00",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": 250657148,
+      "name": "Lémoni Café",
+      "lat": 48.8647973,
+      "lon": 2.3411779,
+      "category": "food",
+      "description": "Lémoni Café food restaurant",
+      "tags": {
+        "amenity": "restaurant",
+        "contact:facebook": "https://www.facebook.com/L%C3%A9moni-Paris-R%C3%A9gime-Cr%C3%A9tois-v%C3%A9g%C3%A9tarien-Healthy-175006572518111",
+        "contact:instagram": "https://www.instagram.com/lemonicafeparis/",
+        "delivery": "yes",
+        "delivery:email": "laurent@lemonicafe.fr",
+        "delivery:phone": "+33662113728",
+        "delivery:website": "https://lemonicafe.fr/livraison/",
+        "email": "contact@lemonicafe.fr",
+        "name": "Lémoni Café",
+        "opening_hours": "Mo-Fr 11:30-15:00",
+        "phone": "+33 1 45 08 49 84",
+        "ref:FR:SIRET": "45337675800018",
+        "website": "https://www.lemonicafe.fr"
+      }
+    },
+    {
+      "id": 250861677,
+      "name": "Rani Mahal",
+      "lat": 48.8687993,
+      "lon": 2.3373273,
+      "category": "food",
+      "description": "Rani Mahal food indian restaurant",
+      "tags": {
+        "amenity": "restaurant",
+        "check_date": "2026-06-11",
+        "check_date:opening_hours": "2026-06-11",
+        "cuisine": "indian",
+        "diet:vegetarian": "yes",
+        "name": "Rani Mahal",
+        "opening_hours:signed": "no"
+      }
+    },
+    {
+      "id": 250861679,
+      "name": "O' Scià",
+      "lat": 48.864878,
+      "lon": 2.3475212,
+      "category": "food",
+      "description": "O' Scià food pizza;italian restaurant",
+      "tags": {
+        "amenity": "restaurant",
+        "check_date": "2026-03-26",
+        "contact:city": "Paris",
+        "contact:housenumber": "42",
+        "contact:postcode": "75002",
+        "contact:street": "Rue Tiquetonne",
+        "cuisine": "pizza;italian",
+        "indoor_seating": "yes",
+        "name": "O' Scià",
+        "opening_hours": "Mo-Sa 12:00-14:30, 19:15-23:15; Su 19:30-22:30",
+        "outdoor_seating": "no",
+        "payment:cash": "yes",
+        "payment:credit_cards": "yes",
+        "payment:debit_cards": "yes",
+        "payment:visa": "yes",
+        "phone": "+331 75 77 23 18",
+        "ref:FR:SIRET": "52130276000025",
+        "smoking": "no",
+        "source:opening_hours": "website",
+        "website": "https://www.pizzeriaoscia.fr/",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": 250861680,
+      "name": "Café Moderne",
+      "lat": 48.8689038,
+      "lon": 2.3422059,
+      "category": "food",
+      "description": "Café Moderne food french restaurant",
+      "tags": {
+        "amenity": "restaurant",
+        "contact:city": "Paris",
+        "contact:housenumber": "40",
+        "contact:postcode": "75002",
+        "contact:street": "Rue Notre-Dame-des-Victoires",
+        "cuisine": "french",
+        "name": "Café Moderne",
+        "ref:FR:SIRET": "80535201000039",
+        "toilets:wheelchair": "yes",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "id": 251043133,
+      "name": "Manteigaria - Fábrica de Pastéis de Nata Rambuteau",
+      "lat": 48.860997,
+      "lon": 2.3544354,
+      "category": "food",
+      "description": "Manteigaria - Fábrica de Pastéis de Nata Rambuteau food portuguese;cake restaurant",
+      "tags": {
+        "addr:housenumber": "24",
+        "addr:postcode": "75003",
+        "addr:street": "Rue Rambuteau",
+        "amenity": "restaurant",
+        "check_date": "2026-05-05",
+        "contact:facebook": "manteigaria.oficial",
+        "contact:housenumber": "24",
+        "contact:instagram": "manteigaria.fr",
+        "contact:street": "Rue Rambuteau",
+        "cuisine": "portuguese;cake",
+        "email": "info@manteigaria.com",
+        "name": "Manteigaria - Fábrica de Pastéis de Nata Rambuteau",
+        "opening_hours": "Mo-Su 08:00-20:00",
+        "phone": "+33183897631",
+        "shop": "pastry",
+        "source": "streetlevel imagery;local knowledge",
+        "website": "https://manteigaria.com/fr/"
+      }
+    },
+    {
+      "id": 251043135,
+      "name": "Le Loir dans la Théière",
+      "lat": 48.8562335,
+      "lon": 2.3610458,
+      "category": "food",
+      "description": "Le Loir dans la Théière food teahouse cafe",
+      "tags": {
+        "addr:housenumber": "3",
+        "addr:street": "Rue des Rosiers",
+        "amenity": "cafe",
+        "contact:city": "Paris",
+        "contact:housenumber": "3",
+        "contact:postcode": "75004",
+        "contact:street": "Rue des Rosiers",
+        "contact:website": "http://leloirdanslatheiere.com/",
+        "cuisine": "teahouse",
+        "name": "Le Loir dans la Théière",
+        "name:fr": "Le Loir dans la Théière",
+        "opening_hours": "Mo-Su 09:00-19:30",
+        "phone": "+33 1 42 72 90 61",
+        "website": "http://leloirdanslatheiere.com/"
+      }
+    },
+    {
+      "id": 251043137,
+      "name": "La Perla",
+      "lat": 48.8557588,
+      "lon": 2.3561398,
+      "category": "food",
+      "description": "La Perla food mexican restaurant",
+      "tags": {
+        "amenity": "restaurant",
+        "check_date": "2026-08-27",
+        "contact:facebook": "https://www.facebook.com/pages/La-Perla-Bar/165869840923",
+        "contact:phone": "+33 1 42 77 59 40",
+        "contact:website": "https://www.cafepacifico-laperla.com/",
+        "cuisine": "mexican",
+        "indoor_seating": "yes",
+        "language:en": "yes",
+        "language:fr": "yes",
+        "level": "0",
+        "name": "La Perla",
+        "opening_hours": "Su-We 12:00-00:00; Th-Sa 12:00-02:00",
+        "outdoor_seating": "sidewalk",
+        "ref:FR:SIRET": "33000376500030",
+        "smoking": "outside",
+        "takeaway": "no",
+        "toilets:wheelchair": "no",
+        "wheelchair": "limited"
+      }
+    },
+    {
+      "id": 251043139,
+      "name": "L'Excuse",
+      "lat": 48.8533876,
+      "lon": 2.3620076,
+      "category": "food",
+      "description": "L'Excuse food restaurant",
+      "tags": {
+        "amenity": "restaurant",
+        "check_date": "2024-11-08",
+        "name": "L'Excuse"
+      }
+    },
+    {
+      "id": 251043140,
+      "name": "Pizzou",
+      "lat": 48.8576083,
+      "lon": 2.3562589,
+      "category": "food",
+      "description": "Pizzou food pizza restaurant",
+      "tags": {
+        "amenity": "restaurant",
+        "contact:website": "https://pizzou.fr/pizzerias/marais/",
+        "cuisine": "pizza",
+        "email": "marais@pizzou.fr",
+        "name": "Pizzou",
+        "opening_hours": "Mo-Th 12:00-14:15, 19:00-22:30; Fr 12:00-14:15, 19:00-23:00; Sa 12:00-23:00; Su 12:00-22:30; PH closed",
+        "phone": "+33 9 83 56 47 93",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "id": 251047644,
+      "name": "Chez Marianne",
+      "lat": 48.8577309,
+      "lon": 2.3586364,
+      "category": "food",
+      "description": "Chez Marianne food lebanese restaurant",
+      "tags": {
+        "addr:city": "Paris",
+        "addr:housenumber": "2",
+        "addr:postcode": "75004",
+        "addr:street": "Rue des Hospitalières-Saint-Gervais",
+        "amenity": "restaurant",
+        "contact:city": "Paris",
+        "contact:facebook": "https://www.facebook.com/chezmarianneparis",
+        "contact:housenumber": "2",
+        "contact:postcode": "75004",
+        "contact:street": "Rue des Hospitalières-Saint-Gervais",
+        "cuisine": "lebanese",
+        "diet:vegetarian": "yes",
+        "instagram": "https://www.instagram.com/chezmarianneparis/",
+        "name": "Chez Marianne",
+        "phone": "+33 1 42 72 18 86",
+        "ref:FR:SIRET": "41521816300012",
+        "survey:date": "2025-04-14",
+        "takeaway": "yes",
+        "website": "https://www.chezmarianne.fr",
+        "website:menu": "https://www.chezmarianne.fr/menus"
+      }
+    },
+    {
+      "id": 251047682,
+      "name": "Chouette",
+      "lat": 48.85559,
+      "lon": 2.3628253,
+      "category": "food",
+      "description": "Chouette food restaurant",
+      "tags": {
+        "amenity": "restaurant",
+        "name": "Chouette"
+      }
+    },
+    {
+      "id": 251056295,
+      "name": "Mariage Frères",
+      "lat": 48.8577196,
+      "lon": 2.3565683,
+      "category": "food",
+      "description": "Mariage Frères food cafe",
+      "tags": {
+        "addr:postcode": "75004",
+        "amenity": "cafe",
+        "name": "Mariage Frères",
+        "name:en": "Mariage Frères",
+        "name:fr": "Mariage Frères",
+        "shop": "tea",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "id": 251125928,
+      "name": "Le Lutétia Île Saint-Louis",
+      "lat": 48.8532987,
+      "lon": 2.3540953,
+      "category": "food",
+      "description": "Le Lutétia Île Saint-Louis food restaurant",
+      "tags": {
+        "addr:housenumber": "33",
+        "addr:postcode": "75004",
+        "addr:street": "Quai de Bourbon",
+        "amenity": "restaurant",
+        "check_date": "2023-10-31",
+        "contact:phone": "+33 1 40 51 80 30",
+        "name": "Le Lutétia Île Saint-Louis",
+        "opening_hours": "Mo-Su 07:30-23:00"
+      }
+    },
+    {
+      "id": 251474107,
+      "name": "Jardin des Pâtes",
+      "lat": 48.8437435,
+      "lon": 2.3544856,
+      "category": "food",
+      "description": "Jardin des Pâtes food pasta;italian restaurant",
+      "tags": {
+        "amenity": "restaurant",
+        "check_date": "2026-05-02",
+        "contact:city": "Paris",
+        "contact:housenumber": "4",
+        "contact:phone": "+33 1 43 31 50 71",
+        "contact:postcode": "75005",
+        "contact:street": "Rue Lacépède",
+        "cuisine": "pasta;italian",
+        "diet:vegetarian": "yes",
+        "name": "Jardin des Pâtes",
+        "opening_hours": "Mo-Su 12:00-14:30,19:30-22:30",
+        "start_date": "1984"
+      }
+    },
+    {
+      "id": 251474108,
+      "name": "La Tour d'Argent",
+      "lat": 48.84983,
+      "lon": 2.3549148,
+      "category": "food",
+      "description": "La Tour d'Argent food french restaurant",
+      "tags": {
+        "amenity": "restaurant",
+        "check_date": "2024-07-28",
+        "contact:facebook": "latourdargent",
+        "contact:housenumber": "15",
+        "contact:postcode": "75005",
+        "contact:street": "Quai de la Tournelle",
+        "cuisine": "french",
+        "name": "La Tour d'Argent",
+        "name:zh": "银塔餐厅",
+        "opening_hours": "Tu-Sa 12:00-13:15, 19:00-21:15",
+        "phone": "+33 1 43 54 23 31",
+        "website": "http://www.latourdargent.com",
+        "wikidata": "Q1338260"
+      }
+    },
+    {
+      "id": 251474109,
+      "name": "Kusksi Original Couscous",
+      "lat": 48.8449458,
+      "lon": 2.3486915,
+      "category": "food",
+      "description": "Kusksi Original Couscous food restaurant",
+      "tags": {
+        "addr:city": "Paris",
+        "addr:housenumber": "12",
+        "addr:postcode": "75005",
+        "addr:street": "Rue Thouin",
+        "amenity": "restaurant",
+        "check_date": "2026-05-26",
+        "contact:city": "Paris",
+        "contact:housenumber": "12",
+        "contact:postcode": "75005",
+        "contact:street": "Rue Thouin",
+        "diet:vegetarian": "yes",
+        "name": "Kusksi Original Couscous",
+        "phone": "+33 142010984",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "id": 251474112,
+      "name": "All'Antico Vinaio",
+      "lat": 48.852612,
+      "lon": 2.3467113,
+      "category": "food",
+      "description": "All'Antico Vinaio food italian restaurant",
+      "tags": {
+        "amenity": "restaurant",
+        "contact:city": "Paris",
+        "contact:housenumber": "3",
+        "contact:postcode": "75005",
+        "contact:street": "Rue du Petit Pont",
+        "cuisine": "italian",
+        "name": "All'Antico Vinaio",
+        "website": "https://www.allanticovinaio.com/parigi/"
+      }
+    },
+    {
+      "id": 251652822,
+      "name": "Desi Road",
+      "lat": 48.8556694,
+      "lon": 2.3399888,
+      "category": "food",
+      "description": "Desi Road food indian restaurant",
+      "tags": {
+        "amenity": "restaurant",
+        "cuisine": "indian",
+        "indoor_seating": "yes",
+        "name": "Desi Road",
+        "outdoor_seating": "no"
+      }
+    },
+    {
+      "id": 251670428,
+      "name": "Bistro des Poèmes",
+      "lat": 48.8493501,
+      "lon": 2.3391528,
+      "category": "food",
+      "description": "Bistro des Poèmes food french restaurant",
+      "tags": {
+        "addr:city": "Paris",
+        "addr:housenumber": "7",
+        "addr:postcode": "75006",
+        "addr:street": "Rue Corneille",
+        "amenity": "restaurant",
+        "contact:phone": "+33 1 71 32 32 63",
+        "cuisine": "french",
+        "name": "Bistro des Poèmes",
+        "opening_hours": "Mo-Su 11:45-22:30",
+        "source:opening_hours": "website",
+        "website": "https://bistrodeslettres.com/bistro-des-poemes"
+      }
+    },
+    {
+      "id": 251671404,
+      "name": "Polidor",
+      "lat": 48.8498182,
+      "lon": 2.3401339,
+      "category": "food",
+      "description": "Polidor food french restaurant",
+      "tags": {
+        "amenity": "restaurant",
+        "check_date": "2025-11-30",
+        "cuisine": "french",
+        "diet:vegetarian": "no",
+        "name": "Polidor",
+        "opening_hours": "Mo-Su 12:00-22:30",
+        "opening_hours:url": "https://www.polidor.com",
+        "phone": "+33 1 43 26 95 34",
+        "source:opening_hours": "website",
+        "website": "https://www.polidor.com/",
+        "wheelchair": "limited",
+        "wikidata": "Q3394227"
+      }
+    },
+    {
+      "id": 1107065565,
+      "name": "Jardin de Roches et de Pivoines",
+      "lat": 48.8447366,
+      "lon": 2.3635126,
+      "category": "nature",
+      "description": "Jardin de Roches et de Pivoines nature garden",
+      "tags": {
+        "leisure": "garden",
+        "name": "Jardin de Roches et de Pivoines"
+      }
+    },
+    {
+      "id": 13992272400,
+      "name": "Baignade du Bas-Marie",
+      "lat": 48.8539084,
+      "lon": 2.3550712,
+      "category": "attraction",
+      "description": "Baignade du Bas-Marie attraction water park",
+      "tags": {
+        "check_date": "2026-07-14",
+        "leisure": "water_park",
+        "name": "Baignade du Bas-Marie",
+        "opening_hours": "Mo-Su 08:00-18:00",
+        "website": "https://www.paris.fr/lieux/paris-en-seine-baignade-bras-marie-20611"
+      }
+    },
+    {
+      "id": 4221369,
+      "name": "Jardin des Plantes",
+      "lat": 48.8440393,
+      "lon": 2.3596915,
+      "category": "nature",
+      "description": "Jardin des Plantes nature attraction park",
+      "tags": {
+        "bicycle": "no",
+        "check_date": "2026-05-19",
+        "contact:mastodon": "LeMuseum@reseauculture.fr",
+        "email": "valhuber@mnhn.fr",
+        "fax": "+33 1 40 79 54 48",
+        "heritage": "2",
+        "heritage:operator": "mhs",
+        "leisure": "park",
+        "mhs:inscription_date": "1993-03-24",
+        "name": "Jardin des Plantes",
+        "name:ar": "حديقة النبات",
+        "name:en": "Garden of the Plants",
+        "name:zh": "巴黎植物园",
+        "opening_hours": "Mar 01-Mar 30 08:00-18:30; Mar 31-Sep 30 07:30-20:00; Oct 01-Oct 26 08:00-18:30; Oct 27-Feb 28 08:00-17:30",
+        "operator": "Muséum National d'Histoire Naturelle",
+        "phone": "+33 1 40 79 56 01;+33 1 40 79 54 79",
+        "ref:FR:FANTOIR": "751054825L",
+        "ref:mhs": "PA00088482",
+        "source:heritage": "Ministère de la Culture - 06/2019",
+        "tourism": "attraction",
+        "tourism:visitors": "2000000",
+        "website": "https://www.jardindesplantesdeparis.fr/fr",
+        "wheelchair": "limited",
+        "wikidata": "Q730948",
+        "wikipedia": "fr:Jardin des plantes de Paris"
+      }
+    },
+    {
+      "id": 4263203,
+      "name": "Jardin du Palais Royal",
+      "lat": 48.8650062,
+      "lon": 2.3378176,
+      "category": "nature",
+      "description": "Jardin du Palais Royal nature attraction park",
+      "tags": {
+        "leisure": "park",
+        "name": "Jardin du Palais Royal",
+        "name:ar": "حديقة القصر الملكي",
+        "name:en": "Royal Palace Garden",
+        "name:ru": "Сад Пале-Руаяль",
+        "name:zh": "皇家宫殿花园",
+        "opening_hours": "Mo-Su 08:00-22:30",
+        "surface": "gravel",
+        "tourism": "attraction",
+        "wheelchair": "yes",
+        "wikidata": "Q3162586",
+        "wikipedia": "fr:Jardin du Palais-Royal"
+      }
+    },
+    {
+      "id": 4433291,
+      "name": "Square Samuel Paty",
+      "lat": 48.850054,
+      "lon": 2.3441227,
+      "category": "nature",
+      "description": "Square Samuel Paty nature park",
+      "tags": {
+        "barrier": "fence",
+        "leisure": "park",
+        "name": "Square Samuel Paty",
+        "name:etymology:wikidata": "Q100451506",
+        "website": "https://www.paris.fr/lieux/square-samuel-paty-2444",
+        "wikidata": "Q3494759",
+        "wikipedia": "fr:Square Samuel-Paty"
+      }
+    },
+    {
+      "id": 5095262,
+      "name": "Square Maurice Gardette",
+      "lat": 48.8616892,
+      "lon": 2.379081,
+      "category": "nature",
+      "description": "Square Maurice Gardette nature park",
+      "tags": {
+        "barrier": "fence",
+        "fence_type": "bars",
+        "internet_access": "wlan",
+        "internet_access:fee": "no",
+        "internet_access:operator": "Mairie de Paris",
+        "leisure": "park",
+        "name": "Square Maurice Gardette",
+        "opening_hours": "sunrise-sunset",
+        "ref:FR:FANTOIR": "751116210J",
+        "source": "cadastre-dgi-fr source : Direction Générale des Impôts - Cadastre;mise à jour : 2009",
+        "source:internet_access": "Paris Open Data",
+        "start_date": "1872",
+        "website": "https://www.paris.fr/equipements/square-maurice-gardette-2725",
+        "wikidata": "Q3494727",
+        "wikipedia": "fr:Square Maurice-Gardette"
+      }
+    },
+    {
+      "id": 13862204,
+      "name": "Jardin de l'Arsenal",
+      "lat": 48.8496559,
+      "lon": 2.368029,
+      "category": "nature",
+      "description": "Jardin de l'Arsenal nature park",
+      "tags": {
+        "alt_name": "Jardin du Port de l'Arsenal",
+        "internet_access": "wlan",
+        "internet_access:fee": "no",
+        "internet_access:operator": "Mairie de Paris",
+        "leisure": "park",
+        "name": "Jardin de l'Arsenal",
+        "opening_hours": "24/7",
+        "source:internet_access": "Paris Open Data",
+        "website": "https://www.paris.fr/lieux/jardin-du-port-de-l-arsenal-1783",
+        "wikidata": "Q3162470"
+      }
+    },
+    {
+      "id": 15275096,
+      "name": "Square Dominique Bernard",
+      "lat": 48.8676687,
+      "lon": 2.368171,
+      "category": "nature",
+      "description": "Square Dominique Bernard nature park",
+      "tags": {
+        "addr:city": "Paris",
+        "addr:postcode": "75011",
+        "barrier": "fence",
+        "leisure": "park",
+        "name": "Square Dominique Bernard",
+        "name:etymology:wikidata": "Q123029396",
+        "old_name": "Square Jules Ferry",
+        "wikidata": "Q3494659",
+        "wikipedia": "fr:Square Dominique Bernard"
+      }
+    },
+    {
+      "id": 15459294,
+      "name": "Jardin May Picqueray",
+      "lat": 48.863404,
+      "lon": 2.3715086,
+      "category": "nature",
+      "description": "Jardin May Picqueray nature park",
+      "tags": {
+        "leisure": "park",
+        "name": "Jardin May Picqueray",
+        "wikidata": "Q3495010"
+      }
+    },
+    {
+      "id": 15459327,
+      "name": "Jardinet de l'Œil du Canal",
+      "lat": 48.8622029,
+      "lon": 2.3723267,
+      "category": "nature",
+      "description": "Jardinet de l'Œil du Canal nature park",
+      "tags": {
+        "leisure": "park",
+        "name": "Jardinet de l'Œil du Canal"
+      }
+    },
+    {
+      "id": 15895172,
+      "name": "Square de la Tour Saint-Jacques",
+      "lat": 48.857913,
+      "lon": 2.3487608,
+      "category": "nature",
+      "description": "Square de la Tour Saint-Jacques nature park",
+      "tags": {
+        "barrier": "fence",
+        "height": "2.1",
+        "internet_access": "wlan",
+        "internet_access:fee": "no",
+        "internet_access:operator": "Mairie de Paris",
+        "leisure": "park",
+        "material": "metal",
+        "name": "Square de la Tour Saint-Jacques",
+        "name:zh": "圣雅克塔广场",
+        "ref:FR:FANTOIR": "751049390U",
+        "source:internet_access": "Paris Open Data",
+        "start_date": "1856",
+        "website": "https://www.paris.fr/equipements/square-de-la-tour-saint-jacques-33",
+        "wikidata": "Q3494976",
+        "wikipedia": "fr:Square de la tour Saint-Jacques"
+      }
+    },
+    {
+      "id": 16405088,
+      "name": "Jardin Villemin - Mahsa Jîna Amini",
+      "lat": 48.8751484,
+      "lon": 2.3618265,
+      "category": "nature",
+      "description": "Jardin Villemin - Mahsa Jîna Amini nature park",
+      "tags": {
+        "dog": "no",
+        "internet_access": "wlan",
+        "internet_access:fee": "no",
+        "internet_access:operator": "Mairie de Paris",
+        "leisure": "park",
+        "name": "Jardin Villemin - Mahsa Jîna Amini",
+        "source:internet_access": "Paris Open Data",
+        "start_date": "1970",
+        "wikidata": "Q636136",
+        "wikipedia": "fr:Jardin Villemin - Mahsa Jîna Amini"
+      }
+    },
+    {
+      "id": 16877048,
+      "name": "Square du Temple- Elie Wiesel",
+      "lat": 48.8644582,
+      "lon": 2.3607531,
+      "category": "nature",
+      "description": "Square du Temple- Elie Wiesel nature park",
+      "tags": {
+        "leisure": "park",
+        "name": "Square du Temple- Elie Wiesel",
+        "opening_hours": "sunrise-sunset",
+        "ref:FR:FANTOIR": "751039193J",
+        "smoking": "no",
+        "start_date": "1857",
+        "wikidata": "Q3495070",
+        "wikimedia_commons": "Category:Square du Temple – Elie-Wiesel",
+        "wikipedia": "fr:Square du Temple - Elie-Wiesel"
+      }
+    },
+    {
+      "id": 17249266,
+      "name": "Square Marie Trintignant",
+      "lat": 48.8530479,
+      "lon": 2.3594008,
+      "category": "nature",
+      "description": "Square Marie Trintignant nature park",
+      "tags": {
+        "addr:city": "Paris",
+        "alt_name": "Jardin Marie Trintignant",
+        "internet_access": "wlan",
+        "internet_access:fee": "no",
+        "internet_access:operator": "Mairie de Paris",
+        "leisure": "park",
+        "name": "Square Marie Trintignant",
+        "old_name": "Square de l'Avé Maria",
+        "opening_hours": "24/7",
+        "ref:FR:FANTOIR": "751046077T",
+        "source": "cadastre-dgi-fr source : Direction Générale des Impôts - Cadastre. Mise à jour : 2015",
+        "source:internet_access": "Paris Open Data",
+        "start_date": "1933",
+        "survey:date": "2025-08-08",
+        "website": "https://www.paris.fr/lieux/jardin-marie-trintignant-31",
+        "wikidata": "Q3494721",
+        "wikipedia": "fr:Square Marie-Trintignant"
+      }
+    },
+    {
+      "id": 19741465,
+      "name": "Jardin médiéval du musée de Cluny",
+      "lat": 48.850769,
+      "lon": 2.3440015,
+      "category": "nature",
+      "description": "Jardin médiéval du musée de Cluny nature park",
+      "tags": {
+        "alt_name": "Square de Cluny",
+        "leisure": "park",
+        "name": "Jardin médiéval du musée de Cluny",
+        "wikidata": "Q3162595",
+        "wikipedia": "fr:Jardin médiéval du musée de Cluny"
+      }
+    },
+    {
+      "id": 20105409,
+      "name": "Square André Lefèvre",
+      "lat": 48.8516815,
+      "lon": 2.3455028,
+      "category": "nature",
+      "description": "Square André Lefèvre nature park",
+      "tags": {
+        "leisure": "park",
+        "name": "Square André Lefèvre",
+        "source": "cadastre-dgi-fr source : Direction Générale des Impôts - Cadastre. Mise à jour : 2010",
+        "wikidata": "Q3494475",
+        "wikipedia": "fr:Square André-Lefèvre"
+      }
+    },
+    {
+      "id": 20444455,
+      "name": "Square Jean XXIII",
+      "lat": 48.8523775,
+      "lon": 2.3503406,
+      "category": "nature",
+      "description": "Square Jean XXIII nature park",
+      "tags": {
+        "access": "no",
+        "alt_name": "square de l'Archevêché",
+        "internet_access": "wlan",
+        "internet_access:fee": "no",
+        "internet_access:operator": "Mairie de Paris",
+        "landuse": "construction",
+        "leisure": "park",
+        "name": "Square Jean XXIII",
+        "name:etymology:wikidata": "Q23873",
+        "name:zh": "若望二十三世广场",
+        "ref:FR:FANTOIR": "751044908X",
+        "source:internet_access": "Paris Open Data",
+        "start_date": "1844",
+        "website": "https://www.paris.fr/lieux/square-jean-xxiii-35",
+        "wikidata": "Q3494657",
+        "wikipedia": "fr:Square Jean XXIII"
+      }
+    },
+    {
+      "id": 20444469,
+      "name": "Square de l'Île-de-France",
+      "lat": 48.8521129,
+      "lon": 2.3521834,
+      "category": "nature",
+      "description": "Square de l'Île-de-France nature park",
+      "tags": {
+        "leisure": "park",
+        "name": "Square de l'Île-de-France",
+        "name:etymology:wikidata": "Q13917",
+        "ref:FR:FANTOIR": "751044689J",
+        "start_date": "1914",
+        "website": "http://equipement.paris.fr/square-de-l-ile-de-france-32",
+        "wikidata": "Q3389977",
+        "wikipedia": "fr:Square de l'Île-de-France"
+      }
+    },
+    {
+      "id": 23071565,
+      "name": "Square Danielle Mitterrand",
+      "lat": 48.8505904,
+      "lon": 2.35003,
+      "category": "nature",
+      "description": "Square Danielle Mitterrand nature park",
+      "tags": {
+        "leisure": "park",
+        "name": "Square Danielle Mitterrand",
+        "old_name": "Jardin de la rue de Bièvre",
+        "source": "survey",
+        "start_date": "1978",
+        "wikidata": "Q3162524",
+        "wikipedia": "fr:Square Danielle-Mitterrand"
+      }
+    },
+    {
+      "id": 23644147,
+      "name": "Jardin Tino Rossi - Musée de la Sculpture en Plein Air",
+      "lat": 48.8474186,
+      "lon": 2.3607371,
+      "category": "culture",
+      "description": "Jardin Tino Rossi - Musée de la Sculpture en Plein Air culture museum park",
+      "tags": {
+        "fee": "no",
+        "leisure": "park",
+        "name": "Jardin Tino Rossi - Musée de la Sculpture en Plein Air",
+        "opening_hours": "Mo-Su,PH 00:00-24:00",
+        "tourism": "museum",
+        "website": "https://www.paris.fr/equipements/jardin-tino-rossi-1786",
+        "wheelchair": "yes",
+        "wikidata": "Q947877"
+      }
+    },
+    {
+      "id": 23981951,
+      "name": "Square Émile Chautemps",
+      "lat": 48.8671737,
+      "lon": 2.3538184,
+      "category": "nature",
+      "description": "Square Émile Chautemps nature park",
+      "tags": {
+        "addr:city": "Paris",
+        "architect": "Gabriel Davioud",
+        "architect:wikidata": "Q979605",
+        "architect:wikipedia": "fr:Gabriel Davioud",
+        "internet_access": "wlan",
+        "internet_access:fee": "no",
+        "internet_access:operator": "Mairie de Paris",
+        "leisure": "park",
+        "name": "Square Émile Chautemps",
+        "ref:FR:FANTOIR": "751033216M",
+        "source:internet_access": "Paris Open Data",
+        "start_date": "1858",
+        "wikidata": "Q3495091",
+        "wikipedia": "fr:Square Émile-Chautemps"
+      }
+    },
+    {
+      "id": 25423021,
+      "name": "Square Léo Ferré",
+      "lat": 48.8496849,
+      "lon": 2.3806486,
+      "category": "nature",
+      "description": "Square Léo Ferré nature park",
+      "tags": {
+        "leisure": "park",
+        "name": "Square Léo Ferré",
+        "old_name": "Jardin Brûlon-Cîteaux",
+        "ref:FR:FANTOIR": "751125522G",
+        "start_date": "2007",
+        "wikidata": "Q3494698",
+        "wikipedia": "fr:Square Léo-Ferré"
+      }
+    },
+    {
+      "id": 25992413,
+      "name": "Jardin Federico-García-Lorca",
+      "lat": 48.8547442,
+      "lon": 2.3531977,
+      "category": "nature",
+      "description": "Jardin Federico-García-Lorca nature This park is mostly unknown,and as surch is a great picnic spot during Paris Plage park",
+      "tags": {
+        "addr:city": "Paris",
+        "check_date": "2026-07-31",
+        "description": "This park is mostly unknown,and as surch is a great picnic spot during Paris Plage",
+        "leisure": "park",
+        "name": "Jardin Federico-García-Lorca",
+        "ref:FR:FANTOIR": "751043851Y",
+        "source": "cadastre-dgi-fr source : Direction Générale des Impôts - Cadastre. Mise à jour : 2010",
+        "website": "https://www.paris.fr/lieux/jardin-federico-garcia-lorca-1204",
+        "wikidata": "Q3495077",
+        "wikipedia": "fr:Jardin Federico-García-Lorca"
+      }
+    },
+    {
+      "id": 26277958,
+      "name": "Square Louvois",
+      "lat": 48.8679732,
+      "lon": 2.3375739,
+      "category": "nature",
+      "description": "Square Louvois nature park",
+      "tags": {
+        "leisure": "park",
+        "name": "Square Louvois",
+        "ref:FR:FANTOIR": "751025821Y",
+        "website": "https://www.paris.fr/lieux/square-louvois-2416",
+        "wikidata": "Q3487022",
+        "wikipedia": "fr:Square Louvois"
+      }
+    },
+    {
+      "id": 26954399,
+      "name": "Square Eugène Varlin",
+      "lat": 48.878076,
+      "lon": 2.3658886,
+      "category": "nature",
+      "description": "Square Eugène Varlin nature park",
+      "tags": {
+        "addr:postcode": "75010",
+        "leisure": "park",
+        "name": "Square Eugène Varlin",
+        "note": "Square Henri Chritiné sur le cadastre, à tort (renommé depuis probablement)",
+        "opening_hours": "24/7",
+        "source": "survey",
+        "start_date": "1891",
+        "website": "https://www.paris.fr/equipements/square-eugene-varlin-17517",
+        "wikidata": "Q3494564",
+        "wikipedia": "fr:Square Eugène-Varlin"
+      }
+    },
+    {
+      "id": 26954406,
+      "name": "Square Henri Christiné",
+      "lat": 48.8779611,
+      "lon": 2.3661926,
+      "category": "nature",
+      "description": "Square Henri Christiné nature park",
+      "tags": {
+        "leisure": "park",
+        "name": "Square Henri Christiné",
+        "opening_hours": "24/7",
+        "source:name": "survey",
+        "start_date": "1880",
+        "website": "https://www.paris.fr/equipements/square-henri-christine-2482",
+        "wikidata": "Q3494616",
+        "wikipedia": "fr:Square Henri-Christiné"
+      }
+    },
+    {
+      "id": 28894002,
+      "name": "Jardin écologique",
+      "lat": 48.8442493,
+      "lon": 2.3618713,
+      "category": "nature",
+      "description": "Jardin écologique nature garden",
+      "tags": {
+        "leisure": "garden",
+        "name": "Jardin écologique"
+      }
+    },
+    {
+      "id": 28911106,
+      "name": "Jardin Alpin",
+      "lat": 48.8440097,
+      "lon": 2.3587768,
+      "category": "nature",
+      "description": "Jardin Alpin nature garden",
+      "tags": {
+        "fenced": "yes",
+        "garden:type": "botanical",
+        "leisure": "garden",
+        "name": "Jardin Alpin",
+        "wikidata": "Q48753535"
+      }
+    },
+    {
+      "id": 29386804,
+      "name": "Jardin Gabriële Buffet",
+      "lat": 48.8707702,
+      "lon": 2.3832889,
+      "category": "nature",
+      "description": "Jardin Gabriële Buffet nature park",
+      "tags": {
+        "barrier": "fence",
+        "leisure": "park",
+        "name": "Jardin Gabriële Buffet",
+        "name:zh": "加布里埃尔·巴菲特花园",
+        "old_name": "Jardin de la rue Pali-kao",
+        "start_date": "1989",
+        "wikidata": "Q3162462",
+        "wikipedia": "fr:Jardin Gabriële-Buffet"
+      }
+    },
+    {
+      "id": 29857475,
+      "name": "Jardin des rues Maronites-Pressoir",
+      "lat": 48.8684325,
+      "lon": 2.3835877,
+      "category": "nature",
+      "description": "Jardin des rues Maronites-Pressoir nature park",
+      "tags": {
+        "leisure": "park",
+        "name": "Jardin des rues Maronites-Pressoir",
+        "website": "https://www.paris.fr/equipements/jardin-maronites-pressoir-2696",
+        "wikidata": "Q3162334"
+      }
+    },
+    {
+      "id": 33134894,
+      "name": "Potager des Oiseaux",
+      "lat": 48.8630306,
+      "lon": 2.3617112,
+      "category": "nature",
+      "description": "Potager des Oiseaux nature garden",
+      "tags": {
+        "access": "no",
+        "leisure": "garden",
+        "name": "Potager des Oiseaux",
+        "source": "cadastre-dgi-fr source : Direction Générale des Impôts - Cadastre ; mise à jour : 2008",
+        "wikidata": "Q3399918"
+      }
+    },
+    {
+      "id": 33189664,
+      "name": "Square Barye",
+      "lat": 48.8499067,
+      "lon": 2.3597039,
+      "category": "nature",
+      "description": "Square Barye nature park",
+      "tags": {
+        "alt_name": "Square Antoine-Louis Barye",
+        "leisure": "park",
+        "name": "Square Barye",
+        "opening_hours": "24/7",
+        "ref:FR:FANTOIR": "751044532N",
+        "source": "cadastre-dgi-fr source : Direction Générale des Impôts - Cadastre;mise à jour : 2008",
+        "website": "https://www.paris.fr/lieux/square-barye-29",
+        "wikidata": "Q3494500"
+      }
+    },
+    {
+      "id": 38308663,
+      "name": "Jardin de l'Hôtel Salé-Léonor-Fini",
+      "lat": 48.8601671,
+      "lon": 2.3616421,
+      "category": "nature",
+      "description": "Jardin de l'Hôtel Salé-Léonor-Fini nature garden",
+      "tags": {
+        "leisure": "garden",
+        "name": "Jardin de l'Hôtel Salé-Léonor-Fini",
+        "wikidata": "Q3162472"
+      }
+    },
+    {
+      "id": 48794811,
+      "name": "Square de la place Pasdeloup",
+      "lat": 48.8629473,
+      "lon": 2.367071,
+      "category": "nature",
+      "description": "Square de la place Pasdeloup nature park",
+      "tags": {
+        "leisure": "park",
+        "name": "Square de la place Pasdeloup",
+        "source": "cadastre-dgi-fr source : Direction Générale des Impôts - Cadastre. Mise à jour : 2010",
+        "website": "https://www.paris.fr/lieux/square-de-la-place-pasdeloup-2585",
+        "wikidata": "Q3494966",
+        "wikipedia": "fr:Square de la Place-Pasdeloup"
+      }
+    },
+    {
+      "id": 676907609,
+      "name": "Statue de Saint-Louis",
+      "lat": 48.8492181,
+      "lon": 2.3413228,
+      "category": "history",
+      "description": "Statue de Saint-Louis history memorial",
+      "tags": {
+        "historic": "memorial",
+        "memorial": "statue",
+        "name": "Statue de Saint-Louis"
+      }
+    },
+    {
+      "id": 678802923,
+      "name": "Maison natale de Molière",
+      "lat": 48.8612403,
+      "lon": 2.3448392,
+      "category": "history",
+      "description": "Maison natale de Molière history Maison natale de Molière memorial",
+      "tags": {
+        "contact:city": "Paris",
+        "contact:housenumber": "31",
+        "contact:postcode": "75001",
+        "contact:street": "Rue du Pont Neuf",
+        "description": "Maison natale de Molière",
+        "historic": "memorial",
+        "material": "marble",
+        "memorial": "plaque",
+        "name": "Maison natale de Molière",
+        "source": "cadastre-dgi-fr source : Direction Générale des Impôts - Cadastre. Mise à jour : 2010",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": 678833516,
+      "name": "Maison natale de Molière",
+      "lat": 48.861512,
+      "lon": 2.3423978,
+      "category": "history",
+      "description": "Maison natale de Molière history Maison natale de Molière memorial",
+      "tags": {
+        "contact:city": "Paris",
+        "contact:housenumber": "96",
+        "contact:postcode": "75001",
+        "contact:street": "Rue Saint-Honoré",
+        "description": "Maison natale de Molière",
+        "direction": "195",
+        "historic": "memorial",
+        "material": "marble",
+        "memorial": "plaque",
+        "name": "Maison natale de Molière",
+        "source": "cadastre-dgi-fr source : Direction Générale des Impôts - Cadastre. Mise à jour : 2010"
+      }
+    },
+    {
+      "id": 702915148,
+      "name": "Jacob Kaplan",
+      "lat": 48.8569879,
+      "lon": 2.3587014,
+      "category": "history",
+      "description": "Jacob Kaplan history memorial",
+      "tags": {
+        "historic": "memorial",
+        "memorial": "plaque",
+        "name": "Jacob Kaplan"
+      }
+    },
+    {
+      "id": 910390736,
+      "name": "Conciergerie",
+      "lat": 48.8559492,
+      "lon": 2.3460263,
+      "category": "culture",
+      "description": "Conciergerie culture castle museum",
+      "tags": {
+        "addr:housenumber": "2",
+        "addr:postcode": "75001",
+        "addr:street": "Boulevard du Palais",
+        "check_date:opening_hours": "2026-08-30",
+        "fee": "yes",
+        "historic": "castle",
+        "name": "Conciergerie",
+        "name:el": "Κονσιερζερί",
+        "name:he": "הקונסיירז'רי",
+        "name:ko": "콩시에르쥬리",
+        "name:ru": "Консьержери",
+        "name:uk": "Консьєржері",
+        "name:zh": "巴黎古監獄",
+        "opening_hours": "Mo-Su 09:30-18:00",
+        "operator": "Centre des monuments nationaux",
+        "tourism": "museum",
+        "website": "https://www.paris-conciergerie.fr",
+        "wikidata": "Q138101",
+        "wikimedia_commons": "Category:Conciergerie",
+        "wikipedia": "fr:Conciergerie de Paris"
+      }
+    },
+    {
+      "id": 1055820722,
+      "name": "Gérard de Nerval",
+      "lat": 48.8578005,
+      "lon": 2.3486134,
+      "category": "history",
+      "description": "Gérard de Nerval history memorial",
+      "tags": {
+        "historic": "memorial",
+        "name": "Gérard de Nerval",
+        "subject:wikidata": "Q191305",
+        "subject:wikipedia": "fr:Gérard de Nerval",
+        "wikimedia_commons": "File:Plaque St-Jacques Nerval.jpg"
+      }
+    },
+    {
+      "id": 1125740266,
+      "name": "Théodore Monod",
+      "lat": 48.8433086,
+      "lon": 2.3562446,
+      "category": "history",
+      "description": "Théodore Monod history memorial artwork",
+      "tags": {
+        "artwork_type": "sculpture",
+        "historic": "memorial",
+        "material": "bronze",
+        "memorial": "bust",
+        "name": "Théodore Monod",
+        "sculpture:type": "bronze",
+        "tourism": "artwork"
+      }
+    },
+    {
+      "id": 1125740344,
+      "name": "Daubenton",
+      "lat": 48.8431737,
+      "lon": 2.3562619,
+      "category": "history",
+      "description": "Daubenton history memorial",
+      "tags": {
+        "alt_name": "Louis Jean-Marie Daubenton",
+        "historic": "memorial",
+        "memorial": "column",
+        "name": "Daubenton",
+        "subject:wikidata": "Q546443",
+        "subject:wikipedia": "fr:Louis Jean-Marie Daubenton"
+      }
+    },
+    {
+      "id": 1336013382,
+      "name": "Marco Lazard",
+      "lat": 48.8455058,
+      "lon": 2.3675323,
+      "category": "history",
+      "description": "Marco Lazard history memorial",
+      "tags": {
+        "commemoration_date": "1944-08-19",
+        "historic": "memorial",
+        "inscription": "Ici est tombé le 19 août 1944 1er jour de l'insurrection nationale Marco Lazard F.F.I. à l'âge de 19 ans",
+        "memorial": "plaque",
+        "memorial:conflict": "WW2",
+        "name": "Marco Lazard",
+        "openplaques:id": "75915",
+        "ref:FR:Paris:plaque": "12022",
+        "subject:wikidata": "Q134309110",
+        "survey:date": "2025-05-01",
+        "wikimedia_commons": "File:Plaque Lieu Décès Marco Lazard Place Mazas - Paris XII (FR75) - 2025-03-08 - 1.jpg"
+      }
+    },
+    {
+      "id": 1440131521,
+      "name": "Thermes de Cluny",
+      "lat": 48.8506016,
+      "lon": 2.3432743,
+      "category": "history",
+      "description": "Thermes de Cluny history archaeological site",
+      "tags": {
+        "archaeological_site": "baths",
+        "historic": "archaeological_site",
+        "historic:civilization": "gallo-roman",
+        "name": "Thermes de Cluny",
+        "name:es": "Termas de Cluny",
+        "website": "https://archeologie.culture.gouv.fr/paris/fr/les-thermes-de-cluny",
+        "wikidata": "Q2669368",
+        "wikipedia": "fr:Thermes de Cluny"
+      }
+    },
+    {
+      "id": 1814461914,
+      "name": "La Grisette de 1830",
+      "lat": 48.8685964,
+      "lon": 2.3674458,
+      "category": "history",
+      "description": "La Grisette de 1830 history memorial artwork",
+      "tags": {
+        "addr:city": "Paris",
+        "addr:postcode": "75011",
+        "artwork_type": "statue",
+        "historic": "memorial",
+        "memorial": "statue",
+        "name": "La Grisette de 1830",
+        "name:fr": "La Grisette de 1830",
+        "tourism": "artwork",
+        "wikidata": "Q23646422"
+      }
+    },
+    {
+      "id": 2534780364,
+      "name": "Jean-Albert Vouillard 1944",
+      "lat": 48.8531567,
+      "lon": 2.3451179,
+      "category": "history",
+      "description": "Jean-Albert Vouillard 1944 history memorial",
+      "tags": {
+        "historic": "memorial",
+        "memorial": "plaque",
+        "name": "Jean-Albert Vouillard 1944"
+      }
+    },
+    {
+      "id": 2990102143,
+      "name": "Plaque commémorative de l'assassinat de Jean Jaurès",
+      "lat": 48.8691906,
+      "lon": 2.3432563,
+      "category": "history",
+      "description": "Plaque commémorative de l'assassinat de Jean Jaurès history Lieu de l'assassinat de Jean Jaurès le 31 Juillet 1914 à 21h40 par Raoul Villain. memorial",
+      "tags": {
+        "description": "Lieu de l'assassinat de Jean Jaurès le 31 Juillet 1914 à 21h40 par Raoul Villain.",
+        "historic": "memorial",
+        "inscription": "ICI LE 31 JUILLET 1914 JEAN JAURÈS FUT ASSASSINÉ - Hommage de la Ligue des Droits de l'Homme - 1923",
+        "material": "stone",
+        "memorial": "plaque",
+        "name": "Plaque commémorative de l'assassinat de Jean Jaurès",
+        "start_date": "1923",
+        "wikidata": "Q2866969",
+        "wikipedia": "fr:Assassinat de Jean Jaurès"
+      }
+    },
+    {
+      "id": 3004053308,
+      "name": "Mémorial du templier Jacques de Molay",
+      "lat": 48.8571988,
+      "lon": 2.3407956,
+      "category": "history",
+      "description": "Mémorial du templier Jacques de Molay history memorial",
+      "tags": {
+        "date": "1314-03-18",
+        "historic": "memorial",
+        "inscription": "À cet endroit Jacques de Molay dernier grand maître de l'Ordre du Temple a été brûlé le 18 mars 1314",
+        "memorial": "plaque",
+        "name": "Mémorial du templier Jacques de Molay",
+        "panoramax": "57361be7-5ee1-433c-9645-b9c9bd8e39c4",
+        "ref:FR:Paris:plaque": "1625",
+        "subject:wikidata": "Q208215;Q21061163",
+        "wikimedia_commons": "File:Placa en el lugar de ejecución de Jacques de Molay.jpg;File:Rois maudits, pont neuf (10648321933).jpg"
+      }
+    },
+    {
+      "id": 3370146093,
+      "name": "Dante",
+      "lat": 48.8493296,
+      "lon": 2.3451503,
+      "category": "history",
+      "description": "Dante history memorial artwork",
+      "tags": {
+        "artist_name": "Jean-Paul Augé",
+        "artwork_type": "statue",
+        "historic": "memorial",
+        "material": "metal",
+        "memorial": "statue",
+        "name": "Dante",
+        "start_date": "1882",
+        "tourism": "artwork"
+      }
+    },
+    {
+      "id": 3370212880,
+      "name": "Claude Bernard",
+      "lat": 48.8492074,
+      "lon": 2.3456128,
+      "category": "history",
+      "description": "Claude Bernard history memorial artwork",
+      "tags": {
+        "artwork_type": "statue",
+        "historic": "memorial",
+        "material": "stone",
+        "memorial": "statue",
+        "name": "Claude Bernard",
+        "subject:wikidata": "Q208230",
+        "tourism": "artwork"
+      }
+    },
+    {
+      "id": 3412381489,
+      "name": "Diorama de Daguerre",
+      "lat": 48.8686048,
+      "lon": 2.3632889,
+      "category": "history",
+      "description": "Diorama de Daguerre history memorial",
+      "tags": {
+        "historic": "memorial",
+        "inscription": "Ici s'élevaient de 1822 à 1839 le Diorama de Daguerre et le laboratoire où celui-ci perfectionnant l'invention de Joseph Nicéphore Niepce découvrit le Daguerréotype",
+        "memorial": "plaque",
+        "name": "Diorama de Daguerre",
+        "panoramax": "606ad272-e588-4397-9a44-91dd4376735e",
+        "ref:FR:Paris:plaque": "10016",
+        "subject:wikidata": "Q3028775;Q3028775;Q188342;Q64029175",
+        "wikimedia_commons": "File:Plaque Daguerre Paris.jpg"
+      }
+    },
+    {
+      "id": 3422228195,
+      "name": "Monument à Denis Diderot",
+      "lat": 48.8462871,
+      "lon": 2.346069,
+      "category": "history",
+      "description": "Monument à Denis Diderot history memorial",
+      "tags": {
+        "direction": "150",
+        "historic": "memorial",
+        "image": "http://upload.wikimedia.org/wikipedia/commons/9/98/Monument_a_Denis_Diderot-DSC_1963w.jpg",
+        "indoor": "yes",
+        "level": "0",
+        "material": "stone",
+        "memorial": "statue",
+        "name": "Monument à Denis Diderot"
+      }
+    },
+    {
+      "id": 3422228205,
+      "name": "Voltaire",
+      "lat": 48.8460313,
+      "lon": 2.346451,
+      "category": "history",
+      "description": "Voltaire history memorial",
+      "tags": {
+        "direction": "20",
+        "historic": "memorial",
+        "image": "https://commons.wikimedia.org/wiki/File:Mogila-Voltera-v-Panteonye-.jpg",
+        "indoor": "yes",
+        "inscription": "Voltaire",
+        "level": "-1",
+        "memorial": "statue",
+        "name": "Voltaire"
+      }
+    },
+    {
+      "id": 3422228207,
+      "name": "Monument à Jean-Jacques Rousseau",
+      "lat": 48.8461467,
+      "lon": 2.346006,
+      "category": "history",
+      "description": "Monument à Jean-Jacques Rousseau history Groupe central : la philosophie entre la nature et la vérité; à gauche, la musique, à droite la gloire. Commandé en 1907 memorial",
+      "tags": {
+        "artist_name": "Albert Bartholomé",
+        "description": "Groupe central : la philosophie entre la nature et la vérité; à gauche, la musique, à droite la gloire. Commandé en 1907",
+        "direction": "60",
+        "historic": "memorial",
+        "image": "http://upload.wikimedia.org/wikipedia/commons/6/63/Pantheon_3%2C_Paris_May_11%2C_2013.jpg",
+        "indoor": "yes",
+        "level": "0",
+        "material": "marble;stone",
+        "memorial": "statue",
+        "name": "Monument à Jean-Jacques Rousseau",
+        "start_date": "1912-06-28",
+        "wikidata": "Q67017679"
+      }
+    },
+    {
+      "id": 3657641339,
+      "name": "Pierre-Jean de Béranger",
+      "lat": 48.8649442,
+      "lon": 2.3602819,
+      "category": "history",
+      "description": "Pierre-Jean de Béranger history memorial",
+      "tags": {
+        "artist:wikidata": "Q3131411",
+        "artist:wikipedia": "fr:Henri Lagriffoul",
+        "artist_name": "Henri Lagriffoul",
+        "historic": "memorial",
+        "material": "stone",
+        "memorial": "statue",
+        "name": "Pierre-Jean de Béranger",
+        "start_date": "1953",
+        "subject:wikidata": "Q324998",
+        "subject:wikipedia": "fr:Pierre-Jean de Béranger"
+      }
+    },
+    {
+      "id": 4051544986,
+      "name": "Charlotte Delbo",
+      "lat": 48.8439358,
+      "lon": 2.3514071,
+      "category": "history",
+      "description": "Charlotte Delbo history memorial information",
+      "tags": {
+        "board_type": "history",
+        "check_date": "2025-02-18",
+        "historic": "memorial",
+        "information": "board",
+        "memorial": "plaque",
+        "name": "Charlotte Delbo",
+        "subject:wikidata": "Q452272",
+        "subject:wikipedia": "fr:Charlotte Delbo",
+        "tourism": "information"
+      }
+    },
+    {
+      "id": 4417669925,
+      "name": "Hommage à Arago",
+      "lat": 48.8620986,
+      "lon": 2.3365163,
+      "category": "history",
+      "description": "Hommage à Arago history memorial",
+      "tags": {
+        "artist_name": "Jan Dibbets",
+        "exhibit": "artwork",
+        "historic": "memorial",
+        "indoor": "yes",
+        "inscription": "Arago",
+        "level": "0",
+        "memorial": "plaque",
+        "name": "Hommage à Arago",
+        "source": "survey",
+        "wheelchair": "yes",
+        "wikidata": "Q3139724",
+        "wikipedia": "fr:Hommage à Arago"
+      }
+    },
+    {
+      "id": 4417690494,
+      "name": "Hommage à Arago",
+      "lat": 48.8619043,
+      "lon": 2.3365011,
+      "category": "history",
+      "description": "Hommage à Arago history memorial",
+      "tags": {
+        "artist_name": "Jan Dibbets",
+        "exhibit": "artwork",
+        "historic": "memorial",
+        "indoor": "yes",
+        "inscription": "Arago",
+        "level": "-1",
+        "memorial": "plaque",
+        "name": "Hommage à Arago",
+        "source": "survey 2022-09-25",
+        "wikidata": "Q3139724",
+        "wikipedia": "fr:Hommage à Arago"
+      }
+    },
+    {
+      "id": 4427343306,
+      "name": "Hommage à Arago",
+      "lat": 48.861685,
+      "lon": 2.3365016,
+      "category": "history",
+      "description": "Hommage à Arago history memorial",
+      "tags": {
+        "artist_name": "Jan Dibbets",
+        "check_date": "2022-09-25",
+        "exhibit": "artwork",
+        "historic": "memorial",
+        "indoor": "yes",
+        "inscription": "Arago",
+        "level": "-0.5",
+        "memorial": "plaque",
+        "name": "Hommage à Arago",
+        "wikidata": "Q3139724",
+        "wikipedia": "fr:Hommage à Arago"
+      }
+    },
+    {
+      "id": 247618453,
+      "name": "Musée des Arts et Métiers",
+      "lat": 48.8660977,
+      "lon": 2.3554138,
+      "category": "culture",
+      "description": "Musée des Arts et Métiers culture museum",
+      "tags": {
+        "addr:housenumber": "60",
+        "addr:postcode": "75003",
+        "addr:street": "Rue Réaumur",
+        "check_date": "2025-12-08",
+        "fax": "+33 1 53 01 82 01",
+        "fee": "yes",
+        "fee:conditional": "no @ age < 26; no @ Fr 18:00-21:00",
+        "name": "Musée des Arts et Métiers",
+        "name:en": "Museum of Arts et Métiers",
+        "name:fr": "Musée des Arts et Métiers",
+        "name:ru": "Музей искусств и ремёсел",
+        "opening_hours": "Tu-Th 10:00-18:00; Fr 10:00-21:00; Sa-Su 10:00-18:00",
+        "payment:mastercard": "yes",
+        "payment:visa": "yes",
+        "phone": "+33 1 53 01 82 20",
+        "ref:FR:museofile": "M5065",
+        "short_name": "MuAM",
+        "source": "Ministère de la Culture - Muséofile - 09/2019",
+        "tourism": "museum",
+        "website": "https://www.arts-et-metiers.net",
+        "wheelchair": "yes",
+        "wikidata": "Q1538826",
+        "wikipedia": "fr:Musée des arts et métiers"
+      }
+    },
+    {
+      "id": 251851363,
+      "name": "Musée Grévin",
+      "lat": 48.8718365,
+      "lon": 2.3420974,
+      "category": "culture",
+      "description": "Musée Grévin culture museum",
+      "tags": {
+        "addr:city": "Paris",
+        "addr:housenumber": "10",
+        "addr:postcode": "75009",
+        "addr:street": "Boulevard Montmartre",
+        "check_date": "2026-10-03",
+        "fee": "yes",
+        "heritage": "3",
+        "heritage:operator": "mhs",
+        "mhs:inscription_date": "1964-11-23",
+        "name": "Musée Grévin",
+        "name:ru": "Музей Гревен",
+        "name:uk": "Музей Гревен",
+        "name:zh": "格雷万蜡像馆",
+        "opening_hours": "Mo-Fr 09:30-18:30; Sa,Su 09:30-19:00",
+        "phone": "+33 1 47 70 85 05",
+        "ref:mhs": "PA00088993",
+        "source:heritage": "Ministère de la Culture - 07/2018",
+        "tourism": "museum",
+        "website": "https://www.grevin.com/",
+        "wheelchair": "yes",
+        "wikidata": "Q1265070",
+        "wikipedia": "fr:Musée Grévin"
+      }
+    },
+    {
+      "id": 252211317,
+      "name": "Musée Edith Piaf",
+      "lat": 48.8662368,
+      "lon": 2.3817367,
+      "category": "culture",
+      "description": "Musée Edith Piaf culture museum",
+      "tags": {
+        "addr:city": "Paris",
+        "addr:housenumber": "5",
+        "addr:postcode": "75011",
+        "addr:street": "Rue Camille Crespin du Gast",
+        "charge": "10 EUR",
+        "check_date": "2026-06-27",
+        "description:opening_hours": "sur rendez-vous (mention affichée sur plaque à l'entrée)",
+        "fee": "yes",
+        "name": "Musée Edith Piaf",
+        "opening_hours": "Mo-We 13:00-18:00; Th 10:00-12:00 \"mandatory reservation by phone\"",
+        "operator": "Les Amis d'Édith Piaf",
+        "phone": "+33 1 43 55 52 72",
+        "reservation": "required",
+        "tourism": "museum",
+        "website": "https://www.parisinfo.com/musee-monument-paris/71402/Musee-Edith-Piaf",
+        "wikidata": "Q3055415",
+        "wikipedia": "fr:Musée Édith-Piaf"
+      }
+    },
+    {
+      "id": 254033221,
+      "name": "Maison de Victor Hugo",
+      "lat": 48.854799,
+      "lon": 2.3661358,
+      "category": "culture",
+      "description": "Maison de Victor Hugo culture museum",
+      "tags": {
+        "addr:city": "Paris",
+        "addr:housenumber": "6",
+        "addr:postcode": "75004",
+        "addr:street": "Place des Vosges",
+        "check_date": "2026-06-03",
+        "email": "maisonvictorhugo@paris.fr",
+        "fee": "no",
+        "internet_access": "wlan",
+        "internet_access:fee": "no",
+        "internet_access:operator": "Mairie de Paris",
+        "museum": "person",
+        "name": "Maison de Victor Hugo",
+        "name:ru": "Дом-музей Виктора Гюго",
+        "opening_hours": "Tu-Su 10:00-18:00",
+        "operator": "Ville de Paris",
+        "operator:type": "public",
+        "operator:wikidata": "Q3278478",
+        "phone": "+33 1 42 72 10 16",
+        "ref:FR:museofile": "M1114",
+        "source": "Ministère de la Culture - Muséofile - 11/2020",
+        "source:internet_access": "Paris Open Data",
+        "tourism": "museum",
+        "website": "https://www.maisonsvictorhugo.paris.fr/paris",
+        "wheelchair": "no",
+        "wikidata": "Q2599177",
+        "wikipedia": "fr:Maison de Victor Hugo"
+      }
+    },
+    {
+      "id": 323911913,
+      "name": "Maison européenne de la Photographie",
+      "lat": 48.8551205,
+      "lon": 2.3589562,
+      "category": "culture",
+      "description": "Maison européenne de la Photographie culture museum arts centre",
+      "tags": {
+        "addr:city": "Paris",
+        "addr:housenumber": "5-7",
+        "addr:postcode": "75004",
+        "addr:street": "Rue de Fourcy",
+        "alt_name": "MEP",
+        "amenity": "arts_centre",
+        "changing_table": "yes",
+        "check_date": "2024-11-08",
+        "fee": "yes",
+        "name": "Maison européenne de la Photographie",
+        "opening_hours": "We-Su 11:00-20:00",
+        "phone": "+33 1 44 78 75 00",
+        "tourism": "museum",
+        "website": "https://www.mep-fr.org/",
+        "wheelchair": "limited",
+        "wikidata": "Q3100297",
+        "wikipedia": "fr:Maison européenne de la photographie"
+      }
+    },
+    {
+      "id": 418140404,
+      "name": "Comédie des 3 bornes",
+      "lat": 48.8674856,
+      "lon": 2.3754516,
+      "category": "culture",
+      "description": "Comédie des 3 bornes culture theatre",
+      "tags": {
+        "addr:city": "Paris",
+        "addr:housenumber": "32",
+        "addr:postcode": "75011",
+        "addr:street": "Rue des Trois Bornes",
+        "air_conditioning": "yes",
+        "amenity": "theatre",
+        "check_date": "2024-07-14",
+        "name": "Comédie des 3 bornes",
+        "payment:credit_cards": "yes",
+        "payment:maestro": "yes",
+        "phone": "+33 1 43 57 68 29",
+        "toilets": "no",
+        "website": "https://www.comediedes3bornes.com",
+        "wheelchair": "limited"
+      }
+    },
+    {
+      "id": 428064680,
+      "name": "Théâtre de la Main d'Or",
+      "lat": 48.8522803,
+      "lon": 2.3779953,
+      "category": "culture",
+      "description": "Théâtre de la Main d'Or culture theatre",
+      "tags": {
+        "addr:city": "Paris",
+        "addr:housenumber": "15",
+        "addr:postcode": "75011",
+        "addr:street": "Passage de la Main d'Or",
+        "amenity": "theatre",
+        "name": "Théâtre de la Main d'Or",
+        "wikidata": "Q3527700"
+      }
+    },
+    {
+      "id": 496114759,
+      "name": "Théâtre de la Bastille",
+      "lat": 48.8558275,
+      "lon": 2.3755799,
+      "category": "culture",
+      "description": "Théâtre de la Bastille culture theatre",
+      "tags": {
+        "addr:city": "Paris",
+        "addr:housenumber": "76",
+        "addr:postcode": "75011",
+        "addr:street": "Rue de la Roquette",
+        "amenity": "theatre",
+        "name": "Théâtre de la Bastille",
+        "phone": "+33 1 43 57 42 14",
+        "website": "https://www.theatre-bastille.com/",
+        "wikidata": "Q3527685"
+      }
+    },
+    {
+      "id": 619174040,
+      "name": "Galerie des Grands Augustins",
+      "lat": 48.8542764,
+      "lon": 2.3406582,
+      "category": "culture",
+      "description": "Galerie des Grands Augustins culture gallery",
+      "tags": {
+        "name": "Galerie des Grands Augustins",
+        "tourism": "gallery"
+      }
+    },
+    {
+      "id": 620894893,
+      "name": "Café Oscar",
+      "lat": 48.8706568,
+      "lon": 2.3426032,
+      "category": "culture",
+      "description": "Café Oscar culture theatre",
+      "tags": {
+        "amenity": "theatre",
+        "contact:city": "Paris",
+        "contact:housenumber": "155",
+        "contact:postcode": "75002",
+        "contact:street": "Rue Montmartre",
+        "name": "Café Oscar",
+        "source": "cadastre-dgi-fr source : Direction Générale des Impôts - Cadastre ; mise à jour : 2010"
+      }
+    },
+    {
+      "id": 630835346,
+      "name": "Théâtre Antoine",
+      "lat": 48.8705772,
+      "lon": 2.3552836,
+      "category": "culture",
+      "description": "Théâtre Antoine culture theatre",
+      "tags": {
+        "addr:floor": "0",
+        "amenity": "theatre",
+        "check_date": "2025-12-27",
+        "contact:city": "Paris",
+        "contact:housenumber": "14",
+        "contact:postcode": "75010",
+        "contact:street": "Boulevard de Strasbourg",
+        "heritage": "3",
+        "heritage:operator": "mhs",
+        "level": "0",
+        "mhs:inscription_date": "1989-11-20",
+        "name": "Théâtre Antoine",
+        "official_name": "Théâtre Antoine - Simone Berriau",
+        "payment:cash": "yes",
+        "payment:credit_cards": "yes",
+        "payment:debit_cards": "yes",
+        "phone": "+33 1 42 08 77 71",
+        "ref:FR:SIRET": "57216094300021",
+        "ref:mhs": "PA00086514",
+        "source:heritage": "data.gouv.fr:Ministère de la culture - 08/2017",
+        "website": "https://www.theatre-antoine.com/",
+        "wikidata": "Q3097818",
+        "wikipedia": "fr:Théâtre Antoine"
+      }
+    },
+    {
+      "id": 703461016,
+      "name": "Double Fond",
+      "lat": 48.8553861,
+      "lon": 2.3625173,
+      "category": "culture",
+      "description": "Double Fond culture theatre",
+      "tags": {
+        "amenity": "theatre",
+        "name": "Double Fond",
+        "source": "cadastre-dgi-fr source : Direction Générale des Impôts - Cadastre. Mise à jour : 2010"
+      }
+    },
+    {
+      "id": 708113103,
+      "name": "Galerie Joseph",
+      "lat": 48.8649486,
+      "lon": 2.3565081,
+      "category": "culture",
+      "description": "Galerie Joseph culture gallery",
+      "tags": {
+        "addr:city": "Paris",
+        "addr:housenumber": "7",
+        "addr:postcode": "75003",
+        "addr:street": "Rue Bailly",
+        "check_date": "2026-06-04",
+        "name": "Galerie Joseph",
+        "source": "cadastre-dgi-fr source : Direction Générale des Impôts - Cadastre. Mise à jour : 2010",
+        "tourism": "gallery"
+      }
+    },
+    {
+      "id": 711007572,
+      "name": "Théâtre Déjazet",
+      "lat": 48.8661243,
+      "lon": 2.3641777,
+      "category": "culture",
+      "description": "Théâtre Déjazet culture theatre",
+      "tags": {
+        "amenity": "theatre",
+        "check_date": "2025-10-25",
+        "name": "Théâtre Déjazet",
+        "source": "cadastre-dgi-fr source : Direction Générale des Impôts - Cadastre. Mise à jour : 2010",
+        "website": "http://www.dejazet.com/",
+        "wikidata": "Q3527454",
+        "wikipedia": "fr:Théâtre Déjazet"
+      }
+    },
+    {
+      "id": 726567966,
+      "name": "Aktéon Théâtre",
+      "lat": 48.8617414,
+      "lon": 2.3781434,
+      "category": "culture",
+      "description": "Aktéon Théâtre culture theatre",
+      "tags": {
+        "amenity": "theatre",
+        "check_date": "2025-10-08",
+        "name": "Aktéon Théâtre",
+        "ref:FR:SIRET": "53338496200023",
+        "theatre:genre": "variety",
+        "website": "https://www.akteon.fr/",
+        "wheelchair": "yes",
+        "wikidata": "Q124790752",
+        "wikipedia": "fr:Aktéon Théâtre"
+      }
+    },
+    {
+      "id": 773538525,
+      "name": "Theatre du Marais",
+      "lat": 48.8662975,
+      "lon": 2.3577542,
+      "category": "culture",
+      "description": "Theatre du Marais culture theatre",
+      "tags": {
+        "addr:floor": "0",
+        "addr:housenumber": "37",
+        "addr:street": "Rue Volta",
+        "amenity": "theatre",
+        "check_date": "2025-06-02",
+        "contact:website": "http://www.theatredumarais.fr/",
+        "level": "0",
+        "name": "Theatre du Marais",
+        "wikidata": "Q376490"
+      }
+    },
+    {
+      "id": 787319268,
+      "name": "Le Local des Autrices",
+      "lat": 48.8698621,
+      "lon": 2.3756096,
+      "category": "culture",
+      "description": "Le Local des Autrices culture arts centre",
+      "tags": {
+        "addr:city": "Paris",
+        "addr:housenumber": "18",
+        "addr:postcode": "75011",
+        "addr:street": "Rue de l'Orillon",
+        "amenity": "arts_centre",
+        "check_date": "2026-04-20",
+        "email": "lelocaldesautrices@gmail.com",
+        "name": "Le Local des Autrices",
+        "url": "http://www.le-local.net/",
+        "website": "https://lelocaldesautrices.fr",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": 795606504,
+      "name": "Le Splendid",
+      "lat": 48.8707058,
+      "lon": 2.3567665,
+      "category": "culture",
+      "description": "Le Splendid culture theatre",
+      "tags": {
+        "amenity": "theatre",
+        "check_date": "2025-05-28",
+        "contact:city": "Paris",
+        "contact:email": "splendid@lesplendid.com",
+        "contact:housenumber": "48",
+        "contact:phone": "+33 1 42 08 21 93",
+        "contact:postcode": "75010",
+        "contact:street": "Rue du Faubourg Saint-Martin",
+        "contact:website": "https://www.lesplendid.com/",
+        "name": "Le Splendid",
+        "ref:FR:SIRET": "32308731200019",
+        "source": "cadastre-dgi-fr source : Direction Générale des Impôts - Cadastre. Mise à jour : 2010",
+        "wikidata": "Q367569"
+      }
+    },
+    {
+      "id": 795606572,
+      "name": "Théâtre Les Étoiles",
+      "lat": 48.8724604,
+      "lon": 2.3551338,
+      "category": "culture",
+      "description": "Théâtre Les Étoiles culture theatre",
+      "tags": {
+        "amenity": "theatre",
+        "check_date": "2024-12-04",
+        "contact:city": "Paris",
+        "contact:facebook": "EtoilesParis",
+        "contact:housenumber": "61",
+        "contact:phone": "+33 1 42 47 16 56",
+        "contact:postcode": "75010",
+        "contact:street": "Rue du Château d'Eau",
+        "contact:website": "https://www.etoiles.paris/",
+        "name": "Théâtre Les Étoiles",
+        "ref:FR:SIRET": "52818201700020",
+        "source": "survey",
+        "theatre:type": "concert_hall"
+      }
+    },
+    {
+      "id": 1011823490,
+      "name": "Théâtre de Belleville",
+      "lat": 48.8709045,
+      "lon": 2.3742891,
+      "category": "culture",
+      "description": "Théâtre de Belleville culture theatre",
+      "tags": {
+        "amenity": "theatre",
+        "contact:email": "contact@theatredebelleville.com",
+        "contact:phone": "+33 1 48 06 72 34",
+        "contact:website": "http://www.theatredebelleville.com/",
+        "name": "Théâtre de Belleville",
+        "wheelchair": "no",
+        "wikidata": "Q48746672",
+        "wikipedia": "fr:Théâtre de Belleville (créé en 2011)"
+      }
+    },
+    {
+      "id": 1028569468,
+      "name": "Forum des images",
+      "lat": 48.8625016,
+      "lon": 2.3453019,
+      "category": "culture",
+      "description": "Forum des images culture arts centre",
+      "tags": {
+        "addr:street": "Rue du Cinéma",
+        "amenity": "arts_centre",
+        "check_date": "2026-03-30",
+        "contact:housenumber": "2",
+        "indoor": "yes",
+        "level": "-3",
+        "name": "Forum des images",
+        "old_name": "Vidéothèque de Paris",
+        "opening_hours": "Tu-Fr 13:00-21:00; Sa,Su 14:00-21:00",
+        "operator": "Forum des Images",
+        "website": "https://www.forumdesimages.fr",
+        "wheelchair": "yes",
+        "wikidata": "Q3078635",
+        "wikipedia": "fr:Forum des images"
+      }
+    },
+    {
+      "id": 1055726500,
+      "name": "Théâtre Les Blancs Manteaux",
+      "lat": 48.8587326,
+      "lon": 2.3573973,
+      "category": "culture",
+      "description": "Théâtre Les Blancs Manteaux culture theatre",
+      "tags": {
+        "amenity": "theatre",
+        "check_date": "2024-08-04",
+        "email": "info@blancsmanteaux.fr",
+        "name": "Théâtre Les Blancs Manteaux",
+        "phone": "+33148871584",
+        "website": "http://www.blancsmanteaux.fr/",
+        "wheelchair": "no",
+        "wikidata": "Q3527741"
+      }
+    },
+    {
+      "id": 1209893702,
+      "name": "Musée du chocolat",
+      "lat": 48.870585,
+      "lon": 2.3500955,
+      "category": "culture",
+      "description": "Musée du chocolat culture museum",
+      "tags": {
+        "addr:city": "Paris",
+        "addr:housenumber": "28",
+        "addr:postcode": "75010",
+        "addr:street": "Boulevard de Bonne Nouvelle",
+        "check_date": "2025-06-18",
+        "email": "info@museeduchocolat.fr",
+        "fax": "+33 1 42 29 65 08",
+        "fee": "yes",
+        "name": "Musée du chocolat",
+        "opening_hours": "Mo-Su 10:00-18:00",
+        "phone": "+33 1 42 29 68 60",
+        "tourism": "museum",
+        "website": "https://www.museeduchocolat.fr",
+        "wheelchair": "yes",
+        "wikidata": "Q3330333",
+        "wikipedia": "fr:Musée du chocolat (Paris)"
+      }
+    },
+    {
+      "id": 1292143874,
+      "name": "Le Bataclan",
+      "lat": 48.8630357,
+      "lon": 2.3706465,
+      "category": "culture",
+      "description": "Le Bataclan culture theatre",
+      "tags": {
+        "amenity": "theatre",
+        "check_date": "2026-06-10",
+        "contact:housenumber": "50",
+        "contact:street": "Boulevard Voltaire",
+        "heritage": "3",
+        "heritage:operator": "mhs",
+        "mhs:inscription_date": "1991-03-11",
+        "name": "Le Bataclan",
+        "ref:mhs": "PA00086554",
+        "short_name": "Bataclan",
+        "source": "cadastre-dgi-fr source : Direction Générale des Impôts - Cadastre. Mise à jour : 2011",
+        "start_date": "1864",
+        "website": "http://www.Le-Bataclan.com",
+        "wheelchair": "no",
+        "wikidata": "Q810700",
+        "wikipedia": "fr:Bataclan"
+      }
+    },
+    {
+      "id": 1350641899,
+      "name": "Théâtre Traversière",
+      "lat": 48.8460948,
+      "lon": 2.3709948,
+      "category": "culture",
+      "description": "Théâtre Traversière culture theatre",
+      "tags": {
+        "addr:housenumber": "15 bis",
+        "addr:street": "Rue Traversière",
+        "amenity": "theatre",
+        "contact:facebook": "Theatre.Traversiere",
+        "contact:instagram": "theatretraversiere",
+        "name": "Théâtre Traversière",
+        "phone": "+33 1 43 46 65 41",
+        "ref:FR:SIRET": "83427755000010",
+        "source": "cadastre-dgi-fr source : Direction Générale des Impôts - Cadastre. Mise à jour : 2011",
+        "website": "https://theatre-traversiere.fr/"
+      }
+    },
+    {
+      "id": 1367979045,
+      "name": "Théâtre de l'Île Saint-Louis - Paul Rey",
+      "lat": 48.8520019,
+      "lon": 2.3570697,
+      "category": "culture",
+      "description": "Théâtre de l'Île Saint-Louis - Paul Rey culture theatre",
+      "tags": {
+        "addr:city": "Paris",
+        "addr:housenumber": "39",
+        "addr:postcode": "75004",
+        "addr:street": "Quai d'Anjou",
+        "amenity": "theatre",
+        "email": "contact@theatre-ilesaintlouis.com",
+        "name": "Théâtre de l'Île Saint-Louis - Paul Rey",
+        "phone": "+33148334865",
+        "source": "cadastre-dgi-fr source : Direction Générale des Impôts - Cadastre. Mise à jour : 2010",
+        "website": "https://www.theatre-ilesaintlouis.com/",
+        "wheelchair": "limited"
+      }
+    },
+    {
+      "id": 1381904238,
+      "name": "Paradis Latin",
+      "lat": 48.8479782,
+      "lon": 2.3529858,
+      "category": "culture",
+      "description": "Paradis Latin culture theatre",
+      "tags": {
+        "amenity": "theatre",
+        "check_date": "2024-08-24",
+        "name": "Paradis Latin",
+        "phone": "+33 1 43 25 28 28",
+        "website": "https://www.paradislatin.com",
+        "wikidata": "Q3363264",
+        "wikipedia": "fr:Paradis latin"
+      }
+    },
+    {
+      "id": 1426016793,
+      "name": "Musée Adam Mickiewicz",
+      "lat": 48.8513494,
+      "lon": 2.355588,
+      "category": "culture",
+      "description": "Musée Adam Mickiewicz culture museum",
+      "tags": {
+        "addr:housenumber": "6",
+        "addr:street": "Quai d'Orléans",
+        "check_date": "2026-03-12",
+        "check_date:opening_hours": "2026-03-12",
+        "contact:facebook": "shlp.bpp",
+        "contact:instagram": "institut_bpp",
+        "email": "biuro@ibpp.eu",
+        "fee": "no",
+        "level": "1",
+        "name": "Musée Adam Mickiewicz",
+        "name:pl": "Muzeum Adama Mickiewicza",
+        "opening_hours": "Tu-Fr 10:00-13:00, 14:00-18:00; Sa 10:00-18:00",
+        "phone": "+33 1 55 42 83 89",
+        "tourism": "museum",
+        "website": "https://www.ibpp.eu/",
+        "wikidata": "Q3051109"
+      }
+    },
+    {
+      "id": 1426176059,
+      "name": "Musée d'Histoire de la Médecine",
+      "lat": 48.8513247,
+      "lon": 2.3409022,
+      "category": "culture",
+      "description": "Musée d'Histoire de la Médecine culture museum",
+      "tags": {
+        "addr:housenumber": "12",
+        "addr:street": "Rue de l'École de Médecine",
+        "name": "Musée d'Histoire de la Médecine",
+        "opening_hours": "Mo-We,Fr,Sa 14:00-17:30",
+        "operator": "Université Paris Cité",
+        "tourism": "museum",
+        "website": "https://u-paris.fr/musee-de-lhistoire-de-la-medecine",
+        "wikidata": "Q3329671"
+      }
+    },
+    {
+      "id": 1426816232,
+      "name": "Musée de la Préfecture de police",
+      "lat": 48.8494311,
+      "lon": 2.3483534,
+      "category": "culture",
+      "description": "Musée de la Préfecture de police culture museum",
+      "tags": {
+        "addr:city": "Paris",
+        "addr:housenumber": "4",
+        "addr:postcode": "75005",
+        "addr:street": "Rue de la Montagne Sainte-Geneviève",
+        "check_date": "2026-04-04",
+        "fee": "no",
+        "level": "3",
+        "name": "Musée de la Préfecture de police",
+        "phone": "+33144415250",
+        "tourism": "museum",
+        "website": "https://www.prefecturedepolice.interieur.gouv.fr/musee",
+        "wikidata": "Q642825"
+      }
+    },
+    {
+      "id": 1426856720,
+      "name": "Théâtre Artistic Athévains",
+      "lat": 48.8566373,
+      "lon": 2.3809209,
+      "category": "culture",
+      "description": "Théâtre Artistic Athévains culture theatre",
+      "tags": {
+        "addr:city": "Paris",
+        "addr:housenumber": "45 bis",
+        "addr:postcode": "75011",
+        "addr:street": "Rue Richard Lenoir",
+        "amenity": "theatre",
+        "check_date": "2023-12-19",
+        "name": "Théâtre Artistic Athévains",
+        "phone": "+33 1 43 56 38 32",
+        "website": "https://www.artistic-athevains.com/",
+        "wikidata": "Q2865828"
+      }
+    },
+    {
+      "id": 1426955707,
+      "name": "Café de la Gare",
+      "lat": 48.8598058,
+      "lon": 2.3531806,
+      "category": "culture",
+      "description": "Café de la Gare culture theatre",
+      "tags": {
+        "amenity": "theatre",
+        "contact:housenumber": "41",
+        "contact:phone": "+33 1 42 78 52 51",
+        "contact:street": "Rue du Temple",
+        "name": "Café de la Gare",
+        "source": "survey 2012-11",
+        "website": "https://www.cdlg.org/",
+        "wikidata": "Q2382361"
+      }
+    },
+    {
+      "id": 1426955708,
+      "name": "Théâtre Libre",
+      "lat": 48.8697908,
+      "lon": 2.3549967,
+      "category": "culture",
+      "description": "Théâtre Libre culture theatre",
+      "tags": {
+        "alt_name": "Théâtre Comédia",
+        "amenity": "theatre",
+        "capacity": "994",
+        "check_date": "2025-06-30",
+        "contact:city": "Paris",
+        "contact:housenumber": "4",
+        "contact:phone": "+33 1 42 38 97 14",
+        "contact:postcode": "75010",
+        "contact:street": "Boulevard Saint-Denis",
+        "contact:website": "https://le-theatrelibre.fr/",
+        "name": "Théâtre Libre",
+        "name:fr": "Théâtre Libre",
+        "name:lt": "Komedijos teatras",
+        "ref:FR:SIRET": "79177387200027",
+        "source": "survey 2014",
+        "wikidata": "Q2991522",
+        "wikipedia": "fr:Théâtre libre"
+      }
+    },
+    {
+      "id": 1426955714,
+      "name": "Le Métropole",
+      "lat": 48.8702624,
+      "lon": 2.3461888,
+      "category": "culture",
+      "description": "Le Métropole culture theatre",
+      "tags": {
+        "addr:city": "Paris",
+        "addr:housenumber": "39",
+        "addr:postcode": "75002",
+        "addr:street": "Rue du Sentier",
+        "amenity": "theatre",
+        "check_date": "2025-08-06",
+        "name": "Le Métropole",
+        "ref:FR:SIRET": "52098798300019",
+        "website": "https://www.theatrelemetropole.com/"
+      }
+    },
+    {
+      "id": 1426999650,
+      "name": "Théâtre Essaïon",
+      "lat": 48.8596873,
+      "lon": 2.3532594,
+      "category": "culture",
+      "description": "Théâtre Essaïon culture theatre",
+      "tags": {
+        "amenity": "theatre",
+        "check_date": "2024-04-14",
+        "name": "Théâtre Essaïon",
+        "wikidata": "Q3527457"
+      }
+    },
+    {
+      "id": 1426999659,
+      "name": "Théâtre de la Huchette",
+      "lat": 48.8530067,
+      "lon": 2.3453592,
+      "category": "culture",
+      "description": "Théâtre de la Huchette culture theatre",
+      "tags": {
+        "addr:street": "Rue de la Huchette",
+        "amenity": "theatre",
+        "name": "Théâtre de la Huchette",
+        "website": "http://www.theatre-huchette.com/",
+        "wheelchair": "no",
+        "wikidata": "Q3527701"
+      }
+    },
+    {
+      "id": 1427038398,
+      "name": "Maison de la Poésie",
+      "lat": 48.8623766,
+      "lon": 2.3515821,
+      "category": "culture",
+      "description": "Maison de la Poésie culture arts centre",
+      "tags": {
+        "addr:street": "Passage Molière",
+        "amenity": "arts_centre",
+        "check_date": "2025-10-07",
+        "name": "Maison de la Poésie",
+        "phone": "+33144545300",
+        "toilets:wheelchair": "yes",
+        "website": "https://maisondelapoesieparis.com/",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": 1427128321,
+      "name": "Théâtre du Nord-Ouest",
+      "lat": 48.8723016,
+      "lon": 2.3429996,
+      "category": "culture",
+      "description": "Théâtre du Nord-Ouest culture theatre",
+      "tags": {
+        "addr:city": "Paris",
+        "addr:housenumber": "13",
+        "addr:postcode": "75009",
+        "addr:street": "Rue du Faubourg Montmartre",
+        "amenity": "theatre",
+        "check_date": "2026-06-11",
+        "name": "Théâtre du Nord-Ouest",
+        "phone": "+33 1 47 70 32 75",
+        "website": "https://theatredunordouest.com",
+        "wheelchair": "no",
+        "wikidata": "Q3527805"
+      }
+    },
+    {
+      "id": 252596129,
+      "name": "Louloute",
+      "lat": 48.8534002,
+      "lon": 2.3787862,
+      "category": "nightlife",
+      "description": "Louloute nightlife bar",
+      "tags": {
+        "addr:city": "Paris",
+        "addr:housenumber": "55",
+        "addr:postcode": "75011",
+        "addr:street": "Rue de Charonne",
+        "amenity": "bar",
+        "check_date": "2024-09-22",
+        "name": "Louloute"
+      }
+    },
+    {
+      "id": 252608626,
+      "name": "La Mercerie",
+      "lat": 48.8657437,
+      "lon": 2.3782276,
+      "category": "nightlife",
+      "description": "La Mercerie nightlife bar",
+      "tags": {
+        "amenity": "bar",
+        "name": "La Mercerie",
+        "source": "survey"
+      }
+    },
+    {
+      "id": 252625380,
+      "name": "Les marcheurs de planète",
+      "lat": 48.8567799,
+      "lon": 2.3773631,
+      "category": "attraction",
+      "description": "Les marcheurs de planète attraction wine bar",
+      "tags": {
+        "amenity": "wine_bar",
+        "name": "Les marcheurs de planète"
+      }
+    },
+    {
+      "id": 254005128,
+      "name": "Bar nouveau",
+      "lat": 48.861504,
+      "lon": 2.3575623,
+      "category": "nightlife",
+      "description": "Bar nouveau nightlife pub",
+      "tags": {
+        "addr:housenumber": "5",
+        "addr:street": "Rue des Haudriettes",
+        "amenity": "pub",
+        "check_date": "2024-08-04",
+        "name": "Bar nouveau",
+        "wheelchair": "limited"
+      }
+    },
+    {
+      "id": 293986548,
+      "name": "Atelier 103",
+      "lat": 48.8632455,
+      "lon": 2.3860891,
+      "category": "nightlife",
+      "description": "Atelier 103 nightlife pub",
+      "tags": {
+        "amenity": "pub",
+        "check_date": "2025-08-24",
+        "name": "Atelier 103"
+      }
+    },
+    {
+      "id": 294141121,
+      "name": "Café Chéri(e)",
+      "lat": 48.874105,
+      "lon": 2.3752878,
+      "category": "nightlife",
+      "description": "Café Chéri(e) nightlife bar",
+      "tags": {
+        "air_conditioning": "no",
+        "amenity": "bar",
+        "check_date": "2025-06-22",
+        "check_date:opening_hours": "2025-01-04",
+        "indoor_seating": "yes",
+        "name": "Café Chéri(e)",
+        "opening_hours:signed": "no",
+        "outdoor_seating": "sidewalk",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": 315769031,
+      "name": "Le Comptoir du Relais",
+      "lat": 48.8519626,
+      "lon": 2.3388319,
+      "category": "nightlife",
+      "description": "Le Comptoir du Relais nightlife french pub",
+      "tags": {
+        "amenity": "pub",
+        "check_date": "2025-11-30",
+        "cuisine": "french",
+        "indoor_seating": "yes",
+        "name": "Le Comptoir du Relais",
+        "opening_hours": "Mo-Su 12:00-23:00",
+        "outdoor_seating": "yes"
+      }
+    },
+    {
+      "id": 320952623,
+      "name": "Le Reflet",
+      "lat": 48.8497449,
+      "lon": 2.3428033,
+      "category": "nightlife",
+      "description": "Le Reflet nightlife bar",
+      "tags": {
+        "amenity": "bar",
+        "check_date": "2026-05-31",
+        "name": "Le Reflet",
+        "name:fr": "Le Reflet"
+      }
+    },
+    {
+      "id": 332086570,
+      "name": "La Place verte",
+      "lat": 48.8659333,
+      "lon": 2.3775773,
+      "category": "nightlife",
+      "description": "La Place verte nightlife table soccer bar",
+      "tags": {
+        "amenity": "bar",
+        "check_date": "2026-08-19",
+        "contact:city": "Paris 11eme Arrondissement",
+        "contact:housenumber": "105",
+        "contact:phone": "+33 1 43 57 34 10",
+        "contact:postcode": "75011",
+        "contact:street": "Rue Oberkampf",
+        "name": "La Place verte",
+        "sport": "table_soccer"
+      }
+    },
+    {
+      "id": 418062332,
+      "name": "Les Anémones",
+      "lat": 48.8653692,
+      "lon": 2.3748561,
+      "category": "nightlife",
+      "description": "Les Anémones nightlife bar",
+      "tags": {
+        "addr:city": "Paris",
+        "addr:housenumber": "41",
+        "addr:postcode": "75011",
+        "addr:street": "Avenue de la République",
+        "amenity": "bar",
+        "check_date": "2026-03-21",
+        "contact:city": "Paris 11eme Arrondissement",
+        "contact:housenumber": "41",
+        "contact:postcode": "75011",
+        "contact:street": "Avenue De La République",
+        "happy_hours": "Mo-We 06:30-02:00; Th-Sa 06:30-05:00; Su 06:30-02:00",
+        "name": "Les Anémones",
+        "opening_hours": "Mo-Su 06:00-18:00",
+        "outdoor_seating": "yes",
+        "phone": "+33 1 43 57 57 34"
+      }
+    },
+    {
+      "id": 418065634,
+      "name": "Haut les Cœurs",
+      "lat": 48.8641179,
+      "lon": 2.3865178,
+      "category": "nightlife",
+      "description": "Haut les Cœurs nightlife bar",
+      "tags": {
+        "addr:housenumber": "72",
+        "addr:street": "Boulevard de Ménilmontant",
+        "amenity": "bar",
+        "check_date": "2025-03-25",
+        "check_date:opening_hours": "2025-03-25",
+        "indoor_seating": "yes",
+        "name": "Haut les Cœurs",
+        "name:2015-2022": "Haut les Cœurs",
+        "name:fr": "Haut les Cœurs",
+        "opening_hours:signed": "no",
+        "outdoor_seating": "yes"
+      }
+    },
+    {
+      "id": 418074933,
+      "name": "Le Grenier",
+      "lat": 48.8665829,
+      "lon": 2.3816081,
+      "category": "nightlife",
+      "description": "Le Grenier nightlife bar",
+      "tags": {
+        "amenity": "bar",
+        "check_date": "2025-03-01",
+        "contact:city": "Paris 11eme Arrondissement",
+        "contact:housenumber": "152",
+        "contact:phone": "+33 9 74 64 01 13",
+        "contact:postcode": "75011",
+        "contact:street": "Rue Oberkampf",
+        "name": "Le Grenier",
+        "opening_hours": "Mo-Fr 07:00-23:59; Sa-Su 00:00-02:00, 07:00-23:59",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "id": 418074935,
+      "name": "Les Marquises (Ex O'berzinc)",
+      "lat": 48.8667135,
+      "lon": 2.3812373,
+      "category": "nightlife",
+      "description": "Les Marquises (Ex O'berzinc) nightlife bar",
+      "tags": {
+        "addr:city": "Paris",
+        "addr:housenumber": "145",
+        "addr:postcode": "75011",
+        "addr:street": "Rue Oberkampf",
+        "amenity": "bar",
+        "contact:city": "Paris 11eme Arrondissement",
+        "contact:housenumber": "145",
+        "contact:phone": "+33 1 83 89 51 41",
+        "contact:postcode": "75011",
+        "contact:street": "Rue Oberkampf",
+        "name": "Les Marquises (Ex O'berzinc)"
+      }
+    },
+    {
+      "id": 418080841,
+      "name": "Le bap",
+      "lat": 48.8658873,
+      "lon": 2.3769721,
+      "category": "nightlife",
+      "description": "Le bap nightlife Bar à jeux avec 10 billards, 3 baby foots, des fléchettes. Diffusion d'événements sportifs sur grands écrans billiards;table soccer pub",
+      "tags": {
+        "addr:city": "Paris",
+        "addr:housenumber": "111",
+        "addr:postcode": "75011",
+        "addr:street": "Rue Saint-Maur",
+        "amenity": "pub",
+        "check_date": "2026-03-21",
+        "contact:email": "contact@lebap.fr",
+        "description": "Bar à jeux avec 10 billards, 3 baby foots, des fléchettes. Diffusion d'événements sportifs sur grands écrans",
+        "internet_access": "wlan",
+        "name": "Le bap",
+        "opening_hours": "Tu-Th, Su 17:00-02:00; Fr, Sa 17:00-04:00",
+        "phone": "+33 1 43 55 87 21",
+        "smoking": "outside",
+        "source": "survey",
+        "sport": "billiards;table_soccer",
+        "website": "https://www.lebap.fr/"
+      }
+    },
+    {
+      "id": 418080844,
+      "name": "Nun's Café",
+      "lat": 48.8668323,
+      "lon": 2.3764592,
+      "category": "nightlife",
+      "description": "Nun's Café nightlife bar",
+      "tags": {
+        "amenity": "bar",
+        "check_date": "2025-07-12",
+        "contact:city": "Paris 11eme Arrondissement",
+        "contact:housenumber": "112",
+        "contact:phone": "+33 7 89 42 67 95",
+        "contact:postcode": "75011",
+        "contact:street": "Rue Saint-Maur",
+        "name": "Nun's Café",
+        "name:fr": "Nun's Café"
+      }
+    },
+    {
+      "id": 418088839,
+      "name": "La Contrescarpe",
+      "lat": 48.8442805,
+      "lon": 2.3494077,
+      "category": "nightlife",
+      "description": "La Contrescarpe nightlife bar",
+      "tags": {
+        "amenity": "bar",
+        "check_date": "2026-03-21",
+        "contact:city": "Paris 5eme Arrondissement",
+        "contact:housenumber": "57",
+        "contact:phone": "+33 1 43 36 82 88",
+        "contact:postcode": "75005",
+        "contact:street": "Rue Lacépède",
+        "indoor_seating": "yes",
+        "internet_access": "yes",
+        "name": "La Contrescarpe",
+        "official_name": "La Contrescarpe Paris 5",
+        "outdoor_seating": "yes",
+        "smoking": "outside"
+      }
+    },
+    {
+      "id": 418140401,
+      "name": "Chair de poule",
+      "lat": 48.8676394,
+      "lon": 2.3754366,
+      "category": "nightlife",
+      "description": "Chair de poule nightlife bar",
+      "tags": {
+        "addr:city": "Paris",
+        "addr:housenumber": "141",
+        "addr:postcode": "75011",
+        "addr:street": "Rue Saint-Maur",
+        "amenity": "bar",
+        "brewery": "Barge IPA",
+        "check_date": "2025-02-26",
+        "contact:mastodon": "https://mastodon.social/@SoniaTerhzaz",
+        "name": "Chair de poule",
+        "opening_hours": "Mo-Sa 08:00-18:00; Su 17:00-24:00",
+        "phone": "+33 1 43 38 89 06",
+        "website": "http://chairdepouleparis.com"
+      }
+    },
+    {
+      "id": 418142760,
+      "name": "Onze bar",
+      "lat": 48.8681035,
+      "lon": 2.3782452,
+      "category": "nightlife",
+      "description": "Onze bar nightlife pub",
+      "tags": {
+        "amenity": "pub",
+        "check_date": "2025-04-22",
+        "indoor_seating": "yes",
+        "name": "Onze bar",
+        "outdoor_seating": "yes"
+      }
+    },
+    {
+      "id": 420684832,
+      "name": "Uva",
+      "lat": 48.8645121,
+      "lon": 2.3683814,
+      "category": "nightlife",
+      "description": "Uva nightlife Cave, assiettes et vin bar",
+      "tags": {
+        "amenity": "bar",
+        "check_date": "2025-02-02",
+        "contact:instagram": "https://www.instagram.com/uva_paris?igsh=MXZuaXRrbm94ZGNkaA==",
+        "description": "Cave, assiettes et vin",
+        "name": "Uva",
+        "opening_hours": "Tu-Sa 18:00-24:00"
+      }
+    },
+    {
+      "id": 428039924,
+      "name": "Le Crozatier",
+      "lat": 48.8480388,
+      "lon": 2.3805088,
+      "category": "shopping",
+      "description": "Le Crozatier shopping cafe;bar;gambling",
+      "tags": {
+        "addr:city": "Paris",
+        "addr:housenumber": "43",
+        "addr:postcode": "75012",
+        "addr:street": "Rue Crozatier",
+        "amenity": "cafe;bar;gambling",
+        "bar": "yes",
+        "brewery": "Kronenbourg;Grimbergen",
+        "check_date": "2024-11-14",
+        "diet:halal": "no",
+        "diet:vegetarian": "no",
+        "gambling": "yes",
+        "internet_access": "no",
+        "lottery": "yes",
+        "name": "Le Crozatier",
+        "name:fr": "Le Crozatier",
+        "opening_hours": "Mo-Sa 06:45-20:30",
+        "outdoor_seating": "yes",
+        "payment:cash": "yes",
+        "payment:credit_cards": "yes",
+        "payment:debit_cards": "yes",
+        "sells:tobacco": "yes",
+        "shop": "lottery",
+        "smoking": "outside",
+        "takeaway": "yes"
+      }
+    },
+    {
+      "id": 428040634,
+      "name": "Le Baron Rouge",
+      "lat": 48.8494401,
+      "lon": 2.377381,
+      "category": "nightlife",
+      "description": "Le Baron Rouge nightlife bar",
+      "tags": {
+        "addr:housenumber": "1",
+        "addr:street": "Rue Théophile Roussel",
+        "amenity": "bar",
+        "indoor_seating": "yes",
+        "name": "Le Baron Rouge",
+        "opening_hours": "Mo 17:00-22:00; Tu-Fr 10:00-14:00,17:00-22:00; Sa 10:00-22:00; Su 10:00-16:00",
+        "outdoor_seating": "yes",
+        "phone": "+33 1 43 43 14 32",
+        "website": "https://www.lebaronrouge.net/"
+      }
+    },
+    {
+      "id": 252610163,
+      "name": "La Petite Étoile",
+      "lat": 48.8526294,
+      "lon": 2.3745004,
+      "category": "shopping",
+      "description": "La Petite Étoile shopping",
+      "tags": {
+        "addr:city": "Paris",
+        "addr:housenumber": "14",
+        "addr:postcode": "75011",
+        "addr:street": "Rue de Charonne",
+        "clothes": "women",
+        "name": "La Petite Étoile",
+        "opening_hours": "Tu-Sa 11:00-19:00",
+        "phone": "+33 973617915",
+        "shop": "clothes",
+        "website": "https://www.lapetiteetoile.com/pages/paris-rue-de-charonne"
+      }
+    },
+    {
+      "id": 428032271,
+      "name": "Top Asia",
+      "lat": 48.8485694,
+      "lon": 2.3787232,
+      "category": "shopping",
+      "description": "Top Asia shopping",
+      "tags": {
+        "addr:city": "Paris",
+        "addr:housenumber": "15",
+        "addr:postcode": "75012",
+        "addr:street": "Place d'Aligre",
+        "check_date": "2024-11-14",
+        "name": "Top Asia",
+        "payment:cash": "yes",
+        "payment:credit_cards": "yes",
+        "payment:debit_cards": "yes",
+        "shop": "supermarket"
+      }
+    },
+    {
+      "id": 532031913,
+      "name": "Épicerie Fine",
+      "lat": 48.8461054,
+      "lon": 2.3720079,
+      "category": "shopping",
+      "description": "Épicerie Fine shopping",
+      "tags": {
+        "alt_name": "Remo Ricciuti",
+        "check_date": "2026-04-09",
+        "check_date:opening_hours": "2026-04-09",
+        "level": "0",
+        "name": "Épicerie Fine",
+        "opening_hours:signed": "no",
+        "ref:FR:SIRET": "45142581300024",
+        "shop": "gift",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": 620845441,
+      "name": "Passage des Panoramas",
+      "lat": 48.871,
+      "lon": 2.3416312,
+      "category": "shopping",
+      "description": "Passage des Panoramas shopping",
+      "tags": {
+        "addr:city": "Paris",
+        "addr:postcode": "75002",
+        "addr:street": "Passage des Panoramas",
+        "name": "Passage des Panoramas",
+        "opening_hours": "Mo-Su 06:00-00:00",
+        "ref:FR:SIRET": "78420582500010",
+        "shop": "mall",
+        "source": "cadastre-dgi-fr source : Direction Générale des Impôts - Cadastre;mise à jour : 2010",
+        "toilets": "no",
+        "wikidata": "Q3141829"
+      }
+    },
+    {
+      "id": 667342363,
+      "name": "Wing Seng",
+      "lat": 48.873871,
+      "lon": 2.3754889,
+      "category": "shopping",
+      "description": "Wing Seng shopping",
+      "tags": {
+        "addr:city": "Paris",
+        "addr:housenumber": "2",
+        "addr:postcode": "75019",
+        "addr:street": "Rue Rébeval",
+        "check_date": "2025-06-22",
+        "diet:halal": "no",
+        "diet:kosher": "no",
+        "name": "Wing Seng",
+        "opening_hours:signed": "no",
+        "payment:apple_pay": "yes",
+        "payment:cards": "yes",
+        "payment:cash": "yes",
+        "phone": "+33 142419778",
+        "ref:FR:SIRET": "32818666300014",
+        "shop": "supermarket",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": 667342374,
+      "name": "Les halles de l'Asie - 新今日超市",
+      "lat": 48.8727703,
+      "lon": 2.3788139,
+      "category": "shopping",
+      "description": "Les halles de l'Asie - 新今日超市 shopping",
+      "tags": {
+        "addr:city": "Paris",
+        "addr:housenumber": "19",
+        "addr:postcode": "75019",
+        "addr:street": "Rue de Belleville",
+        "check_date:opening_hours": "2026-03-27",
+        "name": "Les halles de l'Asie - 新今日超市",
+        "name:zh": "新今日超市",
+        "opening_hours": "Mo 10:00-20:00; Tu-Su 08:30-20:00",
+        "phone": "+33 1 42 38 18 98",
+        "shop": "supermarket",
+        "type": "chinese",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": 680443043,
+      "name": "Unisport",
+      "lat": 48.8609376,
+      "lon": 2.3485197,
+      "category": "shopping",
+      "description": "Unisport shopping",
+      "tags": {
+        "addr:city": "Paris",
+        "addr:postcode": "75001",
+        "addr:street": "Rue Berger",
+        "check_date": "2026-08-20",
+        "clothes": "sports",
+        "email": "support@unisportstore.fr",
+        "name": "Unisport",
+        "old_name": "Adidas Football",
+        "phone": "+33 1 40 26 39 20",
+        "shop": "clothes",
+        "website": "https://unisportstore.fr",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": 682258926,
+      "name": "Antoine",
+      "lat": 48.8648371,
+      "lon": 2.335091,
+      "category": "shopping",
+      "description": "Antoine shopping",
+      "tags": {
+        "contact:city": "Paris",
+        "contact:email": "contact@antoine1745.com",
+        "contact:housenumber": "10",
+        "contact:phone": "+33 1 42 96 01 80;+33 6 59 05 89 01",
+        "contact:postcode": "75001",
+        "contact:street": "Avenue de l'Opéra",
+        "contact:website": "https://www.antoine1745.com",
+        "name": "Antoine",
+        "opening_hours": "Tu-Sa 10:30-13:00,14:00-18:30",
+        "ref:FR:SIRET": "65205478400010",
+        "shop": "clothes",
+        "source": "cadastre-dgi-fr source : Direction Générale des Impôts - Cadastre. Mise à jour : 2010"
+      }
+    },
+    {
+      "id": 689346689,
+      "name": "Jonas et Cie (Jean-Claude et Laurent Touboul)",
+      "lat": 48.8665825,
+      "lon": 2.3431631,
+      "category": "shopping",
+      "description": "Jonas et Cie (Jean-Claude et Laurent Touboul) shopping",
+      "tags": {
+        "check_date": "2026-04-13",
+        "contact:city": "Paris",
+        "contact:housenumber": "19",
+        "contact:postcode": "75002",
+        "contact:street": "Rue d'Aboukir",
+        "internet_access": "wlan",
+        "name": "Jonas et Cie (Jean-Claude et Laurent Touboul)",
+        "ref:FR:SIRET": "83100703400018",
+        "shop": "clothes",
+        "source": "cadastre-dgi-fr source : Direction Générale des Impôts - Cadastre. Mise à jour : 2010",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "id": 691614074,
+      "name": "Duke Store",
+      "lat": 48.8646872,
+      "lon": 2.3499029,
+      "category": "shopping",
+      "description": "Duke Store shopping",
+      "tags": {
+        "contact:city": "Paris",
+        "contact:housenumber": "3",
+        "contact:postcode": "75002",
+        "contact:street": "Passage du Grand-Cerf",
+        "contact:website": "http://dukestoreparis.com",
+        "name": "Duke Store",
+        "opening_hours": "Tu-Sa 10:00-19:00",
+        "shop": "clothes",
+        "source": "cadastre-dgi-fr source : Direction Générale des Impôts - Cadastre. Mise à jour : 2010",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": 693733000,
+      "name": "ZXSBN6DD3VZBGSY",
+      "lat": 48.8695806,
+      "lon": 2.3496212,
+      "category": "shopping",
+      "description": "ZXSBN6DD3VZBGSY shopping",
+      "tags": {
+        "addr:housenumber": "5",
+        "addr:street": "Rue Notre-Dame de Bonne Nouvelle",
+        "check_date": "2025-08-01",
+        "contact:city": "Paris",
+        "contact:housenumber": "5",
+        "contact:phone": "+33 6 98 14 14 98",
+        "contact:street": "Rue Notre-Dame-de-Bonne-Nouvelle",
+        "name": "ZXSBN6DD3VZBGSY",
+        "opening_hours": "Mo-Su 10:00-19:00",
+        "shop": "clothes",
+        "source": "cadastre-dgi-fr source : Direction Générale des Impôts - Cadastre. Mise à jour : 2010"
+      }
+    },
+    {
+      "id": 702915150,
+      "name": "LePantalon Marais",
+      "lat": 48.8565503,
+      "lon": 2.3573564,
+      "category": "shopping",
+      "description": "LePantalon Marais shopping Magasin de pantalons",
+      "tags": {
+        "addr:housenumber": "48",
+        "addr:street": "Rue du roi de Sicile",
+        "check_date": "2026-07-05",
+        "description": "Magasin de pantalons",
+        "name": "LePantalon Marais",
+        "opening_hours": "Mo-We 11:30-15:00, 15:30-20:00; Th, Fr 11:30-20:00; Sa 10:30-20:00; Su 11:00-13:00, 13:30-19:00",
+        "phone": "+33 9 81 33 83 59",
+        "shop": "clothes",
+        "source": "cadastre-dgi-fr source : Direction Générale des Impôts - Cadastre. Mise à jour : 2010",
+        "website": "https://lepantalon.fr"
+      }
+    },
+    {
+      "id": 702977327,
+      "name": "Maison Lejaby",
+      "lat": 48.8564568,
+      "lon": 2.3609807,
+      "category": "shopping",
+      "description": "Maison Lejaby shopping",
+      "tags": {
+        "name": "Maison Lejaby",
+        "ref:FR:SIRET": "51500504900033",
+        "shop": "clothes"
+      }
+    },
+    {
+      "id": 703432519,
+      "name": "Free People",
+      "lat": 48.8561231,
+      "lon": 2.3614099,
+      "category": "shopping",
+      "description": "Free People shopping",
+      "tags": {
+        "contact:city": "Paris",
+        "contact:housenumber": "12",
+        "contact:postcode": "75004",
+        "contact:street": "Rue Malher",
+        "email": "str4810@freepeople.com",
+        "name": "Free People",
+        "opening_hours": "Mo-Tu 12:00-19:00; We-Su 11:00-19:00",
+        "phone": "+33 1 85 14 22 76",
+        "ref:FR:SIRET": "80349207300090",
+        "shop": "clothes",
+        "website": "https://www.freepeople.com/stores/RueMalher"
+      }
+    },
+    {
+      "id": 705253242,
+      "name": "Debby Doll",
+      "lat": 48.8539678,
+      "lon": 2.3642349,
+      "category": "shopping",
+      "description": "Debby Doll shopping",
+      "tags": {
+        "addr:city": "Paris",
+        "addr:housenumber": "53",
+        "addr:postcode": "75004",
+        "addr:street": "Rue Saint-Antoine",
+        "check_date": "2026-04-29",
+        "clothes": "women",
+        "name": "Debby Doll",
+        "opening_hours": "Tu-Sa 11:00-19:00; Mo 13:00-19:00",
+        "shop": "clothes",
+        "source": "cadastre-dgi-fr source : Direction Générale des Impôts - Cadastre. Mise à jour : 2010"
+      }
+    },
+    {
+      "id": 708981028,
+      "name": "Maurice",
+      "lat": 48.8608013,
+      "lon": 2.3550206,
+      "category": "shopping",
+      "description": "Maurice shopping",
+      "tags": {
+        "addr:city": "Paris",
+        "addr:housenumber": "16",
+        "addr:street": "Rue Rambuteau",
+        "check_date": "2026-02-03",
+        "clothes": "women",
+        "name": "Maurice",
+        "not:brand:wikidata": "Q6793571",
+        "shop": "clothes",
+        "source": "survey 2018",
+        "website": "https://mauriceparis.com/"
+      }
+    },
+    {
+      "id": 718851879,
+      "name": "The Frankie Shop",
+      "lat": 48.8601675,
+      "lon": 2.3658211,
+      "category": "shopping",
+      "description": "The Frankie Shop shopping",
+      "tags": {
+        "addr:housenumber": "14",
+        "addr:postcode": "75003",
+        "addr:street": "Rue Saint-Claude",
+        "check_date": "2024-08-04",
+        "name": "The Frankie Shop",
+        "opening_hours": "Mo-Sa 11:00-19:00; Su 14:00-19:00",
+        "phone": "+33149965239",
+        "shop": "clothes",
+        "source": "cadastre-dgi-fr source : Direction Générale des Impôts - Cadastre. Mise à jour : 2010",
+        "website": "https://thefrankieshop.com/"
+      }
+    },
+    {
+      "id": 785239886,
+      "name": "Pylones",
+      "lat": 48.8604546,
+      "lon": 2.3446159,
+      "category": "shopping",
+      "description": "Pylones shopping",
+      "tags": {
+        "addr:city": "Paris",
+        "addr:postcode": "75001",
+        "addr:street": "Rue du Pont Neuf",
+        "check_date": "2026-06-20",
+        "email": "pylones-pontneuf@pylones.com",
+        "name": "Pylones",
+        "opening_hours": "Mo-Su 10:30-20:00",
+        "phone": "+33 9 84 55 89 55",
+        "ref:FR:SIRET": "33225187500545",
+        "shop": "gift",
+        "wheelchair": "limited"
+      }
+    },
+    {
+      "id": 940712735,
+      "name": "Salsa Studio",
+      "lat": 48.8500725,
+      "lon": 2.3811912,
+      "category": "shopping",
+      "description": "Salsa Studio shopping",
+      "tags": {
+        "name": "Salsa Studio",
+        "shop": "clothes"
+      }
+    },
+    {
+      "id": 1020352067,
+      "name": "Préférence",
+      "lat": 48.8715603,
+      "lon": 2.3752922,
+      "category": "shopping",
+      "description": "Préférence shopping",
+      "tags": {
+        "check_date": "2025-06-22",
+        "check_date:opening_hours": "2025-03-28",
+        "contact:city": "Paris",
+        "contact:housenumber": "127",
+        "contact:postcode": "75010",
+        "contact:street": "Rue du Faubourg du Temple",
+        "name": "Préférence",
+        "opening_hours:signed": "no",
+        "shop": "clothes",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": 1020391904,
+      "name": "Arc en Ciel",
+      "lat": 48.871091,
+      "lon": 2.3740337,
+      "category": "shopping",
+      "description": "Arc en Ciel shopping",
+      "tags": {
+        "check_date": "2025-06-22",
+        "contact:city": "Paris",
+        "contact:housenumber": "107",
+        "contact:postcode": "75010",
+        "contact:street": "Rue du Faubourg du Temple",
+        "name": "Arc en Ciel",
+        "opening_hours:signed": "no",
+        "shop": "clothes",
+        "wheelchair": "limited"
+      }
+    },
+    {
+      "id": 1022710340,
+      "name": "Leo-bra",
+      "lat": 48.8708717,
+      "lon": 2.3734754,
+      "category": "shopping",
+      "description": "Leo-bra shopping",
+      "tags": {
+        "check_date": "2025-06-22",
+        "contact:city": "Paris",
+        "contact:housenumber": "99",
+        "contact:postcode": "75010",
+        "contact:street": "Rue du Faubourg du Temple",
+        "name": "Leo-bra",
+        "opening_hours:signed": "no",
+        "ref:FR:SIRET": "82380687200011",
+        "shop": "clothes",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": 1022710357,
+      "name": "Outlet 99",
+      "lat": 48.8708405,
+      "lon": 2.3733833,
+      "category": "shopping",
+      "description": "Outlet 99 shopping",
+      "tags": {
+        "check_date": "2025-06-22",
+        "check_date:opening_hours": "2025-01-10",
+        "name": "Outlet 99",
+        "opening_hours:signed": "no",
+        "shop": "clothes",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "id": 1022752613,
+      "name": "Romy",
+      "lat": 48.8709526,
+      "lon": 2.3737302,
+      "category": "shopping",
+      "description": "Romy shopping",
+      "tags": {
+        "check_date": "2025-06-22",
+        "contact:city": "Paris",
+        "contact:housenumber": "103",
+        "contact:postcode": "75010",
+        "contact:street": "Rue du Faubourg du Temple",
+        "name": "Romy",
+        "opening_hours:signed": "no",
+        "ref:FR:SIRET": "53050836500018",
+        "shop": "clothes",
+        "wheelchair": "limited"
+      }
+    },
+    {
+      "id": 1023168042,
+      "name": "Loona",
+      "lat": 48.8710573,
+      "lon": 2.3743844,
+      "category": "shopping",
+      "description": "Loona shopping",
+      "tags": {
+        "check_date:opening_hours": "2025-01-10",
+        "name": "Loona",
+        "opening_hours:signed": "no",
+        "shop": "clothes",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": 1023168068,
+      "name": "Téa Paris",
+      "lat": 48.8706718,
+      "lon": 2.3734743,
+      "category": "shopping",
+      "description": "Téa Paris shopping",
+      "tags": {
+        "check_date:opening_hours": "2024-10-05",
+        "name": "Téa Paris",
+        "opening_hours:signed": "no",
+        "shop": "clothes",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": 1023168095,
+      "name": "L'Attrape Cœur",
+      "lat": 48.8713377,
+      "lon": 2.3752354,
+      "category": "shopping",
+      "description": "L'Attrape Cœur shopping",
+      "tags": {
+        "check_date": "2025-06-22",
+        "check_date:opening_hours": "2024-10-11",
+        "name": "L'Attrape Cœur",
+        "opening_hours:signed": "no",
+        "shop": "clothes",
+        "wheelchair": "limited"
+      }
+    },
+    {
+      "id": 1023168124,
+      "name": "Fifi",
+      "lat": 48.8712819,
+      "lon": 2.3750678,
+      "category": "shopping",
+      "description": "Fifi shopping",
+      "tags": {
+        "check_date:opening_hours": "2025-03-28",
+        "name": "Fifi",
+        "opening_hours:signed": "no",
+        "shop": "clothes",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": 1023168145,
+      "name": "Froc",
+      "lat": 48.8712697,
+      "lon": 2.3744869,
+      "category": "shopping",
+      "description": "Froc shopping",
+      "tags": {
+        "check_date": "2025-06-22",
+        "name": "Froc",
+        "opening_hours:signed": "no",
+        "shop": "clothes",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": 1023168240,
+      "name": "Shinel",
+      "lat": 48.8714341,
+      "lon": 2.3755016,
+      "category": "shopping",
+      "description": "Shinel shopping",
+      "tags": {
+        "check_date:opening_hours": "2025-03-28",
+        "name": "Shinel",
+        "opening_hours:signed": "no",
+        "shop": "clothes",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": 1023168248,
+      "name": "Vic Fel",
+      "lat": 48.8706037,
+      "lon": 2.3732762,
+      "category": "shopping",
+      "description": "Vic Fel shopping",
+      "tags": {
+        "check_date": "2024-10-05",
+        "check_date:opening_hours": "2024-10-05",
+        "name": "Vic Fel",
+        "opening_hours:signed": "no",
+        "shop": "clothes",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": 1094366310,
+      "name": "Starcow",
+      "lat": 48.8618996,
+      "lon": 2.3432872,
+      "category": "shopping",
+      "description": "Starcow shopping Anciennement : Ideal Standard",
+      "tags": {
+        "addr:city": "Paris",
+        "addr:housenumber": "49",
+        "addr:postcode": "75001",
+        "addr:street": "Rue Berger",
+        "check_date": "2025-06-04",
+        "contact:city": "Paris",
+        "contact:housenumber": "41",
+        "contact:postcode": "75001",
+        "contact:street": "Rue Berger",
+        "description": "Anciennement : Ideal Standard",
+        "name": "Starcow",
+        "opening_hours": "Mo 14:00-19:00; Tu-Sa 11:00-19:00",
+        "shop": "clothes",
+        "wheelchair": "limited"
+      }
+    },
+    {
+      "id": 1110738523,
+      "name": "Jihanne Souvenirs",
+      "lat": 48.8467134,
+      "lon": 2.3429597,
+      "category": "shopping",
+      "description": "Jihanne Souvenirs shopping",
+      "tags": {
+        "check_date": "2026-06-11",
+        "check_date:opening_hours": "2026-06-11",
+        "name": "Jihanne Souvenirs",
+        "opening_hours:signed": "no",
+        "shop": "gift",
+        "source": "cadastre-dgi-fr source : Direction Générale des Impôts - Cadastre. Mise à jour : 2011"
+      }
+    },
+    {
+      "id": 1166729097,
+      "name": "Bleuforêt",
+      "lat": 48.8574136,
+      "lon": 2.3615631,
+      "category": "shopping",
+      "description": "Bleuforêt shopping",
+      "tags": {
+        "name": "Bleuforêt",
+        "shop": "clothes",
+        "source": "survey 2013"
+      }
+    },
+    {
+      "id": 1166729138,
+      "name": "Reformation",
+      "lat": 48.8573534,
+      "lon": 2.3617134,
+      "category": "shopping",
+      "description": "Reformation shopping",
+      "tags": {
+        "level": "0",
+        "name": "Reformation",
+        "shop": "clothes"
+      }
+    },
+    {
+      "id": 1224640815,
+      "name": "Chen Market",
+      "lat": 48.8717702,
+      "lon": 2.3766798,
+      "category": "shopping",
+      "description": "Chen Market shopping asian",
+      "tags": {
+        "addr:city": "Paris",
+        "addr:housenumber": "120-124",
+        "addr:postcode": "75011",
+        "addr:street": "Rue du Faubourg du Temple",
+        "check_date": "2025-03-29",
+        "check_date:opening_hours": "2023-04-14",
+        "cuisine": "asian",
+        "name": "Chen Market",
+        "opening_hours": "Mo-Sa 09:00-20:30; Su 08:30-13:00",
+        "phone": "+33 1 43 38 22 72",
+        "shop": "supermarket",
+        "source": "survey 09/2017",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": 1292143858,
+      "name": "Vintage Clothing Store - Mode Femme",
+      "lat": 48.8640163,
+      "lon": 2.3678055,
+      "category": "shopping",
+      "description": "Vintage Clothing Store - Mode Femme shopping",
+      "tags": {
+        "addr:housenumber": "10",
+        "addr:street": "Rue de Crussol",
+        "name": "Vintage Clothing Store - Mode Femme",
+        "name:en": "Vintage Clothing Store - Women's Fashion",
+        "shop": "clothes",
+        "source": "cadastre-dgi-fr source : Direction Générale des Impôts - Cadastre. Mise à jour : 2011"
+      }
+    },
+    {
+      "id": 1430808028,
+      "name": "Centre Commercial",
+      "lat": 48.8531666,
+      "lon": 2.3752103,
+      "category": "shopping",
+      "description": "Centre Commercial shopping",
+      "tags": {
+        "addr:city": "Paris",
+        "addr:housenumber": "26",
+        "addr:postcode": "75011",
+        "addr:street": "Rue de Charonne",
+        "contact:facebook": "https://www.facebook.com/Centre.Commercial.Paris/",
+        "name": "Centre Commercial",
+        "opening_hours": "Mo-Sa 11:00-20:00; Su 14:00-19:00",
+        "shop": "clothes",
+        "website": "https://www.centrecommercial.cc/"
+      }
+    },
+    {
+      "id": 1477602786,
+      "name": "K-mart",
+      "lat": 48.865499,
+      "lon": 2.3352849,
+      "category": "shopping",
+      "description": "K-mart shopping Supermarché coréen vendant également des produits japonais korean;japanese",
+      "tags": {
+        "check_date": "2025-12-01",
+        "check_date:opening_hours": "2025-12-01",
+        "contact:city": "Paris",
+        "contact:housenumber": "8",
+        "contact:phone": "+33 1 58 62 49 09",
+        "contact:postcode": "75001",
+        "contact:street": "Rue Sainte-Anne",
+        "cuisine": "korean;japanese",
+        "description": "Supermarché coréen vendant également des produits japonais",
+        "name": "K-mart",
+        "opening_hours": "Mo-Su 10:00-21:00",
+        "shop": "supermarket",
+        "source": "survey",
+        "website": "https://www.k-mart.fr/opera",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": 191031796,
+      "name": "Point zéro des Routes de France",
+      "lat": 48.8534015,
+      "lon": 2.3487885,
+      "category": "history",
+      "description": "Point zéro des Routes de France history milestone attraction",
+      "tags": {
+        "historic": "milestone",
+        "latitude": "48.853402",
+        "longitude": "2.348785",
+        "man_made": "survey_point",
+        "name": "Point zéro des Routes de France",
+        "name:el": "Σημείο μηδέν για την μέτρηση αποστάσεων στην Γαλλία",
+        "name:en": "Point Zero for French Road Measurements",
+        "name:es": "Punto kilométrico cero de las carreteras francesas",
+        "name:fr": "Point zéro des Routes de France",
+        "name:sk": "Nulový kilometrovník francúzskych ciest",
+        "name:zh": "巴黎 原點",
+        "start_date": "1924",
+        "subject:wikidata": "Q329477",
+        "survey_point:structure": "medallion",
+        "tourism": "attraction",
+        "wheelchair": "yes",
+        "wikidata": "Q2467833",
+        "wikipedia": "fr:Point zéro des routes de France"
+      }
+    },
+    {
+      "id": 530585154,
+      "name": "Fontaine Cuvier",
+      "lat": 48.8439963,
+      "lon": 2.3550311,
+      "category": "history",
+      "description": "Fontaine Cuvier history yes attraction drinking water",
+      "tags": {
+        "access": "yes",
+        "amenity": "drinking_water",
+        "bottle": "yes",
+        "covered": "no",
+        "fee": "no",
+        "fountain": "bubbler",
+        "historic": "yes",
+        "indoor": "no",
+        "lit": "yes",
+        "mapillary": "1095600540961985",
+        "name": "Fontaine Cuvier",
+        "panoramax": "ffb26a2f-d486-44a5-be12-557ecbe6ef30",
+        "source": "cadastre-dgi-fr source : Direction Générale des Impôts - Cadastre. Mise à jour : 2009",
+        "tourism": "attraction",
+        "wikidata": "Q3076018",
+        "wikipedia": "fr:Fontaine Cuvier"
+      }
+    },
+    {
+      "id": 681283199,
+      "name": "Le Petit Bouillon Pharamond",
+      "lat": 48.8630061,
+      "lon": 2.3485109,
+      "category": "food",
+      "description": "Le Petit Bouillon Pharamond food french attraction restaurant",
+      "tags": {
+        "addr:city": "Paris",
+        "addr:floor": "0",
+        "addr:housenumber": "24",
+        "addr:postcode": "75001",
+        "addr:street": "Rue de la Grande Truanderie",
+        "amenity": "restaurant",
+        "check_date": "2026-10-08",
+        "cuisine": "french",
+        "email": "lepetitbouillonpharamond@gmail.com",
+        "indoor_seating": "yes",
+        "level": "0",
+        "name": "Le Petit Bouillon Pharamond",
+        "opening_hours": "Mo-Su 12:00-24:00",
+        "outdoor_seating": "pedestrian_zone",
+        "phone": "+33 1 40 28 45 18",
+        "ref:FR:SIRET": "84924795200013",
+        "reservation": "no",
+        "smoking": "outside",
+        "source": "cadastre-dgi-fr source : Direction Générale des Impôts - Cadastre. Mise à jour : 2010",
+        "tourism": "attraction",
+        "website": "https://www.petitbouillonpharamond.com/",
+        "wheelchair": "limited",
+        "wikidata": "Q15918460",
+        "wikipedia": "fr:Pharamond (restaurant)"
+      }
+    },
+    {
+      "id": 693733161,
+      "name": "Happy Hour - Escape Game",
+      "lat": 48.8699301,
+      "lon": 2.3484226,
+      "category": "attraction",
+      "description": "Happy Hour - Escape Game attraction escape game",
+      "tags": {
+        "contact:city": "Paris",
+        "contact:housenumber": "37",
+        "contact:postcode": "75002",
+        "contact:street": "Rue de la Lune",
+        "contact:website": "http://www.happyhourescapegame.com/",
+        "leisure": "escape_game",
+        "name": "Happy Hour - Escape Game",
+        "source": "cadastre-dgi-fr source : Direction Générale des Impôts - Cadastre. Mise à jour : 2010"
+      }
+    },
+    {
+      "id": 968153548,
+      "name": "Brasserie Bofinger",
+      "lat": 48.8539095,
+      "lon": 2.3680433,
+      "category": "food",
+      "description": "Brasserie Bofinger food french attraction restaurant",
+      "tags": {
+        "amenity": "restaurant",
+        "check_date": "2026-06-13",
+        "cuisine": "french",
+        "cuisine:fr": "brasserie;alsacien",
+        "heritage": "3",
+        "heritage:operator": "mhs",
+        "mhs:inscription_date": "1989-03-13",
+        "name": "Brasserie Bofinger",
+        "opening_hours": "Mo-Sa 12:00-15:00, 18:30-00:00; Su 12:00-15:00, 18:30-23:00",
+        "phone": "+33 1 42 72 87 82",
+        "ref:mhs": "PA00086249",
+        "source:heritage": "data.gouv.fr:Ministère de la culture - 08/2017",
+        "takeaway": "yes",
+        "toilets:wheelchair": "yes",
+        "tourism": "attraction",
+        "website": "https://www.bofingerparis.com/",
+        "wheelchair": "yes",
+        "wikidata": "Q22921405"
+      }
+    },
+    {
+      "id": 977193507,
+      "name": "Renard des Steppes",
+      "lat": 48.8453955,
+      "lon": 2.3614522,
+      "category": "attraction",
+      "description": "Renard des Steppes attraction attraction",
+      "tags": {
+        "attraction": "animal",
+        "name": "Renard des Steppes",
+        "name:en": "Corsac fox",
+        "name:fr": "Renard des Steppes",
+        "species:wikidata": "Q187024",
+        "species:wikipedia": "fr:Vulpes corsac",
+        "tourism": "attraction"
+      }
+    },
+    {
+      "id": 977193689,
+      "name": "Takin",
+      "lat": 48.8449433,
+      "lon": 2.3611035,
+      "category": "attraction",
+      "description": "Takin attraction attraction",
+      "tags": {
+        "alt_name": "Takin du Sichuan",
+        "attraction": "animal",
+        "name": "Takin",
+        "species:wikidata": "Q193469",
+        "species:wikipedia": "fr:Takin",
+        "tourism": "attraction"
+      }
+    },
+    {
+      "id": 977193735,
+      "name": "Markhor",
+      "lat": 48.8455992,
+      "lon": 2.3601919,
+      "category": "attraction",
+      "description": "Markhor attraction attraction",
+      "tags": {
+        "attraction": "animal",
+        "name": "Markhor",
+        "species:wikidata": "Q187927",
+        "species:wikipedia": "fr:Markhor",
+        "tourism": "attraction"
+      }
+    },
+    {
+      "id": 977193908,
+      "name": "Cheval de Przewalski",
+      "lat": 48.8455987,
+      "lon": 2.3610025,
+      "category": "attraction",
+      "description": "Cheval de Przewalski attraction attraction",
+      "tags": {
+        "attraction": "animal",
+        "name": "Cheval de Przewalski",
+        "name:en": "Przewalski's horse",
+        "name:fr": "Cheval de Przewalski",
+        "species:wikidata": "Q22712",
+        "species:wikipedia": "fr:Cheval de Przewalski",
+        "tourism": "attraction"
+      }
+    },
+    {
+      "id": 977193930,
+      "name": "Tapir malais",
+      "lat": 48.8460274,
+      "lon": 2.36141,
+      "category": "attraction",
+      "description": "Tapir malais attraction attraction",
+      "tags": {
+        "attraction": "animal",
+        "name": "Tapir malais",
+        "species:wikidata": "Q192710",
+        "tourism": "attraction"
+      }
+    },
+    {
+      "id": 977193947,
+      "name": "Chèvres des montagnes rocheuses",
+      "lat": 48.845395,
+      "lon": 2.3600837,
+      "category": "attraction",
+      "description": "Chèvres des montagnes rocheuses attraction attraction",
+      "tags": {
+        "attraction": "animal",
+        "name": "Chèvres des montagnes rocheuses",
+        "name:en": "Mountain goat",
+        "name:fr": "Chèvres des montagnes rocheuses",
+        "species:wikidata": "Q242602",
+        "species:wikipedia": "fr:Chèvre des montagnes Rocheuses",
+        "tourism": "attraction"
+      }
+    },
+    {
+      "id": 977193965,
+      "name": "Flamant des Caraïbes",
+      "lat": 48.8451325,
+      "lon": 2.3585787,
+      "category": "attraction",
+      "description": "Flamant des Caraïbes attraction attraction",
+      "tags": {
+        "attraction": "animal",
+        "name": "Flamant des Caraïbes",
+        "name:en": "American flamingo",
+        "name:fr": "Flamant des Caraïbes",
+        "species:wikidata": "Q208004",
+        "species:wikipedia": "fr:Flamant des Caraïbes",
+        "tourism": "attraction"
+      }
+    },
+    {
+      "id": 977194054,
+      "name": "Vigognes",
+      "lat": 48.8448648,
+      "lon": 2.3615333,
+      "category": "attraction",
+      "description": "Vigognes attraction attraction",
+      "tags": {
+        "attraction": "animal",
+        "name": "Vigognes",
+        "name:en": "Vicuña",
+        "name:fr": "Vigognes",
+        "species:wikidata": "Q167797",
+        "species:wikipedia": "fr:Vigogne",
+        "tourism": "attraction"
+      }
+    },
+    {
+      "id": 977194140,
+      "name": "Casoars à casque",
+      "lat": 48.8461195,
+      "lon": 2.360275,
+      "category": "attraction",
+      "description": "Casoars à casque attraction attraction",
+      "tags": {
+        "attraction": "animal",
+        "name": "Casoars à casque",
+        "name:en": "Cassowary",
+        "name:fr": "Casoars à casque",
+        "name:lt": "Kazuariniai paukščiai",
+        "name:pl": "Kazuary",
+        "name:uk": "Казуароподібні",
+        "species:wikidata": "Q375790",
+        "species:wikipedia": "fr:Casoar à casque",
+        "tourism": "attraction"
+      }
+    },
+    {
+      "id": 977194246,
+      "name": "Oryx d'Arabie",
+      "lat": 48.8449788,
+      "lon": 2.3620536,
+      "category": "attraction",
+      "description": "Oryx d'Arabie attraction attraction",
+      "tags": {
+        "attraction": "animal",
+        "name": "Oryx d'Arabie",
+        "species:wikidata": "Q237286",
+        "species:wikipedia": "fr:Oryx d'Arabie",
+        "tourism": "attraction"
+      }
+    },
+    {
+      "id": 977194357,
+      "name": "Gaur",
+      "lat": 48.8444306,
+      "lon": 2.35884,
+      "category": "attraction",
+      "description": "Gaur attraction attraction",
+      "tags": {
+        "attraction": "animal",
+        "name": "Gaur",
+        "tourism": "attraction"
+      }
+    },
+    {
+      "id": 977194454,
+      "name": "Pademelons",
+      "lat": 48.8450246,
+      "lon": 2.3589585,
+      "category": "attraction",
+      "description": "Pademelons attraction attraction",
+      "tags": {
+        "attraction": "animal",
+        "name": "Pademelons",
+        "species:wikidata": "Q209167",
+        "species:wikipedia": "fr:Thylogale brunii",
+        "tourism": "attraction"
+      }
+    },
+    {
+      "id": 977194483,
+      "name": "Sanglier de Visayas",
+      "lat": 48.8448968,
+      "lon": 2.3592364,
+      "category": "attraction",
+      "description": "Sanglier de Visayas attraction attraction",
+      "tags": {
+        "attraction": "animal",
+        "name": "Sanglier de Visayas",
+        "species:wikidata": "Q859200",
+        "tourism": "attraction"
+      }
+    },
+    {
+      "id": 977194662,
+      "name": "Wallaby de Bennett",
+      "lat": 48.844406,
+      "lon": 2.3578617,
+      "category": "attraction",
+      "description": "Wallaby de Bennett attraction attraction",
+      "tags": {
+        "attraction": "animal",
+        "name": "Wallaby de Bennett",
+        "species:wikidata": "Q20902621",
+        "tourism": "attraction"
+      }
+    },
+    {
+      "id": 977194828,
+      "name": "Gaur",
+      "lat": 48.8446941,
+      "lon": 2.3581762,
+      "category": "attraction",
+      "description": "Gaur attraction attraction",
+      "tags": {
+        "attraction": "animal",
+        "name": "Gaur",
+        "species:wikidata": "Q174296",
+        "species:wikipedia": "fr:Gayal",
+        "tourism": "attraction"
+      }
+    },
+    {
+      "id": 977194847,
+      "name": "Goral",
+      "lat": 48.8451002,
+      "lon": 2.3603422,
+      "category": "attraction",
+      "description": "Goral attraction attraction",
+      "tags": {
+        "attraction": "animal",
+        "name": "Goral",
+        "species:wikidata": "Q1370188",
+        "species:wikipedia": "fr:Goral",
+        "tourism": "attraction"
+      }
+    },
+    {
+      "id": 977194883,
+      "name": "Gaur",
+      "lat": 48.8443675,
+      "lon": 2.3593861,
+      "category": "attraction",
+      "description": "Gaur attraction attraction",
+      "tags": {
+        "attraction": "animal",
+        "name": "Gaur",
+        "tourism": "attraction"
+      }
+    },
+    {
+      "id": 977195099,
+      "name": "Potamochère roux",
+      "lat": 48.8446411,
+      "lon": 2.3605583,
+      "category": "attraction",
+      "description": "Potamochère roux attraction attraction",
+      "tags": {
+        "attraction": "animal",
+        "name": "Potamochère roux",
+        "name:en": "Red river hog",
+        "name:fr": "Potamochère roux",
+        "species:wikidata": "Q654370",
+        "species:wikipedia": "fr:Potamochoerus porcus",
+        "tourism": "attraction"
+      }
+    },
+    {
+      "id": 977195237,
+      "name": "Ara",
+      "lat": 48.8457133,
+      "lon": 2.3599754,
+      "category": "attraction",
+      "description": "Ara attraction attraction",
+      "tags": {
+        "attraction": "animal",
+        "name": "Ara",
+        "species:wikidata": "Q219035",
+        "species:wikipedia": "fr:Ara (oiseau)",
+        "tourism": "attraction"
+      }
+    },
+    {
+      "id": 1107052608,
+      "name": "Himalaya",
+      "lat": 48.844063,
+      "lon": 2.3591577,
+      "category": "attraction",
+      "description": "Himalaya attraction attraction",
+      "tags": {
+        "name": "Himalaya",
+        "tourism": "attraction"
+      }
+    },
+    {
+      "id": 1107052618,
+      "name": "Serre de Nouvelle-Calédonie",
+      "lat": 48.8431338,
+      "lon": 2.3572563,
+      "category": "attraction",
+      "description": "Serre de Nouvelle-Calédonie attraction attraction",
+      "tags": {
+        "name": "Serre de Nouvelle-Calédonie",
+        "tourism": "attraction"
+      }
+    },
+    {
+      "id": 1107052799,
+      "name": "Cévennes",
+      "lat": 48.8439327,
+      "lon": 2.3586581,
+      "category": "attraction",
+      "description": "Cévennes attraction attraction",
+      "tags": {
+        "name": "Cévennes",
+        "name:de": "Cevennen",
+        "name:fr": "Cévennes",
+        "tourism": "attraction"
+      }
+    },
+    {
+      "id": 1107052804,
+      "name": "Maroc",
+      "lat": 48.8441742,
+      "lon": 2.3588085,
+      "category": "attraction",
+      "description": "Maroc attraction attraction",
+      "tags": {
+        "name": "Maroc",
+        "tourism": "attraction"
+      }
+    },
+    {
+      "id": 1107052847,
+      "name": "Corse",
+      "lat": 48.8441587,
+      "lon": 2.3590142,
+      "category": "attraction",
+      "description": "Corse attraction attraction",
+      "tags": {
+        "name": "Corse",
+        "tourism": "attraction"
+      }
+    },
+    {
+      "id": 1107052875,
+      "name": "Forêts tropicales humides",
+      "lat": 48.8433054,
+      "lon": 2.3580196,
+      "category": "attraction",
+      "description": "Forêts tropicales humides attraction attraction",
+      "tags": {
+        "name": "Forêts tropicales humides",
+        "tourism": "attraction",
+        "wheelchair": "no",
+        "wheelchair:description": "Has a wheelchair lift that once worked, but looks like it has been out of action for a long time. 8 steps to get inside."
+      }
+    },
+    {
+      "id": 1107052881,
+      "name": "Rapaces diurnes",
+      "lat": 48.8458624,
+      "lon": 2.3599834,
+      "category": "attraction",
+      "description": "Rapaces diurnes attraction attraction",
+      "tags": {
+        "attraction": "animal",
+        "name": "Rapaces diurnes",
+        "tourism": "attraction"
+      }
+    },
+    {
+      "id": 1107052993,
+      "name": "Espagne",
+      "lat": 48.8441758,
+      "lon": 2.3585181,
+      "category": "attraction",
+      "description": "Espagne attraction attraction",
+      "tags": {
+        "name": "Espagne",
+        "tourism": "attraction"
+      }
+    },
+    {
+      "id": 1107053051,
+      "name": "Balkans",
+      "lat": 48.8440565,
+      "lon": 2.3582832,
+      "category": "attraction",
+      "description": "Balkans attraction attraction",
+      "tags": {
+        "name": "Balkans",
+        "tourism": "attraction"
+      }
+    },
+    {
+      "id": 1107053257,
+      "name": "Provence",
+      "lat": 48.8441366,
+      "lon": 2.3586465,
+      "category": "attraction",
+      "description": "Provence attraction attraction",
+      "tags": {
+        "name": "Provence",
+        "tourism": "attraction"
+      }
+    },
+    {
+      "id": 1107053281,
+      "name": "Préalpes",
+      "lat": 48.8439166,
+      "lon": 2.3585197,
+      "category": "attraction",
+      "description": "Préalpes attraction attraction",
+      "tags": {
+        "name": "Préalpes",
+        "tourism": "attraction",
+        "wheelchair": "limited"
+      }
+    },
+    {
+      "id": 1107053404,
+      "name": "USA",
+      "lat": 48.8440008,
+      "lon": 2.3589658,
+      "category": "attraction",
+      "description": "USA attraction attraction",
+      "tags": {
+        "name": "USA",
+        "tourism": "attraction"
+      }
+    },
+    {
+      "id": 1107053526,
+      "name": "Zone arides des déserts",
+      "lat": 48.8431839,
+      "lon": 2.3575411,
+      "category": "attraction",
+      "description": "Zone arides des déserts attraction attraction",
+      "tags": {
+        "name": "Zone arides des déserts",
+        "tourism": "attraction"
+      }
+    },
+    {
+      "id": 1107053532,
+      "name": "Alpes",
+      "lat": 48.8439389,
+      "lon": 2.358275,
+      "category": "attraction",
+      "description": "Alpes attraction attraction",
+      "tags": {
+        "name": "Alpes",
+        "tourism": "attraction"
+      }
+    },
+    {
+      "id": 977195330,
+      "name": "Butte de Coupeaux",
+      "lat": 48.8431371,
+      "lon": 2.355922,
+      "category": "attraction",
+      "description": "Butte de Coupeaux attraction viewpoint",
+      "tags": {
+        "mapillary": "586512742314550",
+        "name": "Butte de Coupeaux",
+        "tourism": "viewpoint"
+      }
+    }
+  ]
+}

@@ -1,8 +1,8 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView, ScrollView, Alert, Animated } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, SafeAreaView, ScrollView, Alert, Animated, ActivityIndicator } from 'react-native';
 import { useRouter, useFocusEffect } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { getSavedTrips, clearPrefs, clearAllSavedTrips, loadPrefs, UserPrefs } from '../services/api';
+import { getSavedTrips, clearPrefs, clearAllSavedTrips, loadPrefs, UserPrefs, User, getCurrentUser, getServerTrips, login, register, logout } from '../services/api';
 import { ONBOARDING_KEY } from './onboarding';
 
 const PREFS_LABELS: Record<keyof Omit<UserPrefs, 'goals'>, string> = {
@@ -20,7 +20,7 @@ const VALUE_LABELS: Record<string, string> = {
   easy: 'Easy', active: 'Active',
   first_time: 'First time', returning: 'Returning',
   morning: 'Morning', afternoon: 'Afternoon', evening: 'Evening',
-  walking: 'Walking', transit: 'Transit',
+  walking: 'Walking', transit: 'Transit', cycling: 'Cycling', driving: 'Driving',
 };
 
 const GOAL_COLORS: Record<string, string> = {
@@ -28,11 +28,32 @@ const GOAL_COLORS: Record<string, string> = {
   culture: '#3B82F6', nightlife: '#EC4899', shopping: '#F97316', adventure: '#EF4444',
 };
 
+// Same rules the server applies, checked here so mistakes show up before a request is made
+function validateEmail(email: string): string | null {
+  if (!email.trim()) return 'Enter your email';
+  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email.trim())) return 'That doesn\'t look like an email address';
+  return null;
+}
+
+function validatePassword(password: string): string | null {
+  if (!password) return 'Enter a password';
+  if (password.length < 8) return 'Password must be at least 8 characters';
+  return null;
+}
+
 export default function SettingsScreen() {
   const router = useRouter();
   const [tripCount, setTripCount] = useState(0);
   const [totalStops, setTotalStops] = useState(0);
   const [prefs, setPrefs] = useState<Partial<UserPrefs>>({});
+  const [user, setUser] = useState<User | null>(null);
+  const [authMode, setAuthMode] = useState<'signin' | 'register'>('signin');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [emailError, setEmailError] = useState<string | null>(null);
+  const [passwordError, setPasswordError] = useState<string | null>(null);
+  const [authError, setAuthError] = useState<string | null>(null);
+  const [authBusy, setAuthBusy] = useState(false);
   const fadeAnim  = useRef(new Animated.Value(0)).current;
   const slideAnim = useRef(new Animated.Value(16)).current;
 
@@ -43,13 +64,62 @@ export default function SettingsScreen() {
     ]).start();
   }, []);
 
+  // Signed in: count the account's trips on the server. Signed out: count the trips on this device.
+  const loadStats = async (signedIn: boolean) => {
+    if (signedIn) {
+      try {
+        const trips = await getServerTrips();
+        setTripCount(trips.length);
+        setTotalStops(trips.reduce((sum, t) => sum + t.stops, 0));
+        return;
+      } catch (e: any) {
+        if (e?.status !== 401) return; // offline or server down: keep what is shown
+        setUser(null);                 // session expired: fall through to the device's trips
+      }
+    }
+    const trips = await getSavedTrips();
+    setTripCount(trips.length);
+    setTotalStops(trips.reduce((sum, t) => sum + t.itinerary.days.reduce((s, d) => s + d.stops.length, 0), 0));
+  };
+
   useFocusEffect(useCallback(() => {
-    getSavedTrips().then(trips => {
-      setTripCount(trips.length);
-      setTotalStops(trips.reduce((sum, t) => sum + t.itinerary.days.reduce((s, d) => s + d.stops.length, 0), 0));
+    getCurrentUser().then(u => {
+      setUser(u);
+      loadStats(!!u);
     });
     loadPrefs().then(setPrefs);
   }, []));
+
+  const submitAccount = async () => {
+    const emailErr = validateEmail(email);
+    const passwordErr = validatePassword(password);
+    setEmailError(emailErr);
+    setPasswordError(passwordErr);
+    if (emailErr || passwordErr) return;
+    setAuthBusy(true); setAuthError(null);
+    try {
+      const u = authMode === 'register'
+        ? await register(email.trim(), password)
+        : await login(email.trim(), password);
+      setUser(u);
+      setPassword('');
+      loadStats(true);
+    } catch (e: any) {
+      // The API layer turns 401, 409, 422 and 429 into messages that can be shown directly
+      setAuthError(e?.message || 'Something went wrong. Please try again.');
+    } finally { setAuthBusy(false); }
+  };
+
+  const switchAuthMode = () => {
+    setAuthMode(m => m === 'signin' ? 'register' : 'signin');
+    setAuthError(null);
+  };
+
+  const signOut = async () => {
+    await logout();
+    setUser(null);
+    loadStats(false);
+  };
 
   const confirmClearTrips = () => {
     Alert.alert('Clear saved trips', 'This will delete all your saved itineraries. This can\'t be undone.', [
@@ -94,7 +164,7 @@ export default function SettingsScreen() {
         <View style={{ width: 56 }} />
       </View>
 
-      <Animated.ScrollView contentContainerStyle={styles.scroll} style={{ opacity: fadeAnim, transform: [{ translateY: slideAnim }] }}>
+      <Animated.ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={styles.scroll} style={{ opacity: fadeAnim, transform: [{ translateY: slideAnim }] }}>
 
         {/* Stats strip */}
         <View style={styles.statsRow}>
@@ -107,6 +177,62 @@ export default function SettingsScreen() {
             <Text style={styles.statNum}>{totalStops}</Text>
             <Text style={styles.statLabel}>Stops discovered</Text>
           </View>
+        </View>
+
+        {/* Account */}
+        <View style={styles.section}>
+          <Text style={styles.sectionLabel}>Account</Text>
+          {user ? (
+            <View style={styles.card}>
+              <View style={[styles.row, styles.rowBorder]}>
+                <Text style={styles.rowLabel}>Signed in as</Text>
+                <Text style={[styles.rowValue, styles.emailValue]} numberOfLines={1}>{user.email}</Text>
+              </View>
+              <TouchableOpacity style={styles.row} onPress={signOut}>
+                <Text style={styles.rowLabel}>Sign out</Text>
+              </TouchableOpacity>
+            </View>
+          ) : (
+            <>
+              <View style={styles.card}>
+                <TextInput
+                  style={[styles.input, styles.rowBorder]}
+                  placeholder="Email"
+                  placeholderTextColor="rgba(255,255,255,0.25)"
+                  value={email}
+                  onChangeText={v => { setEmail(v); if (emailError) setEmailError(validateEmail(v)); }}
+                  onBlur={() => { if (email) setEmailError(validateEmail(email)); }}
+                  autoCapitalize="none" autoCorrect={false} keyboardType="email-address"
+                  maxLength={320}
+                />
+                <TextInput
+                  style={styles.input}
+                  placeholder="Password (at least 8 characters)"
+                  placeholderTextColor="rgba(255,255,255,0.25)"
+                  value={password}
+                  onChangeText={v => { setPassword(v); if (passwordError) setPasswordError(validatePassword(v)); }}
+                  onBlur={() => { if (password) setPasswordError(validatePassword(password)); }}
+                  onSubmitEditing={submitAccount}
+                  secureTextEntry autoCapitalize="none" autoCorrect={false}
+                  maxLength={72}
+                />
+              </View>
+              {emailError && <Text style={styles.fieldError}>{emailError}</Text>}
+              {passwordError && <Text style={styles.fieldError}>{passwordError}</Text>}
+              {authError && <Text style={styles.fieldError}>{authError}</Text>}
+              <TouchableOpacity style={styles.accountBtn} onPress={submitAccount} disabled={authBusy} activeOpacity={0.8}>
+                {authBusy
+                  ? <ActivityIndicator size="small" color="#09090b" />
+                  : <Text style={styles.accountBtnText}>{authMode === 'register' ? 'Create account' : 'Sign in'}</Text>}
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.dangerRow} onPress={switchAuthMode}>
+                <Text style={styles.switchText}>
+                  {authMode === 'register' ? 'Already have an account? Sign in' : 'New here? Create an account'}
+                </Text>
+              </TouchableOpacity>
+              <Text style={styles.accountHint}>Sign in to see your trips on any device.</Text>
+            </>
+          )}
         </View>
 
         {/* Saved defaults */}
@@ -155,13 +281,16 @@ export default function SettingsScreen() {
           <View style={styles.section}>
             <Text style={styles.sectionLabel}>Data</Text>
             <View style={styles.card}>
-              <TouchableOpacity style={[styles.row, styles.rowBorder]} onPress={() => router.push('/history' as any)}>
+              <TouchableOpacity style={[styles.row, !user && styles.rowBorder]} onPress={() => router.push('/history' as any)}>
                 <Text style={styles.rowLabel}>View saved trips</Text>
                 <Text style={styles.rowChevron}>›</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.row} onPress={confirmClearTrips}>
-                <Text style={[styles.rowLabel, { color: '#EF4444', opacity: 0.85 }]}>Clear all saved trips</Text>
-              </TouchableOpacity>
+              {/* Clearing only touches this device, so it is hidden while the account's trips are shown */}
+              {!user && (
+                <TouchableOpacity style={styles.row} onPress={confirmClearTrips}>
+                  <Text style={[styles.rowLabel, { color: '#EF4444', opacity: 0.85 }]}>Clear all saved trips</Text>
+                </TouchableOpacity>
+              )}
             </View>
           </View>
         )}
@@ -236,6 +365,15 @@ const styles = StyleSheet.create({
   goalPill:    { flexDirection: 'row', alignItems: 'center', gap: 5, paddingHorizontal: 9, paddingVertical: 4, borderRadius: 100, borderWidth: 1 },
   goalDot:     { width: 5, height: 5, borderRadius: 2.5 },
   goalPillText:{ fontSize: 12, fontWeight: '500' },
+
+  // ── Account ──
+  input:          { color: '#fff', fontSize: 14, paddingHorizontal: 16, paddingVertical: 13 },
+  emailValue:     { flex: 1, textAlign: 'right', marginLeft: 16 },
+  fieldError:     { color: '#EF4444', fontSize: 12, marginTop: 4, marginLeft: 4, opacity: 0.85 },
+  accountBtn:     { backgroundColor: '#fff', borderRadius: 12, paddingVertical: 13, alignItems: 'center', marginTop: 8 },
+  accountBtnText: { color: '#09090b', fontSize: 14, fontWeight: '700', letterSpacing: 0.3 },
+  switchText:     { color: 'rgba(255,255,255,0.5)', fontSize: 13 },
+  accountHint:    { color: 'rgba(255,255,255,0.25)', fontSize: 12, marginLeft: 4 },
 
   dangerRow:  { paddingHorizontal: 4, paddingVertical: 8 },
   dangerText: { color: '#EF4444', fontSize: 13, opacity: 0.8 },
